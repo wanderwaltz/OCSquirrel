@@ -9,6 +9,7 @@
 #ifndef OCSquirrel_OCSquirrel_h
 #define OCSquirrel_OCSquirrel_h
 
+// Import original Squirrel API
 #import "squirrel.h"
 
 #import "sqstdaux.h"
@@ -17,5 +18,9 @@
 #import "sqstdmath.h"
 #import "sqstdstring.h"
 #import "sqstdsystem.h"
+
+
+// Import classes provided by the OCSquirrel
+#import "OCSquirrelVM.h"
 
 #endif

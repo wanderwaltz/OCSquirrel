@@ -9,7 +9,6 @@
 /* Begin PBXBuildFile section */
 		5DB09CA31719686D00F50257 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 5DB09CA11719686D00F50257 /* InfoPlist.strings */; };
 		5DB09CAD1719686D00F50257 /* SenTestingKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5DB09CAC1719686D00F50257 /* SenTestingKit.framework */; };
-		5DB09CB41719686D00F50257 /* OCSquirrel.framework in Resources */ = {isa = PBXBuildFile; fileRef = 5DB09C9C1719686D00F50257 /* OCSquirrel.framework */; };
 		5DB09CBA1719686D00F50257 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 5DB09CB81719686D00F50257 /* InfoPlist.strings */; };
 		5DB09D721719690300F50257 /* OCSquirrel.h in Headers */ = {isa = PBXBuildFile; fileRef = 5DB09D71171968FB00F50257 /* OCSquirrel.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		5DB09D94171969D100F50257 /* sqapi.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5DB09D76171969D100F50257 /* sqapi.cpp */; };
@@ -47,7 +46,6 @@
 		5DB09DBD171969D700F50257 /* sqstdstring.h in Headers */ = {isa = PBXBuildFile; fileRef = 5DB09DB6171969D700F50257 /* sqstdstring.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		5DB09DBE171969D700F50257 /* sqstdsystem.h in Headers */ = {isa = PBXBuildFile; fileRef = 5DB09DB7171969D700F50257 /* sqstdsystem.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		5DB09DBF171969D700F50257 /* squirrel.h in Headers */ = {isa = PBXBuildFile; fileRef = 5DB09DB8171969D700F50257 /* squirrel.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		5DB09DDA17196B4300F50257 /* OCSquirrel.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5DB09C9C1719686D00F50257 /* OCSquirrel.framework */; };
 		5DB09DE917196BF300F50257 /* sqstdaux.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5DB09DDD17196BF300F50257 /* sqstdaux.cpp */; };
 		5DB09DEA17196BF300F50257 /* sqstdblob.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5DB09DDE17196BF300F50257 /* sqstdblob.cpp */; };
 		5DB09DEB17196BF300F50257 /* sqstdblobimpl.h in Headers */ = {isa = PBXBuildFile; fileRef = 5DB09DDF17196BF300F50257 /* sqstdblobimpl.h */; };
@@ -59,6 +57,9 @@
 		5DB09DF217196BF300F50257 /* sqstdstring.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5DB09DE617196BF300F50257 /* sqstdstring.cpp */; };
 		5DB09DF317196BF300F50257 /* sqstdsystem.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5DB09DE717196BF300F50257 /* sqstdsystem.cpp */; };
 		5DB09DF617196D1F00F50257 /* TestRawSquirrelAPI.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DB09DF517196D1F00F50257 /* TestRawSquirrelAPI.m */; };
+		5DB09DF917196FA500F50257 /* TestOCSquirrelVM.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5DB09DF817196FA500F50257 /* TestOCSquirrelVM.mm */; };
+		5DB09DFD1719705500F50257 /* OCSquirrelVM.h in Headers */ = {isa = PBXBuildFile; fileRef = 5DB09DFB1719705500F50257 /* OCSquirrelVM.h */; };
+		5DB09DFE1719705500F50257 /* OCSquirrelVM.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DB09DFC1719705500F50257 /* OCSquirrelVM.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -132,6 +133,10 @@
 		5DB09DE717196BF300F50257 /* sqstdsystem.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = sqstdsystem.cpp; sourceTree = "<group>"; };
 		5DB09DF417196D1F00F50257 /* TestRawSquirrelAPI.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TestRawSquirrelAPI.h; sourceTree = "<group>"; };
 		5DB09DF517196D1F00F50257 /* TestRawSquirrelAPI.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TestRawSquirrelAPI.m; sourceTree = "<group>"; };
+		5DB09DF717196FA500F50257 /* TestOCSquirrelVM.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TestOCSquirrelVM.h; sourceTree = "<group>"; };
+		5DB09DF817196FA500F50257 /* TestOCSquirrelVM.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = TestOCSquirrelVM.mm; sourceTree = "<group>"; };
+		5DB09DFB1719705500F50257 /* OCSquirrelVM.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OCSquirrelVM.h; sourceTree = "<group>"; };
+		5DB09DFC1719705500F50257 /* OCSquirrelVM.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OCSquirrelVM.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -147,7 +152,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				5DB09CAD1719686D00F50257 /* SenTestingKit.framework in Frameworks */,
-				5DB09DDA17196B4300F50257 /* OCSquirrel.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -178,6 +182,7 @@
 			isa = PBXGroup;
 			children = (
 				5DB09D71171968FB00F50257 /* OCSquirrel.h */,
+				5DB09DFA1719704000F50257 /* Classes */,
 				5DB09C9F1719686D00F50257 /* Supporting Files */,
 			);
 			path = OCSquirrel;
@@ -204,6 +209,8 @@
 		5DB09CB51719686D00F50257 /* OCSquirrelTests */ = {
 			isa = PBXGroup;
 			children = (
+				5DB09DF717196FA500F50257 /* TestOCSquirrelVM.h */,
+				5DB09DF817196FA500F50257 /* TestOCSquirrelVM.mm */,
 				5DB09DF417196D1F00F50257 /* TestRawSquirrelAPI.h */,
 				5DB09DF517196D1F00F50257 /* TestRawSquirrelAPI.m */,
 				5DB09CB61719686D00F50257 /* Supporting Files */,
@@ -242,12 +249,12 @@
 			isa = PBXGroup;
 			children = (
 				5DB09D75171969D100F50257 /* Makefile */,
-				5DB09D76171969D100F50257 /* sqapi.cpp */,
 				5DB09D77171969D100F50257 /* sqarray.h */,
-				5DB09D78171969D100F50257 /* sqbaselib.cpp */,
-				5DB09D79171969D100F50257 /* sqclass.cpp */,
 				5DB09D7A171969D100F50257 /* sqclass.h */,
 				5DB09D7B171969D100F50257 /* sqclosure.h */,
+				5DB09D76171969D100F50257 /* sqapi.cpp */,
+				5DB09D78171969D100F50257 /* sqbaselib.cpp */,
+				5DB09D79171969D100F50257 /* sqclass.cpp */,
 				5DB09D7C171969D100F50257 /* sqcompiler.cpp */,
 				5DB09D7D171969D100F50257 /* sqcompiler.h */,
 				5DB09D7E171969D100F50257 /* sqdebug.cpp */,
@@ -311,6 +318,15 @@
 			path = SQUIRREL3/sqstdlib;
 			sourceTree = "<group>";
 		};
+		5DB09DFA1719704000F50257 /* Classes */ = {
+			isa = PBXGroup;
+			children = (
+				5DB09DFB1719705500F50257 /* OCSquirrelVM.h */,
+				5DB09DFC1719705500F50257 /* OCSquirrelVM.m */,
+			);
+			name = Classes;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXHeadersBuildPhase section */
@@ -344,6 +360,7 @@
 				5DB09DB0171969D100F50257 /* sqvm.h in Headers */,
 				5DB09DEB17196BF300F50257 /* sqstdblobimpl.h in Headers */,
 				5DB09DF117196BF300F50257 /* sqstdstream.h in Headers */,
+				5DB09DFD1719705500F50257 /* OCSquirrelVM.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -430,7 +447,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				5DB09CB41719686D00F50257 /* OCSquirrel.framework in Resources */,
 				5DB09CBA1719686D00F50257 /* InfoPlist.strings in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -517,6 +533,7 @@
 				5DB09DF017196BF300F50257 /* sqstdstream.cpp in Sources */,
 				5DB09DF217196BF300F50257 /* sqstdstring.cpp in Sources */,
 				5DB09DF317196BF300F50257 /* sqstdsystem.cpp in Sources */,
+				5DB09DFE1719705500F50257 /* OCSquirrelVM.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -525,6 +542,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				5DB09DF617196D1F00F50257 /* TestRawSquirrelAPI.m in Sources */,
+				5DB09DF917196FA500F50257 /* TestOCSquirrelVM.mm in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
