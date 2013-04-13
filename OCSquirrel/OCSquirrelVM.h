@@ -13,7 +13,8 @@
 #pragma mark -
 #pragma mark Constants
 
-/*! Default initial stack capacity of the Squirrel VM. When initializing an OCSquirrelVM instance using the -init method, the initial stack capacity will be set to this value.
+/*! Default initial stack capacity of the Squirrel VM. When initializing an OCSquirrelVM 
+    instance using the -init method, the initial stack capacity will be set to this value.
  */
 extern const NSUInteger kOCSquirrelVMDefaultInitialStackSize;
 
@@ -48,7 +49,10 @@ extern const NSUInteger kOCSquirrelVMDefaultInitialStackSize;
 
 /*! Serial dispatch queue which should be used to serialize calls to Squirrel VM.
  
- Squirrel is not thread safe, so we should make sure all calls to the Squirrel VM are serialized. This can be achieved by only working with the VM on a certain serial dispatch queue. OCSquirrelVM uses vmQueue property within all its methods for vm calls, and anyone else should do the same thing if vm property needs to be accessed directly.
+ Squirrel is not thread safe, so we should make sure all calls to the Squirrel VM are serialized. 
+ This can be achieved by only working with the VM on a certain serial dispatch queue. OCSquirrelVM 
+ uses vmQueue property within all its methods for vm calls, and anyone else should do the same 
+ thing if vm property needs to be accessed directly.
  */
 @property (readonly, nonatomic) dispatch_queue_t vmQueue;
 
