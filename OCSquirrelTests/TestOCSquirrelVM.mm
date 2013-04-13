@@ -11,6 +11,7 @@
 #endif
 
 #import "TestOCSquirrelVM.h"
+#import "OCMock.h"
 
 #import <math.h>
 #import <stdlib.h>
@@ -55,6 +56,23 @@
 
 @end
 
+
+
+#pragma mark -
+#pragma mark OCSquirrelPrintDelegate class
+
+/*! A class which is used for testing that delegate method is invoked by OCSquirrelVM when a script tries to print some string. Actual implementation of the delegate method is not important since the method invocation will be tested by an OCMockObject. The OCMockObject cannot mock -respondsToSelector:, so this class is needed only for that. 
+ 
+ See -testPrintCallsDelegateMethod below for more info.
+ */
+@interface OCSquirrelPrintDelegate : NSObject<OCSquirrelVMDelegate>
+@end
+
+@implementation OCSquirrelPrintDelegate
+
+- (void) squirrelVM: (OCSquirrelVM *) squirrelVM didPrintString: (NSString *) string {}
+
+@end
 
 
 #pragma mark -
@@ -149,8 +167,9 @@
 
 - (void) testDoesNotThrowIfDelegateRightProtocol
 {
-    // Assume that the test case class does conform to OCSquirrelVMDelegate protocol
-    STAssertNoThrow(_squirrelVM.delegate = self,
+    id delegate = [OCMockObject mockForProtocol: @protocol(OCSquirrelVMDelegate)];
+    
+    STAssertNoThrow(_squirrelVM.delegate = delegate,
                     @"OCSquirrelVM does not throw an exception if a delegate conforming to OCSquireelVMDelegate protocol is set.");
 }
 
@@ -170,6 +189,35 @@
     STAssertThrowsSpecificNamed([_squirrelVM executeSync: @"local x + 0"],
                                 NSException, NSInvalidArgumentException,
                    @"OCSquirrelVM -executeSync: should throw an NSInvalidArgumentException for an invalid Squirrel script.");
+}
+
+
+- (void) testPrintCallsDelegateMethod
+{
+    id delegate = [OCMockObject partialMockForObject: [OCSquirrelPrintDelegate new]];
+    
+    _squirrelVM.delegate = delegate;
+
+    NSString * const kHelloWorld = @"Hello, World!";
+    
+    [[delegate expect] squirrelVM: _squirrelVM didPrintString: kHelloWorld];
+    
+    NSString *printHelloWorld = [NSString stringWithFormat: @"print(\"%@\");", kHelloWorld];
+    
+    [_squirrelVM executeSync: printHelloWorld];
+    
+    STAssertNoThrow([delegate verify],
+                    @"Delegate method -squirrelVM:didPrintString: should be invoked with the OCSquirrelVM instance which compiled the script and the string which was passed to print function.");
+    [NSThread sleepForTimeInterval:1.0];
+}
+
+
+#pragma mark -
+#pragma mark OCSquirrelVMDelegate
+
+- (void) squirrelVM: (OCSquirrelVM *) squirrelVM didPrintString: (NSString *) string
+{
+    
 }
 
 @end

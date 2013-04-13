@@ -58,8 +58,11 @@
 		5DB09DF317196BF300F50257 /* sqstdsystem.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5DB09DE717196BF300F50257 /* sqstdsystem.cpp */; };
 		5DB09DF617196D1F00F50257 /* TestRawSquirrelAPI.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DB09DF517196D1F00F50257 /* TestRawSquirrelAPI.m */; };
 		5DB09DF917196FA500F50257 /* TestOCSquirrelVM.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5DB09DF817196FA500F50257 /* TestOCSquirrelVM.mm */; };
-		5DB09DFD1719705500F50257 /* OCSquirrelVM.h in Headers */ = {isa = PBXBuildFile; fileRef = 5DB09DFB1719705500F50257 /* OCSquirrelVM.h */; };
+		5DB09DFD1719705500F50257 /* OCSquirrelVM.h in Headers */ = {isa = PBXBuildFile; fileRef = 5DB09DFB1719705500F50257 /* OCSquirrelVM.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		5DB09DFE1719705500F50257 /* OCSquirrelVM.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DB09DFC1719705500F50257 /* OCSquirrelVM.m */; };
+		5DB09E091719BA0F00F50257 /* libOCMock.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5DB09E001719BA0F00F50257 /* libOCMock.a */; };
+		5DB09E0D1719C0C500F50257 /* OCSquirrelVM+DelegateCallbacks.h in Headers */ = {isa = PBXBuildFile; fileRef = 5DB09E0B1719C0C500F50257 /* OCSquirrelVM+DelegateCallbacks.h */; };
+		5DB09E0E1719C0C500F50257 /* OCSquirrelVM+DelegateCallbacks.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DB09E0C1719C0C500F50257 /* OCSquirrelVM+DelegateCallbacks.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -137,6 +140,16 @@
 		5DB09DF817196FA500F50257 /* TestOCSquirrelVM.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = TestOCSquirrelVM.mm; sourceTree = "<group>"; };
 		5DB09DFB1719705500F50257 /* OCSquirrelVM.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OCSquirrelVM.h; sourceTree = "<group>"; };
 		5DB09DFC1719705500F50257 /* OCSquirrelVM.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OCSquirrelVM.m; sourceTree = "<group>"; };
+		5DB09E001719BA0F00F50257 /* libOCMock.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libOCMock.a; sourceTree = "<group>"; };
+		5DB09E011719BA0F00F50257 /* License.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = License.txt; sourceTree = "<group>"; };
+		5DB09E031719BA0F00F50257 /* NSNotificationCenter+OCMAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSNotificationCenter+OCMAdditions.h"; sourceTree = "<group>"; };
+		5DB09E041719BA0F00F50257 /* OCMArg.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OCMArg.h; sourceTree = "<group>"; };
+		5DB09E051719BA0F00F50257 /* OCMConstraint.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OCMConstraint.h; sourceTree = "<group>"; };
+		5DB09E061719BA0F00F50257 /* OCMock.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OCMock.h; sourceTree = "<group>"; };
+		5DB09E071719BA0F00F50257 /* OCMockObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OCMockObject.h; sourceTree = "<group>"; };
+		5DB09E081719BA0F00F50257 /* OCMockRecorder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OCMockRecorder.h; sourceTree = "<group>"; };
+		5DB09E0B1719C0C500F50257 /* OCSquirrelVM+DelegateCallbacks.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "OCSquirrelVM+DelegateCallbacks.h"; sourceTree = "<group>"; };
+		5DB09E0C1719C0C500F50257 /* OCSquirrelVM+DelegateCallbacks.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "OCSquirrelVM+DelegateCallbacks.m"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -152,6 +165,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				5DB09CAD1719686D00F50257 /* SenTestingKit.framework in Frameworks */,
+				5DB09E091719BA0F00F50257 /* libOCMock.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -209,6 +223,7 @@
 		5DB09CB51719686D00F50257 /* OCSquirrelTests */ = {
 			isa = PBXGroup;
 			children = (
+				5DB09DFF1719BA0F00F50257 /* OCMock */,
 				5DB09DF717196FA500F50257 /* TestOCSquirrelVM.h */,
 				5DB09DF817196FA500F50257 /* TestOCSquirrelVM.mm */,
 				5DB09DF417196D1F00F50257 /* TestRawSquirrelAPI.h */,
@@ -321,10 +336,43 @@
 		5DB09DFA1719704000F50257 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
+				5DB09E0F1719C0C800F50257 /* protected */,
 				5DB09DFB1719705500F50257 /* OCSquirrelVM.h */,
 				5DB09DFC1719705500F50257 /* OCSquirrelVM.m */,
 			);
 			name = Classes;
+			sourceTree = "<group>";
+		};
+		5DB09DFF1719BA0F00F50257 /* OCMock */ = {
+			isa = PBXGroup;
+			children = (
+				5DB09E001719BA0F00F50257 /* libOCMock.a */,
+				5DB09E011719BA0F00F50257 /* License.txt */,
+				5DB09E021719BA0F00F50257 /* OCMock */,
+			);
+			path = OCMock;
+			sourceTree = "<group>";
+		};
+		5DB09E021719BA0F00F50257 /* OCMock */ = {
+			isa = PBXGroup;
+			children = (
+				5DB09E031719BA0F00F50257 /* NSNotificationCenter+OCMAdditions.h */,
+				5DB09E041719BA0F00F50257 /* OCMArg.h */,
+				5DB09E051719BA0F00F50257 /* OCMConstraint.h */,
+				5DB09E061719BA0F00F50257 /* OCMock.h */,
+				5DB09E071719BA0F00F50257 /* OCMockObject.h */,
+				5DB09E081719BA0F00F50257 /* OCMockRecorder.h */,
+			);
+			path = OCMock;
+			sourceTree = "<group>";
+		};
+		5DB09E0F1719C0C800F50257 /* protected */ = {
+			isa = PBXGroup;
+			children = (
+				5DB09E0B1719C0C500F50257 /* OCSquirrelVM+DelegateCallbacks.h */,
+				5DB09E0C1719C0C500F50257 /* OCSquirrelVM+DelegateCallbacks.m */,
+			);
+			name = protected;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -335,6 +383,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				5DB09D721719690300F50257 /* OCSquirrel.h in Headers */,
+				5DB09DFD1719705500F50257 /* OCSquirrelVM.h in Headers */,
 				5DB09DB9171969D700F50257 /* sqstdaux.h in Headers */,
 				5DB09DBA171969D700F50257 /* sqstdblob.h in Headers */,
 				5DB09DBB171969D700F50257 /* sqstdio.h in Headers */,
@@ -360,7 +409,7 @@
 				5DB09DB0171969D100F50257 /* sqvm.h in Headers */,
 				5DB09DEB17196BF300F50257 /* sqstdblobimpl.h in Headers */,
 				5DB09DF117196BF300F50257 /* sqstdstream.h in Headers */,
-				5DB09DFD1719705500F50257 /* OCSquirrelVM.h in Headers */,
+				5DB09E0D1719C0C500F50257 /* OCSquirrelVM+DelegateCallbacks.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -534,6 +583,7 @@
 				5DB09DF217196BF300F50257 /* sqstdstring.cpp in Sources */,
 				5DB09DF317196BF300F50257 /* sqstdsystem.cpp in Sources */,
 				5DB09DFE1719705500F50257 /* OCSquirrelVM.m in Sources */,
+				5DB09E0E1719C0C500F50257 /* OCSquirrelVM+DelegateCallbacks.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -690,13 +740,19 @@
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "OCSquirrel/OCSquirrel-Prefix.pch";
+				HEADER_SEARCH_PATHS = "${SRCROOT}/OCSquirrelTests/OCMock";
 				INFOPLIST_FILE = "OCSquirrelTests/OCSquirrelTests-Info.plist";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/OCSquirrelTests/OCMock\"",
+				);
 				OTHER_LDFLAGS = (
 					"-framework",
 					SenTestingKit,
 					"-framework",
 					.fake_fw_testing,
 					"-lstdc++",
+					"-ObjC",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = octest;
@@ -712,13 +768,19 @@
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "OCSquirrel/OCSquirrel-Prefix.pch";
+				HEADER_SEARCH_PATHS = "${SRCROOT}/OCSquirrelTests/OCMock";
 				INFOPLIST_FILE = "OCSquirrelTests/OCSquirrelTests-Info.plist";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/OCSquirrelTests/OCMock\"",
+				);
 				OTHER_LDFLAGS = (
 					"-framework",
 					SenTestingKit,
 					"-framework",
 					.fake_fw_testing,
 					"-lstdc++",
+					"-ObjC",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = octest;
