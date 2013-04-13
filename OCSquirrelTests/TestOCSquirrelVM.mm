@@ -32,7 +32,9 @@
 #pragma mark -
 #pragma mark OCSquirrelVMInitWithStackSizeOverride class
 
-/*! A custom OCSquirrelVM subclass which sets the calledInitWithStackSize property to YES if -initWithStackSize: method has been called with the kOCSquirrelVMDefaultInitialStackSize constant as parameter.
+/*! A custom OCSquirrelVM subclass which sets the calledInitWithStackSize property to YES 
+    if -initWithStackSize: method has been called with the kOCSquirrelVMDefaultInitialStackSize 
+    constant as parameter.
  
  This class is used for testing that the default initializer calls the designated initializer.
  */
@@ -61,7 +63,10 @@
 #pragma mark -
 #pragma mark OCSquirrelPrintDelegate class
 
-/*! A class which is used for testing that delegate method is invoked by OCSquirrelVM when a script tries to print some string. Actual implementation of the delegate method is not important since the method invocation will be tested by an OCMockObject. The OCMockObject cannot mock -respondsToSelector:, so this class is needed only for that. 
+/*! A class which is used for testing that delegate method is invoked by OCSquirrelVM when 
+    a script tries to print some string. Actual implementation of the delegate method is not 
+    important since the method invocation will be tested by an OCMockObject. The OCMockObject 
+    cannot mock -respondsToSelector:, so this class is needed only for that. 
  
  See -testPrintCallsDelegateMethod below for more info.
  */
