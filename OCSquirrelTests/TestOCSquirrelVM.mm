@@ -120,7 +120,8 @@
 - (void) testDefaultInitialStackSize
 {
     STAssertEquals(_squirrelVM.vm->_stack.capacity(), kOCSquirrelVMDefaultInitialStackSize,
-                   @"Initial stack size of a OCSquirrelVM initialized with -init should be equal to kOCSquirrelVMDefaultInitialStackSize");
+                   @"Initial stack size of a OCSquirrelVM initialized with -init should be equal to \
+                   kOCSquirrelVMDefaultInitialStackSize");
 }
 
 
@@ -131,7 +132,8 @@
     _squirrelVM = [[OCSquirrelVM alloc] initWithStackSize: kCustomStackSize];
     
     STAssertEquals(_squirrelVM.vm->_stack.capacity(), kCustomStackSize,
-                   @"Initial stack size of a OCSquirrelVM initialized with -initWithStackSize: should be equal to kCustomStackSize");
+                   @"Initial stack size of a OCSquirrelVM initialized with -initWithStackSize: \
+                   should be equal to kCustomStackSize");
 }
 
 
@@ -143,7 +145,8 @@
     OCSquirrelVMInitWithStackSizeOverride *vm = [OCSquirrelVMInitWithStackSizeOverride new];
     
     STAssertTrue(vm.calledInitWithStackSize,
-                 @"-init method should have called -initWithStackSize: with kOCSquirrelVMDefaultInitialStackSize param value");
+                 @"-init method should have called -initWithStackSize: with \
+                 kOCSquirrelVMDefaultInitialStackSize param value");
 }
 
 
@@ -166,7 +169,8 @@
 {
     STAssertThrowsSpecificNamed(_squirrelVM.delegate = (id)[NSObject new],
                                 NSException, NSInvalidArgumentException,
-                                @"OCSquirrelVM should throw and NSIvalidArgumentException if a delegate not conforming to OCSquirrelVMDelegate protocol is set.");
+                                @"OCSquirrelVM should throw and NSIvalidArgumentException if a delegate \
+                                not conforming to OCSquirrelVMDelegate protocol is set.");
 }
 
 
@@ -175,7 +179,8 @@
     id delegate = [OCMockObject mockForProtocol: @protocol(OCSquirrelVMDelegate)];
     
     STAssertNoThrow(_squirrelVM.delegate = delegate,
-                    @"OCSquirrelVM does not throw an exception if a delegate conforming to OCSquireelVMDelegate protocol is set.");
+                    @"OCSquirrelVM does not throw an exception if a delegate conforming to \
+                    OCSquireelVMDelegate protocol is set.");
 }
 
 
@@ -193,7 +198,8 @@
 {
     STAssertThrowsSpecificNamed([_squirrelVM executeSync: @"local x + 0"],
                                 NSException, NSInvalidArgumentException,
-                   @"OCSquirrelVM -executeSync: should throw an NSInvalidArgumentException for an invalid Squirrel script.");
+                                @"OCSquirrelVM -executeSync: should throw an NSInvalidArgumentException \
+                                for an invalid Squirrel script.");
 }
 
 
@@ -212,7 +218,8 @@
     [_squirrelVM executeSync: printHelloWorld];
     
     STAssertNoThrow([delegate verify],
-                    @"Delegate method -squirrelVM:didPrintString: should be invoked with the OCSquirrelVM instance which compiled the script and the string which was passed to print function.");
+                    @"Delegate method -squirrelVM:didPrintString: should be invoked with the OCSquirrelVM \
+                    instance which compiled the script and the string which was passed to print function.");
     [NSThread sleepForTimeInterval:1.0];
 }
 

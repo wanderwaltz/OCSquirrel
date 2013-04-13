@@ -69,7 +69,8 @@ void OCSquirrelVMErrorfunc(HSQUIRRELVM vm, const SQChar *s, ...)
     if (![delegate conformsToProtocol: @protocol(OCSquirrelVMDelegate)])
     {
         @throw [NSException exceptionWithName: NSInvalidArgumentException
-                                       reason: @"*** setDelegate: delegate should conform to OCSquirrelVMDelegate protocol"
+                                       reason: @"*** setDelegate: delegate should conform to \
+                                                OCSquirrelVMDelegate protocol"
                                      userInfo: nil];
     }
     
@@ -104,7 +105,9 @@ void OCSquirrelVMErrorfunc(HSQUIRRELVM vm, const SQChar *s, ...)
             if (SQ_FAILED(sq_newslot(_vm, -3, SQFalse)))
             {
                 @throw [NSException exceptionWithName: NSInternalInconsistencyException
-                                               reason: @"*** initWithStackSize: failed to store the OCSquirrelVM user pointer in the Squirrel VM root table."
+                                               reason: @"*** initWithStackSize: failed to store the \
+                                                        OCSquirrelVM user pointer in the Squirrel VM \
+                                                        root table."
                                              userInfo: nil];
             }
             
