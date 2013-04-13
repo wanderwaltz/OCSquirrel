@@ -35,6 +35,7 @@ extern const NSUInteger kOCSquirrelVMDefaultInitialStackSize;
 - (id) init;
 
 
+/// Designated initializer
 - (id) initWithStackSize: (NSUInteger) stackSize;
 
 @end

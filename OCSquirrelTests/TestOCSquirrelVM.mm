@@ -29,6 +29,35 @@
 #import "sqclass.h"
 
 #pragma mark -
+#pragma mark OCSquirrelVMInitWithStackSizeOverride class
+
+/*! A custom OCSquirrelVM subclass which sets the calledInitWithStackSize property to YES if -initWithStackSize: method has been called with the kOCSquirrelVMDefaultInitialStackSize constant as parameter.
+ 
+ This class is used for testing that the default initializer calls the designated initializer.
+ */
+@interface OCSquirrelVMInitWithStackSizeOverride : OCSquirrelVM
+@property (readonly, nonatomic) BOOL calledInitWithStackSize;
+@end
+
+@implementation OCSquirrelVMInitWithStackSizeOverride : OCSquirrelVM
+
+- (id) initWithStackSize: (NSUInteger) stackSize
+{
+    self = [super initWithStackSize: stackSize];
+    
+    if (self != nil)
+    {
+        if (stackSize == kOCSquirrelVMDefaultInitialStackSize)
+            _calledInitWithStackSize = YES;
+    }
+    return self;
+}
+
+@end
+
+
+
+#pragma mark -
 #pragma mark TestOCSquirrelVM implementation
 
 @implementation TestOCSquirrelVM
@@ -47,28 +76,28 @@
 }
 
 
-- (void) testSquirrelVMCreation
+- (void) testCreation
 {
     STAssertNotNil(_squirrelVM,
                    @"OCSquirrelVM class should be created");
 }
 
 
-- (void) testSquirrelVMHasVMProperty
+- (void) testHasVMProperty
 {
     STAssertTrue(_squirrelVM.vm != NULL,
                  @"OCSquirrelVM should have a non-nil vm property.");
 }
 
 
-- (void) testSquirrelVMDefaultInitialStackSize
+- (void) testDefaultInitialStackSize
 {
     STAssertEquals(_squirrelVM.vm->_stack.capacity(), kOCSquirrelVMDefaultInitialStackSize,
                    @"Initial stack size of a OCSquirrelVM initialized with -init should be equal to kOCSquirrelVMDefaultInitialStackSize");
 }
 
 
-- (void) testSquirrelVMCustomInitialStackSize
+- (void) testCustomInitialStackSize
 {
     static const NSUInteger kCustomStackSize = 10;
     
@@ -79,7 +108,19 @@
 }
 
 
-- (void) testSquirrelVMHasDispatchQueue
+- (void) testInitCallsInitWithStackSize
+{
+    // A custom OCSquirrelVM subclass which sets the calledInitWithStackSize
+    // property to YES if -initWithStackSize: method has been called with
+    // the kOCSquirrelVMDefaultInitialStackSize constant as parameter.
+    OCSquirrelVMInitWithStackSizeOverride *vm = [OCSquirrelVMInitWithStackSizeOverride new];
+    
+    STAssertTrue(vm.calledInitWithStackSize,
+                 @"-init method should have called -initWithStackSize: with kOCSquirrelVMDefaultInitialStackSize param value");
+}
+
+
+- (void) testHasDispatchQueue
 {
     STAssertNotNil(_squirrelVM.vmQueue,
                    @"OCSquirrelVM should have a dispatch queue to serialize calls to the vm");
