@@ -17,6 +17,15 @@ extern const NSUInteger kOCSquirrelVMDefaultInitialStackSize;
 
 
 #pragma mark -
+#pragma mark OCSquirrelVMDelegate protocol
+
+@class OCSquirrelVM;
+
+@protocol OCSquirrelVMDelegate<NSObject>
+@end
+
+
+#pragma mark -
 #pragma mark OCSquirrelVM interface
 
 @interface OCSquirrelVM : NSObject
@@ -26,6 +35,8 @@ extern const NSUInteger kOCSquirrelVMDefaultInitialStackSize;
     
     dispatch_queue_t _vmQueue;
 }
+
+@property (weak, nonatomic) id<OCSquirrelVMDelegate> delegate;
 
 @property (readonly, nonatomic) HSQUIRRELVM vm;
 @property (readonly, nonatomic) dispatch_queue_t vmQueue;
@@ -37,5 +48,11 @@ extern const NSUInteger kOCSquirrelVMDefaultInitialStackSize;
 
 /// Designated initializer
 - (id) initWithStackSize: (NSUInteger) stackSize;
+
+
+#pragma mark script execution
+
+- (id) executeSync: (NSString *) script;
+
 
 @end

@@ -17,11 +17,28 @@
 
 const NSUInteger kOCSquirrelVMDefaultInitialStackSize = 1024;
 
+static const char * const kOCSquirrelVMCompileBufferSourceName = "buffer";
+
 
 #pragma mark -
 #pragma mark OCSquirrelVM implementation
 
 @implementation OCSquirrelVM
+
+#pragma mark -
+#pragma mark properties
+
+- (void) setDelegate: (id<OCSquirrelVMDelegate>) delegate
+{
+    if (![delegate conformsToProtocol: @protocol(OCSquirrelVMDelegate)])
+    {
+        [[[NSException alloc] initWithName: NSInvalidArgumentException
+                                    reason: @"*** setDelegate: delegate should conform to OCSquirrelVMDelegate protocol"
+                                  userInfo: nil] raise];
+    }
+    
+    _delegate = delegate;
+}
 
 #pragma mark -
 #pragma mark initialization methods
@@ -50,6 +67,36 @@ const NSUInteger kOCSquirrelVMDefaultInitialStackSize = 1024;
     
     if (_vm != nil)
         sq_close(_vm);
+}
+
+
+#pragma mark -
+#pragma mark script execution
+
+- (id) executeSync: (NSString *) script
+{
+    __block BOOL success = NO;
+    
+    dispatch_sync(_vmQueue, ^{
+        
+        const SQChar *cScript = [script cStringUsingEncoding: NSASCIIStringEncoding];
+        
+        if (SQ_SUCCEEDED(sq_compilebuffer(_vm, cScript, strlen(cScript),
+                                          kOCSquirrelVMCompileBufferSourceName, SQTrue)))
+        {
+            success = YES;
+            sq_call(_vm, 0, NO, SQTrue);
+        }
+    });
+    
+    if (!success)
+    {
+        [[[NSException alloc] initWithName: NSInvalidArgumentException
+                                    reason: @"*** executeSync: failed to compile script"
+                                  userInfo: nil] raise];
+    }
+    
+    return nil;
 }
 
 @end

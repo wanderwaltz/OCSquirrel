@@ -12,7 +12,7 @@
 #pragma mark -
 #pragma mark TestOCSquirrelVM interface
 
-@interface TestOCSquirrelVM : SenTestCase
+@interface TestOCSquirrelVM : SenTestCase<OCSquirrelVMDelegate>
 {
     OCSquirrelVM *_squirrelVM;
 }

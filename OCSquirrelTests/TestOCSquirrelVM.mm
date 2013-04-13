@@ -65,7 +65,8 @@
 - (void) setUp
 {
     [super setUp];
-    _squirrelVM = [[OCSquirrelVM alloc] init];
+    _squirrelVM          = [[OCSquirrelVM alloc] init];
+    _squirrelVM.delegate = self;
 }
 
 
@@ -75,6 +76,9 @@
     [super tearDown];
 }
 
+
+#pragma mark -
+#pragma mark tests for general properties of the VM
 
 - (void) testCreation
 {
@@ -124,6 +128,48 @@
 {
     STAssertNotNil(_squirrelVM.vmQueue,
                    @"OCSquirrelVM should have a dispatch queue to serialize calls to the vm");
+}
+
+
+- (void) testHasDelegateProperty
+{
+    STAssertTrue([OCSquirrelVM instancesRespondToSelector: @selector(setDelegate:)] &&
+                 [OCSquirrelVM instancesRespondToSelector: @selector(delegate)],
+                 @"OCSquirrelVM should have a readwrite delegate property");
+}
+
+
+- (void) testThrowsIfDelegateWrongProtocol
+{
+    STAssertThrowsSpecificNamed(_squirrelVM.delegate = (id)[NSObject new],
+                                NSException, NSInvalidArgumentException,
+                                @"OCSquirrelVM should throw and NSIvalidArgumentException if a delegate not conforming to OCSquirrelVMDelegate protocol is set.");
+}
+
+
+- (void) testDoesNotThrowIfDelegateRightProtocol
+{
+    // Assume that the test case class does conform to OCSquirrelVMDelegate protocol
+    STAssertNoThrow(_squirrelVM.delegate = self,
+                    @"OCSquirrelVM does not throw an exception if a delegate conforming to OCSquireelVMDelegate protocol is set.");
+}
+
+
+#pragma mark -
+#pragma mark tests for script string execution
+
+- (void) testExecuteSyncValidNoThrow
+{
+    STAssertNoThrow([_squirrelVM executeSync: @"local x = 0;"],
+                    @"OCSquirrelVM -executeSync: should not throw exception for a valid Squirrel script.");
+}
+
+
+- (void) testExecuteSyncInvalidThrows
+{
+    STAssertThrowsSpecificNamed([_squirrelVM executeSync: @"local x + 0"],
+                                NSException, NSInvalidArgumentException,
+                   @"OCSquirrelVM -executeSync: should throw an NSInvalidArgumentException for an invalid Squirrel script.");
 }
 
 @end
