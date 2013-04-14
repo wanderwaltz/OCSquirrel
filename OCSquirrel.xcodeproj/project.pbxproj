@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		5D8EC812171A57600084F92C /* TestPrinting.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D8EC811171A57600084F92C /* TestPrinting.m */; };
 		5DB09CA31719686D00F50257 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 5DB09CA11719686D00F50257 /* InfoPlist.strings */; };
 		5DB09CAD1719686D00F50257 /* SenTestingKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5DB09CAC1719686D00F50257 /* SenTestingKit.framework */; };
 		5DB09CBA1719686D00F50257 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 5DB09CB81719686D00F50257 /* InfoPlist.strings */; };
@@ -76,6 +77,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		5D8EC810171A57600084F92C /* TestPrinting.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TestPrinting.h; sourceTree = "<group>"; };
+		5D8EC811171A57600084F92C /* TestPrinting.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TestPrinting.m; sourceTree = "<group>"; };
 		5DB09C9C1719686D00F50257 /* OCSquirrel.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = OCSquirrel.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		5DB09CA01719686D00F50257 /* OCSquirrel-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "OCSquirrel-Info.plist"; sourceTree = "<group>"; };
 		5DB09CA21719686D00F50257 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
@@ -223,7 +226,8 @@
 		5DB09CB51719686D00F50257 /* OCSquirrelTests */ = {
 			isa = PBXGroup;
 			children = (
-				5DB09DFF1719BA0F00F50257 /* OCMock */,
+				5D8EC810171A57600084F92C /* TestPrinting.h */,
+				5D8EC811171A57600084F92C /* TestPrinting.m */,
 				5DB09DF717196FA500F50257 /* TestOCSquirrelVM.h */,
 				5DB09DF817196FA500F50257 /* TestOCSquirrelVM.mm */,
 				5DB09DF417196D1F00F50257 /* TestRawSquirrelAPI.h */,
@@ -236,6 +240,7 @@
 		5DB09CB61719686D00F50257 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				5DB09DFF1719BA0F00F50257 /* OCMock */,
 				5DB09CB71719686D00F50257 /* OCSquirrelTests-Info.plist */,
 				5DB09CB81719686D00F50257 /* InfoPlist.strings */,
 			);
@@ -593,6 +598,7 @@
 			files = (
 				5DB09DF617196D1F00F50257 /* TestRawSquirrelAPI.m in Sources */,
 				5DB09DF917196FA500F50257 /* TestOCSquirrelVM.mm in Sources */,
+				5D8EC812171A57600084F92C /* TestPrinting.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -698,6 +704,7 @@
 				INSTALL_PATH = "$(BUILT_PRODUCTS_DIR)";
 				LINK_WITH_STANDARD_LIBRARIES = NO;
 				MACH_O_TYPE = mh_object;
+				OTHER_CFLAGS = "-fshort-wchar";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
 				UNLOCALIZED_RESOURCES_FOLDER_PATH = "$(CONTENTS_FOLDER_PATH)/Resources";
@@ -724,6 +731,7 @@
 				INSTALL_PATH = "$(BUILT_PRODUCTS_DIR)";
 				LINK_WITH_STANDARD_LIBRARIES = NO;
 				MACH_O_TYPE = mh_object;
+				OTHER_CFLAGS = "-fshort-wchar";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
 				UNLOCALIZED_RESOURCES_FOLDER_PATH = "$(CONTENTS_FOLDER_PATH)/Resources";
@@ -746,6 +754,7 @@
 					"$(inherited)",
 					"\"$(SRCROOT)/OCSquirrelTests/OCMock\"",
 				);
+				OTHER_CFLAGS = "-fshort-wchar";
 				OTHER_LDFLAGS = (
 					"-framework",
 					SenTestingKit,
@@ -774,6 +783,7 @@
 					"$(inherited)",
 					"\"$(SRCROOT)/OCSquirrelTests/OCMock\"",
 				);
+				OTHER_CFLAGS = "-fshort-wchar";
 				OTHER_LDFLAGS = (
 					"-framework",
 					SenTestingKit,

@@ -27,7 +27,7 @@ static const SQChar * const kRootTableKeyUPSquirrelVM = "___UPsquirrelVM";
 
 void OCSquirrelVMPrintfunc(HSQUIRRELVM vm, const SQChar *s, ...)
 {
-    char buffer[4096] = {0};
+    SQChar buffer[4096] = {0};
     
 	va_list vl;
 	va_start(vl, s);
@@ -46,7 +46,7 @@ void OCSquirrelVMPrintfunc(HSQUIRRELVM vm, const SQChar *s, ...)
     OCSquirrelVM *squirrelVM = (__bridge id)squirrelVMCPointer;
     [squirrelVM _delegate_didPrintString:
      [[NSString alloc] initWithCString: buffer
-                              encoding: NSASCIIStringEncoding]];
+                              encoding: NSUTF8StringEncoding]];
 }
 
 
@@ -69,8 +69,8 @@ void OCSquirrelVMErrorfunc(HSQUIRRELVM vm, const SQChar *s, ...)
     if (![delegate conformsToProtocol: @protocol(OCSquirrelVMDelegate)])
     {
         @throw [NSException exceptionWithName: NSInvalidArgumentException
-                                       reason: @"*** setDelegate: delegate should conform to \
-                                                OCSquirrelVMDelegate protocol"
+                                       reason: @"*** setDelegate: delegate should conform to "
+                                               @"OCSquirrelVMDelegate protocol"
                                      userInfo: nil];
     }
     
@@ -99,15 +99,15 @@ void OCSquirrelVMErrorfunc(HSQUIRRELVM vm, const SQChar *s, ...)
             
             SQInteger top = sq_gettop(_vm);
             sq_pushroottable(_vm);
-            sq_pushstring(_vm, kRootTableKeyUPSquirrelVM, strlen(kRootTableKeyUPSquirrelVM));
+            sq_pushstring(_vm, kRootTableKeyUPSquirrelVM, scstrlen(kRootTableKeyUPSquirrelVM));
             sq_pushuserpointer(_vm, (__bridge void *)self);
             
             if (SQ_FAILED(sq_newslot(_vm, -3, SQFalse)))
             {
                 @throw [NSException exceptionWithName: NSInternalInconsistencyException
-                                               reason: @"*** initWithStackSize: failed to store the \
-                                                        OCSquirrelVM user pointer in the Squirrel VM \
-                                                        root table."
+                                               reason: @"*** initWithStackSize: failed to store the "
+                                                       @"OCSquirrelVM user pointer in the Squirrel VM "
+                                                       @"root table."
                                              userInfo: nil];
             }
             
@@ -139,30 +139,38 @@ void OCSquirrelVMErrorfunc(HSQUIRRELVM vm, const SQChar *s, ...)
     
     dispatch_sync(_vmQueue, ^{
         
-        const SQChar *cScript = [script cStringUsingEncoding: NSASCIIStringEncoding];
+        const SQChar *cScript = [script cStringUsingEncoding: NSUTF8StringEncoding];
         
-        SQInteger top = sq_gettop(_vm);
-        
-        if (SQ_SUCCEEDED(sq_compilebuffer(_vm, cScript, strlen(cScript),
-                                          kOCSquirrelVMCompileBufferSourceName, SQTrue)))
+        if (cScript != NULL)
         {
-            sq_pushroottable(_vm);
-            if (SQ_SUCCEEDED(sq_call(_vm, 1, SQFalse, SQTrue)))
+            SQInteger top = sq_gettop(_vm);
+            
+            if (SQ_SUCCEEDED(sq_compilebuffer(_vm, cScript, scstrlen(cScript),
+                                              kOCSquirrelVMCompileBufferSourceName, SQTrue)))
             {
-                success = YES;
+                sq_pushroottable(_vm);
+                if (SQ_SUCCEEDED(sq_call(_vm, 1, SQFalse, SQTrue)))
+                {
+                    success = YES;
+                }
+                else
+                {
+                    exceptionReason = @"*** executeSync: failed to call compiled script function";
+                }
+                
             }
             else
             {
-                exceptionReason = @"*** executeSync: failed to call compiled script function";
+                exceptionReason = @"*** executeSync: failed to compile script";
             }
-
+            
+            sq_settop(_vm, top);
         }
         else
         {
-            exceptionReason = @"*** executeSync: failed to compile script";
+            exceptionReason = @"*** executeSync: failed to convert NSString "
+                              @"to a format accepted by Squirrel";
         }
-        
-        sq_settop(_vm, top);
     });
     
     if (!success)
