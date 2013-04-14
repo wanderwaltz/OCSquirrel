@@ -23,19 +23,11 @@
 #import "sqstdsystem.h"
 
 
-// Forward declarations for OCSquirrel classes
-// (needed so all other .h files could just #import "OCSquirrel.h"
-// and no dependency problems to arise)
-@class OCSquirrelVM;
-@class OCSquirrelObject;
-
-@protocol OCSquirrelVMDelegate;
-@protocol OCSquirrelVMStack;
-
-
 // Import classes provided by the OCSquirrel
 #import "OCSQuirrelVMStack.h"
 #import "OCSquirrelVM.h"
 #import "OCSquirrelObject.h"
+#import "OCSquirrelTable.h"
+#import "OCSquirrelRootTable.h"
 
 #endif

@@ -6,7 +6,8 @@
 //  Copyright (c) 2013 Egor Chiglintsev. All rights reserved.
 //
 
-#import "OCSquirrel.h"
+#import "squirrel.h"
+#import "OCSquirrelVMStack.h"
 
 
 #pragma mark -
