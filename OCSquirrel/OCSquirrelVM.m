@@ -21,13 +21,26 @@
 
 const NSUInteger kOCSquirrelVMDefaultInitialStackSize = 1024;
 
-static const SQChar * const kOCSquirrelVMCompileBufferSourceName = "buffer";
-static const SQChar * const kRootTableKeyUPSquirrelVM = "___UPsquirrelVM";
+
+/// A source name used when compiling a script from NSString.
+static const SQChar * const kOCSquirrelVMCompileBufferSourceName = _SC("buffer");
+
+
+/*! A key with which the OCSquirrelVM pointer will be stored in the Squirrel VM's root table.
+ 
+ OCSquirrelVM stores the pointer to self in the Squirrel VM's root table so that Squirrel could access
+ the current OCSquirrelVM from the native C functions like OCSquirrelVMPrintfunc or OCSquirrelVMErrorfunc.
+ */
+static const SQChar * const kRootTableKeyUPSquirrelVM = _SC("___UPsquirrelVM");
 
 
 #pragma mark -
 #pragma mark Static constants
 
+/*! An unique constant void* key which will be used by dispatch_queue_set_specific and dispatch_get_specific
+ for checking whether the current execution context is within the OCSquirrelVM's serial dispatch queue. This
+ is needed to allow synchronous calls which do not result in a deadlock when called on the same queue. 
+ */
 static const void * const kDispatchSpecificKeyOCSquirrelVMQueue = &kDispatchSpecificKeyOCSquirrelVMQueue;
 
 
@@ -47,7 +60,7 @@ void OCSquirrelVMPrintfunc(HSQUIRRELVM vm, const SQChar *s, ...)
     
     SQInteger top = sq_gettop(vm);
     sq_pushroottable(vm);
-    sq_pushstring(vm, kRootTableKeyUPSquirrelVM, strlen(kRootTableKeyUPSquirrelVM));
+    sq_pushstring(vm, kRootTableKeyUPSquirrelVM, scstrlen(kRootTableKeyUPSquirrelVM));
     sq_rawget(vm, -2);
     sq_getuserpointer(vm, -1, &squirrelVMCPointer);
     sq_settop(vm, top);
@@ -207,7 +220,7 @@ void OCSquirrelVMErrorfunc(HSQUIRRELVM vm, const SQChar *s, ...)
 
 - (BOOL) currentlyInVMQueue
 {
-    return (dispatch_get_specific(kDispatchSpecificKeyOCSquirrelVMQueue) != NULL);
+    return (dispatch_get_specific(kDispatchSpecificKeyOCSquirrelVMQueue) == _vm);
 }
 
 
