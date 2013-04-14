@@ -22,5 +22,6 @@
 
 // Import classes provided by the OCSquirrel
 #import "OCSquirrelVM.h"
+#import "OCSQuirrelVMStack.h"
 
 #endif

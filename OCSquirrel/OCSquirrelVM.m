@@ -11,7 +11,10 @@
 #endif
 
 #import "OCSquirrel.h"
+#import "OCSquirrelVM+Protected.h"
 #import "OCSquirrelVM+DelegateCallbacks.h"
+#import "OCSquirrelVMStackImpl.h"
+
 
 #pragma mark -
 #pragma mark Constants
@@ -20,6 +23,12 @@ const NSUInteger kOCSquirrelVMDefaultInitialStackSize = 1024;
 
 static const SQChar * const kOCSquirrelVMCompileBufferSourceName = "buffer";
 static const SQChar * const kRootTableKeyUPSquirrelVM = "___UPsquirrelVM";
+
+
+#pragma mark -
+#pragma mark Static constants
+
+static const void * const kDispatchSpecificKeyOCSquirrelVMQueue = &kDispatchSpecificKeyOCSquirrelVMQueue;
 
 
 #pragma mark -
@@ -93,7 +102,12 @@ void OCSquirrelVMErrorfunc(HSQUIRRELVM vm, const SQChar *s, ...)
     {
         _vm      = sq_open(stackSize);
         _vmQueue = dispatch_queue_create("OCSquirrelVM dispatch queue", DISPATCH_QUEUE_SERIAL);
+        dispatch_queue_set_specific(_vmQueue,
+                                    kDispatchSpecificKeyOCSquirrelVMQueue,
+                                    _vm, NULL);
         
+        _stack = [[OCSquirrelVMStackImpl alloc] initWithSquirrelVM: self];
+     
         dispatch_sync(_vmQueue, ^{
             sqstd_seterrorhandlers(_vm);
             
@@ -136,14 +150,15 @@ void OCSquirrelVMErrorfunc(HSQUIRRELVM vm, const SQChar *s, ...)
 {
     __block BOOL      success         = NO;
     __block NSString *exceptionReason = nil;
+    __block NSString *exceptionName   = nil;
     
-    dispatch_sync(_vmQueue, ^{
+    [self doWait: ^{
         
         const SQChar *cScript = [script cStringUsingEncoding: NSUTF8StringEncoding];
         
         if (cScript != NULL)
         {
-            SQInteger top = sq_gettop(_vm);
+            NSInteger top = self.stack.top;
             
             if (SQ_SUCCEEDED(sq_compilebuffer(_vm, cScript, scstrlen(cScript),
                                               kOCSquirrelVMCompileBufferSourceName, SQTrue)))
@@ -155,32 +170,56 @@ void OCSquirrelVMErrorfunc(HSQUIRRELVM vm, const SQChar *s, ...)
                 }
                 else
                 {
+                    exceptionName   = NSInternalInconsistencyException;
                     exceptionReason = @"*** executeSync: failed to call compiled script function";
                 }
                 
             }
             else
             {
+                exceptionName   = NSInvalidArgumentException;
                 exceptionReason = @"*** executeSync: failed to compile script";
             }
             
-            sq_settop(_vm, top);
+            self.stack.top = top;
         }
         else
         {
+            exceptionName   = NSInvalidArgumentException;
             exceptionReason = @"*** executeSync: failed to convert NSString "
                               @"to a format accepted by Squirrel";
         }
-    });
+    }];
     
     if (!success)
     {
-        @throw [NSException exceptionWithName: NSInvalidArgumentException
+        @throw [NSException exceptionWithName: exceptionName
                                        reason: exceptionReason
                                      userInfo: nil];
     }
     
     return nil;
+}
+
+
+#pragma mark -
+#pragma mark GCD-related
+
+- (BOOL) currentlyInVMQueue
+{
+    return (dispatch_get_specific(kDispatchSpecificKeyOCSquirrelVMQueue) != NULL);
+}
+
+
+- (void) doWait: (dispatch_block_t) block
+{
+    if (block != nil)
+    {
+        if (![self currentlyInVMQueue])
+            dispatch_sync(_vmQueue, block);
+        else
+            block();
+    }
 }
 
 @end
