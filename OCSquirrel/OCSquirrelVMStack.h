@@ -18,7 +18,16 @@
 @property (assign, nonatomic) NSInteger top;
 
 - (void) pushInteger: (SQInteger) value;
-- (void) pushString: (NSString *) string;
+- (void) pushFloat:   (SQFloat)   value;
+- (void) pushBool:    (BOOL)      value;
+
+- (void) pushString:  (NSString *) string;
+
+- (void) pushUserPointer: (SQUserPointer) pointer;
+- (void) pushSQObject: (HSQOBJECT) object;
+
+- (void) pushNull;
+
 
 
 - (SQInteger) integerAtPosition: (SQInteger) position;

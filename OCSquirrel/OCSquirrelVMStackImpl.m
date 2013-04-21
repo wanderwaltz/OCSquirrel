@@ -57,12 +57,52 @@
 
 
 #pragma mark -
-#pragma mark methods
+#pragma mark pushing methods
 
 - (void) pushInteger: (SQInteger) value
 {
     [_squirrelVM doWait: ^{
         sq_pushinteger(_squirrelVM.vm, value);
+    }];
+}
+
+
+- (void) pushFloat: (SQFloat) value
+{
+    [_squirrelVM doWait: ^{
+        sq_pushfloat(_squirrelVM.vm, value);
+    }];
+}
+
+
+- (void) pushBool: (BOOL) value
+{
+    [_squirrelVM doWait: ^{
+        sq_pushbool(_squirrelVM.vm, (value) ? SQTrue : SQFalse);
+    }];
+}
+
+
+- (void) pushNull
+{
+    [_squirrelVM doWait: ^{
+        sq_pushnull(_squirrelVM.vm);
+    }];
+}
+
+
+- (void) pushUserPointer: (SQUserPointer) pointer
+{
+    [_squirrelVM doWait: ^{
+        sq_pushuserpointer(_squirrelVM.vm, pointer);
+    }];
+}
+
+
+- (void) pushSQObject: (HSQOBJECT) object
+{
+    [_squirrelVM doWait: ^{
+        sq_pushobject(_squirrelVM.vm, object);
     }];
 }
 
@@ -75,6 +115,9 @@
     }];
 }
 
+
+#pragma mark -
+#pragma mark reading methods
 
 - (SQInteger) integerAtPosition: (SQInteger) position
 {
