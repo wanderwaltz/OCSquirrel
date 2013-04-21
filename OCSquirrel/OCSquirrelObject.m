@@ -71,8 +71,15 @@
     if (self != nil)
     {
         _obj = object;
+        sq_addref(_squirrelVM.vm, &_obj);
     }
     return self;
+}
+
+
+- (void) dealloc
+{
+    sq_release(_squirrelVM.vm, &_obj);
 }
 
 @end

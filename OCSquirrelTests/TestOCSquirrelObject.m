@@ -138,4 +138,44 @@
                   @"the Squirrel VM's root table.");
 }
 
+
+- (void) testRefCountIncreasesWhenInitWithHSQOBJECT
+{
+    sq_pushroottable(_squirrelVM.vm);
+    
+    HSQOBJECT root;
+    
+    sq_getstackobj(_squirrelVM.vm, -1, &root);
+    
+    NSUInteger refCountInitial = sq_getrefcount(_squirrelVM.vm, &root);
+    
+    OCSquirrelObject *object = [[OCSquirrelObject alloc] initWithHSQOBJECT: root
+                                                                      inVM: _squirrelVM];
+    
+    STAssertEquals(refCountInitial+1, sq_getrefcount(_squirrelVM.vm, &root),
+                   @"When initializing with and existing HSQOBJECT, OCSquirrelObject should "
+                   @"increase the ref count by 1.");
+    
+    object = nil;
+}
+
+
+- (void) testRefCountDecreasesWhenDealloc
+{
+    sq_pushroottable(_squirrelVM.vm);
+    
+    HSQOBJECT root;
+    
+    sq_getstackobj(_squirrelVM.vm, -1, &root);
+    
+    NSUInteger refCountInitial = sq_getrefcount(_squirrelVM.vm, &root);
+    
+    OCSquirrelObject *object = [[OCSquirrelObject alloc] initWithHSQOBJECT: root
+                                                                      inVM: _squirrelVM];
+    object = nil;
+    
+    STAssertEquals(refCountInitial, sq_getrefcount(_squirrelVM.vm, &root),
+                   @"When OCSquirrelObject deallocs it should release the HSQOBJECT");
+}
+
 @end
