@@ -55,4 +55,40 @@
                    @"Reference count of the root table should be equal to 0 after releasing ref");
 }
 
+
+- (void) testObjectCopyRefCount1
+{
+    sq_pushroottable(_vm);
+    
+    HSQOBJECT root1;
+    HSQOBJECT root2;
+    
+    sq_getstackobj(_vm, -1, &root1);
+    sq_getstackobj(_vm, -1, &root2);
+    
+    sq_addref(_vm, &root1);
+    
+    STAssertEquals(sq_getrefcount(_vm, &root2), 1u,
+                   @"Reference count should be retrieved regardless of which instance of HSQOBJECT "
+                   @"we are working with.");
+}
+
+
+- (void) testObjectCopyRefCount2
+{
+    sq_pushroottable(_vm);
+    
+    HSQOBJECT root1;
+    HSQOBJECT root2;
+    
+    sq_getstackobj(_vm, -1, &root1);
+    root2 = root1;
+    
+    sq_addref(_vm, &root1);
+    
+    STAssertEquals(sq_getrefcount(_vm, &root2), 1u,
+                   @"Reference count should be retrieved regardless of which instance of HSQOBJECT "
+                   @"we are working with.");
+}
+
 @end
