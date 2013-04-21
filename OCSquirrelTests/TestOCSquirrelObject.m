@@ -92,6 +92,22 @@
 }
 
 
+- (void) testSQNullWhenCreated
+{
+    OCSquirrelObject *object = [[OCSquirrelObject alloc] initWithVM: _squirrelVM];
+    STAssertTrue(sq_isnull(*object.obj),
+                 @"OCSquirrelObject's obj property should have a default `null` value in Squirrel VM.");
+}
+
+
+- (void) testIsNullWhenCreated
+{
+    OCSquirrelObject *object = [[OCSquirrelObject alloc] initWithVM: _squirrelVM];
+    STAssertTrue(object.isNull,
+                 @"isNull property should be YES by default for OCSquirrelObject");
+}
+
+
 - (void) testInitWithHSQOBJECT
 {
     sq_pushroottable(_squirrelVM.vm);
@@ -106,5 +122,20 @@
                    @"OCSquirrelObject should support initialization with an existing HSQOBJECT");
 }
 
+
+- (void) testNotNullWhenInitWithRootTable
+{
+    sq_pushroottable(_squirrelVM.vm);
+    
+    HSQOBJECT root;
+    
+    sq_getstackobj(_squirrelVM.vm, -1, &root);
+    
+    OCSquirrelObject *object = [[OCSquirrelObject alloc] initWithHSQOBJECT: root
+                                                                      inVM: _squirrelVM];
+    STAssertFalse(object.isNull,
+                  @"-isNull shoud return NO when initializing with a non-null HSQOBJECT such as "
+                  @"the Squirrel VM's root table.");
+}
 
 @end

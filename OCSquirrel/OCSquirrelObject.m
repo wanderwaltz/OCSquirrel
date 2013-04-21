@@ -41,6 +41,12 @@
 }
 
 
+- (BOOL) isNull
+{
+    return sq_isnull(_obj);
+}
+
+
 #pragma mark -
 #pragma mark initialization methods
 
