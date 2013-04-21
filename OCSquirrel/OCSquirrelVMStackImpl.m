@@ -123,11 +123,47 @@
 {
     __block SQInteger value = 0;
     
-    [_squirrelVM doWait:^{
+    [_squirrelVM doWait: ^{
         sq_getinteger(_squirrelVM.vm, position, &value);
     }];
     
     return value;
+}
+
+
+- (SQFloat) floatAtPosition: (SQInteger) position
+{
+    __block SQFloat value = 0.0;
+    
+    [_squirrelVM doWait: ^{
+        sq_getfloat(_squirrelVM.vm, position, &value);
+    }];
+    
+    return value;
+}
+
+
+- (BOOL) boolAtPosition: (SQInteger) position
+{
+    __block SQBool value = SQFalse;
+    
+    [_squirrelVM doWait: ^{
+        sq_getbool(_squirrelVM.vm, position, &value);
+    }];
+    
+    return (value == SQTrue) ? YES : NO;
+}
+
+
+- (SQUserPointer) userPointerAtPosition: (SQInteger) position
+{
+    __block SQUserPointer pointer = NULL;
+    
+    [_squirrelVM doWait: ^{
+        sq_getuserpointer(_squirrelVM.vm, position, &pointer);
+    }];
+    
+    return pointer;
 }
 
 
@@ -145,6 +181,19 @@
                                         encoding: NSUTF8StringEncoding];
     }
     else return nil;
+}
+
+
+- (HSQOBJECT) sqObjectAtPosition: (SQInteger) position
+{
+    __block HSQOBJECT object;
+    sq_resetobject(&object);
+    
+    [_squirrelVM doWait: ^{
+        sq_getstackobj(_squirrelVM.vm, position, &object);
+    }];
+    
+    return object;
 }
 
 @end

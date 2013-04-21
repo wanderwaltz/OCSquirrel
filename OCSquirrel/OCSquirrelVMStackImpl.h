@@ -38,6 +38,11 @@
 
 
 - (SQInteger) integerAtPosition: (SQInteger) position;
+- (SQFloat)     floatAtPosition: (SQInteger) position;
+- (BOOL)         boolAtPosition: (SQInteger) position;
 - (NSString *) stringAtPosition: (SQInteger) position;
+
+- (SQUserPointer) userPointerAtPosition: (SQInteger) position;
+- (HSQOBJECT) sqObjectAtPosition: (SQInteger) position;
 
 @end

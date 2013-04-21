@@ -95,8 +95,10 @@
 
 - (void) push
 {
-    [self.squirrelVM doWait: ^{
-        sq_pushobject(self.squirrelVM.vm, _obj);
+    OCSquirrelVM *squirrelVM = self.squirrelVM;
+    
+    [squirrelVM doWait: ^{
+        [squirrelVM.stack pushSQObject: _obj];
     }];
 }
 

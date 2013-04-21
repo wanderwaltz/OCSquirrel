@@ -186,6 +186,46 @@
 }
 
 
+- (void) testFloatAtPosition
+{
+    [_squirrelVM.stack pushFloat: 123.456];
+    STAssertEquals(123.456f, [_squirrelVM.stack floatAtPosition: -1],
+                   @"-floatAtPosition: should return the pushed value.");
+}
+
+
+- (void) testBoolAtPosition
+{
+    [_squirrelVM.stack pushBool: YES];
+    STAssertEquals(YES, [_squirrelVM.stack boolAtPosition: -1],
+                   @"-boolAtPosition: should return the pushed value.");
+}
+
+
+- (void) testUserPointerAtPosition
+{
+    [_squirrelVM.stack pushUserPointer: (__bridge SQUserPointer)self];
+    
+    STAssertEquals((__bridge SQUserPointer)self, [_squirrelVM.stack userPointerAtPosition: -1],
+                   @"-userPointerAtPosition: should return the pushed value");
+}
+
+
+- (void) testSQObjectAtPosition
+{
+    sq_pushroottable(_squirrelVM.vm);
+    
+    HSQOBJECT root;
+    
+    sq_getstackobj(_squirrelVM.vm, -1, &root);
+    
+    [_squirrelVM.stack pushSQObject: root];
+    
+    STAssertEquals(root, [_squirrelVM.stack sqObjectAtPosition: -1],
+                   @"-sqObjectAtPosition: should return the pushed value");
+}
+
+
 - (void) testStringAtPosition
 {
     // That's the word 'unicode' written with Cyrillic alphabet
@@ -205,6 +245,30 @@
     [_squirrelVM.stack pushString: @"string"];
     STAssertEquals(0, [_squirrelVM.stack integerAtPosition: -1],
                    @"If failed to read an integer, OCSquirrelVMStack is expected to return 0.");
+}
+
+
+- (void) testReadFloatFailure
+{
+    [_squirrelVM.stack pushNull];
+    STAssertEquals([_squirrelVM.stack floatAtPosition: -1], 0.0f,
+                @"If failed to read a float, OCSquirrelVMStack is expected to return 0.0");
+}
+
+
+- (void) testReadBoolFailure
+{
+    [_squirrelVM.stack pushNull];
+    STAssertEquals([_squirrelVM.stack boolAtPosition: -1], NO,
+                   @"If failed to read a BOOL, OCSquirrelVMStack is expected to return NO");
+}
+
+
+- (void) testReadUserPointerFailure
+{
+    [_squirrelVM.stack pushString: @"qwerty"];
+    STAssertEquals([_squirrelVM.stack userPointerAtPosition: -1], NULL,
+                   @"If failed to read a SQUserPointer, OCSquirrelVMStack is expected to return NULL");
 }
 
 

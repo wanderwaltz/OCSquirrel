@@ -17,6 +17,8 @@
 
 @property (assign, nonatomic) NSInteger top;
 
+#pragma mark pushing methods
+
 - (void) pushInteger: (SQInteger) value;
 - (void) pushFloat:   (SQFloat)   value;
 - (void) pushBool:    (BOOL)      value;
@@ -29,8 +31,14 @@
 - (void) pushNull;
 
 
+#pragma mark reading methods
 
 - (SQInteger) integerAtPosition: (SQInteger) position;
+- (SQFloat)     floatAtPosition: (SQInteger) position;
+- (BOOL)         boolAtPosition: (SQInteger) position;
 - (NSString *) stringAtPosition: (SQInteger) position;
+
+- (SQUserPointer) userPointerAtPosition: (SQInteger) position;
+- (HSQOBJECT) sqObjectAtPosition: (SQInteger) position;
 
 @end
