@@ -14,6 +14,8 @@
 
 @interface OCSquirrelTable : OCSquirrelObject
 
++ (id) rootTableForVM: (OCSquirrelVM *) squirrelVM;
+
 - (SQInteger) integerForKey: (id) key;
 
 @end

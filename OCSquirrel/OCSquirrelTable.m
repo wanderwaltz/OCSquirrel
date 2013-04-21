@@ -21,6 +21,29 @@
 #pragma mark -
 #pragma mark initialization methods
 
++ (id) rootTableForVM: (OCSquirrelVM *) squirrelVM
+{
+    __block id table = nil;
+    
+    [squirrelVM doWait: ^{
+        
+        SQInteger top = squirrelVM.stack.top;
+        
+        sq_pushroottable(squirrelVM.vm);
+        
+        HSQOBJECT root = [squirrelVM.stack sqObjectAtPosition: -1];
+        
+        table = [[self alloc] initWithHSQOBJECT: root
+                                           inVM: squirrelVM];
+        
+        squirrelVM.stack.top = top;
+    }];
+    
+    
+    return table;
+}
+
+
 - (id) initWithHSQOBJECT: (HSQOBJECT) object
                     inVM: (OCSquirrelVM *) squirrelVM
 {

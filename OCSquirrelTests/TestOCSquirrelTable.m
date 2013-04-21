@@ -39,6 +39,20 @@
 }
 
 
+- (void) testRootTable
+{
+    sq_pushroottable(_squirrelVM.vm);
+    
+    HSQOBJECT root = [_squirrelVM.stack sqObjectAtPosition: -1];
+    
+    OCSquirrelTable *table = [OCSquirrelTable rootTableForVM: _squirrelVM];
+    
+    STAssertEquals(*table.obj, root,
+                   @"+rootTableForVM: method should return an OCSquirrelTable set to the root "
+                   @"talbe of the given VM");
+}
+
+
 - (void) testNotNilWhenInitializingWithTable
 {
     sq_pushroottable(_squirrelVM.vm);
