@@ -75,4 +75,112 @@
                          @"Should not throw exception if VM has been set in initializer.");
 }
 
+
+- (void) testHasReadonlyObjProperty
+{
+    STAssertTrue( [OCSquirrelObject instancesRespondToSelector: @selector(obj)] &&
+                 ![OCSquirrelObject instancesRespondToSelector: @selector(setObj:)],
+                 @"OCSquirrelObject should have a readonly obj property.");
+}
+
+
+- (void) testNotNULLObjWhenCreated
+{
+    OCSquirrelObject *object = [[OCSquirrelObject alloc] initWithVM: _squirrelVM];
+    STAssertTrue(object.obj != NULL,
+                 @"OCSquirrelObject should have a non-NULL obj property value when created.");
+}
+
+
+- (void) testSQNullWhenCreated
+{
+    OCSquirrelObject *object = [[OCSquirrelObject alloc] initWithVM: _squirrelVM];
+    STAssertTrue(sq_isnull(*object.obj),
+                 @"OCSquirrelObject's obj property should have a default `null` value in Squirrel VM.");
+}
+
+
+- (void) testIsNullWhenCreated
+{
+    OCSquirrelObject *object = [[OCSquirrelObject alloc] initWithVM: _squirrelVM];
+    STAssertTrue(object.isNull,
+                 @"isNull property should be YES by default for OCSquirrelObject");
+}
+
+
+- (void) testInitWithHSQOBJECT
+{
+    sq_pushroottable(_squirrelVM.vm);
+    
+    HSQOBJECT root = [_squirrelVM.stack sqObjectAtPosition: -1];
+    
+    OCSquirrelObject *object = [[OCSquirrelObject alloc] initWithHSQOBJECT: root
+                                                                      inVM: _squirrelVM];
+    STAssertEquals(*object.obj, root,
+                   @"OCSquirrelObject should support initialization with an existing HSQOBJECT");
+}
+
+
+- (void) testNotNullWhenInitWithRootTable
+{
+    sq_pushroottable(_squirrelVM.vm);
+    
+    HSQOBJECT root = [_squirrelVM.stack sqObjectAtPosition: -1];
+    
+    OCSquirrelObject *object = [[OCSquirrelObject alloc] initWithHSQOBJECT: root
+                                                                      inVM: _squirrelVM];
+    STAssertFalse(object.isNull,
+                  @"-isNull shoud return NO when initializing with a non-null HSQOBJECT such as "
+                  @"the Squirrel VM's root table.");
+}
+
+
+- (void) testRefCountIncreasesWhenInitWithHSQOBJECT
+{
+    sq_pushroottable(_squirrelVM.vm);
+    
+    HSQOBJECT root = [_squirrelVM.stack sqObjectAtPosition: -1];
+    
+    NSUInteger refCountInitial = sq_getrefcount(_squirrelVM.vm, &root);
+    
+    OCSquirrelObject *object = [[OCSquirrelObject alloc] initWithHSQOBJECT: root
+                                                                      inVM: _squirrelVM];
+    
+    STAssertEquals(refCountInitial+1, sq_getrefcount(_squirrelVM.vm, &root),
+                   @"When initializing with and existing HSQOBJECT, OCSquirrelObject should "
+                   @"increase the ref count by 1.");
+    
+    object = nil;
+}
+
+
+- (void) testRefCountDecreasesWhenDealloc
+{
+    sq_pushroottable(_squirrelVM.vm);
+    
+    HSQOBJECT root = [_squirrelVM.stack sqObjectAtPosition: -1];
+    
+    NSUInteger refCountInitial = sq_getrefcount(_squirrelVM.vm, &root);
+    
+    OCSquirrelObject *object = [[OCSquirrelObject alloc] initWithHSQOBJECT: root
+                                                                      inVM: _squirrelVM];
+    object = nil;
+    
+    STAssertEquals(refCountInitial, sq_getrefcount(_squirrelVM.vm, &root),
+                   @"When OCSquirrelObject deallocs it should release the HSQOBJECT");
+}
+
+
+- (void) testTopValueAfterPush
+{
+    NSInteger top = _squirrelVM.stack.top;
+    
+    OCSquirrelObject *object = [[OCSquirrelObject alloc] initWithVM: _squirrelVM];
+    
+    [object push];
+    
+    STAssertEquals(_squirrelVM.stack.top, top+1,
+                   @"Squirrel VM stack top value should increase after pushing a OCSquirrelObject");
+}
+
 @end
