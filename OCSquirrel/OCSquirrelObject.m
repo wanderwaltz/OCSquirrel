@@ -35,8 +35,20 @@
 }
 
 
+- (HSQOBJECT *) obj
+{
+    return &_obj;
+}
+
+
+- (BOOL) isNull
+{
+    return sq_isnull(_obj);
+}
+
+
 #pragma mark -
-#pragma mark initializer methods
+#pragma mark initialization methods
 
 - (id) initWithVM: (OCSquirrelVM *) squirrelVM
 {
@@ -45,8 +57,49 @@
     if (self != nil)
     {
         _squirrelVM = squirrelVM;
+        [squirrelVM doWait: ^{
+            sq_resetobject(&_obj);
+        }];
+        
     }
     return self;
+}
+
+
+- (id) initWithHSQOBJECT: (HSQOBJECT) object
+                    inVM: (OCSquirrelVM *) squirrelVM
+{
+    self = [self initWithVM: squirrelVM];
+    
+    if (self != nil)
+    {
+        _obj = object;
+        [squirrelVM doWait: ^{
+            sq_addref(_squirrelVM.vm, &_obj);
+        }];
+    }
+    return self;
+}
+
+
+- (void) dealloc
+{
+    [_squirrelVM doWait: ^{
+        sq_release(_squirrelVM.vm, &_obj); 
+    }];
+}
+
+
+#pragma mark -
+#pragma mark methods
+
+- (void) push
+{
+    OCSquirrelVM *squirrelVM = self.squirrelVM;
+    
+    [squirrelVM doWait: ^{
+        [squirrelVM.stack pushSQObject: _obj];
+    }];
 }
 
 @end

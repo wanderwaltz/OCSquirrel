@@ -95,6 +95,15 @@
 }
 
 
+- (void) testForeignPtr
+{
+    SQUserPointer vmPointer = sq_getforeignptr(_squirrelVM.vm);
+
+    STAssertEquals(vmPointer, (__bridge SQUserPointer)_squirrelVM,
+                   @"OCSquirrelVM should set self as the foreign ptr for the Squirrel VM");
+}
+
+
 - (void) testDefaultInitialStackSize
 {
     STAssertEquals(_squirrelVM.vm->_stack.capacity(), kOCSquirrelVMDefaultInitialStackSize,

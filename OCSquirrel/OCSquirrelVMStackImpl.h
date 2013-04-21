@@ -16,11 +16,46 @@
 @interface OCSquirrelVMStackImpl : NSObject<OCSquirrelVMStack>
 {
 @protected
+    // OCSquirrelVM is referenced weakly because the OCSquirrelVM
+    // keeps a strong reference to the stack impl
     __weak OCSquirrelVM *_squirrelVM;
 }
 
 @property (assign, nonatomic) NSInteger top;
 
 - (id) initWithSquirrelVM: (OCSquirrelVM *) squirrelVM;
+
+#pragma mark pushing methods
+
+- (void) pushInteger: (SQInteger) value;
+- (void) pushFloat:   (SQFloat)   value;
+- (void) pushBool:    (BOOL)      value;
+
+- (void) pushString: (NSString *) string;
+
+- (void) pushUserPointer: (SQUserPointer) pointer;
+- (void) pushSQObject: (HSQOBJECT) object;
+
+- (void) pushNull;
+
+- (void) pushValue: (id) value;
+
+
+#pragma mark reading methods
+
+- (SQInteger) integerAtPosition: (SQInteger) position;
+- (SQFloat)     floatAtPosition: (SQInteger) position;
+- (BOOL)         boolAtPosition: (SQInteger) position;
+- (NSString *) stringAtPosition: (SQInteger) position;
+
+- (SQUserPointer) userPointerAtPosition: (SQInteger) position;
+- (HSQOBJECT) sqObjectAtPosition: (SQInteger) position;
+
+- (id) valueAtPosition: (SQInteger) position;
+
+
+#pragma mark type information
+
+- (BOOL) isNullAtPosition: (SQInteger) position;
 
 @end

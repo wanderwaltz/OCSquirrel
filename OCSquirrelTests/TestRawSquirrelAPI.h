@@ -16,7 +16,7 @@
  */
 @interface TestRawSquirrelAPI : SenTestCase
 {
-    HSQUIRRELVM _squirrelVM;
+    HSQUIRRELVM _vm;
 }
 
 @end
