@@ -55,4 +55,24 @@
     return self;
 }
 
+
+#pragma mark -
+#pragma mark methods
+
+- (void) pushInteger: (SQInteger) value
+{
+    [_squirrelVM doWait: ^{
+        sq_pushinteger(_squirrelVM.vm, value);
+    }];
+}
+
+
+- (void) pushString: (NSString *) string
+{
+    [_squirrelVM doWait: ^{
+        const SQChar *cString = [string cStringUsingEncoding: NSUTF8StringEncoding];
+        sq_pushstring(_squirrelVM.vm, cString, scstrlen(cString));
+    }];
+}
+
 @end

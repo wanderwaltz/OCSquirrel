@@ -13,5 +13,11 @@
 #pragma mark OCSquirrelVMStack protocol
 
 @protocol OCSquirrelVMStack<NSObject>
+@required
+
 @property (assign, nonatomic) NSInteger top;
+
+- (void) pushInteger: (SQInteger) value;
+- (void) pushString: (NSString *) string;
+
 @end

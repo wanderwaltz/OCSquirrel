@@ -23,4 +23,7 @@
 
 - (id) initWithSquirrelVM: (OCSquirrelVM *) squirrelVM;
 
+- (void) pushInteger: (SQInteger) value;
+- (void) pushString: (NSString *) string;
+
 @end

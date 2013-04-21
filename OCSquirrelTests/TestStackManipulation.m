@@ -81,4 +81,35 @@
                    @"explicitly setting it to this value.");
 }
 
+
+- (void) testPushInteger
+{
+    [_squirrelVM.stack pushInteger: 12345];
+    SQInteger value = 0;
+    sq_getinteger(_squirrelVM.vm, -1, &value);
+    
+    STAssertEquals(value, 12345,
+                   @"-pushInteger: should push the expected value to the Squirrel VM stack.");
+}
+
+
+- (void) testPushString
+{
+    // That's the word 'unicode' written with Cyrillic alphabet
+    static NSString * const kString = @"юникод";
+    
+    [_squirrelVM.stack pushString: kString];
+    
+    const SQChar *cString = NULL;
+    
+    sq_getstring(_squirrelVM.vm, -1, &cString);
+    
+    NSString *readString = [[NSString alloc] initWithCString: cString
+                                                    encoding: NSUTF8StringEncoding];
+    
+    STAssertEqualObjects(kString, readString,
+                         @"-pushString: should push the UTF8-encoded string to the Squirrel VM stack");
+    
+}
+
 @end

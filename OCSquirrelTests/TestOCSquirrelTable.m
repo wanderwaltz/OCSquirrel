@@ -76,7 +76,9 @@
     sq_getstackobj(_squirrelVM.vm, -1, &sqTable);
     
     sq_pushstring(_squirrelVM.vm, _SC("someKey"), scstrlen("someKey"));
-    sq_pushinteger(_squirrelVM.vm, 1234);
+    
+    [_squirrelVM.stack pushInteger: 1234];
+    
     sq_newslot(_squirrelVM.vm, -3, SQFalse);
     
     OCSquirrelTable *table = [[OCSquirrelTable alloc] initWithHSQOBJECT: sqTable
