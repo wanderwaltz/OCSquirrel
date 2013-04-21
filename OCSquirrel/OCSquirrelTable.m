@@ -17,4 +17,19 @@
 #pragma mark OCSquirrelTable implementation
 
 @implementation OCSquirrelTable
+
+#pragma mark -
+#pragma mark initialization methods
+
+- (id) initWithHSQOBJECT: (HSQOBJECT) object
+                    inVM: (OCSquirrelVM *) squirrelVM
+{
+    if (sq_type(object) == OT_TABLE)
+    {
+        return [super initWithHSQOBJECT: object
+                                   inVM: squirrelVM];
+    }
+    else return nil;
+}
+
 @end

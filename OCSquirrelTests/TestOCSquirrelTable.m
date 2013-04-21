@@ -38,4 +38,33 @@
                 @"OCSquirrelTable class should exist and be a subclass of OCSquirrelObject");
 }
 
+
+- (void) testNotNilWhenInitializingWithTable
+{
+    sq_pushroottable(_squirrelVM.vm);
+    
+    HSQOBJECT root;
+    
+    sq_getstackobj(_squirrelVM.vm, -1, &root);
+    
+    OCSquirrelTable *table = [[OCSquirrelTable alloc] initWithHSQOBJECT: root
+                                                                   inVM: _squirrelVM];
+    
+    STAssertNotNil(table,
+                   @"OCSquirrelTable should support initializing with an existing table HSQOBJECT");
+}
+
+
+- (void) testNilWhenInitializingWithNull
+{
+    HSQOBJECT obj;
+    sq_resetobject(&obj);
+    
+    OCSquirrelTable *table = [[OCSquirrelTable alloc] initWithHSQOBJECT: obj
+                                                                   inVM: _squirrelVM];
+    STAssertNil(table,
+                @"OCSquirrelTable should return nil when initializing with a `null` HSQOBJECT");
+}
+
+
 @end
