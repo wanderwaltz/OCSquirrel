@@ -35,8 +35,14 @@
 }
 
 
+- (HSQOBJECT *) obj
+{
+    return &_obj;
+}
+
+
 #pragma mark -
-#pragma mark initializer methods
+#pragma mark initialization methods
 
 - (id) initWithVM: (OCSquirrelVM *) squirrelVM
 {
@@ -45,6 +51,20 @@
     if (self != nil)
     {
         _squirrelVM = squirrelVM;
+        sq_resetobject(&_obj);
+    }
+    return self;
+}
+
+
+- (id) initWithHSQOBJECT: (HSQOBJECT) object
+                    inVM: (OCSquirrelVM *) squirrelVM
+{
+    self = [self initWithVM: squirrelVM];
+    
+    if (self != nil)
+    {
+        _obj = object;
     }
     return self;
 }

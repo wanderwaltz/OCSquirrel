@@ -17,4 +17,25 @@
 #pragma mark OCSquirrelRootTable implementation
 
 @implementation OCSquirrelRootTable
+
+#pragma mark -
+#pragma mark initialization methods
+
+- (id) initWithVM: (OCSquirrelVM *) squirrelVM
+{
+    self = [super initWithVM: squirrelVM];
+    
+    if (self != nil)
+    {
+        
+    }
+    return self;
+}
+
+
+- (void) dealloc
+{
+    
+}
+
 @end

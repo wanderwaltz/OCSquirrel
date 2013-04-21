@@ -17,19 +17,42 @@
 - (void) setUp
 {
     [super setUp];
-    _squirrelVM = sq_open(1024);
+    _vm = sq_open(1024);
 }
 
 - (void) tearDown
 {
-    sq_close(_squirrelVM);
+    sq_close(_vm);
     [super tearDown];
 }
 
 
 - (void) testSquirrelVMExists
 {
-    STAssertTrue(_squirrelVM != NULL, @"Squirrel VM should exist.");
+    STAssertTrue(_vm != NULL, @"Squirrel VM should exist.");
+}
+
+
+- (void) testPushRootTableRefCount
+{
+    sq_pushroottable(_vm);
+    
+    HSQOBJECT root;
+    
+    sq_getstackobj(_vm, -1, &root);
+    
+    STAssertEquals(sq_getrefcount(_vm, &root), 0u,
+                   @"Reference count of the root table should be equal to 0 before adding ref");
+    
+    sq_addref(_vm, &root);
+    
+    STAssertEquals(sq_getrefcount(_vm, &root), 1u,
+                   @"Reference count of the root table should be equal to 1 after adding ref");
+    
+    sq_release(_vm, &root);
+    
+    STAssertEquals(sq_getrefcount(_vm, &root), 0u,
+                   @"Reference count of the root table should be equal to 0 after releasing ref");
 }
 
 @end

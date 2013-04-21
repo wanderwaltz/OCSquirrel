@@ -24,6 +24,9 @@
      authomatically synthesized for squirrelVM readonly ivar with a custom getter method.
      */
     OCSquirrelVM *_squirrelVM;
+    
+    /// ivar backing the obj property; note that the obj property returns _obj by reference.
+    HSQOBJECT _obj;
 }
 
 /*! Will throw an exception if accessed while the value of the _squirrelVM ivar is `nil`.
@@ -31,8 +34,13 @@
     with a non-nil `squirrelVM` property.
  */
 @property (readonly, nonatomic) OCSquirrelVM *squirrelVM;
+@property (readonly, nonatomic) HSQOBJECT *obj;
 
 /// Designated initializer
 - (id) initWithVM: (OCSquirrelVM *) squirrelVM;
+
+
+- (id) initWithHSQOBJECT: (HSQOBJECT) object
+                    inVM: (OCSquirrelVM *) squirrelVM;
 
 @end

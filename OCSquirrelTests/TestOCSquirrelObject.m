@@ -75,4 +75,36 @@
                          @"Should not throw exception if VM has been set in initializer.");
 }
 
+
+- (void) testHasReadonlyObjProperty
+{
+    STAssertTrue( [OCSquirrelObject instancesRespondToSelector: @selector(obj)] &&
+                 ![OCSquirrelObject instancesRespondToSelector: @selector(setObj:)],
+                 @"OCSquirrelObject should have a readonly obj property.");
+}
+
+
+- (void) testNotNULLObjWhenCreated
+{
+    OCSquirrelObject *object = [[OCSquirrelObject alloc] initWithVM: _squirrelVM];
+    STAssertTrue(object.obj != NULL,
+                 @"OCSquirrelObject should have a non-NULL obj property value when created.");
+}
+
+
+- (void) testInitWithHSQOBJECT
+{
+    sq_pushroottable(_squirrelVM.vm);
+    
+    HSQOBJECT root;
+    
+    sq_getstackobj(_squirrelVM.vm, -1, &root);
+    
+    OCSquirrelObject *object = [[OCSquirrelObject alloc] initWithHSQOBJECT: root
+                                                                      inVM: _squirrelVM];
+    STAssertEquals(*object.obj, root,
+                   @"OCSquirrelObject should support initialization with an existing HSQOBJECT");
+}
+
+
 @end
