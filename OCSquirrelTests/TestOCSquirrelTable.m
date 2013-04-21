@@ -65,7 +65,7 @@
 }
 
 
-- (void) testIntForKey
+- (void) testIntForStringKey
 {
     sq_newtable(_squirrelVM.vm);
     
@@ -80,6 +80,26 @@
                                                                    inVM: _squirrelVM];
     
     STAssertEquals([table integerForKey: @"someKey"], 1234,
+                   @"The value set through Squirrel API should be accessible "
+                   @"using OCSquirrelTable methods");
+}
+
+
+- (void) testIntForIntKey
+{
+    sq_newtable(_squirrelVM.vm);
+    
+    HSQOBJECT sqTable = [_squirrelVM.stack sqObjectAtPosition: -1];
+    
+    [_squirrelVM.stack pushInteger: 5678];
+    [_squirrelVM.stack pushInteger: 1234];
+    
+    sq_newslot(_squirrelVM.vm, -3, SQFalse);
+    
+    OCSquirrelTable *table = [[OCSquirrelTable alloc] initWithHSQOBJECT: sqTable
+                                                                   inVM: _squirrelVM];
+    
+    STAssertEquals([table integerForKey: @5678], 1234,
                    @"The value set through Squirrel API should be accessible "
                    @"using OCSquirrelTable methods");
 }

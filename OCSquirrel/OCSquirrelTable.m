@@ -36,7 +36,7 @@
 #pragma mark -
 #pragma mark methods
 
-- (SQInteger) integerForKey: (NSString *) key
+- (SQInteger) integerForKey: (id) key
 {
     __block SQInteger value = 0;
     
@@ -47,7 +47,7 @@
         NSInteger top = squirrelVM.stack.top;
         [self push];
         
-        [squirrelVM.stack pushString: key];
+        [squirrelVM.stack pushValue: key];
         
         sq_get(squirrelVM.vm, -2);
         

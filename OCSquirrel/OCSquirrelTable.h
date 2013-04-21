@@ -14,6 +14,6 @@
 
 @interface OCSquirrelTable : OCSquirrelObject
 
-- (SQInteger) integerForKey: (NSString *) key;
+- (SQInteger) integerForKey: (id) key;
 
 @end
