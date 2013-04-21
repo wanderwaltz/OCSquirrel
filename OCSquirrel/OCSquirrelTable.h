@@ -13,4 +13,7 @@
 #pragma mark OCSquirrelTable interface
 
 @interface OCSquirrelTable : OCSquirrelObject
+
+- (SQInteger) integerForKey: (NSString *) key;
+
 @end

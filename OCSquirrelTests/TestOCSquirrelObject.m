@@ -178,4 +178,17 @@
                    @"When OCSquirrelObject deallocs it should release the HSQOBJECT");
 }
 
+
+- (void) testTopValueAfterPush
+{
+    NSInteger top = _squirrelVM.stack.top;
+    
+    OCSquirrelObject *object = [[OCSquirrelObject alloc] initWithVM: _squirrelVM];
+    
+    [object push];
+    
+    STAssertEquals(_squirrelVM.stack.top, top+1,
+                   @"Squirrel VM stack top value should increase after pushing a OCSquirrelObject");
+}
+
 @end

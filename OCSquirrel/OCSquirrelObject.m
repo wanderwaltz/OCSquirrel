@@ -89,4 +89,15 @@
     }];
 }
 
+
+#pragma mark -
+#pragma mark methods
+
+- (void) push
+{
+    [self.squirrelVM doWait: ^{
+        sq_pushobject(self.squirrelVM.vm, _obj);
+    }];
+}
+
 @end

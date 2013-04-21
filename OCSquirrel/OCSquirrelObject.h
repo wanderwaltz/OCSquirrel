@@ -45,4 +45,8 @@
 - (id) initWithHSQOBJECT: (HSQOBJECT) object
                     inVM: (OCSquirrelVM *) squirrelVM;
 
+
+/// Pushes the object to the current VM's stack
+- (void) push;
+
 @end

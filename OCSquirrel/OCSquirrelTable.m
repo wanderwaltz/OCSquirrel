@@ -32,4 +32,31 @@
     else return nil;
 }
 
+
+#pragma mark -
+#pragma mark methods
+
+- (SQInteger) integerForKey: (NSString *) key
+{
+    __block SQInteger value = 0;
+    
+    OCSquirrelVM *squirrelVM = self.squirrelVM;
+    
+    [squirrelVM doWait: ^{
+        
+        NSInteger top = squirrelVM.stack.top;
+        [self push];
+        
+        const SQChar *cKey = [key cStringUsingEncoding: NSUTF8StringEncoding];
+        
+        sq_pushstring(squirrelVM.vm, cKey, scstrlen(cKey));
+        sq_get(squirrelVM.vm, -2);
+        sq_getinteger(squirrelVM.vm, -1, &value);
+        
+        self.squirrelVM.stack.top = top;
+    }];
+    
+    return value;
+}
+
 @end
