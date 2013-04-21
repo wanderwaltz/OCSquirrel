@@ -201,6 +201,45 @@
 }
 
 
+- (void) testPushValueBOOL
+{
+    [_squirrelVM.stack pushValue: @YES];
+    
+    SQBool value = SQFalse;
+    
+    sq_getbool(_squirrelVM.vm, -1, &value);
+    
+    STAssertEquals(value, (SQBool)SQTrue,
+                   @"-pushValue: should be capable of pushing BOOL NSNumbers");
+}
+
+
+- (void) testPushValueBoolLikeYES
+{
+    [_squirrelVM.stack pushValue: @((SQInteger)YES)];
+    
+    SQInteger value = 0;
+    
+    sq_getinteger(_squirrelVM.vm, -1, &value);
+    
+    STAssertEquals(value, (SQInteger)YES,
+                   @"-pushValue: should not confuse (SQInteger)YES integers with BOOL YES values");
+}
+
+
+- (void) testPushValueBoolLikeNO
+{
+    [_squirrelVM.stack pushValue: @((SQInteger)NO)];
+    
+    SQInteger value = 0;
+    
+    sq_getinteger(_squirrelVM.vm, -1, &value);
+    
+    STAssertEquals(value, (SQInteger)NO,
+                   @"-pushValue: should not confuse (SQInteger)NO integers with BOOL NO values");
+}
+
+
 - (void) testPushValueString
 {
     // That's the word 'unicode' written with Cyrillic alphabet
@@ -315,6 +354,137 @@
     [_squirrelVM.stack pushString: kString];
     STAssertEqualObjects(kString, [_squirrelVM.stack stringAtPosition: -1],
                          @"-stringAtPosition: should return the pushed value");
+}
+
+
+#pragma mark -
+#pragma mark reading generic values
+
+- (void) testReadValueIntegerClass
+{
+    [_squirrelVM.stack pushInteger: 1234];
+    STAssertTrue([[_squirrelVM.stack valueAtPosition: -1] isKindOfClass: [NSNumber class]],
+                 @"-valueAtPosition: should return an NSNumber for integer stack values");
+}
+
+
+- (void) testReadValueIntegerValue
+{
+    [_squirrelVM.stack pushInteger: 1234];
+    STAssertEquals([[_squirrelVM.stack valueAtPosition: -1] integerValue], 1234,
+                 @"-valueAtPosition: should return the corresponding NSNumber for integer stack values");
+}
+
+
+- (void) testReadValueFloatClass
+{
+    [_squirrelVM.stack pushFloat: 123.456];
+    STAssertTrue([[_squirrelVM.stack valueAtPosition: -1] isKindOfClass: [NSNumber class]],
+                 @"-valueAtPosition: should return an NSNumber for float stack values");
+}
+
+
+- (void) testReadValueFloatValue
+{
+    [_squirrelVM.stack pushFloat: 123.456];
+    STAssertEquals([[_squirrelVM.stack valueAtPosition: -1] floatValue], 123.456f,
+                   @"-valueAtPosition: should return the corresponding NSNumber for float stack values");
+}
+
+
+- (void) testReadValueBoolClass
+{
+    [_squirrelVM.stack pushBool: YES];
+    STAssertTrue([[_squirrelVM.stack valueAtPosition: -1] isKindOfClass: [NSNumber class]],
+                 @"-valueAtPosition: should return an NSNumber for bool stack values");
+}
+
+
+- (void) testReadValueBoolValue
+{
+    [_squirrelVM.stack pushBool: YES];
+    STAssertEquals([[_squirrelVM.stack valueAtPosition: -1] boolValue], YES,
+                   @"-valueAtPosition: should return the corresponding NSNumber for bool stack values");
+}
+
+
+- (void) testReadValueUserPointerClass
+{
+    [_squirrelVM.stack pushUserPointer: (__bridge SQUserPointer)self];
+    STAssertTrue([[_squirrelVM.stack valueAtPosition: -1] isKindOfClass: [NSValue class]],
+                 @"-valueAtPosition: should return an NSValue for userPointer stack values");
+}
+
+
+- (void) testReadValueUserPointerValue
+{
+    [_squirrelVM.stack pushUserPointer: (__bridge SQUserPointer)self];
+    STAssertEquals([[_squirrelVM.stack valueAtPosition: -1] pointerValue], (__bridge void *)self,
+                   @"-valueAtPosition: should return the corresponding NSValue for userPointer stack values");
+}
+
+
+- (void) testReadValueStringClass
+{
+    [_squirrelVM.stack pushString: @"qwerty"];
+    STAssertTrue([[_squirrelVM.stack valueAtPosition: -1] isKindOfClass: [NSString class]],
+                 @"-valueAtPosition: should return an NSString for string stack values");
+}
+
+
+- (void) testReadValueStringValue
+{
+    [_squirrelVM.stack pushString: @"qwerty"];
+    STAssertEqualObjects([_squirrelVM.stack valueAtPosition: -1], @"qwerty",
+                   @"-valueAtPosition: should return the corresponding NSString for string stack values");
+}
+
+
+- (void) testReadValueNullValue
+{
+    [_squirrelVM.stack pushNull];
+    STAssertNil([_squirrelVM.stack valueAtPosition: -1],
+                @"-valueAtPosition: should return nil for `null` values");
+}
+
+
+- (void) testReadValueTableClass
+{
+    sq_pushroottable(_squirrelVM.vm);
+    STAssertTrue([[_squirrelVM.stack valueAtPosition: -1] isKindOfClass: [OCSquirrelTable class]],
+                 @"-valueAtPosition: should return an OCSquirrelTable for table stack values");
+}
+
+
+- (void) testReadValueTableValue
+{
+    sq_pushroottable(_squirrelVM.vm);
+    
+    HSQOBJECT root = [_squirrelVM.stack sqObjectAtPosition: -1];
+    
+    STAssertEquals(*[[_squirrelVM.stack valueAtPosition: -1] obj], root,
+                   @"-valueAtPosition: should return the corresponding OCSquirrelTable for "
+                   @"table stack values");
+}
+
+
+- (void) testReadValueOtherClass
+{
+    sq_newuserdata(_squirrelVM.vm, 1);
+    STAssertTrue([[_squirrelVM.stack valueAtPosition: -1] isKindOfClass: [OCSquirrelObject class]],
+                 @"-valueAtPosition: should return an OCSquirrelObject for other stack values");
+}
+
+
+- (void) testReadValueOtherValue
+{
+    sq_newuserdata(_squirrelVM.vm, 1);
+    
+    HSQOBJECT object = [_squirrelVM.stack sqObjectAtPosition: -1];
+    
+    STAssertEquals(*[[_squirrelVM.stack valueAtPosition: -1] obj], object,
+                   @"-valueAtPosition: should return the corresponding OCSquirrelObject for "
+                   @"other stack values");
 }
 
 

@@ -51,6 +51,8 @@
 - (SQUserPointer) userPointerAtPosition: (SQInteger) position;
 - (HSQOBJECT) sqObjectAtPosition: (SQInteger) position;
 
+- (id) valueAtPosition: (SQInteger) position;
+
 
 #pragma mark type information
 

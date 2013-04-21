@@ -127,6 +127,10 @@
         {
             [self pushFloat: (SQFloat)[value doubleValue]];
         }
+        else if (strcmp(objCType, @encode(BOOL)) == 0)
+        {
+            [self pushBool: [value boolValue]];
+        }
         else
         {
             [self pushInteger: (SQInteger)[value integerValue]];
@@ -234,6 +238,66 @@
     }];
     
     return object;
+}
+
+
+- (id) valueAtPosition: (SQInteger) position
+{
+    __block id value = nil;
+    
+    [_squirrelVM doWait: ^{
+        switch (sq_gettype(_squirrelVM.vm, position))
+        {
+            case OT_INTEGER:
+            {
+                value = @([self integerAtPosition: position]);
+            } break;
+                
+            case OT_FLOAT:
+            {
+                value = @([self floatAtPosition: position]);
+            } break;
+                
+            case OT_BOOL:
+            {
+                value = @([self boolAtPosition: position]);
+            } break;
+                
+            case OT_USERPOINTER:
+            {
+                value = [NSValue valueWithPointer: [self userPointerAtPosition: position]];
+            } break;
+                
+            case OT_STRING:
+            {
+                value = [self stringAtPosition: position];
+            } break;
+                
+            case OT_NULL:
+            {
+                value = nil;
+            } break;
+                
+            case OT_TABLE:
+            {
+                HSQOBJECT table = [self sqObjectAtPosition: position];
+                
+                value = [[OCSquirrelTable alloc] initWithHSQOBJECT: table
+                                                              inVM: _squirrelVM];
+            } break;
+     
+            default:
+            {
+                HSQOBJECT object = [self sqObjectAtPosition: position];
+                
+                value = [[OCSquirrelObject alloc] initWithHSQOBJECT: object
+                                                               inVM: _squirrelVM];
+            } break;
+        }
+    }];
+    
+    
+    return value;
 }
 
 
