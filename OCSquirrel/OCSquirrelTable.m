@@ -79,7 +79,7 @@
 
 
 #pragma mark -
-#pragma mark methods
+#pragma mark getter methods
 
 - (SQInteger) integerForKey: (id) key
 {
@@ -164,5 +164,57 @@
     
     return object;
 }
+
+
+#pragma mark -
+#pragma mark setter objects
+
+- (void) setObject: (id) object forKey: (id) key
+{
+    OCSquirrelVM *squirrelVM = self.squirrelVM;
+    
+    [squirrelVM doWait: ^{
+        NSInteger top = squirrelVM.stack.top;
+        
+        [self push];
+        [squirrelVM.stack pushValue: key];
+        [squirrelVM.stack pushValue: object];
+        
+        sq_newslot(squirrelVM.vm, -3, SQFalse);
+        
+        squirrelVM.stack.top = top;
+    }];
+}
+
+
+- (void) setInteger: (SQInteger) value forKey: (id) key
+{
+    [self setObject: @(value) forKey: key];
+}
+
+
+- (void) setFloat: (SQFloat) value forKey: (id) key
+{
+    [self setObject: @(value) forKey: key];
+}
+
+
+- (void) setBool: (BOOL) value forKey: (id) key
+{
+    [self setObject: @(value) forKey: key];
+}
+
+
+- (void) setString: (NSString *) value forKey: (id) key
+{
+    [self setObject: value forKey: key];
+}
+
+
+- (void) setUserPointer: (SQUserPointer) pointer forKey: (id) key
+{
+    [self setObject: [NSValue valueWithPointer: pointer] forKey: key];
+}
+
 
 @end

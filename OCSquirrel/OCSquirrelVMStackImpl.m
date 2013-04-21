@@ -136,6 +136,11 @@
             [self pushInteger: (SQInteger)[value integerValue]];
         }
     }
+    else if ([value isKindOfClass: [NSValue class]] &&
+             (strcmp([value objCType], @encode(void *)) == 0))
+    {
+        [self pushUserPointer: [value pointerValue]];
+    }
     else if ([value isKindOfClass: [NSString class]])
     {
         [self pushString: value];

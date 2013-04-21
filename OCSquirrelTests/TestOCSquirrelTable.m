@@ -442,4 +442,137 @@
 }
 
 
+#pragma mark -
+#pragma mark generic setter tests
+
+- (void) testSetObjectIntForKeyOnce
+{
+    OCSquirrelTable *table = [[OCSquirrelTable alloc] initWithVM: _squirrelVM];
+    
+    [table setObject: @1234 forKey: @"key"];
+    
+    STAssertEquals([table integerForKey: @"key"], 1234,
+                   @"Integer value should be properly set by setObject:forKey:");
+}
+
+
+- (void) testSetObjectIntForKeyTwice
+{
+    OCSquirrelTable *table = [[OCSquirrelTable alloc] initWithVM: _squirrelVM];
+    
+    [table setObject: @1234 forKey: @"key"];
+    [table setObject: @5678 forKey: @"key"];
+    
+    STAssertEquals([table integerForKey: @"key"], 5678,
+                   @"Should be able to reassign the value for the same key");
+}
+
+
+- (void) testSetObjectFloatForKey
+{
+    OCSquirrelTable *table = [[OCSquirrelTable alloc] initWithVM: _squirrelVM];
+    
+    [table setObject: @123.456 forKey: @"key"];
+    
+    STAssertEquals([table floatForKey: @"key"], 123.456f,
+                   @"Float value should be properly set by setObject:forKey:");
+}
+
+
+- (void) testSetObjectBoolForKey
+{
+    OCSquirrelTable *table = [[OCSquirrelTable alloc] initWithVM: _squirrelVM];
+    
+    [table setObject: @YES forKey: @"key"];
+    
+    STAssertEquals([table boolForKey: @"key"], YES,
+                   @"Bool value should be properly set by setObject:forKey:");
+}
+
+
+- (void) testSetObjectUserPointerForKey
+{
+    OCSquirrelTable *table = [[OCSquirrelTable alloc] initWithVM: _squirrelVM];
+    
+    [table setObject: [NSValue valueWithPointer: (__bridge void *)self] forKey: @"key"];
+    
+    STAssertEquals([table userPointerForKey: @"key"], (__bridge SQUserPointer)self,
+                   @"UserPoniter value should be properly set by setObject:forKey:");
+}
+
+
+- (void) testSetObjectStringForKey
+{
+    OCSquirrelTable *table = [[OCSquirrelTable alloc] initWithVM: _squirrelVM];
+    
+    [table setObject: @"value" forKey: @"key"];
+    
+    STAssertEqualObjects([table stringForKey: @"key"], @"value",
+                         @"String value should be properly set by setObject:forKey:");
+}
+
+
+- (void) testSetObjectNilForKey
+{
+    OCSquirrelTable *table = [[OCSquirrelTable alloc] initWithVM: _squirrelVM];
+    
+    [table setObject: nil forKey: @"key"];
+    
+    STAssertNil([table objectForKey: @"key"],
+                @"nil value should be properly set by setObject:forKey:");
+}
+
+
+#pragma mark -
+#pragma mark type-specific setters
+
+- (void) testSetIntegerForKey
+{
+    OCSquirrelTable *table = [[OCSquirrelTable alloc] initWithVM: _squirrelVM];
+    [table setInteger: 1234 forKey: @"key"];
+    
+    STAssertEquals([table integerForKey: @"key"], 1234,
+                   @"Integer value should be properly set by a type-specific method");
+}
+
+
+- (void) testSetFloatForKey
+{
+    OCSquirrelTable *table = [[OCSquirrelTable alloc] initWithVM: _squirrelVM];
+    [table setFloat: 123.456 forKey: @"key"];
+    
+    STAssertEquals([table floatForKey: @"key"], 123.456f,
+                   @"Float value should be properly set by a type-specific method");
+}
+
+
+- (void) testSetBoolForKey
+{
+    OCSquirrelTable *table = [[OCSquirrelTable alloc] initWithVM: _squirrelVM];
+    [table setBool: YES forKey: @"key"];
+    
+    STAssertEquals([table boolForKey: @"key"], YES,
+                   @"Bool value should be properly set by a type-specific method");
+}
+
+
+- (void) testSetUserPointerForKey
+{
+    OCSquirrelTable *table = [[OCSquirrelTable alloc] initWithVM: _squirrelVM];
+    [table setUserPointer: (__bridge SQUserPointer)self forKey: @"key"];
+    
+    STAssertEquals([table userPointerForKey: @"key"], (__bridge SQUserPointer)self,
+                   @"UserPointer value should be properly set by a type-specific method");
+}
+
+
+- (void) testSetStringForKey
+{
+    OCSquirrelTable *table = [[OCSquirrelTable alloc] initWithVM: _squirrelVM];
+    [table setString: @"value" forKey: @"key"];
+    
+    STAssertEqualObjects([table stringForKey: @"key"], @"value",
+                         @"String value should be properly set by a type-specific method");
+}
+
 @end

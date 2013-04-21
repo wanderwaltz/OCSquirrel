@@ -286,6 +286,14 @@
 }
 
 
+- (void) testPushValuePointer
+{
+    [_squirrelVM.stack pushValue: [NSValue valueWithPointer: (__bridge void *)self]];
+    STAssertEquals([_squirrelVM.stack userPointerAtPosition: -1], (__bridge SQUserPointer)self,
+                   @"-pushValue: should be capable of pushing NSValues with pointers");
+}
+
+
 - (void) testThrowsForUnsupportedTypes
 {
     STAssertThrowsSpecificNamed([_squirrelVM.stack pushValue: [NSObject new]],
