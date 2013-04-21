@@ -43,9 +43,7 @@
 {
     sq_pushroottable(_squirrelVM.vm);
     
-    HSQOBJECT root;
-    
-    sq_getstackobj(_squirrelVM.vm, -1, &root);
+    HSQOBJECT root = [_squirrelVM.stack sqObjectAtPosition: -1];
     
     OCSquirrelTable *table = [[OCSquirrelTable alloc] initWithHSQOBJECT: root
                                                                    inVM: _squirrelVM];
@@ -71,9 +69,7 @@
 {
     sq_newtable(_squirrelVM.vm);
     
-    HSQOBJECT sqTable;
-    
-    sq_getstackobj(_squirrelVM.vm, -1, &sqTable);
+    HSQOBJECT sqTable = [_squirrelVM.stack sqObjectAtPosition: -1];
     
     [_squirrelVM.stack pushString: @"someKey"];
     [_squirrelVM.stack pushInteger: 1234];

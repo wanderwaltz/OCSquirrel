@@ -45,10 +45,8 @@
 {
     sq_pushroottable(_squirrelVM.vm);
     
-    HSQOBJECT root;
-    
-    sq_getstackobj(_squirrelVM.vm, -1, &root);
-    
+    HSQOBJECT root = [_squirrelVM.stack sqObjectAtPosition: -1];
+
     STAssertEquals(*_rootTable.obj, root,
                    @"OCSquirrelRootTable obj should be equal to the Squirrel VM's root table by default");
 }

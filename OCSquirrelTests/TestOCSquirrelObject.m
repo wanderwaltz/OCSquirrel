@@ -112,9 +112,7 @@
 {
     sq_pushroottable(_squirrelVM.vm);
     
-    HSQOBJECT root;
-    
-    sq_getstackobj(_squirrelVM.vm, -1, &root);
+    HSQOBJECT root = [_squirrelVM.stack sqObjectAtPosition: -1];
     
     OCSquirrelObject *object = [[OCSquirrelObject alloc] initWithHSQOBJECT: root
                                                                       inVM: _squirrelVM];
@@ -127,9 +125,7 @@
 {
     sq_pushroottable(_squirrelVM.vm);
     
-    HSQOBJECT root;
-    
-    sq_getstackobj(_squirrelVM.vm, -1, &root);
+    HSQOBJECT root = [_squirrelVM.stack sqObjectAtPosition: -1];
     
     OCSquirrelObject *object = [[OCSquirrelObject alloc] initWithHSQOBJECT: root
                                                                       inVM: _squirrelVM];
@@ -143,9 +139,7 @@
 {
     sq_pushroottable(_squirrelVM.vm);
     
-    HSQOBJECT root;
-    
-    sq_getstackobj(_squirrelVM.vm, -1, &root);
+    HSQOBJECT root = [_squirrelVM.stack sqObjectAtPosition: -1];
     
     NSUInteger refCountInitial = sq_getrefcount(_squirrelVM.vm, &root);
     
@@ -164,9 +158,7 @@
 {
     sq_pushroottable(_squirrelVM.vm);
     
-    HSQOBJECT root;
-    
-    sq_getstackobj(_squirrelVM.vm, -1, &root);
+    HSQOBJECT root = [_squirrelVM.stack sqObjectAtPosition: -1];
     
     NSUInteger refCountInitial = sq_getrefcount(_squirrelVM.vm, &root);
     
