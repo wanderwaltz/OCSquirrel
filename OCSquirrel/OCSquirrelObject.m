@@ -57,7 +57,10 @@
     if (self != nil)
     {
         _squirrelVM = squirrelVM;
-        sq_resetobject(&_obj);
+        [squirrelVM doWait: ^{
+            sq_resetobject(&_obj);
+        }];
+        
     }
     return self;
 }
@@ -71,7 +74,9 @@
     if (self != nil)
     {
         _obj = object;
-        sq_addref(_squirrelVM.vm, &_obj);
+        [squirrelVM doWait: ^{
+            sq_addref(_squirrelVM.vm, &_obj);
+        }];
     }
     return self;
 }
@@ -79,7 +84,9 @@
 
 - (void) dealloc
 {
-    sq_release(_squirrelVM.vm, &_obj);
+    [_squirrelVM doWait:^{
+        sq_release(_squirrelVM.vm, &_obj); 
+    }];
 }
 
 @end

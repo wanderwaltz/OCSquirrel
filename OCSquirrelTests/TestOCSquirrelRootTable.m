@@ -40,4 +40,34 @@
                  @"OCSquirrelRootTable class should exist and be a subclass of OCSquirrelTable");
 }
 
+
+- (void) testObjIsRootTable
+{
+    sq_pushroottable(_squirrelVM.vm);
+    
+    HSQOBJECT root;
+    
+    sq_getstackobj(_squirrelVM.vm, -1, &root);
+    
+    STAssertEquals(*_rootTable.obj, root,
+                   @"OCSquirrelRootTable obj should be equal to the Squirrel VM's root table by default");
+}
+
+
+- (void) testThrowsIfInitWithHSQOBJECT
+{
+    HSQOBJECT object;
+    sq_resetobject(&object);
+    
+    id root = nil;
+    
+    STAssertThrowsSpecificNamed(root = [[OCSquirrelRootTable alloc] initWithHSQOBJECT: object
+                                                                                 inVM: _squirrelVM],
+                                NSException, NSGenericException,
+                                @"OCSquirrelRootTable should throw an exception if trying to initialize "
+                                @"it with an existing HSQOBJECT. This operation does not make sense for "
+                                @"HSQOBJECTs which are not the root table of the Squirrel VM, and if "
+                                @"passing the actual root table then it is just redundant.");
+}
+
 @end
