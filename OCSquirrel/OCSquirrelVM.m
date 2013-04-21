@@ -26,14 +26,6 @@ const NSUInteger kOCSquirrelVMDefaultInitialStackSize = 1024;
 static const SQChar * const kOCSquirrelVMCompileBufferSourceName = _SC("buffer");
 
 
-/*! A key with which the OCSquirrelVM pointer will be stored in the Squirrel VM's root table.
- 
- OCSquirrelVM stores the pointer to self in the Squirrel VM's root table so that Squirrel could access
- the current OCSquirrelVM from the native C functions like OCSquirrelVMPrintfunc or OCSquirrelVMErrorfunc.
- */
-static const SQChar * const kRootTableKeyUPSquirrelVM = _SC("___UPsquirrelVM");
-
-
 #pragma mark -
 #pragma mark Static constants
 
@@ -56,15 +48,8 @@ void OCSquirrelVMPrintfunc(HSQUIRRELVM vm, const SQChar *s, ...)
 	vsprintf(buffer, s, vl);
 	va_end(vl);
     
-    void *squirrelVMCPointer = nil;
-    
-    SQInteger top = sq_gettop(vm);
-    sq_pushroottable(vm);
-    sq_pushstring(vm, kRootTableKeyUPSquirrelVM, scstrlen(kRootTableKeyUPSquirrelVM));
-    sq_rawget(vm, -2);
-    sq_getuserpointer(vm, -1, &squirrelVMCPointer);
-    sq_settop(vm, top);
-    
+    SQUserPointer squirrelVMCPointer = sq_getforeignptr(vm);
+        
     OCSquirrelVM *squirrelVM = (__bridge id)squirrelVMCPointer;
     [squirrelVM _delegate_didPrintString:
      [[NSString alloc] initWithCString: buffer
@@ -124,23 +109,8 @@ void OCSquirrelVMErrorfunc(HSQUIRRELVM vm, const SQChar *s, ...)
         [self doWait: ^{
             sqstd_seterrorhandlers(_vm);
             
-            SQInteger top = sq_gettop(_vm);
-            sq_pushroottable(_vm);
-            sq_pushstring(_vm, kRootTableKeyUPSquirrelVM, scstrlen(kRootTableKeyUPSquirrelVM));
-            sq_pushuserpointer(_vm, (__bridge void *)self);
-            
-            if (SQ_FAILED(sq_newslot(_vm, -3, SQFalse)))
-            {
-                @throw [NSException exceptionWithName: NSInternalInconsistencyException
-                                               reason: @"*** initWithStackSize: failed to store the "
-                        @"OCSquirrelVM user pointer in the Squirrel VM "
-                        @"root table."
-                                             userInfo: nil];
-            }
-            
-            sq_settop(_vm, top);
-            
-            sq_setprintfunc(_vm, OCSquirrelVMPrintfunc, OCSquirrelVMErrorfunc);
+            sq_setforeignptr(_vm, (__bridge SQUserPointer)self);
+            sq_setprintfunc (_vm, OCSquirrelVMPrintfunc, OCSquirrelVMErrorfunc);
         }];
     }
     return self;
