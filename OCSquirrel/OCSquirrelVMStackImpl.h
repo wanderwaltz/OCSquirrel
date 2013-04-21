@@ -26,4 +26,7 @@
 - (void) pushInteger: (SQInteger) value;
 - (void) pushString: (NSString *) string;
 
+- (SQInteger) integerAtPosition: (SQInteger) position;
+- (NSString *) stringAtPosition: (SQInteger) position;
+
 @end

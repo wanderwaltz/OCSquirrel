@@ -75,4 +75,33 @@
     }];
 }
 
+
+- (SQInteger) integerAtPosition: (SQInteger) position
+{
+    __block SQInteger value = 0;
+    
+    [_squirrelVM doWait:^{
+        sq_getinteger(_squirrelVM.vm, position, &value);
+    }];
+    
+    return value;
+}
+
+
+- (NSString *) stringAtPosition: (SQInteger) position
+{
+    __block const SQChar *cString = NULL;
+    
+    [_squirrelVM doWait: ^{
+        sq_getstring(_squirrelVM.vm, position, &cString);
+    }];
+    
+    if (cString != NULL)
+    {
+        return [[NSString alloc] initWithCString: cString
+                                        encoding: NSUTF8StringEncoding];
+    }
+    else return nil;
+}
+
 @end

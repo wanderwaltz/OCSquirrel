@@ -84,7 +84,7 @@
 
 - (void) dealloc
 {
-    [_squirrelVM doWait:^{
+    [_squirrelVM doWait: ^{
         sq_release(_squirrelVM.vm, &_obj); 
     }];
 }

@@ -47,11 +47,11 @@
         NSInteger top = squirrelVM.stack.top;
         [self push];
         
-        const SQChar *cKey = [key cStringUsingEncoding: NSUTF8StringEncoding];
+        [squirrelVM.stack pushString: key];
         
-        sq_pushstring(squirrelVM.vm, cKey, scstrlen(cKey));
         sq_get(squirrelVM.vm, -2);
-        sq_getinteger(squirrelVM.vm, -1, &value);
+        
+        value = [squirrelVM.stack integerAtPosition: -1];
         
         self.squirrelVM.stack.top = top;
     }];

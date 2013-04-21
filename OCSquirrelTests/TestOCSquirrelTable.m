@@ -75,8 +75,7 @@
     
     sq_getstackobj(_squirrelVM.vm, -1, &sqTable);
     
-    sq_pushstring(_squirrelVM.vm, _SC("someKey"), scstrlen("someKey"));
-    
+    [_squirrelVM.stack pushString: @"someKey"];
     [_squirrelVM.stack pushInteger: 1234];
     
     sq_newslot(_squirrelVM.vm, -3, SQFalse);

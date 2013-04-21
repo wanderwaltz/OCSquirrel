@@ -112,4 +112,23 @@
     
 }
 
+
+- (void) testIntegerAtPosition
+{
+    [_squirrelVM.stack pushInteger: 12345];
+    STAssertEquals(12345, [_squirrelVM.stack integerAtPosition: -1],
+                   @"-integerAtPosition: should return the pushed value.");
+}
+
+
+- (void) testStringAtPosition
+{
+    // That's the word 'unicode' written with Cyrillic alphabet
+    static NSString * const kString = @"юникод";
+    
+    [_squirrelVM.stack pushString: kString];
+    STAssertEqualObjects(kString, [_squirrelVM.stack stringAtPosition: -1],
+                         @"-stringAtPosition: should return the pushed value");
+}
+
 @end
