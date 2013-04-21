@@ -17,5 +17,12 @@
 + (id) rootTableForVM: (OCSquirrelVM *) squirrelVM;
 
 - (SQInteger) integerForKey: (id) key;
+- (SQFloat)     floatForKey: (id) key;
+- (BOOL)         boolForKey: (id) key;
+- (NSString *) stringForKey: (id) key;
+
+- (SQUserPointer) userPointerForKey: (id) key;
+
+- (id) objectForKey: (id) key;
 
 @end
