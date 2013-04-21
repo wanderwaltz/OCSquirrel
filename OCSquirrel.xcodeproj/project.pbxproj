@@ -76,6 +76,7 @@
 		5DC29C35171AFE09000A2096 /* TestOCSquirrelObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DC29C34171AFE09000A2096 /* TestOCSquirrelObject.m */; };
 		5DC29C39171AFE09000A2096 /* OCSquirrelObject.h in Headers */ = {isa = PBXBuildFile; fileRef = 5DC29C37171AFE09000A2096 /* OCSquirrelObject.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		5DC29C3A171AFE09000A2096 /* OCSquirrelObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DC29C38171AFE09000A2096 /* OCSquirrelObject.m */; };
+		5DCDB1E71723A07C00642184 /* TestOCSquirrelRootTable.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DCDB1E61723A07C00642184 /* TestOCSquirrelRootTable.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -181,6 +182,8 @@
 		5DC29C34171AFE09000A2096 /* TestOCSquirrelObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TestOCSquirrelObject.m; sourceTree = "<group>"; };
 		5DC29C37171AFE09000A2096 /* OCSquirrelObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OCSquirrelObject.h; sourceTree = "<group>"; };
 		5DC29C38171AFE09000A2096 /* OCSquirrelObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OCSquirrelObject.m; sourceTree = "<group>"; };
+		5DCDB1E51723A07C00642184 /* TestOCSquirrelRootTable.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TestOCSquirrelRootTable.h; sourceTree = "<group>"; };
+		5DCDB1E61723A07C00642184 /* TestOCSquirrelRootTable.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TestOCSquirrelRootTable.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -254,6 +257,8 @@
 		5DB09CB51719686D00F50257 /* OCSquirrelTests */ = {
 			isa = PBXGroup;
 			children = (
+				5DCDB1E51723A07C00642184 /* TestOCSquirrelRootTable.h */,
+				5DCDB1E61723A07C00642184 /* TestOCSquirrelRootTable.m */,
 				5D63982E171AA39F00CFECC1 /* TestOCSquirrelTable.h */,
 				5D63982F171AA39F00CFECC1 /* TestOCSquirrelTable.m */,
 				5DC29C33171AFE09000A2096 /* TestOCSquirrelObject.h */,
@@ -655,6 +660,7 @@
 				5D8EC815171A64690084F92C /* TestStackManipulation.m in Sources */,
 				5DC29C35171AFE09000A2096 /* TestOCSquirrelObject.m in Sources */,
 				5D639830171AA39F00CFECC1 /* TestOCSquirrelTable.m in Sources */,
+				5DCDB1E71723A07C00642184 /* TestOCSquirrelRootTable.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

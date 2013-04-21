@@ -38,11 +38,4 @@
                 @"OCSquirrelTable class should exist and be a subclass of OCSquirrelObject");
 }
 
-
-- (void) testOCSquirrelRootTableClassExists
-{
-    STAssertTrue([OCSquirrelRootTable isSubclassOfClass: [OCSquirrelTable class]],
-                 @"OCSquirrelRootTable class should exist and be a subclass of OCSquirrelTable");
-}
-
 @end
