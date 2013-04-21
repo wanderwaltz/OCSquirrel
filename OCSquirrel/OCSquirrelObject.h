@@ -19,13 +19,20 @@
     /*! ivar backing the squirrelVM property; maintains a strong reference to VM because the
      OCSQuirrelObject cannot actually function without a VM. Note that the OCSquirrelVM itself
      does not track OCSQuirrelObjects or retain any references to them, so no retain cycle here.
+     
+     We have to actually explicitly include this ivar in the class because it would not be
+     authomatically synthesized for squirrelVM readonly ivar with a custom getter method.
      */
     OCSquirrelVM *_squirrelVM;
 }
 
+/*! Will throw an exception if accessed while the value of the _squirrelVM ivar is `nil`.
+    So basically OCSquirrelObject subclasses must be initialized with -initWithVM method
+    with a non-nil `squirrelVM` property.
+ */
 @property (readonly, nonatomic) OCSquirrelVM *squirrelVM;
 
-
+/// Designated initializer
 - (id) initWithVM: (OCSquirrelVM *) squirrelVM;
 
 @end
