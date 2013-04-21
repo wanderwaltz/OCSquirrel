@@ -175,6 +175,87 @@
 }
 
 
+- (void) testPushValueInteger
+{
+    [_squirrelVM.stack pushValue: @(1234)];
+    
+    SQInteger value = 0;
+    
+    sq_getinteger(_squirrelVM.vm, -1, &value);
+    
+    STAssertEquals(value, 1234,
+                   @"-pushValue: should be capable of pushing integer NSNumbers");
+}
+
+
+- (void) testPushValueFloat
+{
+    [_squirrelVM.stack pushValue: @(123.456)];
+    
+    SQFloat value = 0;
+    
+    sq_getfloat(_squirrelVM.vm, -1, &value);
+    
+    STAssertEquals(value, 123.456f,
+                   @"-pushValue: should be capable of pushing float NSNumbers");
+}
+
+
+- (void) testPushValueString
+{
+    // That's the word 'unicode' written with Cyrillic alphabet
+    static NSString * const kString = @"юникод";
+    
+    [_squirrelVM.stack pushValue: kString];
+    
+    const SQChar *cString = NULL;
+    
+    sq_getstring(_squirrelVM.vm, -1, &cString);
+    
+    NSString *readString = [[NSString alloc] initWithCString: cString
+                                                    encoding: NSUTF8StringEncoding];
+    
+    STAssertEqualObjects(kString, readString,
+                         @"-pushValue: should be capable of pushing NSStrings");
+    
+}
+
+
+- (void) testPushValueNil
+{
+    // Pushing root table so that the stack is not empty;
+    // otherwise the test would falsely pass even if there
+    // is no `null` at the top.
+    sq_pushroottable(_squirrelVM.vm);
+    
+    [_squirrelVM.stack pushValue: nil];
+    STAssertTrue([_squirrelVM.stack isNullAtPosition: -1],
+                 @"-pushValue: should push `null` for nil value");
+}
+
+
+- (void) testPushValueNSNull
+{
+    // Pushing root table so that the stack is not empty;
+    // otherwise the test would falsely pass even if there
+    // is no `null` at the top.
+    sq_pushroottable(_squirrelVM.vm);
+    
+    [_squirrelVM.stack pushValue: [NSNull null]];
+    STAssertTrue([_squirrelVM.stack isNullAtPosition: -1],
+                 @"-pushValue: should push `null` for nil value");
+}
+
+
+- (void) testThrowsForUnsupportedTypes
+{
+    STAssertThrowsSpecificNamed([_squirrelVM.stack pushValue: [NSObject new]],
+                                NSException, NSInvalidArgumentException,
+                                @"-pushValue: shoud throw an NSInvalidArgumentException for unsupported "
+                                @"values.");
+}
+
+
 #pragma mark -
 #pragma mark reading successfull tests
 
@@ -277,6 +358,17 @@
     [_squirrelVM.stack pushInteger: 12345];
     STAssertNil([_squirrelVM.stack stringAtPosition: -1],
                 @"If failed to read a string, OCSquirrelVMStack is expected to return nil.");
+}
+
+
+#pragma mark -
+#pragma mark type information
+
+- (void) testIsNullAtPosition
+{
+    [_squirrelVM.stack pushNull];
+    STAssertTrue([_squirrelVM.stack isNullAtPosition: -1],
+                 @"-isNullAtPosition: should be YES for `null` values pushed to stack.");
 }
 
 @end

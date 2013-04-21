@@ -116,6 +116,46 @@
 }
 
 
+- (void) pushValue: (id) value
+{
+    if ([value isKindOfClass: [NSNumber class]])
+    {
+        const char *objCType = [value objCType];
+        
+        if ((strcmp(objCType, @encode(float))  == 0) ||
+            (strcmp(objCType, @encode(double)) == 0))
+        {
+            [self pushFloat: (SQFloat)[value doubleValue]];
+        }
+        else
+        {
+            [self pushInteger: (SQInteger)[value integerValue]];
+        }
+    }
+    else if ([value isKindOfClass: [NSString class]])
+    {
+        [self pushString: value];
+    }
+    else if ([value isKindOfClass: [NSNull class]])
+    {
+        [self pushNull];
+    }
+    else if (value == nil)
+    {
+        [self pushNull];
+    }
+    else
+    {
+        @throw [NSException exceptionWithName: NSInvalidArgumentException
+                                       reason:
+                [NSString stringWithFormat:
+                 @"*** pushValue: unsupported value of class %@ received: %@",
+                 [value class], value]
+                                     userInfo: nil];
+    }
+}
+
+
 #pragma mark -
 #pragma mark reading methods
 
@@ -194,6 +234,21 @@
     }];
     
     return object;
+}
+
+
+#pragma mark -
+#pragma mark type information
+
+- (BOOL) isNullAtPosition: (SQInteger) position
+{
+    __block BOOL isNull = NO;
+    
+    [_squirrelVM doWait: ^{
+        isNull = (sq_gettype(_squirrelVM.vm, position) == OT_NULL);
+    }];
+    
+    return isNull;
 }
 
 @end

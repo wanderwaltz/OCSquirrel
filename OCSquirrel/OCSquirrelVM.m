@@ -120,8 +120,8 @@ void OCSquirrelVMErrorfunc(HSQUIRRELVM vm, const SQChar *s, ...)
                                     _vm, NULL);
         
         _stack = [[OCSquirrelVMStackImpl alloc] initWithSquirrelVM: self];
-     
-        dispatch_sync(_vmQueue, ^{
+        
+        [self doWait: ^{
             sqstd_seterrorhandlers(_vm);
             
             SQInteger top = sq_gettop(_vm);
@@ -133,15 +133,15 @@ void OCSquirrelVMErrorfunc(HSQUIRRELVM vm, const SQChar *s, ...)
             {
                 @throw [NSException exceptionWithName: NSInternalInconsistencyException
                                                reason: @"*** initWithStackSize: failed to store the "
-                                                       @"OCSquirrelVM user pointer in the Squirrel VM "
-                                                       @"root table."
+                        @"OCSquirrelVM user pointer in the Squirrel VM "
+                        @"root table."
                                              userInfo: nil];
             }
             
             sq_settop(_vm, top);
             
             sq_setprintfunc(_vm, OCSquirrelVMPrintfunc, OCSquirrelVMErrorfunc);
-        });
+        }];
     }
     return self;
 }

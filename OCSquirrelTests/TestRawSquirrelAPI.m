@@ -91,4 +91,34 @@
                    @"we are working with.");
 }
 
+
+- (void) testNonStringKey
+{
+    static const SQInteger key   = 123;
+    static const SQInteger value = 456;
+    
+    sq_pushroottable(_vm);
+    
+    SQInteger top = sq_gettop(_vm);
+    
+    sq_pushinteger(_vm, key);
+    sq_pushinteger(_vm, value);
+    
+    sq_newslot(_vm, -3, SQFalse);
+    
+    sq_settop(_vm, top);
+    
+    sq_pushroottable(_vm);
+    sq_pushinteger(_vm, key);
+    
+    sq_get(_vm, -2);
+    
+    SQInteger readValue = 0;
+    
+    sq_getinteger(_vm, -1, &readValue);
+    
+    STAssertEquals(readValue, value,
+                   @"Should be able to create slots with non-string based keys");
+}
+
 @end

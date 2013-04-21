@@ -25,6 +25,8 @@
 
 - (id) initWithSquirrelVM: (OCSquirrelVM *) squirrelVM;
 
+#pragma mark pushing methods
+
 - (void) pushInteger: (SQInteger) value;
 - (void) pushFloat:   (SQFloat)   value;
 - (void) pushBool:    (BOOL)      value;
@@ -36,6 +38,10 @@
 
 - (void) pushNull;
 
+- (void) pushValue: (id) value;
+
+
+#pragma mark reading methods
 
 - (SQInteger) integerAtPosition: (SQInteger) position;
 - (SQFloat)     floatAtPosition: (SQInteger) position;
@@ -44,5 +50,10 @@
 
 - (SQUserPointer) userPointerAtPosition: (SQInteger) position;
 - (HSQOBJECT) sqObjectAtPosition: (SQInteger) position;
+
+
+#pragma mark type information
+
+- (BOOL) isNullAtPosition: (SQInteger) position;
 
 @end

@@ -30,6 +30,8 @@
 
 - (void) pushNull;
 
+- (void) pushValue: (id) value;
+
 
 #pragma mark reading methods
 
@@ -40,5 +42,10 @@
 
 - (SQUserPointer) userPointerAtPosition: (SQInteger) position;
 - (HSQOBJECT) sqObjectAtPosition: (SQInteger) position;
+
+
+#pragma mark type information
+
+- (BOOL) isNullAtPosition: (SQInteger) position;
 
 @end
