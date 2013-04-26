@@ -86,6 +86,11 @@ extern const NSUInteger kOCSquirrelVMDefaultInitialStackSize;
 - (id) executeSync: (NSString *) script;
 
 
+#pragma mark bindings
+
+- (void) bindClass: (Class) aClass;
+
+
 #pragma mark general dispatch
 
 /// Performs block on the vmQueue; does not lead to deadlock if called within a block already on vmQueue

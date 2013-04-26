@@ -163,6 +163,15 @@ static const void * const kDispatchSpecificKeyOCSquirrelVMQueue = &kDispatchSpec
 
 
 #pragma mark -
+#pragma mark bindings
+
+- (void) bindClass: (Class) aClass
+{
+    
+}
+
+
+#pragma mark -
 #pragma mark GCD-related
 
 - (BOOL) currentlyInVMQueue

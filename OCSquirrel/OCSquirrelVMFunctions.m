@@ -43,5 +43,12 @@ void OCSquirrelVMPrintfunc(HSQUIRRELVM vm, const SQChar *s, ...)
 
 void OCSquirrelVMErrorfunc(HSQUIRRELVM vm, const SQChar *s, ...)
 {
-    // TODO: implement
+    SQChar buffer[4096] = {0};
+    
+	va_list vl;
+	va_start(vl, s);
+	vsprintf(buffer, s, vl);
+	va_end(vl);
+    
+    NSLog(@"%s", buffer);
 }
