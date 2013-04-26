@@ -176,23 +176,67 @@
 
 - (void) testExecuteSyncValidNoThrow
 {
-    STAssertNoThrow([_squirrelVM executeSync: @"local x = 0;"],
+    STAssertNoThrow([_squirrelVM executeSync: @"local x = 0;" error: nil],
                     @"OCSquirrelVM -executeSync: should not throw exception for a valid Squirrel script.");
 }
 
 
-- (void) testExecuteSyncInvalidThrows
+- (void) testExecuteSyncInvalidError
 {
-    STAssertThrowsSpecificNamed([_squirrelVM executeSync: @"local x + 0"],
-                                NSException, NSInvalidArgumentException,
-                                @"OCSquirrelVM -executeSync: should throw an NSInvalidArgumentException "
-                                @"for an invalid Squirrel script.");
+    NSError *error = nil;
+    [_squirrelVM executeSync: @"local x + 0" error: &error];
+    
+    STAssertNotNil(error,
+                   @"OCSquirrelVM -executeSync: should return a not nil NSError "
+                   @"for an invalid Squirrel script.");
+}
+
+
+- (void) testExecuteSyncInvalidErrorDomain
+{
+    NSError *error = nil;
+    [_squirrelVM executeSync: @"local x + 0" error: &error];
+    
+    STAssertEqualObjects(error.domain, OCSquirrelVMErrorDomain,
+                         @"Error returned by OCSquirrelVM should have OCSquirrelVMErrorDomain domain.");
+}
+
+
+- (void) testExecuteSyncInvalidErrorCodeFailedGetCString
+{
+    NSError *error = nil;
+    [_squirrelVM executeSync: nil error: &error];
+    
+    STAssertEquals(error.code, OCSquirrelVMError_FailedToGetCString,
+                   @"When a C string could not be retrieved for a script, returned error code "
+                   @"should be equal to OCSquirrelVMError_FailedToGetCString");
+}
+
+
+- (void) testExecuteSyncInvalidErrorCodeCompilerError
+{
+    NSError *error = nil;
+    [_squirrelVM executeSync: @"local x + 0" error: &error];
+    
+    STAssertEquals(error.code, OCSquirrelVMError_CompilerError,
+                   @"When compiling script fails, returned error code "
+                   @"should be equal to OCSquirrelVMError_CompilerError");
+}
+
+
+- (void) testExecuteSyncInvalidResult
+{
+    id result = [_squirrelVM executeSync: @"local x + 0" error: nil];
+    
+    STAssertNil(result,
+                @"OCSquirrelVM -executeSync: should return a nil result "
+                @"for an invalid Squirrel script.");
 }
 
 
 - (void) testExecuteSyncResultString
 {
-    id result = [_squirrelVM executeSync: @"return \"some string\";"];
+    id result = [_squirrelVM executeSync: @"return \"some string\";" error: nil];
     
     STAssertEqualObjects(result, @"some string",
                          @"-executeSync should return the value which the Squirrel script "
@@ -202,7 +246,7 @@
 
 - (void) testExecuteSyncResultInteger
 {
-    id result = [_squirrelVM executeSync: @"return 12345;"];
+    id result = [_squirrelVM executeSync: @"return 12345;" error: nil];
     
     STAssertEqualObjects(result, @12345,
                          @"-executeSync should return the value which the Squirrel script "
@@ -212,7 +256,7 @@
 
 - (void) testExecuteSyncResultFloat
 {
-    id result = [_squirrelVM executeSync: @"return 123.456;"];
+    id result = [_squirrelVM executeSync: @"return 123.456;" error: nil];
     
     STAssertEqualsWithAccuracy([result floatValue], 123.456f, 1e-3,
                                @"-executeSync should return the value which the Squirrel script "
@@ -222,7 +266,7 @@
 
 - (void) testExecuteSyncResultBool
 {
-    id result = [_squirrelVM executeSync: @"return true;"];
+    id result = [_squirrelVM executeSync: @"return true;" error: nil];
     
     STAssertEqualObjects(result, @YES,
                          @"-executeSync should return the value which the Squirrel script "
@@ -232,7 +276,7 @@
 
 - (void) testExecuteSyncResultNull
 {
-    id result = [_squirrelVM executeSync: @"return null;"];
+    id result = [_squirrelVM executeSync: @"return null;" error: nil];
     
     STAssertNil(result,
                 @"-executeSync should return the value which the Squirrel script "
@@ -242,7 +286,7 @@
 
 - (void) testExecuteSyncResultNone
 {
-    id result = [_squirrelVM executeSync: @"local x = 0;"];
+    id result = [_squirrelVM executeSync: @"local x = 0;" error: nil];
     
     STAssertNil(result,
                 @"-executeSync should nil if the script does not return anything.");

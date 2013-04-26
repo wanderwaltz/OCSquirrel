@@ -23,6 +23,8 @@
 
 const NSUInteger kOCSquirrelVMDefaultInitialStackSize = 1024;
 
+NSString * const OCSquirrelVMErrorDomain = @"com.frostbit.OCSquirrelVM.error.domain";
+
 
 /// A source name used when compiling a script from NSString.
 static const SQChar * const kOCSquirrelVMCompileBufferSourceName = _SC("buffer");
@@ -104,12 +106,11 @@ static const void * const kDispatchSpecificKeyOCSquirrelVMQueue = &kDispatchSpec
 #pragma mark -
 #pragma mark script execution
 
-- (id) executeSync: (NSString *) script
+- (id) executeSync: (NSString *) script error: (__autoreleasing NSError **) outError
 {
-    __block BOOL      success         = NO;
-    __block NSString *exceptionReason = nil;
-    __block NSString *exceptionName   = nil;
-    __block id        result          = nil;
+    __block BOOL    success = NO;
+    __block NSError *error  = nil;
+    __block id      result  = nil;
     
     [self doWait: ^{
         
@@ -130,32 +131,35 @@ static const void * const kDispatchSpecificKeyOCSquirrelVMQueue = &kDispatchSpec
                 }
                 else
                 {
-                    exceptionName   = NSInternalInconsistencyException;
-                    exceptionReason = @"*** executeSync: failed to call compiled script function";
+                    error = [NSError errorWithDomain: OCSquirrelVMErrorDomain
+                                                code: OCSquirrelVMError_FailedToCallScript
+                                            userInfo: nil];
                 }
                 
             }
             else
             {
-                exceptionName   = NSInvalidArgumentException;
-                exceptionReason = @"*** executeSync: failed to compile script";
+                error = [NSError errorWithDomain: OCSquirrelVMErrorDomain
+                                            code: OCSquirrelVMError_CompilerError
+                                        userInfo: nil];
             }
             
             self.stack.top = top;
         }
         else
         {
-            exceptionName   = NSInvalidArgumentException;
-            exceptionReason = @"*** executeSync: failed to convert NSString "
-                              @"to a format accepted by Squirrel";
+            error = [NSError errorWithDomain: OCSquirrelVMErrorDomain
+                                        code: OCSquirrelVMError_FailedToGetCString
+                                    userInfo: nil];
         }
     }];
     
     if (!success)
     {
-        @throw [NSException exceptionWithName: exceptionName
-                                       reason: exceptionReason
-                                     userInfo: nil];
+        if (outError != nil)
+        {
+            *outError = error;
+        }
     }
     
     return result;

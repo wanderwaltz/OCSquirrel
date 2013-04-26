@@ -56,7 +56,7 @@
     
     NSString *printHelloWorld = [NSString stringWithFormat: @"print(\"%@\");", kHelloWorld];
     
-    [_squirrelVM executeSync: printHelloWorld];
+    [_squirrelVM executeSync: printHelloWorld error: nil];
     
     STAssertNoThrow([delegate verify],
                     @"Delegate method -squirrelVM:didPrintString: should be invoked with the OCSquirrelVM "
@@ -71,7 +71,7 @@
     
     NSString *printEnglishString = [NSString stringWithFormat: @"print(\"%@\");", kEnglishString];
     
-    [_squirrelVM executeSync: printEnglishString];
+    [_squirrelVM executeSync: printEnglishString error: nil];
     
     STAssertEqualObjects(_lastPrintedString, kEnglishString,
                          @"String containing only letters from English alphabet should be "
@@ -86,7 +86,7 @@
     
     NSString *printUnicodeString = [NSString stringWithFormat: @"print(\"%@\");", kUnicodeString];
     
-    [_squirrelVM executeSync: printUnicodeString];
+    [_squirrelVM executeSync: printUnicodeString error: nil];
     
     STAssertEqualObjects(_lastPrintedString, kUnicodeString,
                          @"String containing unicode characters should be "

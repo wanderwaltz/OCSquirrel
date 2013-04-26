@@ -18,6 +18,15 @@
  */
 extern const NSUInteger kOCSquirrelVMDefaultInitialStackSize;
 
+extern NSString * const OCSquirrelVMErrorDomain;
+
+enum : NSInteger
+{
+    OCSquirrelVMError_FailedToGetCString = 0x01,
+    OCSquirrelVMError_CompilerError      = 0x02,
+    OCSquirrelVMError_FailedToCallScript = 0x03
+};
+
 
 #pragma mark -
 #pragma mark OCSquirrelVMDelegate protocol
@@ -68,22 +77,8 @@ extern const NSUInteger kOCSquirrelVMDefaultInitialStackSize;
 
 #pragma mark script execution
 
-/*! Compiles and executes the Squirrel script synchronously, returning the result of the script execution.
- 
- This method is designed to be called when an immediate result is needed, and does throw 
- NSInvalidArgumentException if compiling the script failed. May also throw an
- NSInternalInconsistencyException, but this is an unusual case and should generally never happen.
- 
- It is recommended to use NSError-based error handling for expected errors, and it would make more sense 
- to do that if the app could run the code from some unexpected source so that the compilation errors 
- would be possible etc. But since Apple forbids iOS applications to download executable code in any form, 
- we may expect all scripts passed to this method to be either hard-coded or read from the resource files 
- included in the application bundle. So any compilation errors which may happen with these scripts will 
- most likely be fixed at the time of application developing, and exceptions seem to be a more sensible 
- way to handle these.
- 
- */
-- (id) executeSync: (NSString *) script;
+/// Compiles and executes the Squirrel script synchronously, returning the result of the script execution.
+- (id) executeSync: (NSString *) script error: (__autoreleasing NSError **) error;
 
 
 #pragma mark bindings

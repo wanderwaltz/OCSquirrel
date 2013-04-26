@@ -49,7 +49,7 @@
 - (void) testDoesCreateSquirrelClass
 {
     [_squirrelVM bindClass: [NSDate class]];
-    id instance = [_squirrelVM executeSync: @"return NSDate();"];
+    id instance = [_squirrelVM executeSync: @"return NSDate();" error: nil];
     
     STAssertNotNil(instance,
                    @"After binding a class SquirrelVM should be able to create its intsnces.");
