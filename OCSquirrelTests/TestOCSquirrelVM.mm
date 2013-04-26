@@ -189,4 +189,63 @@
                                 @"for an invalid Squirrel script.");
 }
 
+
+- (void) testExecuteSyncResultString
+{
+    id result = [_squirrelVM executeSync: @"return \"some string\";"];
+    
+    STAssertEqualObjects(result, @"some string",
+                         @"-executeSync should return the value which the Squirrel script "
+                         @"has returned.");
+}
+
+
+- (void) testExecuteSyncResultInteger
+{
+    id result = [_squirrelVM executeSync: @"return 12345;"];
+    
+    STAssertEqualObjects(result, @12345,
+                         @"-executeSync should return the value which the Squirrel script "
+                         @"has returned.");
+}
+
+
+- (void) testExecuteSyncResultFloat
+{
+    id result = [_squirrelVM executeSync: @"return 123.456;"];
+    
+    STAssertEqualsWithAccuracy([result floatValue], 123.456f, 1e-3,
+                               @"-executeSync should return the value which the Squirrel script "
+                               @"has returned.");
+}
+
+
+- (void) testExecuteSyncResultBool
+{
+    id result = [_squirrelVM executeSync: @"return true;"];
+    
+    STAssertEqualObjects(result, @YES,
+                         @"-executeSync should return the value which the Squirrel script "
+                         @"has returned.");
+}
+
+
+- (void) testExecuteSyncResultNull
+{
+    id result = [_squirrelVM executeSync: @"return null;"];
+    
+    STAssertNil(result,
+                @"-executeSync should return the value which the Squirrel script "
+                @"has returned.");
+}
+
+
+- (void) testExecuteSyncResultNone
+{
+    id result = [_squirrelVM executeSync: @"local x = 0;"];
+    
+    STAssertNil(result,
+                @"-executeSync should nil if the script does not return anything.");
+}
+
 @end

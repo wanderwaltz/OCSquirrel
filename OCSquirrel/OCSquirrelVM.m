@@ -134,6 +134,7 @@ void OCSquirrelVMErrorfunc(HSQUIRRELVM vm, const SQChar *s, ...)
     __block BOOL      success         = NO;
     __block NSString *exceptionReason = nil;
     __block NSString *exceptionName   = nil;
+    __block id        result          = nil;
     
     [self doWait: ^{
         
@@ -147,9 +148,10 @@ void OCSquirrelVMErrorfunc(HSQUIRRELVM vm, const SQChar *s, ...)
                                               kOCSquirrelVMCompileBufferSourceName, SQTrue)))
             {
                 sq_pushroottable(_vm);
-                if (SQ_SUCCEEDED(sq_call(_vm, 1, SQFalse, SQTrue)))
+                if (SQ_SUCCEEDED(sq_call(_vm, 1, SQTrue, SQTrue)))
                 {
                     success = YES;
+                    result  = [self.stack valueAtPosition: -1];
                 }
                 else
                 {
@@ -181,7 +183,7 @@ void OCSquirrelVMErrorfunc(HSQUIRRELVM vm, const SQChar *s, ...)
                                      userInfo: nil];
     }
     
-    return nil;
+    return result;
 }
 
 
