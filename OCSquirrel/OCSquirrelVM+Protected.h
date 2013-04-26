@@ -24,4 +24,6 @@
     OCSquirrelVMStackImpl *_stack;
 }
 
+@property (strong, readwrite, nonatomic) NSError *lastError;
+
 @end

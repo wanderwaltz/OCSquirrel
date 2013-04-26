@@ -12,6 +12,7 @@
 
 #import "OCSquirrelVMFunctions.h"
 #import "OCSquirrelVM+DelegateCallbacks.h"
+#import "OCSquirrelVM+Protected.h"
 
 
 OCSquirrelVM *OCSquirrelVMforVM(HSQUIRRELVM vm)
@@ -50,5 +51,22 @@ void OCSquirrelVMErrorfunc(HSQUIRRELVM vm, const SQChar *s, ...)
 	vsprintf(buffer, s, vl);
 	va_end(vl);
     
-    NSLog(@"%s", buffer);
+    NSLog(@">>>>ERROR<<<< %s", buffer);
+    
+    NSString *errorMessage = [[NSString alloc] initWithCString: buffer
+                                                      encoding: NSUTF8StringEncoding];
+    
+    NSDictionary *userInfo = nil;
+    
+    if (errorMessage != nil)
+    {
+        userInfo = @{ NSLocalizedDescriptionKey : errorMessage };
+    }
+    
+    NSError *error = [NSError errorWithDomain: OCSquirrelVMErrorDomain
+                                         code: OCSquirrelVMError_CompilerError
+                                     userInfo: userInfo];
+    
+    OCSquirrelVM *squirrelVM = OCSquirrelVMforVM(vm);
+    squirrelVM.lastError     = error;
 }

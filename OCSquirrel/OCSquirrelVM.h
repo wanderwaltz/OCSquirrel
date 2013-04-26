@@ -24,7 +24,8 @@ enum : NSInteger
 {
     OCSquirrelVMError_FailedToGetCString = 0x01,
     OCSquirrelVMError_CompilerError      = 0x02,
-    OCSquirrelVMError_FailedToCallScript = 0x03
+    OCSquirrelVMError_FailedToCallScript = 0x03,
+    OCSquirrelVMError_RuntimeError       = 0x04
 };
 
 
@@ -60,6 +61,8 @@ enum : NSInteger
 
 
 @property (readonly, nonatomic) id<OCSquirrelVMStack> stack;
+
+@property (strong, readonly, nonatomic) NSError *lastError;
 
 
 

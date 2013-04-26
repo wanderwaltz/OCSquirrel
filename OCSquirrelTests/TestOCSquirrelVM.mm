@@ -172,7 +172,7 @@
 
 
 #pragma mark -
-#pragma mark tests for script string execution
+#pragma mark executeSync: errors
 
 - (void) testExecuteSyncValidNoThrow
 {
@@ -189,6 +189,17 @@
     STAssertNotNil(error,
                    @"OCSquirrelVM -executeSync: should return a not nil NSError "
                    @"for an invalid Squirrel script.");
+}
+
+
+- (void) testExecuteSyncInvalidLastError
+{
+    NSError *error = nil;
+    [_squirrelVM executeSync: @"local x + 0" error: &error];
+    
+    STAssertEqualObjects(error, _squirrelVM.lastError,
+                         @"OCSquirrelVM -executeSync: should return a not nil NSError "
+                         @"and have a lastError property with the same error.");
 }
 
 
@@ -233,6 +244,8 @@
                 @"for an invalid Squirrel script.");
 }
 
+
+#pragma mark executeSync: result values
 
 - (void) testExecuteSyncResultString
 {

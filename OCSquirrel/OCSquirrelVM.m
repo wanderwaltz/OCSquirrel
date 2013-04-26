@@ -139,9 +139,16 @@ static const void * const kDispatchSpecificKeyOCSquirrelVMQueue = &kDispatchSpec
             }
             else
             {
-                error = [NSError errorWithDomain: OCSquirrelVMErrorDomain
-                                            code: OCSquirrelVMError_CompilerError
-                                        userInfo: nil];
+                if (self.lastError != nil)
+                {
+                    error = self.lastError;
+                }
+                else
+                {
+                    error = [NSError errorWithDomain: OCSquirrelVMErrorDomain
+                                                code: OCSquirrelVMError_CompilerError
+                                            userInfo: nil];
+                }
             }
             
             self.stack.top = top;
