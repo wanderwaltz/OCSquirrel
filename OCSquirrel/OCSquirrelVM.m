@@ -14,6 +14,8 @@
 #import "OCSquirrelVM+Protected.h"
 #import "OCSquirrelVM+DelegateCallbacks.h"
 #import "OCSquirrelVMStackImpl.h"
+#import "OCSquirrelVMFunctions.h"
+
 
 
 #pragma mark -
@@ -34,33 +36,6 @@ static const SQChar * const kOCSquirrelVMCompileBufferSourceName = _SC("buffer")
  is needed to allow synchronous calls which do not result in a deadlock when called on the same queue. 
  */
 static const void * const kDispatchSpecificKeyOCSquirrelVMQueue = &kDispatchSpecificKeyOCSquirrelVMQueue;
-
-
-#pragma mark -
-#pragma mark Squirrel bindings
-
-void OCSquirrelVMPrintfunc(HSQUIRRELVM vm, const SQChar *s, ...)
-{
-    SQChar buffer[4096] = {0};
-    
-	va_list vl;
-	va_start(vl, s);
-	vsprintf(buffer, s, vl);
-	va_end(vl);
-    
-    SQUserPointer squirrelVMCPointer = sq_getforeignptr(vm);
-        
-    OCSquirrelVM *squirrelVM = (__bridge id)squirrelVMCPointer;
-    [squirrelVM _delegate_didPrintString:
-     [[NSString alloc] initWithCString: buffer
-                              encoding: NSUTF8StringEncoding]];
-}
-
-
-void OCSquirrelVMErrorfunc(HSQUIRRELVM vm, const SQChar *s, ...)
-{
-    // TODO: implement
-}
 
 
 #pragma mark -
