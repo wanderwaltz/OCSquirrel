@@ -329,6 +329,14 @@
                     value = [[OCSquirrelClass alloc] initWithHSQOBJECT: class
                                                                   inVM: _squirrelVM];
             } break;
+                
+            case OT_INSTANCE:
+            {
+                HSQOBJECT instance = [self sqObjectAtPosition: position];
+                
+                value = [[OCSquirrelInstance alloc] initWithHSQOBJECT: instance
+                                                                 inVM: _squirrelVM];
+            } break;
      
             default:
             {

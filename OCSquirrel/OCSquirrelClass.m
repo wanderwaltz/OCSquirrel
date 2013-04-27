@@ -12,7 +12,6 @@
 
 #import "OCSquirrelClass.h"
 
-
 #pragma mark -
 #pragma mark OCSquirrelClass implementation
 
@@ -23,17 +22,13 @@
 
 - (Class) nativeClass
 {
-    __block Class class = nil;
+    Class class   = nil;
+    id attributes = [self classAttributes];
     
-    OCSquirrelVM *squirrelVM = self.squirrelVM;
-    
-    [squirrelVM doWaitPreservingStackTop: ^{
-        [self push];
-        [squirrelVM.stack pushNull];
-        sq_getattributes(squirrelVM.vm, -2);
-        class = (Class)[squirrelVM.stack userPointerAtPosition: -1];
-    }];
-    
+    if ([attributes isKindOfClass: [NSValue class]])
+    {
+        class = (__bridge Class)[attributes pointerValue];
+    }
     
     return class;
 }
@@ -65,5 +60,41 @@
     }
     return self;
 }
+
+
+#pragma mark -
+#pragma mark class attributes
+
+- (void) setClassAttributes: (id) attributes
+{
+    OCSquirrelVM *squirrelVM = self.squirrelVM;
+    
+    [squirrelVM doWaitPreservingStackTop: ^{
+        [self push];
+        sq_pushnull(squirrelVM.vm);
+        [squirrelVM.stack pushValue: attributes];
+        
+        sq_setattributes(squirrelVM.vm, -3);
+    }];
+}
+
+
+- (id) classAttributes
+{
+    __block id value = nil;
+    
+    OCSquirrelVM *squirrelVM = self.squirrelVM;
+    
+    [squirrelVM doWaitPreservingStackTop: ^{
+        [self push];
+        sq_pushnull(squirrelVM.vm);
+        sq_getattributes(squirrelVM.vm, -2);
+        
+        value = [squirrelVM.stack valueAtPosition: -1];
+    }];
+    
+    return value;
+}
+
 
 @end

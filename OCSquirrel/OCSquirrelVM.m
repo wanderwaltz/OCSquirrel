@@ -229,10 +229,7 @@ static const void * const kDispatchSpecificKeyOCSquirrelVMQueue = &kDispatchSpec
             class = [[OCSquirrelClass alloc] initWithVM: self];
             _classBindings[className] = class;
             
-            [class push];
-            [self.stack pushNull];
-            [self.stack pushUserPointer: (SQUserPointer)aClass];
-            sq_setattributes(_vm, -3);
+            [class setClassAttributes: [NSValue valueWithPointer: (__bridge void *)aClass]];
         }
     }];
     

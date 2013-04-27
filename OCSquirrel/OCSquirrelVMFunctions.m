@@ -219,3 +219,18 @@ void OCSquirrelVMCompilerErrorHandler(HSQUIRRELVM vm,
         squirrelVM.lastError = error;
     }];
 }
+
+
+#pragma mark -
+#pragma mark Bindings
+
+SQInteger OCSquirrelVMBindings_Constructor(HSQUIRRELVM vm)
+{
+    OCSquirrelVM *squirrelVM = OCSquirrelVMforVM(vm);
+    
+    [squirrelVM doWaitPreservingStackTop: ^{
+        NSLog(@"-1: %@", [squirrelVM.stack valueAtPosition: -1]);
+    }];
+    
+    return 0;
+}

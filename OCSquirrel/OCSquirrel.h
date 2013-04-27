@@ -29,5 +29,6 @@
 #import "OCSquirrelObject.h"
 #import "OCSquirrelTable.h"
 #import "OCSquirrelClass.h"
+#import "OCSquirrelInstance.h"
 
 #endif

@@ -8,10 +8,13 @@
 
 #import "OCSquirrelTable.h"
 
-
 #pragma mark -
 #pragma mark OCSquirrelClass interface
 
 @interface OCSquirrelClass : OCSquirrelTable
 @property (readonly, nonatomic) Class nativeClass;
+
+- (void) setClassAttributes: (id) attributes;
+- (id) classAttributes;
+
 @end

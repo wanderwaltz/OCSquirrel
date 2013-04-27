@@ -520,6 +520,50 @@
 }
 
 
+- (void) testReadValueClassValue
+{
+    sq_newclass(_squirrelVM.vm, SQFalse);
+    
+    HSQOBJECT class;
+    sq_getstackobj(_squirrelVM.vm, -1, &class);
+    
+    id value = [_squirrelVM.stack valueAtPosition: -1];
+    
+    STAssertEquals(*[value obj], class,
+                   @"-valueAtPosition: should return the corresponding OCSquirrelClass for "
+                   @"class stack values");
+}
+
+
+- (void) testReadValueInstanceClass
+{
+    sq_newclass(_squirrelVM.vm, SQFalse);
+    sq_createinstance(_squirrelVM.vm, -1);
+    
+    id value = [_squirrelVM.stack valueAtPosition: -1];
+    
+    STAssertTrue([value isKindOfClass: [OCSquirrelInstance class]],
+                 @"-valueAtPosition: should return an OCSquirrelInstance for instance stack values");
+}
+
+
+- (void) testReadValueInstanceValue
+{
+    sq_newclass(_squirrelVM.vm, SQFalse);
+    sq_createinstance(_squirrelVM.vm, -1);
+    
+    HSQOBJECT instance;
+    sq_getstackobj(_squirrelVM.vm, -1, &instance);
+    
+    id value = [_squirrelVM.stack valueAtPosition: -1];
+    
+    STAssertEquals(*[value obj], instance,
+                   @"-valueAtPosition: should return the corresponding OCSquirrelInstance for "
+                   @"instance stack values");
+}
+
+
+
 #pragma mark -
 #pragma mark reading failures tests
 
