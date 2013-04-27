@@ -21,20 +21,6 @@
 #pragma mark -
 #pragma mark properties
 
-- (OCSquirrelVM *) squirrelVM
-{
-    if (_squirrelVM == nil)
-    {
-        @throw [NSException exceptionWithName: NSInternalInconsistencyException
-                                       reason: @"*** OCSquirrelObject cannot function without "
-                                               @"an OCSquirrelVM"
-                                     userInfo: nil];
-    }
-    
-    return _squirrelVM;
-}
-
-
 - (HSQOBJECT *) obj
 {
     return &_obj;

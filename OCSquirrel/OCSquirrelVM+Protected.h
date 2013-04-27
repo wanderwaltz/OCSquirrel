@@ -22,6 +22,10 @@
     
     /// A concrete implementation of the stack property
     OCSquirrelVMStackImpl *_stack;
+    
+    
+    /// Contains Objective-C class names as keys an OCSquirrelClass instances as values
+    NSMutableDictionary *_classBindings;
 }
 
 @property (strong, readwrite, nonatomic) NSError *lastError;

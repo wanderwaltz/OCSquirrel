@@ -48,11 +48,22 @@
 
 - (void) testDoesCreateSquirrelClass
 {
-    [_squirrelVM bindClass: [NSDate class]];
-    id instance = [_squirrelVM executeSync: @"return NSDate();" error: nil];
+    OCSquirrelClass *class = [_squirrelVM bindClass: [NSDate class]];
     
-    STAssertNotNil(instance,
-                   @"After binding a class SquirrelVM should be able to create its intsnces.");
+    STAssertNotNil(class,
+                   @"bindClass: should return an OCSquirrelClass instance");
 }
+
+
+- (void) testBindingTwiceSameClass
+{
+    OCSquirrelClass *class1 = [_squirrelVM bindClass: [NSDate class]];
+    OCSquirrelClass *class2 = [_squirrelVM bindClass: [NSDate class]];
+    
+    STAssertEqualObjects(class1, class2,
+                         @"bindClass: should return the same OCSquirrelClass "
+                         @"for the same Objective-C classes");
+}
+
 
 @end

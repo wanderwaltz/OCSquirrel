@@ -15,6 +15,7 @@
 #import "OCSquirrelVM+DelegateCallbacks.h"
 #import "OCSquirrelVMStackImpl.h"
 #import "OCSquirrelVMFunctions.h"
+#import "OCSquirrelTable.h"
 
 
 
@@ -98,6 +99,7 @@ static const void * const kDispatchSpecificKeyOCSquirrelVMQueue = &kDispatchSpec
                                     _vm, NULL);
         
         _stack = [[OCSquirrelVMStackImpl alloc] initWithSquirrelVM: self];
+        _classBindings = [NSMutableDictionary dictionary];
         
         [self doWait: ^{
             
@@ -119,7 +121,8 @@ static const void * const kDispatchSpecificKeyOCSquirrelVMQueue = &kDispatchSpec
 
 - (void) dealloc
 {
-    _vmQueue = nil;
+    _classBindings = nil;
+    _vmQueue       = nil;
     
     if (_vm != nil)
         sq_close(_vm);
@@ -205,9 +208,23 @@ static const void * const kDispatchSpecificKeyOCSquirrelVMQueue = &kDispatchSpec
 #pragma mark -
 #pragma mark bindings
 
-- (void) bindClass: (Class) aClass
+- (OCSquirrelClass *) bindClass: (Class) aClass;
 {
+    __block OCSquirrelClass *class = nil;
     
+    [self doWait:^{
+        NSString *className = NSStringFromClass(aClass);
+        
+        class = _classBindings[className];
+        
+        if (class == nil)
+        {
+            class = [[OCSquirrelClass alloc] initWithVM: self];
+            _classBindings[className] = class;
+        }
+    }];
+    
+    return class;
 }
 
 

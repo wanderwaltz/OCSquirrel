@@ -11,6 +11,14 @@
 
 
 #pragma mark -
+#pragma mark External declarations
+
+@class OCSquirrelObject;
+@class OCSquirrelTable;
+@class OCSquirrelClass;
+
+
+#pragma mark -
 #pragma mark Constants
 
 /*! Default initial stack capacity of the Squirrel VM. When initializing an OCSquirrelVM 
@@ -96,7 +104,7 @@ enum : NSInteger
 
 #pragma mark bindings
 
-- (void) bindClass: (Class) aClass;
+- (OCSquirrelClass *) bindClass: (Class) aClass;
 
 
 #pragma mark general dispatch
