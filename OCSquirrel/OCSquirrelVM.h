@@ -20,6 +20,14 @@ extern const NSUInteger kOCSquirrelVMDefaultInitialStackSize;
 
 extern NSString * const OCSquirrelVMErrorDomain;
 extern NSString * const OCSquirrelVMErrorCallStackUserInfoKey;
+extern NSString * const OCSquirrelVMErrorLocalsUserInfoKey;
+
+extern NSString * const OCSquirrelVMCallStackFunctionKey;
+extern NSString * const OCSquirrelVMCallStackLineKey;
+extern NSString * const OCSquirrelVMCallStackSourceKey;
+
+extern NSString * const OCSquirrelVMLocalNameKey;
+extern NSString * const OCSquirrelVMLocalValueKey;
 
 enum : NSInteger
 {

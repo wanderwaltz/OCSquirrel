@@ -65,9 +65,70 @@ void OCSquirrelVMErrorFunc(HSQUIRRELVM vm, const SQChar *s, ...)
 }
 
 
-static NSString *OCSquirrelVMCallStack(HSQUIRRELVM vm)
+static NSArray * OCSquirrelVMCallStackInfo(HSQUIRRELVM vm)
 {
-    return nil;
+    NSMutableArray *result = [NSMutableArray array];
+    
+    SQStackInfos stackInfos;
+    SQInteger    level = 1; // 1 is to skip the current function that is level 0
+
+    while (SQ_SUCCEEDED(sq_stackinfos(vm, level, &stackInfos)))
+    {
+        const SQChar *function = _SC("unknown");
+        const SQChar *source   = _SC("unknown");
+        
+        if (stackInfos.funcname) function = stackInfos.funcname;
+        if (stackInfos.source)   source   = stackInfos.source;
+        
+        [result addObject:
+         @{
+            OCSquirrelVMCallStackLineKey     : @(stackInfos.line),
+            OCSquirrelVMCallStackSourceKey   : [NSString stringWithFormat: @"%s", source],
+            OCSquirrelVMCallStackFunctionKey : [NSString stringWithFormat: @"%s", function]
+         }];
+        
+        level++;
+    }
+    
+    return [result copy];
+}
+
+
+static NSArray * OCSquirrelVMLocalsInfo(HSQUIRRELVM vm)
+{
+    OCSquirrelVM *squirrelVM = OCSquirrelVMforVM(vm);
+    NSMutableArray   *result = [NSMutableArray array];
+    
+    SQInteger level = 0;
+    const SQChar *name = 0;
+    SQInteger seq = 0;
+    
+    for (level = 0; level < 10; level++)
+    {
+        seq = 0;
+        
+        while ((name = sq_getlocal(vm, level, seq)))
+        {
+            seq++;
+            
+            id value = [squirrelVM.stack valueAtPosition: -1];
+            
+            NSMutableDictionary *localInfo = [NSMutableDictionary dictionaryWithCapacity: 2];
+            
+            localInfo[OCSquirrelVMLocalNameKey] = [NSString stringWithFormat: @"%s", name];
+            
+            if (value != nil)
+                localInfo[OCSquirrelVMLocalValueKey] = value;
+            else
+                localInfo[OCSquirrelVMLocalValueKey] = [NSNull null];
+            
+            [result addObject: [localInfo copy]];
+        
+            sq_pop(vm,1);
+        }
+    }
+    
+    return [result copy];
 }
 
 
@@ -75,34 +136,53 @@ SQInteger OCSquirrelVMRuntimeErrorHandler(HSQUIRRELVM vm)
 {
     OCSquirrelVM *squirrelVM = OCSquirrelVMforVM(vm);
     
-    if (squirrelVM != nil)
-    {
-        const SQChar *sErrorMessage = 0;
+    [squirrelVM doWait:
+     ^{
+         const SQChar *sErrorMessage = 0;
         
-		if (sq_gettop(vm) >= 1)
-        {
-			sq_getstring(vm, 2, &sErrorMessage);
-        }
+         if (sq_gettop(vm) >= 1)
+         {
+             sq_getstring(vm, 2, &sErrorMessage);
+         }
         
         
-        NSString *errorMessage = nil;
+         NSString *errorMessage = nil;
         
-        if (sErrorMessage != NULL)
-        {
-            errorMessage = [[NSString alloc] initWithCString: sErrorMessage
-                                                    encoding: NSUTF8StringEncoding];
-        }
-        else
-        {
-            errorMessage = @"An unknown error occurred.";
-        }
+         if (sErrorMessage != NULL)
+         {
+             errorMessage = [[NSString alloc] initWithCString: sErrorMessage
+                                                     encoding: NSUTF8StringEncoding];
+         }
+         else
+         {
+             errorMessage = @"An unknown error occurred.";
+         }
         
-        NSError *error = [NSError errorWithDomain: OCSquirrelVMErrorDomain
-                                             code: OCSquirrelVMError_RuntimeError
-                                         userInfo: @{ NSLocalizedDescriptionKey : errorMessage }];
+         NSMutableDictionary *userInfo = [NSMutableDictionary dictionary];
         
-        squirrelVM.lastError = error;
-    }
+         // Add error message if possible
+         if (errorMessage != nil)
+            userInfo[NSLocalizedDescriptionKey] = errorMessage;
+        
+         
+         // Add call stack info if possible
+         NSArray *callStack = OCSquirrelVMCallStackInfo(vm);
+         if (callStack != nil)
+            userInfo[OCSquirrelVMErrorCallStackUserInfoKey] = callStack;
+         
+         
+         // Add info about locals if possible
+         NSArray *locals = OCSquirrelVMLocalsInfo(vm);
+         if (locals != nil)
+             userInfo[OCSquirrelVMErrorLocalsUserInfoKey] = locals;
+        
+         
+         NSError *error = [NSError errorWithDomain: OCSquirrelVMErrorDomain
+                                              code: OCSquirrelVMError_RuntimeError
+                                          userInfo: [userInfo copy]];
+        
+         squirrelVM.lastError = error;
+     }];
     
     return 0;
 }
@@ -116,10 +196,10 @@ void OCSquirrelVMCompilerErrorHandler(HSQUIRRELVM vm,
 {
     OCSquirrelVM *squirrelVM = OCSquirrelVMforVM(vm);
     
-    if (squirrelVM != nil)
-    {
+    [squirrelVM doWait:
+    ^{
         NSString *errorMessage =
-        [NSString stringWithFormat: @"%s line = (%d) column = (%d) : error %s",
+        [NSString stringWithFormat: @"[%s] line = (%d), column = (%d) : error %s",
          sSource, line, column, sError];
         
         NSError *error = [NSError errorWithDomain: OCSquirrelVMErrorDomain
@@ -127,5 +207,5 @@ void OCSquirrelVMCompilerErrorHandler(HSQUIRRELVM vm,
                                          userInfo: @{ NSLocalizedDescriptionKey : errorMessage }];
         
         squirrelVM.lastError = error;
-    }
+    }];
 }

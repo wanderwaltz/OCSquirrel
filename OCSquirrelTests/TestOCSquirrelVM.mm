@@ -246,6 +246,79 @@
 }
 
 
+- (void) testExecuteSyncRuntimeErrorCallStack
+{
+    NSError *error = nil;
+    [_squirrelVM executeSync: @"local x = y;" error: &error];
+    
+    STAssertNotNil(error.userInfo[OCSquirrelVMErrorCallStackUserInfoKey],
+                   @"When a runtime error occurs, userInfo dictionary should "
+                   @"contain call stack info.");
+}
+
+
+- (void) testExecuteSyncRuntimeErrorCallStackContentClass
+{
+    NSError *error = nil;
+    [_squirrelVM executeSync: @"function func() { local x = y; } func();" error: &error];
+    
+    for (id contents in error.userInfo[OCSquirrelVMErrorCallStackUserInfoKey])
+    {
+        STAssertTrue([contents isKindOfClass: [NSDictionary class]],
+                     @"Call stack array should contain NSDictionary elements.");
+    }
+}
+
+
+- (void) testExecuteSyncRuntimeErrorCallStackContents
+{
+    NSError *error = nil;
+    [_squirrelVM executeSync: @"function func() { local x = y; } func();" error: &error];
+    
+    NSArray *callStack = error.userInfo[OCSquirrelVMErrorCallStackUserInfoKey];
+    
+    STAssertTrue([[callStack valueForKey: OCSquirrelVMCallStackFunctionKey] containsObject: @"func"],
+                 @"Call stack should contain the function in which the error has occurred.");
+}
+
+
+- (void) testExecuteSyncRuntimeErrorLocals
+{
+    NSError *error = nil;
+    [_squirrelVM executeSync: @"local x = y;" error: &error];
+    
+    STAssertNotNil(error.userInfo[OCSquirrelVMErrorLocalsUserInfoKey],
+                   @"When a runtime error occurs, userInfo dictionary should "
+                   @"contain locals info.");
+}
+
+
+- (void) testExecuteSyncRuntimeErrorLocalsContentClass
+{
+    NSError *error = nil;
+    [_squirrelVM executeSync: @"local x = y;" error: &error];
+    
+    for (id contents in error.userInfo[OCSquirrelVMErrorLocalsUserInfoKey])
+    {
+        STAssertTrue([contents isKindOfClass: [NSDictionary class]],
+                     @"Locals array should contain NSDictionary elements.");
+    }
+}
+
+
+- (void) testExecuteSyncRuntimeErrorLocalsContents
+{
+    NSError *error = nil;
+    [_squirrelVM executeSync: @"local z = \"qwerty\"; local x = y;" error: &error];
+    
+    NSArray *locals = error.userInfo[OCSquirrelVMErrorLocalsUserInfoKey];
+    
+    STAssertTrue([[locals valueForKey: OCSquirrelVMLocalValueKey] containsObject: @"qwerty"],
+                 @"Locals array should contain local variables from the scope of the function "
+                 @"where an error has occurred.");
+}
+
+
 
 - (void) testExecuteSyncInvalidResult
 {

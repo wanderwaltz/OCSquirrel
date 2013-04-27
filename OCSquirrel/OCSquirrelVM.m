@@ -28,6 +28,20 @@ NSString * const OCSquirrelVMErrorDomain = @"com.frostbit.OCSquirrelVM.error.dom
 NSString * const OCSquirrelVMErrorCallStackUserInfoKey =
     @"com.frostbit.OCSquirrelVM.error.userInfo.callStack";
 
+NSString * const OCSquirrelVMErrorLocalsUserInfoKey =
+    @"com.frostbit.OCSquirrelVM.error.userInfo.locals";
+
+
+NSString * const OCSquirrelVMCallStackFunctionKey = @"function";
+NSString * const OCSquirrelVMCallStackLineKey     = @"line";
+NSString * const OCSquirrelVMCallStackSourceKey   = @"source";
+
+
+NSString * const OCSquirrelVMLocalNameKey  = @"name";
+NSString * const OCSquirrelVMLocalValueKey = @"value";
+
+
+
 /// A source name used when compiling a script from NSString.
 static const SQChar * const kOCSquirrelVMCompileBufferSourceName = _SC("buffer");
 
