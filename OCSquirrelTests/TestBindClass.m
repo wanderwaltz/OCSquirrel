@@ -51,7 +51,7 @@
     OCSquirrelClass *class = [_squirrelVM bindClass: [NSDate class]];
     
     STAssertNotNil(class,
-                   @"bindClass: should return an OCSquirrelClass instance");
+                   @"bindClass should return an OCSquirrelClass instance");
 }
 
 
@@ -61,8 +61,17 @@
     OCSquirrelClass *class2 = [_squirrelVM bindClass: [NSDate class]];
     
     STAssertEqualObjects(class1, class2,
-                         @"bindClass: should return the same OCSquirrelClass "
+                         @"bindClass should return the same OCSquirrelClass "
                          @"for the same Objective-C classes");
+}
+
+
+- (void) testType
+{
+    OCSquirrelClass *class = [_squirrelVM bindClass: [NSDate class]];
+    
+    STAssertEquals(class.type, OT_CLASS,
+                   @"bindClass should return an OCSquirrelObject of type OT_CLASS");
 }
 
 

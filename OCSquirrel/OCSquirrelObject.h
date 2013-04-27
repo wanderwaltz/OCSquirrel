@@ -27,6 +27,7 @@
 @property (readonly, nonatomic) HSQOBJECT *obj;
 
 @property (readonly, nonatomic) BOOL isNull;
+@property (readonly, nonatomic) SQObjectType type;
 
 /// Designated initializer
 - (id) initWithVM: (OCSquirrelVM *) squirrelVM;

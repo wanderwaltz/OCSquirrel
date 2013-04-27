@@ -33,6 +33,12 @@
 }
 
 
+- (SQObjectType) type
+{
+    return _obj._type;
+}
+
+
 #pragma mark -
 #pragma mark initialization methods
 
@@ -43,10 +49,7 @@
     if (self != nil)
     {
         _squirrelVM = squirrelVM;
-        [squirrelVM doWait: ^{
-            sq_resetobject(&_obj);
-        }];
-        
+        sq_resetobject(&_obj);        
     }
     return self;
 }

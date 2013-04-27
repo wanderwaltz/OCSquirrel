@@ -17,4 +17,27 @@
 #pragma mark OCSquirrelClass implementation
 
 @implementation OCSquirrelClass
+
+#pragma mark -
+#pragma mark initialization methods
+
+- (id) initWithVM: (OCSquirrelVM *) squirrelVM
+{
+    self = [super initWithVM: squirrelVM];
+    
+    if (self != nil)
+    {
+        [squirrelVM doWait:^{
+            NSInteger top = squirrelVM.stack.top;
+            
+            sq_newclass(squirrelVM.vm, SQFalse);
+            sq_getstackobj(squirrelVM.vm, -1, &_obj);
+            sq_addref(squirrelVM.vm, &_obj);
+            
+            squirrelVM.stack.top = top;
+        }];
+    }
+    return self;
+}
+
 @end
