@@ -496,6 +496,18 @@
 }
 
 
+- (void) testReadValueClassClass
+{
+    sq_newclass(_squirrelVM.vm, SQFalse);
+    
+    id value = [_squirrelVM.stack valueAtPosition: -1];
+    
+    STAssertTrue([value isKindOfClass: [OCSquirrelClass class]],
+                 @"-valueAtPosition: should return an OCSquirrelClass for class stack values, "
+                 @"got %@ instead", value);
+}
+
+
 #pragma mark -
 #pragma mark reading failures tests
 

@@ -40,6 +40,15 @@
 
 
 #pragma mark -
+#pragma mark class methods
+
++ (BOOL) isAllowedToInitWithSQObjectOfType: (SQObjectType) type
+{
+    return YES;
+}
+
+
+#pragma mark -
 #pragma mark initialization methods
 
 - (id) initWithVM: (OCSquirrelVM *) squirrelVM
@@ -58,16 +67,21 @@
 - (id) initWithHSQOBJECT: (HSQOBJECT) object
                     inVM: (OCSquirrelVM *) squirrelVM
 {
-    self = [self initWithVM: squirrelVM];
-    
-    if (self != nil)
+    if ([[self class] isAllowedToInitWithSQObjectOfType: object._type])
     {
-        _obj = object;
-        [squirrelVM doWait: ^{
-            sq_addref(_squirrelVM.vm, &_obj);
-        }];
+        self = [super init];
+        
+        if (self != nil)
+        {
+            _squirrelVM = squirrelVM;
+            _obj        = object;
+            [squirrelVM doWait: ^{
+                sq_addref(_squirrelVM.vm, &_obj);
+            }];
+        }
+        return self;
     }
-    return self;
+    else return nil;
 }
 
 

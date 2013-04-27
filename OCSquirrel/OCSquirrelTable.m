@@ -19,6 +19,15 @@
 @implementation OCSquirrelTable
 
 #pragma mark -
+#pragma mark class methods
+
++ (BOOL) isAllowedToInitWithSQObjectOfType: (SQObjectType) type
+{
+    return (type == OT_TABLE);
+}
+
+
+#pragma mark -
 #pragma mark initialization methods
 
 + (id) rootTableForVM: (OCSquirrelVM *) squirrelVM
@@ -52,18 +61,6 @@
         }];
     }
     return self;
-}
-
-
-- (id) initWithHSQOBJECT: (HSQOBJECT) object
-                    inVM: (OCSquirrelVM *) squirrelVM
-{
-    if (sq_type(object) == OT_TABLE)
-    {
-        return [super initWithHSQOBJECT: object
-                                   inVM: squirrelVM];
-    }
-    else return nil;
 }
 
 

@@ -40,4 +40,7 @@
 /// Pushes the object to the current VM's stack
 - (void) push;
 
+
++ (BOOL) isAllowedToInitWithSQObjectOfType: (SQObjectType) type;
+
 @end

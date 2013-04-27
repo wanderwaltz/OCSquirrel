@@ -12,6 +12,7 @@
 
 #import "OCSquirrelVMStackImpl.h"
 #import "OCSquirrelVM+Protected.h"
+#import "OCSquirrel.h"
 
 #pragma mark -
 #pragma mark OCSquirrelVMStackImpl implementation
@@ -288,6 +289,14 @@
                 HSQOBJECT table = [self sqObjectAtPosition: position];
                 
                 value = [[OCSquirrelTable alloc] initWithHSQOBJECT: table
+                                                              inVM: _squirrelVM];
+            } break;
+                
+            case OT_CLASS:
+            {
+                HSQOBJECT class = [self sqObjectAtPosition: position];
+                
+                value = [[OCSquirrelClass alloc] initWithHSQOBJECT: class
                                                               inVM: _squirrelVM];
             } break;
      

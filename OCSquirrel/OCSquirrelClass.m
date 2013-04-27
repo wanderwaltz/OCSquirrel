@@ -19,6 +19,15 @@
 @implementation OCSquirrelClass
 
 #pragma mark -
+#pragma mark class methods
+
++ (BOOL) isAllowedToInitWithSQObjectOfType: (SQObjectType) type
+{
+    return (type == OT_CLASS);
+}
+
+
+#pragma mark -
 #pragma mark initialization methods
 
 - (id) initWithVM: (OCSquirrelVM *) squirrelVM
