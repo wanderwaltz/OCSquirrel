@@ -119,7 +119,11 @@
 
 - (void) pushValue: (id) value
 {
-    if ([value isKindOfClass: [NSNumber class]])
+    if ([value isKindOfClass: [OCSquirrelObject class]])
+    {
+        [value push];
+    }
+    else if ([value isKindOfClass: [NSNumber class]])
     {
         const char *objCType = [value objCType];
         
@@ -296,8 +300,34 @@
             {
                 HSQOBJECT class = [self sqObjectAtPosition: position];
                 
-                value = [[OCSquirrelClass alloc] initWithHSQOBJECT: class
-                                                              inVM: _squirrelVM];
+                
+                // First check if the class is one of the bound classes,
+                // then we already have an OCSquirrelClass instance corresponding
+                // to it and there is no need to create more.
+                SQUserPointer nativeClass = NULL;
+                
+                SQInteger top = sq_gettop(_squirrelVM.vm);
+                SQInteger positivePosition = (position > 0) ? position : top+position+1;
+                sq_pushnull(_squirrelVM.vm);
+                sq_getattributes(_squirrelVM.vm, positivePosition);
+                sq_getuserpointer(_squirrelVM.vm, -1, &nativeClass);
+                sq_settop(_squirrelVM.vm, top);
+                
+                if (nativeClass != NULL)
+                {
+                    Class class = (__bridge Class)nativeClass;
+                    NSString *className = NSStringFromClass(class);
+                    
+                    if (className != nil)
+                    {
+                        value = _squirrelVM.classBindings[className];
+                    }
+                }
+                
+                // If existing instance was not found, return a new one.
+                if (value == nil)
+                    value = [[OCSquirrelClass alloc] initWithHSQOBJECT: class
+                                                                  inVM: _squirrelVM];
             } break;
      
             default:

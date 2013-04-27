@@ -294,6 +294,18 @@
 }
 
 
+- (void) testPushValueOCSquirrelObject
+{
+    OCSquirrelObject *object = [OCSquirrelTable rootTableForVM: _squirrelVM];
+    [_squirrelVM.stack pushValue: object];
+    
+    OCSquirrelObject *value = [_squirrelVM.stack valueAtPosition: -1];
+    
+    STAssertEquals(*value.obj, *object.obj,
+                   @"-pushValue: should be capable of pushing OCSquirrelObjects");
+}
+
+
 - (void) testThrowsForUnsupportedTypes
 {
     STAssertThrowsSpecificNamed([_squirrelVM.stack pushValue: [NSObject new]],

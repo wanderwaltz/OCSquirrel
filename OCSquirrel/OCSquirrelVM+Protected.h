@@ -29,5 +29,6 @@
 }
 
 @property (strong, readwrite, nonatomic) NSError *lastError;
+@property (readonly, nonatomic) NSDictionary *classBindings;
 
 @end

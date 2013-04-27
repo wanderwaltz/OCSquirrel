@@ -19,6 +19,27 @@
 @implementation OCSquirrelClass
 
 #pragma mark -
+#pragma mark properties
+
+- (Class) nativeClass
+{
+    __block Class class = nil;
+    
+    OCSquirrelVM *squirrelVM = self.squirrelVM;
+    
+    [squirrelVM doWaitPreservingStackTop: ^{
+        [self push];
+        [squirrelVM.stack pushNull];
+        sq_getattributes(squirrelVM.vm, -2);
+        class = (Class)[squirrelVM.stack userPointerAtPosition: -1];
+    }];
+    
+    
+    return class;
+}
+
+
+#pragma mark -
 #pragma mark class methods
 
 + (BOOL) isAllowedToInitWithSQObjectOfType: (SQObjectType) type

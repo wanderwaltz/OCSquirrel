@@ -78,6 +78,13 @@ static const void * const kDispatchSpecificKeyOCSquirrelVMQueue = &kDispatchSpec
     _delegate = delegate;
 }
 
+
+- (NSDictionary *) classBindings
+{
+    return _classBindings;
+}
+
+
 #pragma mark -
 #pragma mark initialization methods
 
@@ -212,7 +219,7 @@ static const void * const kDispatchSpecificKeyOCSquirrelVMQueue = &kDispatchSpec
 {
     __block OCSquirrelClass *class = nil;
     
-    [self doWait:^{
+    [self doWaitPreservingStackTop:^{
         NSString *className = NSStringFromClass(aClass);
         
         class = _classBindings[className];
@@ -221,6 +228,11 @@ static const void * const kDispatchSpecificKeyOCSquirrelVMQueue = &kDispatchSpec
         {
             class = [[OCSquirrelClass alloc] initWithVM: self];
             _classBindings[className] = class;
+            
+            [class push];
+            [self.stack pushNull];
+            [self.stack pushUserPointer: (SQUserPointer)aClass];
+            sq_setattributes(_vm, -3);
         }
     }];
     

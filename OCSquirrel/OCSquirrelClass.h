@@ -13,4 +13,5 @@
 #pragma mark OCSquirrelClass interface
 
 @interface OCSquirrelClass : OCSquirrelTable
+@property (readonly, nonatomic) Class nativeClass;
 @end

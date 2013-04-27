@@ -75,4 +75,52 @@
 }
 
 
+- (void) testNativeClassForBoundClass
+{
+    OCSquirrelClass *class = [_squirrelVM bindClass: [NSDate class]];
+    
+    STAssertEquals(class.nativeClass, [NSDate class],
+                   @"OCSquirrelClass instances should have a native class property "
+                   @"pointing to the Objective-C class for bound classes.");
+}
+
+
+- (void) testNativeClassForUnboundClass
+{
+    OCSquirrelClass *class = [[OCSquirrelClass alloc] initWithVM: _squirrelVM];
+    
+    STAssertNil(class.nativeClass, nil,
+                @"OCSquirrelClass instances should have a native class property "
+                @"with nil value for classes not bound with any native Objective-C class");
+}
+
+
+- (void) testSameClassObject
+{
+    OCSquirrelClass *class = [_squirrelVM bindClass: [NSDate class]];
+    
+    [class push];
+    
+    OCSquirrelClass *other = [_squirrelVM.stack valueAtPosition: -1];
+    
+    STAssertEqualObjects(class, other,
+                         @"OCSquirrelStack should return the same instance of the bound class "
+                         @"as the instance which is returned by bindClass");
+}
+
+
+- (void) testCouldCreateInstance
+{
+    OCSquirrelClass *class = [_squirrelVM bindClass: [NSDate class]];
+    OCSquirrelTable *root  = [OCSquirrelTable rootTableForVM: _squirrelVM];
+    
+    [root setObject: class forKey: @"NSDate"];
+    
+    NSError *error = nil;
+    [_squirrelVM executeSync: @"return NSDate();" error: &error];
+    
+    STAssertNil(error,
+                @"Squirrel script should be able to create instances of the bound class.");
+}
+
 @end

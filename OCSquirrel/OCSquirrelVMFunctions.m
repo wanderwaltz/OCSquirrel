@@ -15,6 +15,9 @@
 #import "OCSquirrelVM+Protected.h"
 
 
+#pragma mark -
+#pragma mark General
+
 OCSquirrelVM *OCSquirrelVMforVM(HSQUIRRELVM vm)
 {
     SQUserPointer squirrelVMCPointer = sq_getforeignptr(vm);
@@ -24,6 +27,9 @@ OCSquirrelVM *OCSquirrelVMforVM(HSQUIRRELVM vm)
     return squirrelVM;
 }
 
+
+#pragma mark -
+#pragma mark Printing functions
 
 void OCSquirrelVMPrintFunc(HSQUIRRELVM vm, const SQChar *s, ...)
 {
@@ -64,6 +70,10 @@ void OCSquirrelVMErrorFunc(HSQUIRRELVM vm, const SQChar *s, ...)
     }
 }
 
+
+
+#pragma mark -
+#pragma mark Error handling
 
 static NSArray * OCSquirrelVMCallStackInfo(HSQUIRRELVM vm)
 {
