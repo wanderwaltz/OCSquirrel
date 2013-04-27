@@ -23,7 +23,7 @@
 
 + (BOOL) isAllowedToInitWithSQObjectOfType: (SQObjectType) type
 {
-    return (type == OT_CLOSURE);
+    return (type == OT_CLOSURE) || (type == OT_NATIVECLOSURE);
 }
 
 
@@ -52,20 +52,44 @@
 
 - (id) call
 {
-    return [self callWithEnvironment: [OCSquirrelTable rootTableForVM: self.squirrelVM]];
+    return [self callWithThis: [OCSquirrelTable rootTableForVM: self.squirrelVM]
+                   parameters: nil];
 }
 
 
-- (id) callWithEnvironment: (OCSquirrelObject *) environment
+- (id) call: (NSArray *) parameters
+{
+    return [self callWithThis: [OCSquirrelTable rootTableForVM: self.squirrelVM]
+                   parameters: parameters];
+}
+
+
+- (id) callWithThis: (OCSquirrelObject *) this
+{
+    return [self callWithThis: this
+                   parameters: nil];
+}
+
+
+- (id) callWithThis: (OCSquirrelObject *) this
+         parameters: (NSArray *) parameters
 {
     OCSquirrelVM *squirrelVM = self.squirrelVM;
     
     __block id result = nil;
     
     [squirrelVM doWaitPreservingStackTop: ^{
-        [environment push];
-        [self push];
-        sq_call(squirrelVM.vm, 0, SQTrue, SQTrue);
+        [self push]; // Pushes the closure to the stack
+        [this push]; // Pushes the 'this' object to the stack
+        
+        for (id parameter in parameters)
+        {
+            [squirrelVM.stack pushValue: parameter];
+        }
+        
+        // Parameters count is at least 1 since the first parameter is
+        // always the 'this' object.
+        sq_call(squirrelVM.vm, parameters.count+1, SQTrue, SQTrue);
         result = [squirrelVM.stack valueAtPosition: -1];
     }];
     

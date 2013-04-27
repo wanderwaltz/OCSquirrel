@@ -105,4 +105,37 @@
     }];
 }
 
+
+#pragma mark -
+#pragma mark NSObject
+
+- (NSString *) description
+{
+    NSString *type = @"Unknown type";
+    
+    switch (_obj._type)
+    {
+        case OT_NULL:          type = @"OT_NULL";          break;
+        case OT_INTEGER:       type = @"OT_INTEGER";       break;
+        case OT_FLOAT:         type = @"OT_FLOAT";         break;
+        case OT_BOOL:          type = @"OT_BOOL";          break;
+        case OT_STRING:        type = @"OT_STRING";        break;
+        case OT_TABLE:         type = @"OT_TABLE";         break;
+        case OT_ARRAY:         type = @"OT_ARRAY";         break;
+        case OT_USERDATA:      type = @"OT_USERDATA";      break;
+        case OT_CLOSURE:       type = @"OT_CLOSURE";       break;
+        case OT_NATIVECLOSURE: type = @"OT_NATIVECLOSURE"; break;
+        case OT_GENERATOR:     type = @"OT_GENERATOR";     break;
+        case OT_USERPOINTER:   type = @"OT_USERPOINTER";   break;
+        case OT_THREAD:        type = @"OT_THREAD";        break;
+        case OT_FUNCPROTO:     type = @"OT_FUNCPROTO";     break;
+        case OT_CLASS:         type = @"OT_CLASS";         break;
+        case OT_INSTANCE:      type = @"OT_INSTANCE";      break;
+        case OT_WEAKREF:       type = @"OT_WEAKREF";       break;
+        case OT_OUTER:         type = @"OT_OUTER";         break;
+    }
+    
+    return [NSString stringWithFormat: @"%@ (%@)", [super description], type];
+}
+
 @end

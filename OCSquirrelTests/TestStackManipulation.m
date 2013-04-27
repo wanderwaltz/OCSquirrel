@@ -563,6 +563,102 @@
 }
 
 
+static SQInteger NativeClosure(HSQUIRRELVM vm)
+{
+    return 0;
+}
+
+
+- (void) testReadValueNativeClosureClass
+{
+    sq_newclosure(_squirrelVM.vm, NativeClosure, 0);
+    
+    id value = [_squirrelVM.stack valueAtPosition: -1];
+    
+    STAssertTrue([value isKindOfClass: [OCSquirrelClosure class]],
+                 @"-valueAtPosition: should return an OCSquirrelClosure for closure stack values");
+}
+
+
+- (void) testReadValueNativeClosureType
+{
+    sq_newclosure(_squirrelVM.vm, NativeClosure, 0);
+    
+    OCSquirrelClosure *value = [_squirrelVM.stack valueAtPosition: -1];
+    
+    STAssertEquals(value.type, OT_NATIVECLOSURE,
+                   @"-valueAtPosition: should return an OCSquirrelClosure of OT_NATIVECLOSURE "
+                   @"type for native closures");
+}
+
+
+- (void) testReadValueNativeClosureValue
+{
+    sq_newclosure(_squirrelVM.vm, NativeClosure, 0);
+    
+    HSQOBJECT closure;
+    sq_getstackobj(_squirrelVM.vm, -1, &closure);
+    
+    id value = [_squirrelVM.stack valueAtPosition: -1];
+    
+    STAssertEquals(*[value obj], closure,
+                   @"-valueAtPosition: should return the corresponding OCSquirrelClosure for "
+                   @"native closure stack values");
+}
+
+
+- (void) testReadValueSquirrelClosureClass
+{
+    [_squirrelVM executeSync: @"function SquirrelClosure() {}" error: nil];
+    
+    sq_pushroottable(_squirrelVM.vm);
+    [_squirrelVM.stack pushString: @"SquirrelClosure"];
+    sq_get(_squirrelVM.vm, -2);
+    
+    id value = [_squirrelVM.stack valueAtPosition: -1];
+    
+    STAssertTrue([value isKindOfClass: [OCSquirrelClosure class]],
+                 @"-valueAtPosition: should return an OCSquirrelClosure for closure stack values");
+}
+
+
+- (void) testReadValueSquirrelClosureType
+{
+    [_squirrelVM executeSync: @"function SquirrelClosure() {}" error: nil];
+    
+    sq_pushroottable(_squirrelVM.vm);
+    [_squirrelVM.stack pushString: @"SquirrelClosure"];
+    sq_get(_squirrelVM.vm, -2);
+
+    
+    OCSquirrelClosure *value = [_squirrelVM.stack valueAtPosition: -1];
+    
+    STAssertEquals(value.type, OT_CLOSURE,
+                   @"-valueAtPosition: should return an OCSquirrelClosure of OT_CLOSURE "
+                   @"type for Squirrel closures");
+}
+
+
+- (void) testReadValueSquirrelClosureValue
+{
+    [_squirrelVM executeSync: @"function SquirrelClosure() {}" error: nil];
+    
+    sq_pushroottable(_squirrelVM.vm);
+    [_squirrelVM.stack pushString: @"SquirrelClosure"];
+    sq_get(_squirrelVM.vm, -2);
+
+    
+    HSQOBJECT closure;
+    sq_getstackobj(_squirrelVM.vm, -1, &closure);
+    
+    id value = [_squirrelVM.stack valueAtPosition: -1];
+    
+    STAssertEquals(*[value obj], closure,
+                   @"-valueAtPosition: should return the corresponding OCSquirrelClosure for "
+                   @"Squirrel closure stack values");
+}
+
+
 
 #pragma mark -
 #pragma mark reading failures tests

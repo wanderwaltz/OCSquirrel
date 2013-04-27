@@ -19,5 +19,11 @@
 
 
 - (id) call;
+- (id) call: (NSArray *) parameters;
+
+- (id) callWithThis: (OCSquirrelObject *) thisObject;
+
+- (id) callWithThis: (OCSquirrelObject *) thisObject
+         parameters: (NSArray *) parameters;
 
 @end
