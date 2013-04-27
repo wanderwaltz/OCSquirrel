@@ -27,14 +27,10 @@
     
     if (self != nil)
     {
-        [squirrelVM doWait:^{
-            NSInteger top = squirrelVM.stack.top;
-            
+        [squirrelVM doWaitPreservingStackTop: ^{
             sq_newclass(squirrelVM.vm, SQFalse);
             sq_getstackobj(squirrelVM.vm, -1, &_obj);
             sq_addref(squirrelVM.vm, &_obj);
-            
-            squirrelVM.stack.top = top;
         }];
     }
     return self;

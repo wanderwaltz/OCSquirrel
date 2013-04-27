@@ -112,4 +112,11 @@ enum : NSInteger
 /// Performs block on the vmQueue; does not lead to deadlock if called within a block already on vmQueue
 - (void) doWait: (dispatch_block_t) block;
 
+/*! Does the same as -doWait:, but stores the current stack top value and pops everything from the stack
+    which will be pushed above this value. Should be used when you expect pushing something to the stack
+    and don't want to bother popping it manually. If you pop something from the stack without pushing,
+    results may be unpredictable.
+ */
+- (void) doWaitPreservingStackTop: (dispatch_block_t) block;
+
 @end

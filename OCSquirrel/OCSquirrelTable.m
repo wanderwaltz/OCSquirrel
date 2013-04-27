@@ -25,18 +25,13 @@
 {
     __block id table = nil;
     
-    [squirrelVM doWait: ^{
-        
-        SQInteger top = squirrelVM.stack.top;
-        
+    [squirrelVM doWaitPreservingStackTop: ^{
         sq_pushroottable(squirrelVM.vm);
         
         HSQOBJECT root = [squirrelVM.stack sqObjectAtPosition: -1];
         
         table = [[self alloc] initWithHSQOBJECT: root
                                            inVM: squirrelVM];
-        
-        squirrelVM.stack.top = top;
     }];
     
     
@@ -50,16 +45,10 @@
     
     if (self != nil)
     {
-        [squirrelVM doWait: ^{
-            
-            SQInteger top = squirrelVM.stack.top;
-            
+        [squirrelVM doWaitPreservingStackTop: ^{
             sq_newtable(squirrelVM.vm);
             _obj = [squirrelVM.stack sqObjectAtPosition: -1];
             sq_addref(squirrelVM.vm, &_obj);
-            
-            squirrelVM.stack.top = top;
-            
         }];
     }
     return self;
@@ -147,9 +136,7 @@
     
     OCSquirrelVM *squirrelVM = self.squirrelVM;
     
-    [squirrelVM doWait: ^{
-        
-        NSInteger top = squirrelVM.stack.top;
+    [squirrelVM doWaitPreservingStackTop: ^{
         [self push];
         
         [squirrelVM.stack pushValue: key];
@@ -158,8 +145,6 @@
         {
             object = [squirrelVM.stack valueAtPosition: -1];
         }
-        
-        squirrelVM.stack.top = top;
     }];
     
     return object;
@@ -173,16 +158,12 @@
 {
     OCSquirrelVM *squirrelVM = self.squirrelVM;
     
-    [squirrelVM doWait: ^{
-        NSInteger top = squirrelVM.stack.top;
-        
+    [squirrelVM doWaitPreservingStackTop: ^{
         [self push];
         [squirrelVM.stack pushValue: key];
         [squirrelVM.stack pushValue: object];
         
         sq_newslot(squirrelVM.vm, -3, SQFalse);
-        
-        squirrelVM.stack.top = top;
     }];
 }
 

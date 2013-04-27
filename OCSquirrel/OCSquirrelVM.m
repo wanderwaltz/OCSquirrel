@@ -248,4 +248,16 @@ static const void * const kDispatchSpecificKeyOCSquirrelVMQueue = &kDispatchSpec
     }
 }
 
+
+- (void) doWaitPreservingStackTop: (dispatch_block_t) block
+{
+    [self doWait: ^{
+        NSInteger top = self.stack.top;
+        
+        [self doWait: block];
+        
+        self.stack.top = top;
+    }];
+}
+
 @end

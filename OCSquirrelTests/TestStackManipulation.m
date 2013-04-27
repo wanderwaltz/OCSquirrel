@@ -549,4 +549,24 @@
                  @"-isNullAtPosition: should be YES for `null` values pushed to stack.");
 }
 
+
+#pragma mark -
+#pragma mark stack-related dispatch
+
+- (void) testDoWaitPreservingStackTop
+{
+    NSInteger topBefore = _squirrelVM.stack.top;
+    
+    [_squirrelVM doWaitPreservingStackTop: ^{
+        [_squirrelVM.stack pushNull];
+        [_squirrelVM.stack pushFloat:  123.456];
+        [_squirrelVM.stack pushInteger: 123456];
+     }];
+    
+    NSInteger topAfter = _squirrelVM.stack.top;
+    
+    STAssertEquals(topBefore, topAfter,
+                   @"doWaitPreservingStackTop should not modify the Squirrel VM's stack.");
+}
+
 @end
