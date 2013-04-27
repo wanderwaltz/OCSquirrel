@@ -19,6 +19,7 @@
 extern const NSUInteger kOCSquirrelVMDefaultInitialStackSize;
 
 extern NSString * const OCSquirrelVMErrorDomain;
+extern NSString * const OCSquirrelVMErrorCallStackUserInfoKey;
 
 enum : NSInteger
 {
@@ -38,6 +39,7 @@ enum : NSInteger
 @optional
 
 - (void) squirrelVM: (OCSquirrelVM *) squirrelVM didPrintString: (NSString *) string;
+- (void) squirrelVM: (OCSquirrelVM *) squirrelVM didPrintError:  (NSString *) error;
 
 @end
 

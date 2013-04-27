@@ -25,48 +25,107 @@ OCSquirrelVM *OCSquirrelVMforVM(HSQUIRRELVM vm)
 }
 
 
-void OCSquirrelVMPrintfunc(HSQUIRRELVM vm, const SQChar *s, ...)
+void OCSquirrelVMPrintFunc(HSQUIRRELVM vm, const SQChar *s, ...)
 {
-    SQChar buffer[4096] = {0};
-    
-	va_list vl;
-	va_start(vl, s);
-	vsprintf(buffer, s, vl);
-	va_end(vl);
-    
     OCSquirrelVM *squirrelVM = OCSquirrelVMforVM(vm);
     
-    [squirrelVM _delegate_didPrintString:
-     [[NSString alloc] initWithCString: buffer
-                              encoding: NSUTF8StringEncoding]];
+    if (squirrelVM != nil)
+    {
+        SQChar buffer[4096] = {0};
+        
+        va_list vl;
+        va_start(vl, s);
+        vsprintf(buffer, s, vl);
+        va_end(vl);
+        
+        [squirrelVM _delegate_didPrintString:
+         [[NSString alloc] initWithCString: buffer
+                                  encoding: NSUTF8StringEncoding]];
+    }
 }
 
 
-void OCSquirrelVMErrorfunc(HSQUIRRELVM vm, const SQChar *s, ...)
+void OCSquirrelVMErrorFunc(HSQUIRRELVM vm, const SQChar *s, ...)
 {
-    SQChar buffer[4096] = {0};
+    OCSquirrelVM *squirrelVM = OCSquirrelVMforVM(vm);
     
-	va_list vl;
-	va_start(vl, s);
-	vsprintf(buffer, s, vl);
-	va_end(vl);
-    
-    NSLog(@">>>>ERROR<<<< %s", buffer);
-    
-    NSString *errorMessage = [[NSString alloc] initWithCString: buffer
-                                                      encoding: NSUTF8StringEncoding];
-    
-    NSDictionary *userInfo = nil;
-    
-    if (errorMessage != nil)
+    if (squirrelVM != nil)
     {
-        userInfo = @{ NSLocalizedDescriptionKey : errorMessage };
+        SQChar buffer[4096] = {0};
+        
+        va_list vl;
+        va_start(vl, s);
+        vsprintf(buffer, s, vl);
+        va_end(vl);
+        
+        [squirrelVM _delegate_didPrintError:
+         [[NSString alloc] initWithCString: buffer
+                                  encoding: NSUTF8StringEncoding]];
+    }
+}
+
+
+static NSString *OCSquirrelVMCallStack(HSQUIRRELVM vm)
+{
+    return nil;
+}
+
+
+SQInteger OCSquirrelVMRuntimeErrorHandler(HSQUIRRELVM vm)
+{
+    OCSquirrelVM *squirrelVM = OCSquirrelVMforVM(vm);
+    
+    if (squirrelVM != nil)
+    {
+        const SQChar *sErrorMessage = 0;
+        
+		if (sq_gettop(vm) >= 1)
+        {
+			sq_getstring(vm, 2, &sErrorMessage);
+        }
+        
+        
+        NSString *errorMessage = nil;
+        
+        if (sErrorMessage != NULL)
+        {
+            errorMessage = [[NSString alloc] initWithCString: sErrorMessage
+                                                    encoding: NSUTF8StringEncoding];
+        }
+        else
+        {
+            errorMessage = @"An unknown error occurred.";
+        }
+        
+        NSError *error = [NSError errorWithDomain: OCSquirrelVMErrorDomain
+                                             code: OCSquirrelVMError_RuntimeError
+                                         userInfo: @{ NSLocalizedDescriptionKey : errorMessage }];
+        
+        squirrelVM.lastError = error;
     }
     
-    NSError *error = [NSError errorWithDomain: OCSquirrelVMErrorDomain
-                                         code: OCSquirrelVMError_CompilerError
-                                     userInfo: userInfo];
-    
+    return 0;
+}
+
+
+void OCSquirrelVMCompilerErrorHandler(HSQUIRRELVM vm,
+                                      const SQChar *sError,
+                                      const SQChar *sSource,
+                                      SQInteger line,
+                                      SQInteger column)
+{
     OCSquirrelVM *squirrelVM = OCSquirrelVMforVM(vm);
-    squirrelVM.lastError     = error;
+    
+    if (squirrelVM != nil)
+    {
+        NSString *errorMessage =
+        [NSString stringWithFormat: @"%s line = (%d) column = (%d) : error %s",
+         sSource, line, column, sError];
+        
+        NSError *error = [NSError errorWithDomain: OCSquirrelVMErrorDomain
+                                             code: OCSquirrelVMError_CompilerError
+                                         userInfo: @{ NSLocalizedDescriptionKey : errorMessage }];
+        
+        squirrelVM.lastError = error;
+    }
 }

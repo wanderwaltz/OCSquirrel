@@ -25,6 +25,8 @@ const NSUInteger kOCSquirrelVMDefaultInitialStackSize = 1024;
 
 NSString * const OCSquirrelVMErrorDomain = @"com.frostbit.OCSquirrelVM.error.domain";
 
+NSString * const OCSquirrelVMErrorCallStackUserInfoKey =
+    @"com.frostbit.OCSquirrelVM.error.userInfo.callStack";
 
 /// A source name used when compiling a script from NSString.
 static const SQChar * const kOCSquirrelVMCompileBufferSourceName = _SC("buffer");
@@ -84,10 +86,17 @@ static const void * const kDispatchSpecificKeyOCSquirrelVMQueue = &kDispatchSpec
         _stack = [[OCSquirrelVMStackImpl alloc] initWithSquirrelVM: self];
         
         [self doWait: ^{
-            sqstd_seterrorhandlers(_vm);
             
+            // Adding custom implementations of compiler and runtime error
+            // handlers since we need something a bit different than the
+            // sqstdaux implementations can provide.
+            sq_setcompilererrorhandler(_vm, OCSquirrelVMCompilerErrorHandler);
+            sq_newclosure(_vm, OCSquirrelVMRuntimeErrorHandler, 0);
+            sq_seterrorhandler(_vm);
+            
+            // Print and error functions
             sq_setforeignptr(_vm, (__bridge SQUserPointer)self);
-            sq_setprintfunc (_vm, OCSquirrelVMPrintfunc, OCSquirrelVMErrorfunc);
+            sq_setprintfunc (_vm, OCSquirrelVMPrintFunc, OCSquirrelVMErrorFunc);
         }];
     }
     return self;
@@ -131,11 +140,17 @@ static const void * const kDispatchSpecificKeyOCSquirrelVMQueue = &kDispatchSpec
                 }
                 else
                 {
-                    error = [NSError errorWithDomain: OCSquirrelVMErrorDomain
-                                                code: OCSquirrelVMError_FailedToCallScript
-                                            userInfo: nil];
+                    if (self.lastError != nil)
+                    {
+                        error = self.lastError;
+                    }
+                    else
+                    {
+                        error = [NSError errorWithDomain: OCSquirrelVMErrorDomain
+                                                    code: OCSquirrelVMError_RuntimeError
+                                                userInfo: nil];
+                    }
                 }
-                
             }
             else
             {

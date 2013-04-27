@@ -27,4 +27,14 @@
     }
 }
 
+
+- (void) _delegate_didPrintError:  (NSString *) error
+{
+    if ([self.delegate respondsToSelector: @selector(squirrelVM:didPrintError:)])
+    {
+        [self.delegate squirrelVM: self
+                    didPrintError: error];
+    }
+}
+
 @end

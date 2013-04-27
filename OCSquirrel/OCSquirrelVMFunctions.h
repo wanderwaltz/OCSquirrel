@@ -15,7 +15,21 @@ OCSquirrelVM *OCSquirrelVMforVM(HSQUIRRELVM vm);
 
 
 /// Print function implementation for OCSquirrelVM
-void OCSquirrelVMPrintfunc(HSQUIRRELVM vm, const SQChar *s, ...);
+void OCSquirrelVMPrintFunc(HSQUIRRELVM vm, const SQChar *s, ...);
 
-/// Erro function implementation for OCSquirrelVM
-void OCSquirrelVMErrorfunc(HSQUIRRELVM vm, const SQChar *s, ...);
+/// Error printing function implementation for OCSquirrelVM
+void OCSquirrelVMErrorFunc(HSQUIRRELVM vm, const SQChar *s, ...);
+
+
+
+/// Runtime error handler
+SQInteger OCSquirrelVMRuntimeErrorHandler(HSQUIRRELVM vm);
+
+
+
+/// Compiler error handler
+void OCSquirrelVMCompilerErrorHandler(HSQUIRRELVM vm,
+                                      const SQChar *sError,
+                                      const SQChar *sSource,
+                                      SQInteger line,
+                                      SQInteger column);

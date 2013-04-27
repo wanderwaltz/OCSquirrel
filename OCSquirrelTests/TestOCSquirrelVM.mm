@@ -235,6 +235,18 @@
 }
 
 
+- (void) testExecuteSyncInvalidErrorCodeRuntimeError
+{
+    NSError *error = nil;
+    [_squirrelVM executeSync: @"local x = y;" error: &error];
+    
+    STAssertEquals(error.code, OCSquirrelVMError_RuntimeError,
+                   @"When a runtime error occurs, returned error code "
+                   @"should be equal to OCSquirrelVMError_RuntimeError");
+}
+
+
+
 - (void) testExecuteSyncInvalidResult
 {
     id result = [_squirrelVM executeSync: @"local x + 0" error: nil];
