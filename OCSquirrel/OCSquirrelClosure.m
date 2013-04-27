@@ -37,9 +37,39 @@
     
     if (self != nil)
     {
-        
+        [squirrelVM doWaitPreservingStackTop: ^{
+            sq_newclosure(squirrelVM.vm, function, 0);
+            sq_getstackobj(squirrelVM.vm, -1, &_obj);
+            sq_addref(squirrelVM.vm, &_obj);
+        }];
     }
     return self;
+}
+
+
+#pragma mark -
+#pragma mark methods
+
+- (id) call
+{
+    return [self callWithEnvironment: [OCSquirrelTable rootTableForVM: self.squirrelVM]];
+}
+
+
+- (id) callWithEnvironment: (OCSquirrelObject *) environment
+{
+    OCSquirrelVM *squirrelVM = self.squirrelVM;
+    
+    __block id result = nil;
+    
+    [squirrelVM doWaitPreservingStackTop: ^{
+        [environment push];
+        [self push];
+        sq_call(squirrelVM.vm, 0, SQTrue, SQTrue);
+        result = [squirrelVM.stack valueAtPosition: -1];
+    }];
+    
+    return result;
 }
 
 @end

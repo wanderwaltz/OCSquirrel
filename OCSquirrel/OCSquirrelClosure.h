@@ -17,4 +17,7 @@
 - (id) initWithSQFUNCTION: (SQFUNCTION) function
                squirrelVM: (OCSquirrelVM *) squirrelVM;
 
+
+- (id) call;
+
 @end
