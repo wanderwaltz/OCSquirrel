@@ -120,3 +120,10 @@ enum : NSInteger
 - (void) doWaitPreservingStackTop: (dispatch_block_t) block;
 
 @end
+
+
+#pragma mark -
+#pragma mark Functions
+    
+/// Returns the OCSquirrelVM instance associated with a given HSQUIRRELVM
+OCSquirrelVM *OCSquirrelVMforVM(HSQUIRRELVM vm);

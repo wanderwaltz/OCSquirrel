@@ -9,11 +9,6 @@
 #import <Foundation/Foundation.h>
 #import "OCSquirrelVM.h"
 
-/// Returns the OCSquirrelVM instance associated with a given HSQUIRRELVM
-OCSquirrelVM *OCSquirrelVMforVM(HSQUIRRELVM vm);
-
-
-
 /// Print function implementation for OCSquirrelVM
 void OCSquirrelVMPrintFunc(HSQUIRRELVM vm, const SQChar *s, ...);
 

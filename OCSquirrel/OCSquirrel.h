@@ -30,5 +30,6 @@
 #import "OCSquirrelTable.h"
 #import "OCSquirrelClass.h"
 #import "OCSquirrelInstance.h"
+#import "OCSquirrelClosure.h"
 
 #endif

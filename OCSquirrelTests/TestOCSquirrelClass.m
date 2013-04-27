@@ -42,7 +42,7 @@
     [_squirrelVM.stack pushValue: nil];
     sq_getattributes(_squirrelVM.vm, -2);
     STAssertEqualObjects([_squirrelVM.stack valueAtPosition: -1], @12345,
-                         @"-setClassAttribute:forKey: should set the class attribute.");
+                         @"-setClassAttributes: should set the class attributes.");
 }
 
 
@@ -51,7 +51,7 @@
     [_class setClassAttributes: @12345];
     
     STAssertEqualObjects([_class classAttributes], @12345,
-                         @"-classAttribute:forKey: should get the class attribute.");
+                         @"-classAttributes should get the class attributes.");
 }
 
 
