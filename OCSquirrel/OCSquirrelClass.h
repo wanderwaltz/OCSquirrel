@@ -17,4 +17,7 @@
 - (void) setClassAttributes: (id) attributes;
 - (id) classAttributes;
 
+
+- (void) pushNewInstance;
+
 @end

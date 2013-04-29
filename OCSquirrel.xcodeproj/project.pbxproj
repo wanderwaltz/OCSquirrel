@@ -85,6 +85,8 @@
 		7C94F8C5172A431E00C7BA78 /* OCSquirrelVMFunctions.h in Headers */ = {isa = PBXBuildFile; fileRef = 7C94F8C3172A431E00C7BA78 /* OCSquirrelVMFunctions.h */; };
 		7C94F8C6172A431E00C7BA78 /* OCSquirrelVMFunctions.m in Sources */ = {isa = PBXBuildFile; fileRef = 7C94F8C4172A431E00C7BA78 /* OCSquirrelVMFunctions.m */; };
 		7C94F8C9172A4D0D00C7BA78 /* TestBindClass.m in Sources */ = {isa = PBXBuildFile; fileRef = 7C94F8C8172A4D0D00C7BA78 /* TestBindClass.m */; };
+		7CA9753C172E4FBE001E58B1 /* OCSquirrelVMFunctions_NoARC.h in Headers */ = {isa = PBXBuildFile; fileRef = 7CA9753A172E4FBE001E58B1 /* OCSquirrelVMFunctions_NoARC.h */; };
+		7CA9753D172E4FBE001E58B1 /* OCSquirrelVMFunctions_NoARC.m in Sources */ = {isa = PBXBuildFile; fileRef = 7CA9753B172E4FBE001E58B1 /* OCSquirrelVMFunctions_NoARC.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -202,6 +204,8 @@
 		7C94F8C4172A431E00C7BA78 /* OCSquirrelVMFunctions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OCSquirrelVMFunctions.m; sourceTree = "<group>"; };
 		7C94F8C7172A4D0D00C7BA78 /* TestBindClass.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TestBindClass.h; sourceTree = "<group>"; };
 		7C94F8C8172A4D0D00C7BA78 /* TestBindClass.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TestBindClass.m; sourceTree = "<group>"; };
+		7CA9753A172E4FBE001E58B1 /* OCSquirrelVMFunctions_NoARC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OCSquirrelVMFunctions_NoARC.h; sourceTree = SOURCE_ROOT; };
+		7CA9753B172E4FBE001E58B1 /* OCSquirrelVMFunctions_NoARC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OCSquirrelVMFunctions_NoARC.m; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -453,6 +457,8 @@
 				5D8EC81B171A65770084F92C /* OCSquirrelVMStackImpl.m */,
 				7C94F8C3172A431E00C7BA78 /* OCSquirrelVMFunctions.h */,
 				7C94F8C4172A431E00C7BA78 /* OCSquirrelVMFunctions.m */,
+				7CA9753A172E4FBE001E58B1 /* OCSquirrelVMFunctions_NoARC.h */,
+				7CA9753B172E4FBE001E58B1 /* OCSquirrelVMFunctions_NoARC.m */,
 			);
 			name = protected;
 			sourceTree = "<group>";
@@ -500,6 +506,7 @@
 				5DB09E0D1719C0C500F50257 /* OCSquirrelVM+DelegateCallbacks.h in Headers */,
 				5D8EC81C171A65770084F92C /* OCSquirrelVMStackImpl.h in Headers */,
 				7C94F8C5172A431E00C7BA78 /* OCSquirrelVMFunctions.h in Headers */,
+				7CA9753C172E4FBE001E58B1 /* OCSquirrelVMFunctions_NoARC.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -681,6 +688,7 @@
 				5DC90419172B88E7009C7082 /* OCSquirrelClass.m in Sources */,
 				5DC9041D172BA3A9009C7082 /* OCSquirrelInstance.m in Sources */,
 				5DC90427172BBA95009C7082 /* OCSquirrelClosure.m in Sources */,
+				7CA9753D172E4FBE001E58B1 /* OCSquirrelVMFunctions_NoARC.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

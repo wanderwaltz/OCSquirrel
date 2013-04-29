@@ -123,4 +123,19 @@
                 @"Squirrel script should be able to create instances of the bound class.");
 }
 
+
+- (void) testCreateInstanceResultClass
+{
+    OCSquirrelClass *class = [_squirrelVM bindClass: [NSDate class]];
+    OCSquirrelTable *root  = [OCSquirrelTable rootTableForVM: _squirrelVM];
+    
+    [root setObject: class forKey: @"NSDate"];
+    
+    NSError *error = nil;
+    id result = [_squirrelVM executeSync: @"return NSDate();" error: &error];
+    
+    STAssertTrue([result isKindOfClass: [OCSquirrelInstance class]],
+                @"Creating an instance of a class should return OCSquirrelInstance");
+}
+
 @end

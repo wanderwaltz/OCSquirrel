@@ -97,4 +97,27 @@
 }
 
 
+#pragma mark -
+#pragma mark instantiation
+
+- (void) pushNewInstance
+{
+    OCSquirrelVM *squirrelVM = self.squirrelVM;
+    
+    __block HSQOBJECT instance;
+    
+    [squirrelVM doWaitPreservingStackTop: ^{
+        [self push];
+        sq_call(squirrelVM.vm, 0, SQTrue, SQTrue);
+        
+        sq_getstackobj(squirrelVM.vm, -1, &instance);
+        sq_addref(squirrelVM.vm, &instance);
+    }];
+    
+    [squirrelVM doWait: ^{
+        sq_pushobject(squirrelVM.vm, instance);
+        sq_release(squirrelVM.vm, &instance);
+    }];
+}
+
 @end

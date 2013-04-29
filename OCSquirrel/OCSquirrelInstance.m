@@ -19,6 +19,23 @@
 @implementation OCSquirrelInstance
 
 #pragma mark -
+#pragma mark properties
+
+- (id) instanceUP
+{
+    __block SQUserPointer userPointer = NULL;
+    
+    OCSquirrelVM *squirrelVM = self.squirrelVM;
+    
+    [squirrelVM doWaitPreservingStackTop: ^{
+        [self push];
+        sq_getinstanceup(squirrelVM.vm, -1, &userPointer, 0);
+    }];
+    
+    return (__bridge id)userPointer;
+}
+
+#pragma mark -
 #pragma mark class methods
 
 + (BOOL) isAllowedToInitWithSQObjectOfType: (SQObjectType) type

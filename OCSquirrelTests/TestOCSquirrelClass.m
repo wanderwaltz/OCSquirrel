@@ -55,4 +55,30 @@
 }
 
 
+- (void) testPushNewInstance
+{
+    OCSquirrelClass *class = [OCSquirrelClass newWithVM: _squirrelVM];
+    
+    [class pushNewInstance];
+    
+    id instance = [_squirrelVM.stack valueAtPosition: -1];
+    
+    STAssertTrue([instance isKindOfClass: [OCSquirrelInstance class]],
+                 @"pushNewInstance method should push an instance of the class "
+                 @"to the OCSquirrelVM stack.");
+}
+
+
+- (void) testNewInstanceUserPointer
+{
+    OCSquirrelClass *class = [OCSquirrelClass newWithVM: _squirrelVM];
+    
+    [class pushNewInstance];
+    
+    OCSquirrelInstance *instance = [_squirrelVM.stack valueAtPosition: -1];
+    
+    STAssertNil(instance.instanceUP,
+                @"New class instance should not have a instanceUP userpointer.");
+}
+
 @end
