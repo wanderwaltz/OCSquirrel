@@ -78,9 +78,25 @@
 }
 
 
+- (void) testNotNULLObjWhenCreatedWithClassMethod
+{
+    OCSquirrelObject *object = [OCSquirrelObject newWithVM: _squirrelVM];
+    STAssertTrue(object.obj != NULL,
+                 @"OCSquirrelObject should have a non-NULL obj property value when created.");
+}
+
+
 - (void) testSQNullWhenCreated
 {
     OCSquirrelObject *object = [[OCSquirrelObject alloc] initWithVM: _squirrelVM];
+    STAssertTrue(sq_isnull(*object.obj),
+                 @"OCSquirrelObject's obj property should have a default `null` value in Squirrel VM.");
+}
+
+
+- (void) testSQNullWhenCreatedWithClassObject
+{
+    OCSquirrelObject *object = [OCSquirrelObject newWithVM: _squirrelVM];
     STAssertTrue(sq_isnull(*object.obj),
                  @"OCSquirrelObject's obj property should have a default `null` value in Squirrel VM.");
 }
@@ -102,6 +118,19 @@
     
     OCSquirrelObject *object = [[OCSquirrelObject alloc] initWithHSQOBJECT: root
                                                                       inVM: _squirrelVM];
+    STAssertEquals(*object.obj, root,
+                   @"OCSquirrelObject should support initialization with an existing HSQOBJECT");
+}
+
+
+- (void) testNewWithHSQOBJECT
+{
+    sq_pushroottable(_squirrelVM.vm);
+    
+    HSQOBJECT root = [_squirrelVM.stack sqObjectAtPosition: -1];
+    
+    OCSquirrelObject *object = [OCSquirrelObject newWithHSQOBJECT: root
+                                                             inVM: _squirrelVM];
     STAssertEquals(*object.obj, root,
                    @"OCSquirrelObject should support initialization with an existing HSQOBJECT");
 }

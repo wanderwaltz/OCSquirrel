@@ -48,6 +48,20 @@
 }
 
 
++ (id) newWithVM: (OCSquirrelVM *) squirrelVM
+{
+    return [[self alloc] initWithVM: squirrelVM];
+}
+
+
++ (id) newWithHSQOBJECT: (HSQOBJECT) object
+                   inVM: (OCSquirrelVM *) squirrelVM
+{
+    return [[self alloc] initWithHSQOBJECT: object
+                                      inVM: squirrelVM];
+}
+
+
 #pragma mark -
 #pragma mark initialization methods
 

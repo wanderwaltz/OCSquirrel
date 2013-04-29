@@ -43,4 +43,9 @@
 
 + (BOOL) isAllowedToInitWithSQObjectOfType: (SQObjectType) type;
 
++ (id) newWithVM: (OCSquirrelVM *) squirrelVM;
+
++ (id) newWithHSQOBJECT: (HSQOBJECT) object
+                   inVM: (OCSquirrelVM *) squirrelVM;
+
 @end
