@@ -46,7 +46,7 @@
 }
 
 
-- (void) testClasAttributeForNilKey
+- (void) testClassAttributeForNilKey
 {
     [_class setClassAttributes: @12345];
     

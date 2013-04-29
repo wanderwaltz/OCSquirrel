@@ -30,19 +30,36 @@ extern NSString * const OCSquirrelVMErrorDomain;
 extern NSString * const OCSquirrelVMErrorCallStackUserInfoKey;
 extern NSString * const OCSquirrelVMErrorLocalsUserInfoKey;
 
-extern NSString * const OCSquirrelVMCallStackFunctionKey;
-extern NSString * const OCSquirrelVMCallStackLineKey;
-extern NSString * const OCSquirrelVMCallStackSourceKey;
 
+/* Call stack report is an array of NSDictionaries having the function name, source file
+   name and line numbers for these three keys respectively.
+ */
+extern NSString * const OCSquirrelVMCallStackFunctionKey;
+extern NSString * const OCSquirrelVMCallStackSourceKey;
+extern NSString * const OCSquirrelVMCallStackLineKey;
+
+
+/* Locals report is an array of NSDictionaries having the local variable name and value
+   for these two keys respectively.
+ */
 extern NSString * const OCSquirrelVMLocalNameKey;
 extern NSString * const OCSquirrelVMLocalValueKey;
 
+
+/// Error codes returned by the OCSquirrelVM class
 enum : NSInteger
 {
+    /*! Is returned when the compiler function fails to get a C string from the NSString with 
+        the script. This usually happens if you pass some wrong input to the function, for
+        example a nil value.
+     */
     OCSquirrelVMError_FailedToGetCString = 0x01,
+    
+    /// Is returned when a compiler error is encountered while compiling a Squirrel script.
     OCSquirrelVMError_CompilerError      = 0x02,
-    OCSquirrelVMError_FailedToCallScript = 0x03,
-    OCSquirrelVMError_RuntimeError       = 0x04
+    
+    /// Is returned when a runtime error occurs while calling the compiled Squirrel script.
+    OCSquirrelVMError_RuntimeError       = 0x03
 };
 
 

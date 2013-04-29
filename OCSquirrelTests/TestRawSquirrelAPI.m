@@ -121,4 +121,26 @@
                    @"Should be able to create slots with non-string based keys");
 }
 
+
+static BOOL g_ReleaseHookCalled = NO;
+
+SQInteger ReleaseHook(SQUserPointer pointer, SQInteger size)
+{
+    g_ReleaseHookCalled = YES;
+    
+    return 0;
+}
+
+- (void) testReleaseHook
+{
+    g_ReleaseHookCalled = NO;
+    sq_newuserdata(_vm, 123);
+    sq_setreleasehook(_vm, -1, ReleaseHook);
+    sq_pop(_vm, 1);
+    
+    STAssertTrue(g_ReleaseHookCalled,
+                 @"Release hook function should be called after popping the newly created "
+                 @"user data object from the stack.");
+}
+
 @end
