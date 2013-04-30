@@ -204,8 +204,8 @@
 		7C94F8C4172A431E00C7BA78 /* OCSquirrelVMFunctions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OCSquirrelVMFunctions.m; sourceTree = "<group>"; };
 		7C94F8C7172A4D0D00C7BA78 /* TestBindClass.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TestBindClass.h; sourceTree = "<group>"; };
 		7C94F8C8172A4D0D00C7BA78 /* TestBindClass.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TestBindClass.m; sourceTree = "<group>"; };
-		7CA9753A172E4FBE001E58B1 /* OCSquirrelVMFunctions_NoARC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OCSquirrelVMFunctions_NoARC.h; sourceTree = SOURCE_ROOT; };
-		7CA9753B172E4FBE001E58B1 /* OCSquirrelVMFunctions_NoARC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OCSquirrelVMFunctions_NoARC.m; sourceTree = SOURCE_ROOT; };
+		7CA9753A172E4FBE001E58B1 /* OCSquirrelVMFunctions_NoARC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OCSquirrelVMFunctions_NoARC.h; sourceTree = "<group>"; };
+		7CA9753B172E4FBE001E58B1 /* OCSquirrelVMFunctions_NoARC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OCSquirrelVMFunctions_NoARC.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
