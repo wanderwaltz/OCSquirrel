@@ -30,7 +30,41 @@ SQInteger OCSquirrelVMBindings_Constructor(HSQUIRRELVM vm)
     
     id instance = [nativeClass alloc];
     
-    OCSquirrelVM_SetInstanceUP(vm, 1, instance);
+    if (SQ_SUCCEEDED(OCSquirrelVM_SetInstanceUP(vm, 1, instance)))
+    {
+        sq_setreleasehook(vm, 1, OCSquirrelVM_InstanceUPReleaseHook);
+    }
     
     return 0;
+}
+
+
+SQInteger OCSquirrelVMBindings_SimpleInvocation(HSQUIRRELVM vm)
+{
+    OCSquirrelVM *squirrelVM = OCSquirrelVMforVM(vm);
+    
+    sq_getclosurename(vm, 0);
+    NSString *closureName = [squirrelVM.stack valueAtPosition: -1];
+    sq_pop(vm, 1);
+    
+    if ([closureName isKindOfClass: [NSString class]])
+    {
+        SQUserPointer userPointer = NULL;
+        sq_getinstanceup(vm, 1, &userPointer, 0);
+        
+        id object = (__bridge id)userPointer;
+        
+        SEL selector = NSSelectorFromString(closureName);
+        
+        NSMethodSignature *signature = [object methodSignatureForSelector: selector];
+        
+        NSInvocation *invocation = [NSInvocation invocationWithMethodSignature: signature];
+        invocation.selector      = selector;
+        
+        [invocation invokeWithTarget: object];
+    }
+    
+    sq_push(vm, 1);
+    
+    return 1;
 }

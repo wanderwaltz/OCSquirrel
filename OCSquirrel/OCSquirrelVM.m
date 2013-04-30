@@ -233,13 +233,31 @@ static const void * const kDispatchSpecificKeyOCSquirrelVMQueue = &kDispatchSpec
             class = [[OCSquirrelClass alloc] initWithVM: self];
             _classBindings[className] = class;
             
+            // Set the top level class attributes to the Objective-C class
+            // pointer for easy access if needed. This is used by the
+            // OCSquirrelVMStackImpl for example to determine whether some
+            // particular Squirrel class is actually a bound native class
+            // or not and return the corresponding OCSquirrelClass instance
             [class setClassAttributes: [NSValue valueWithPointer: (__bridge void *)aClass]];
             
+            // Bind constructor. Note that the constructor only does alloc
+            // an instance of the native class without initializing it,
+            // so further calls to -init or other initializers should be
+            // then immediately performed using one of the bound initializer
+            // methods.
             id constructor =
             [[OCSquirrelClosure alloc] initWithSQFUNCTION: OCSquirrelVMBindings_Constructor
                                                squirrelVM: self];
-            
             [class setObject: constructor forKey: @"constructor"];
+
+            
+            id init =
+            [[OCSquirrelClosure alloc] initWithSQFUNCTION: OCSquirrelVMBindings_SimpleInvocation
+                                                     name: @"init"
+                                               squirrelVM: self];
+            [class setObject: init forKey: @"init"];
+
+            
         }
     }];
     

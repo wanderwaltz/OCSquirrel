@@ -10,3 +10,5 @@
 #import "OCSquirrelVM.h"
 
 SQInteger OCSquirrelVMBindings_Constructor(HSQUIRRELVM vm);
+
+SQInteger OCSquirrelVMBindings_SimpleInvocation(HSQUIRRELVM vm);

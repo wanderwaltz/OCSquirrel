@@ -117,6 +117,19 @@ static SQInteger IntClosureNoParamsCheckEnvironment(HSQUIRRELVM vm)
 }
 
 
+- (void) testNewClosureName
+{
+    OCSquirrelClosure *closure = [[OCSquirrelClosure alloc] initWithSQFUNCTION: VoidClosureNoParams
+                                                                          name: @"some name"
+                                                                    squirrelVM: _squirrelVM];
+    [closure push];
+    sq_getclosurename(_squirrelVM.vm, -1);
+    
+    STAssertEqualObjects([_squirrelVM.stack valueAtPosition: -1], @"some name",
+                         @"OCSquirrelClosure native closure name should be properly set.");
+}
+
+
 - (void) testNativeVoidCallNoParams
 {
     OCSquirrelClosure *closure = [[OCSquirrelClosure alloc] initWithSQFUNCTION: VoidClosureNoParams

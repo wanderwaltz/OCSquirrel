@@ -33,6 +33,16 @@
 - (id) initWithSQFUNCTION: (SQFUNCTION) function
                squirrelVM: (OCSquirrelVM *) squirrelVM
 {
+    return [self initWithSQFUNCTION: function
+                               name: nil
+                         squirrelVM: squirrelVM];
+}
+
+
+- (id) initWithSQFUNCTION: (SQFUNCTION) function
+                     name: (NSString *) name
+               squirrelVM: (OCSquirrelVM *) squirrelVM
+{
     self = [super initWithVM: squirrelVM];
     
     if (self != nil)
@@ -41,6 +51,14 @@
             sq_newclosure(squirrelVM.vm, function, 0);
             sq_getstackobj(squirrelVM.vm, -1, &_obj);
             sq_addref(squirrelVM.vm, &_obj);
+            
+            if (name != nil)
+            {
+                const SQChar *cName = [name cStringUsingEncoding: NSUTF8StringEncoding];
+                
+                if (cName != NULL)
+                    sq_setnativeclosurename(squirrelVM.vm, -1, cName);
+            }
         }];
     }
     return self;

@@ -17,6 +17,10 @@
 - (id) initWithSQFUNCTION: (SQFUNCTION) function
                squirrelVM: (OCSquirrelVM *) squirrelVM;
 
+- (id) initWithSQFUNCTION: (SQFUNCTION) function
+                     name: (NSString *) name
+               squirrelVM: (OCSquirrelVM *) squirrelVM;
+
 
 - (id) call;
 - (id) call: (NSArray *) parameters;

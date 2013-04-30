@@ -11,6 +11,30 @@
 #endif
 
 #import "TestBindClass.h"
+#import "OCMock.h"
+
+
+#pragma mark -
+#pragma mark Helper class
+
+@interface SimpleInvocationChecker : NSObject
+@property (readonly, nonatomic) BOOL calledInit;
+@end
+
+@implementation SimpleInvocationChecker
+
+- (id) init
+{
+    self = [super init];
+    
+    if (self != nil)
+    {
+        _calledInit = YES;
+    }
+    return self;
+}
+
+@end
 
 
 #pragma mark -
@@ -177,6 +201,50 @@
     STAssertNotNil(instance.instanceUP,
                    @"Creating an instance of a native bound class should return OCSquirrelInstance "
                    @"with a non-nil instance user pointer.");
+}
+
+
+- (void) testPushNewInstanceUPClass
+{
+    OCSquirrelClass *class = [_squirrelVM bindClass: [NSDate class]];
+    [class pushNewInstance];
+    
+    OCSquirrelInstance *instance = [_squirrelVM.stack valueAtPosition: -1];
+    
+    STAssertTrue([instance.instanceUP isKindOfClass: [NSDate class]],
+                 @"Creating an instance of a native bound class should return OCSquirrelInstance "
+                 @"with a non-nil instance user pointer of the said native class.");
+}
+
+
+- (void) testPushNewInstanceUPHasInitMethod
+{
+    OCSquirrelClass *class = [_squirrelVM bindClass: [NSDate class]];
+    OCSquirrelTable *root  = [OCSquirrelTable rootTableForVM: _squirrelVM];
+    [root setObject: class forKey: @"NSDate"];
+    
+    NSError *error = nil;
+    [_squirrelVM executeSync: @"return NSDate().init()" error: &error];
+    
+    STAssertNil(error,
+                @"All bound class instances should have an init() method similar to Objective-C "
+                @"NSObject classes, got the following error instead: %@.", error);
+}
+
+
+- (void) testSimpleInvocationIsCalled
+{
+    OCSquirrelClass *class = [_squirrelVM bindClass: [SimpleInvocationChecker class]];
+    OCSquirrelTable *root  = [OCSquirrelTable rootTableForVM: _squirrelVM];
+    [root setObject: class forKey: @"SimpleInvocationChecker"];
+    
+    NSError *error = nil;
+    OCSquirrelInstance *instance =
+    [_squirrelVM executeSync: @"return SimpleInvocationChecker().init()" error: &error];
+    
+    STAssertTrue([instance.instanceUP calledInit],
+                @"Calling init() method from Squirrel should actually invoke -init on the "
+                @"corresponding Objective-C object");
 }
 
 
