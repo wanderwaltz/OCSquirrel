@@ -13,16 +13,18 @@
 #import "OCSquirrelVMFunctions_NoARC.h"
 
 
-void OCSquirrelVM_SetInstanceUP(HSQUIRRELVM vm, HSQOBJECT instance, id object)
+SQRESULT OCSquirrelVM_SetInstanceUP(HSQUIRRELVM vm, SQInteger index, id object)
 {
-    SQInteger top = sq_gettop(vm);
-    
-    sq_pushobject(vm, instance);
-
     [object retain];
-    sq_setinstanceup(vm, -1, object);
     
-    sq_settop(vm, top);
+    SQRESULT result = sq_setinstanceup(vm, index, object);
+    
+    if (SQ_FAILED(result))
+    {
+        [object release];
+    }
+    
+    return result;
 }
 
 

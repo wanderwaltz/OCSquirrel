@@ -108,7 +108,8 @@
     
     [squirrelVM doWaitPreservingStackTop: ^{
         [self push];
-        sq_call(squirrelVM.vm, 0, SQTrue, SQTrue);
+        sq_createinstance(squirrelVM.vm, -1);
+        sq_call(squirrelVM.vm, 1, SQTrue, SQTrue);
         
         sq_getstackobj(squirrelVM.vm, -1, &instance);
         sq_addref(squirrelVM.vm, &instance);

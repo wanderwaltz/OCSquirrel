@@ -28,3 +28,8 @@ void OCSquirrelVMCompilerErrorHandler(HSQUIRRELVM vm,
                                       const SQChar *sSource,
                                       SQInteger line,
                                       SQInteger column);
+
+
+NSArray * OCSquirrelVMCallStackInfo(HSQUIRRELVM vm);
+
+NSArray * OCSquirrelVMLocalsInfo(HSQUIRRELVM vm);

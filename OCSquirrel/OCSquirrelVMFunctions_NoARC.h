@@ -11,10 +11,12 @@
 
 
 
-/*! Attaches the Objective-C object to a given HSQOBJECT as an instance user pointer.
+/*! Attaches the Objective-C object to a given HSQOBJECT at index position 
+    in the stack as an instance user pointer.
+ 
     Retains the Objective-C object.
  */
-void OCSquirrelVM_SetInstanceUP(HSQUIRRELVM vm, HSQOBJECT instance, id object);
+SQRESULT OCSquirrelVM_SetInstanceUP(HSQUIRRELVM vm, SQInteger index, id object);
 
 
 /// Releases the Objective-C object represented by the pointer.

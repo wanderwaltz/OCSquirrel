@@ -109,6 +109,18 @@
 }
 
 
+- (void) testCouldPushNewInstance
+{
+    OCSquirrelClass *class = [_squirrelVM bindClass: [NSDate class]];
+    [class pushNewInstance];
+    
+    OCSquirrelInstance *instance = [_squirrelVM.stack valueAtPosition: -1];
+    
+    STAssertNotNil(instance,
+                   @"OCSquirrelClass should be able to create instances of the bound class.");
+}
+
+
 - (void) testCouldCreateInstance
 {
     OCSquirrelClass *class = [_squirrelVM bindClass: [NSDate class]];
@@ -124,6 +136,7 @@
 }
 
 
+
 - (void) testCreateInstanceResultClass
 {
     OCSquirrelClass *class = [_squirrelVM bindClass: [NSDate class]];
@@ -137,5 +150,35 @@
     STAssertTrue([result isKindOfClass: [OCSquirrelInstance class]],
                 @"Creating an instance of a class should return OCSquirrelInstance");
 }
+
+
+- (void) testCreateInstanceResultUP
+{
+    OCSquirrelClass *class = [_squirrelVM bindClass: [NSDate class]];
+    OCSquirrelTable *root  = [OCSquirrelTable rootTableForVM: _squirrelVM];
+    
+    [root setObject: class forKey: @"NSDate"];
+    NSError *error = nil;
+    OCSquirrelInstance *instance = [_squirrelVM executeSync: @"return NSDate();" error: &error];
+    
+    STAssertNotNil(instance.instanceUP,
+                   @"Creating an instance of a native bound class should return OCSquirrelInstance "
+                   @"with a non-nil instance user pointer.");
+}
+
+
+- (void) testPushNewInstanceResultUP
+{
+    OCSquirrelClass *class = [_squirrelVM bindClass: [NSDate class]];
+    [class pushNewInstance];
+    
+    OCSquirrelInstance *instance = [_squirrelVM.stack valueAtPosition: -1];
+    
+    STAssertNotNil(instance.instanceUP,
+                   @"Creating an instance of a native bound class should return OCSquirrelInstance "
+                   @"with a non-nil instance user pointer.");
+}
+
+
 
 @end

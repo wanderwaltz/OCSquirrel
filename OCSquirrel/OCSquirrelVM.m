@@ -15,7 +15,11 @@
 #import "OCSquirrelVM+DelegateCallbacks.h"
 #import "OCSquirrelVMStackImpl.h"
 #import "OCSquirrelVMFunctions.h"
+#import "OCSquirrelVMBindings.h"
+
+#import "OCSquirrelClass.h"
 #import "OCSquirrelTable.h"
+#import "OCSquirrelClosure.h"
 
 
 
@@ -230,6 +234,12 @@ static const void * const kDispatchSpecificKeyOCSquirrelVMQueue = &kDispatchSpec
             _classBindings[className] = class;
             
             [class setClassAttributes: [NSValue valueWithPointer: (__bridge void *)aClass]];
+            
+            id constructor =
+            [[OCSquirrelClosure alloc] initWithSQFUNCTION: OCSquirrelVMBindings_Constructor
+                                               squirrelVM: self];
+            
+            [class setObject: constructor forKey: @"constructor"];
         }
     }];
     
