@@ -15,7 +15,7 @@
 #import "OCSquirrelVM+DelegateCallbacks.h"
 #import "OCSquirrelVMStackImpl.h"
 #import "OCSquirrelVMFunctions.h"
-#import "OCSquirrelVMBindings.h"
+#import "OCSquirrelVMBindings_NoARC.h"
 
 #import "OCSquirrelClass.h"
 #import "OCSquirrelTable.h"
@@ -252,7 +252,8 @@ static const void * const kDispatchSpecificKeyOCSquirrelVMQueue = &kDispatchSpec
 
             
             id init =
-            [[OCSquirrelClosure alloc] initWithSQFUNCTION: OCSquirrelVMBindings_SimpleInvocation
+            [[OCSquirrelClosure alloc] initWithSQFUNCTION:
+             OCSquirrelVMBindings_InitializerSimpleInvocation
                                                      name: @"init"
                                                squirrelVM: self];
             [class setObject: init forKey: @"init"];

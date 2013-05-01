@@ -15,7 +15,9 @@
 
 
 #pragma mark -
-#pragma mark Helper class
+#pragma mark Helper classes
+
+#pragma mark Simple Invocation Checker
 
 @interface SimpleInvocationChecker : NSObject
 @property (readonly, nonatomic) BOOL calledInit;
@@ -35,6 +37,21 @@
 }
 
 @end
+
+#pragma mark Initializer Checker
+
+@interface InitializerChecker : NSObject
+@end
+
+@implementation InitializerChecker
+
+- (id) init
+{
+    return (self = nil);
+}
+
+@end
+
 
 
 #pragma mark -
@@ -146,7 +163,7 @@
 
 
 - (void) testCouldCreateInstance
-{
+{    
     OCSquirrelClass *class = [_squirrelVM bindClass: [NSDate class]];
     OCSquirrelTable *root  = [OCSquirrelTable rootTableForVM: _squirrelVM];
     
@@ -247,6 +264,21 @@
                 @"corresponding Objective-C object");
 }
 
+
+- (void) testInitMethodReturningNil
+{
+    OCSquirrelClass *class = [_squirrelVM bindClass: [InitializerChecker class]];
+    OCSquirrelTable *root  = [OCSquirrelTable rootTableForVM: _squirrelVM];
+    [root setObject: class forKey: @"InitializerChecker"];
+    
+    NSError *error = nil;
+    OCSquirrelInstance *instance =
+    [_squirrelVM executeSync: @"return InitializerChecker().init()" error: &error];
+    
+    STAssertNil(instance.instanceUP,
+                @"-init method returning a different value for 'self' should actually"
+                @"replace the instance user pointer of the Squirrel class instance.");
+}
 
 
 @end

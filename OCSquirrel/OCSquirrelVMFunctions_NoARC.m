@@ -15,13 +15,31 @@
 
 SQRESULT OCSquirrelVM_SetInstanceUP(HSQUIRRELVM vm, SQInteger index, id object)
 {
-    [object retain];
+    [object retain]; // A: +1 retain count
+    id prevObject = nil;
     
-    SQRESULT result = sq_setinstanceup(vm, index, object);
+    SQRESULT result = SQ_ERROR;
     
-    if (SQ_FAILED(result))
+    if (SQ_SUCCEEDED(result = sq_getinstanceup(vm, index, (SQUserPointer *)&prevObject, 0)))
     {
-        [object release];
+        if (SQ_SUCCEEDED(result = sq_setinstanceup(vm, index, object)))
+        {
+            // Release the previous user poniter if existed
+            // and only if setting new user pointer succeeds.
+            // Otherwise releasing prevObject would leave
+            // an pointer to deallocated object, which will
+            // definitely crash the app at some point. We'll
+            // better cope with memory leaks than with crashes.
+            [prevObject release];
+        }
+        else
+        {
+            [object release]; // Compensate retain in A
+        }
+    }
+    else
+    {
+        [object release]; // Compensate retain in line A
     }
     
     return result;
