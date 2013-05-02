@@ -195,4 +195,22 @@
 }
 
 
+#pragma mark -
+#pragma mark key-value coding
+
+- (id) valueForUndefinedKey: (NSString *) key
+{
+    // Tries to get the value from the underlying Squirrel table.
+    return [self objectForKey: key];
+}
+
+
+- (void) setValue: (id) value
+  forUndefinedKey: (NSString *) key
+{
+    // Tries to set the corresponding slot of the underlying Squirrel table
+    [self setObject: value forKey: key];
+}
+
+
 @end

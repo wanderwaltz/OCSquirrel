@@ -575,4 +575,110 @@
                          @"String value should be properly set by a type-specific method");
 }
 
+
+#pragma mark -
+#pragma mark key-value coding (read)
+
+- (void) testIntegerValueForKey
+{
+    OCSquirrelTable *table = [[OCSquirrelTable alloc] initWithVM: _squirrelVM];
+    [table setInteger: 12345 forKey: @"key"];
+    
+    STAssertEquals([[table valueForKey: @"key"] integerValue], 12345,
+                   @"Integer value should be properly read with valueForKey:");
+}
+
+
+- (void) testFloatValueForKey
+{
+    OCSquirrelTable *table = [[OCSquirrelTable alloc] initWithVM: _squirrelVM];
+    [table setFloat: 123.456 forKey: @"key"];
+    
+    STAssertEqualsWithAccuracy([[table valueForKey: @"key"] floatValue], 123.456f, 1e-3,
+                               @"Float value should be properly read with valueForKey:");
+}
+
+
+- (void) testBoolValueForKey
+{
+    OCSquirrelTable *table = [[OCSquirrelTable alloc] initWithVM: _squirrelVM];
+    [table setBool: YES forKey: @"key"];
+    
+    STAssertEquals([[table valueForKey: @"key"] boolValue], YES,
+                   @"BOOL value should be properly read with valueForKey:");
+}
+
+
+- (void) testUserPointerValueForKey
+{
+    OCSquirrelTable *table = [[OCSquirrelTable alloc] initWithVM: _squirrelVM];
+    [table setUserPointer: (__bridge SQUserPointer)self forKey: @"key"];
+    
+    STAssertEquals([[table valueForKey: @"key"] pointerValue], (__bridge SQUserPointer)self,
+                   @"UserPointer value should be properly read with valueForKey:");
+}
+
+
+- (void) testStringValueForKey
+{
+    OCSquirrelTable *table = [[OCSquirrelTable alloc] initWithVM: _squirrelVM];
+    [table setString: @"value" forKey: @"key"];
+    
+    STAssertEqualObjects([table valueForKey: @"key"], @"value",
+                         @"String value should be properly read with valueForKey:");
+}
+
+
+#pragma mark -
+#pragma mark key-value coding (write)
+
+- (void) testSetIntegerValueForKey
+{
+    OCSquirrelTable *table = [[OCSquirrelTable alloc] initWithVM: _squirrelVM];
+    [table setValue: @12345 forKey: @"key"];
+    
+    STAssertEquals([[table valueForKey: @"key"] integerValue], 12345,
+                   @"Integer value should be properly set with setValue:forKey:");
+}
+
+
+- (void) testSetFloatValueForKey
+{
+    OCSquirrelTable *table = [[OCSquirrelTable alloc] initWithVM: _squirrelVM];
+    [table setValue: @123.456 forKey: @"key"];
+    
+    STAssertEqualsWithAccuracy([[table valueForKey: @"key"] floatValue], 123.456f, 1e-3,
+                               @"Float value should be properly set with setValue:forKey:");
+}
+
+
+- (void) testSetBoolValueForKey
+{
+    OCSquirrelTable *table = [[OCSquirrelTable alloc] initWithVM: _squirrelVM];
+    [table setValue: @YES forKey: @"key"];
+    
+    STAssertEquals([[table valueForKey: @"key"] boolValue], YES,
+                   @"BOOL value should be properly set with setValue:forKey:");
+}
+
+
+- (void) testSetUserPointerValueForKey
+{
+    OCSquirrelTable *table = [[OCSquirrelTable alloc] initWithVM: _squirrelVM];
+    [table setValue: [NSValue valueWithPointer: (__bridge SQUserPointer)self] forKey: @"key"];
+    
+    STAssertEquals([[table valueForKey: @"key"] pointerValue], (__bridge SQUserPointer)self,
+                   @"UserPointer value should be properly set with setValue:forKey:");
+}
+
+
+- (void) testSetStringValueForKey
+{
+    OCSquirrelTable *table = [[OCSquirrelTable alloc] initWithVM: _squirrelVM];
+    [table setValue: @"value" forKey: @"key"];
+    
+    STAssertEqualObjects([table valueForKey: @"key"], @"value",
+                         @"String value should be properly set with setValue:forKey:");
+}
+
 @end
