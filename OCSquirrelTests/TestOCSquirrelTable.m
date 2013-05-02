@@ -681,4 +681,62 @@
                          @"String value should be properly set with setValue:forKey:");
 }
 
+
+#pragma mark -
+#pragma mark enumeration
+
+- (void) testEnumerateObjectsAndKeys
+{
+    OCSquirrelTable *table = [[OCSquirrelTable alloc] initWithVM: _squirrelVM];
+    
+    NSDictionary *valuesAndKeys =
+    @{
+      @"key"   : @"value",
+      @12345   : @6789,
+      @"other" : [NSNull null]
+    };
+    
+    [table setObject: nil      forKey: @"other"];
+    [table setObject: @"value" forKey: @"key"];
+    [table setObject: @6789    forKey: @12345];
+    
+    NSMutableDictionary *enumerated = [NSMutableDictionary dictionary];
+    
+    [table enumerateObjectsAndKeysUsingBlock:
+     ^(id key, id value, BOOL *stop)
+     {
+         if (key   == nil) key   = [NSNull null];
+         if (value == nil) value = [NSNull null];
+         
+         enumerated[key] = value;
+     }];
+    
+    STAssertEqualObjects(valuesAndKeys, enumerated,
+                         @"enumerateObjectsAndKeysUsingBlock should enumerate all table elements");
+}
+
+
+- (void) testEnumerateObjectsAndKeysStop
+{
+    OCSquirrelTable *table = [[OCSquirrelTable alloc] initWithVM: _squirrelVM];
+    
+    [table setObject: nil      forKey: @"other"];
+    [table setObject: @"value" forKey: @"key"];
+    [table setObject: @6789    forKey: @12345];
+    
+    __block NSUInteger iterations = 0;
+    
+    [table enumerateObjectsAndKeysUsingBlock:
+     ^(id key, id value, BOOL *stop)
+     {
+         iterations++;
+         *stop = YES;         
+     }];
+    
+    STAssertEquals(iterations, 1u,
+                   @"enumerateObjectsAndKeysUsingBlock should stop if stop parameter of the block is "
+                   @"set to YES");
+}
+
+
 @end

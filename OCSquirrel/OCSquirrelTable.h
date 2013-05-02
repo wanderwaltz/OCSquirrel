@@ -40,4 +40,9 @@
 
 - (void) setUserPointer: (SQUserPointer) pointer forKey: (id) key;
 
+
+#pragma mark enumeration
+
+- (void) enumerateObjectsAndKeysUsingBlock: (void (^)(id key, id value, BOOL *stop)) block;
+
 @end

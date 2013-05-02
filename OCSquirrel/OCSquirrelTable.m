@@ -213,4 +213,36 @@
 }
 
 
+#pragma mark -
+#pragma mark enumeration
+
+- (void) enumerateObjectsAndKeysUsingBlock: (void (^)(id key, id value, BOOL *stop)) block
+{
+    if (block != nil)
+    {
+        OCSquirrelVM *squirrelVM = self.squirrelVM;
+        
+        [squirrelVM doWaitPreservingStackTop:^{
+            
+            [self push];
+            sq_pushnull(squirrelVM.vm);
+            
+            while(SQ_SUCCEEDED(sq_next(squirrelVM.vm, -2)))
+            {
+                id key   = [squirrelVM.stack valueAtPosition: -2];
+                id value = [squirrelVM.stack valueAtPosition: -1];
+                
+                sq_pop(squirrelVM.vm,2);
+                
+                BOOL stop = NO;
+                
+                block(key, value, &stop);
+            
+                if (stop) break;
+            }
+        }];
+    }
+}
+
+
 @end
