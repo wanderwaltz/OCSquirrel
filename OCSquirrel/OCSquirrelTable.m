@@ -11,6 +11,7 @@
 #endif
 
 #import "OCSquirrelTable.h"
+#import "OCSquirrelClosure.h"
 
 
 #pragma mark -
@@ -260,6 +261,35 @@
             }
         }];
     }
+}
+
+
+#pragma mark -
+#pragma mark calls
+
+- (id) callClosureWithKey: (id) key
+{
+    id closure = [self objectForKey: key];
+    
+    if ([closure isKindOfClass: [OCSquirrelClosure class]])
+    {
+        return [closure callWithThis: self];
+    }
+    else return nil;
+}
+
+
+- (id) callClosureWithKey: (id) key
+               parameters: (NSArray *) parameters
+{
+    id closure = [self objectForKey: key];
+    
+    if ([closure isKindOfClass: [OCSquirrelClosure class]])
+    {
+        return [closure callWithThis: self
+                          parameters: parameters];
+    }
+    else return nil;
 }
 
 

@@ -753,4 +753,51 @@
 }
 
 
+#pragma mark -
+#pragma mark calls
+
+- (void) testCallClosureWithKey
+{
+    OCSquirrelTable *table = [_squirrelVM executeSync:
+                               @"return { value = false, closure = function() { value = true; } }"
+                                   error: nil];
+    
+    [table callClosureWithKey: @"closure"];
+    
+    STAssertTrue([table boolForKey: @"value"],
+                 @"Closure with the given key should be called with the table passed as 'this'");
+}
+
+
+- (void) testCallClosureWithKeyResult
+{
+    OCSquirrelTable *table = [_squirrelVM executeSync:
+                              @"return { value = 1234, closure = function() { return value; } }"
+                                                error: nil];
+    
+    id result = [table callClosureWithKey: @"closure"];
+    
+    STAssertEqualObjects(result, @1234,
+                         @"Closure with the given key should be called with the "
+                         @"table passed as 'this'");
+
+}
+
+
+- (void) testCallClosureWithKeyParametersResult
+{
+    OCSquirrelTable *table = [_squirrelVM executeSync:
+                              @"return { value = 1, closure = function(x, y) { return x+y+value; } }"
+                                                error: nil];
+    
+    id result = [table callClosureWithKey: @"closure"
+                               parameters: @[@4, @5]];
+    
+    STAssertEqualObjects(result, @10,
+                         @"Closure with the given key should be called with the "
+                         @"table passed as 'this' and the parameters array should "
+                         @"be properly passed");
+    
+}
+
 @end

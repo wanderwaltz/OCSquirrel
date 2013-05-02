@@ -46,4 +46,11 @@
 
 - (void) enumerateObjectsAndKeysUsingBlock: (void (^)(id key, id value, BOOL *stop)) block;
 
+
+#pragma mark calls
+
+- (id) callClosureWithKey: (id) key;
+- (id) callClosureWithKey: (id) key
+               parameters: (NSArray *) parameters;
+
 @end
