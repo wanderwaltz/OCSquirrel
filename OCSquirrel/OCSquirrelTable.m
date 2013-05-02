@@ -48,6 +48,24 @@
 }
 
 
++ (id) registryTableForVM: (OCSquirrelVM *) squirrelVM
+{
+    __block id table = nil;
+    
+    [squirrelVM doWaitPreservingStackTop: ^{
+        sq_pushregistrytable(squirrelVM.vm);
+        
+        HSQOBJECT registry = [squirrelVM.stack sqObjectAtPosition: -1];
+        
+        table = [[self alloc] initWithHSQOBJECT: registry
+                                           inVM: squirrelVM];
+    }];
+    
+    
+    return table;
+}
+
+
 - (id) initWithVM: (OCSquirrelVM *) squirrelVM
 {
     self = [super initWithVM: squirrelVM];

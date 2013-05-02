@@ -14,7 +14,8 @@
 
 @interface OCSquirrelTable : OCSquirrelObject
 
-+ (id) rootTableForVM: (OCSquirrelVM *) squirrelVM;
++ (id) rootTableForVM:     (OCSquirrelVM *) squirrelVM;
++ (id) registryTableForVM: (OCSquirrelVM *) squirrelVM;
 
 
 #pragma mark getter methods

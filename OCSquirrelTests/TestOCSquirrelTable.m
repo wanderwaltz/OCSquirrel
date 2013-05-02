@@ -53,6 +53,20 @@
 }
 
 
+- (void) testRegistryTable
+{
+    sq_pushregistrytable(_squirrelVM.vm);
+    
+    HSQOBJECT registry = [_squirrelVM.stack sqObjectAtPosition: -1];
+    
+    OCSquirrelTable *table = [OCSquirrelTable registryTableForVM: _squirrelVM];
+    
+    STAssertEquals(*table.obj, registry,
+                   @"+registryTableForVM: method should return an OCSquirrelTable set to the "
+                   @"registry talbe of the given VM");
+}
+
+
 - (void) testNewTableWhenInitializingWithVM
 {
     OCSquirrelTable *table = [[OCSquirrelTable alloc] initWithVM: _squirrelVM];
