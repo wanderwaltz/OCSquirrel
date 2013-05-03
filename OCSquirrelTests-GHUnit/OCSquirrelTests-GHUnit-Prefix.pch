@@ -1,0 +1,51 @@
+//
+// Prefix header for all source files of the 'OCSquirrelTests-GHUnit' target in the 'OCSquirrelTests-GHUnit' project
+//
+
+#import <Availability.h>
+
+#ifndef __IPHONE_3_0
+#warning "This project uses features only available in iOS SDK 3.0 and later."
+#endif
+
+#ifdef __OBJC__
+    #import <UIKit/UIKit.h>
+    #import <Foundation/Foundation.h>
+    #import <GHUnitIOS/GHUnit.h>
+
+    // A flag macro for conditional compilation of the test case classes.
+    // If GHUnit_Target is defined, the <SenTestingKit/SenTestingKit.h>
+    // won't be imported by the test case class headers.
+    #define GHUnit_Target
+
+    // Compatibility defines for the SenTestingKit -> GHUnitIOS conversion
+    // With these defines we could reuse the test case classes without
+    // modification.
+    #define    SenTestCase                     GHTestCase
+
+    #define    STFail                          GHFail
+
+    #define    STAssertNil                     GHAssertNil
+
+    #define    STAssertNotNil                  GHAssertNotNil
+
+    #define    STAssertTrue                    GHAssertTrue
+
+    #define    STAssertFalse                   GHAssertFalse
+
+    #define    STAssertEquals                  GHAssertEquals
+    #define    STAssertEqualObjects            GHAssertEqualObjects
+    #define    STAssertEqualsWithAccuracy      GHAssertEqualsWithAccuracy
+
+    #define    STAssertThrows                  GHAssertThrows
+    #define    STAssertThrowsSpecific          GHAssertThrowsSpecific
+    #define    STAssertThrowsSpecificNamed     GHAssertThrowsSpecificNamed
+
+    #define    STAssertNoThrow                 GHAssertNoThrow
+    #define    STAssertNoThrowSpecific         GHAssertNoThrowSpecific
+    #define    STAssertNoThrowSpecificNamed    GHAssertNoThrowSpecificNamed
+
+    #define    STAssertTrueNoThrow             GHAssertTrueNoThrow
+
+    #define    STAssertFalseNoThrow            GHAssertFalseNoThrow
+#endif

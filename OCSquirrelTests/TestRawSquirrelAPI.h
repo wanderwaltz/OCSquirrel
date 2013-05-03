@@ -6,7 +6,10 @@
 //  Copyright (c) 2013 Egor Chiglintsev. All rights reserved.
 //
 
-#import <SenTestingKit/SenTestingKit.h>
+#ifndef GHUnit_Target
+    #import <SenTestingKit/SenTestingKit.h>
+#endif
+
 #import <OCSquirrel/OCSquirrel.h>
 
 #pragma mark -

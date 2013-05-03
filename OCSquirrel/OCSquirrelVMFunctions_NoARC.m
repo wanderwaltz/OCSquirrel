@@ -42,6 +42,10 @@ SQRESULT OCSquirrelVM_SetInstanceUP(HSQUIRRELVM vm, SQInteger index, id object)
         [object release]; // Compensate retain in line A
     }
     
+    // In case of the successfull setting the instance user pointer,
+    // object should have its retain count increased by 1 and the
+    // previous user pointer should be released.
+    
     return result;
 }
 
