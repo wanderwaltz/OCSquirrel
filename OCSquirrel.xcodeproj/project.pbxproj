@@ -87,6 +87,22 @@
 		5DBE08CD173374B600908658 /* TestPrinting.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D8EC811171A57600084F92C /* TestPrinting.m */; };
 		5DBE08CE173374B600908658 /* TestOCSquirrelVM.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5DB09DF817196FA500F50257 /* TestOCSquirrelVM.mm */; };
 		5DBE08CF173374B600908658 /* TestRawSquirrelAPI.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DB09DF517196D1F00F50257 /* TestRawSquirrelAPI.m */; };
+		5DBE08D617338E1300908658 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5DBE08A71733742200908658 /* UIKit.framework */; };
+		5DBE08D717338E1300908658 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5DBE08A91733742200908658 /* Foundation.framework */; };
+		5DBE08D817338E1300908658 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5DBE08AB1733742200908658 /* CoreGraphics.framework */; };
+		5DBE08DE17338E1300908658 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 5DBE08DC17338E1300908658 /* InfoPlist.strings */; };
+		5DBE08E017338E1300908658 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DBE08DF17338E1300908658 /* main.m */; };
+		5DBE08E417338E1300908658 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DBE08E317338E1300908658 /* AppDelegate.m */; };
+		5DBE08E617338E1300908658 /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = 5DBE08E517338E1300908658 /* Default.png */; };
+		5DBE08E817338E1300908658 /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5DBE08E717338E1300908658 /* Default@2x.png */; };
+		5DBE08EA17338E1300908658 /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5DBE08E917338E1300908658 /* Default-568h@2x.png */; };
+		5DBE08F217338E6500908658 /* RootViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DBE08F017338E6500908658 /* RootViewController.m */; };
+		5DBE08F317338E6500908658 /* RootViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5DBE08F117338E6500908658 /* RootViewController.xib */; };
+		5DBE08F817338F4300908658 /* BenchmarkViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DBE08F617338F4300908658 /* BenchmarkViewController.m */; };
+		5DBE08F917338F4300908658 /* BenchmarkViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5DBE08F717338F4300908658 /* BenchmarkViewController.xib */; };
+		5DBE08FB1733902A00908658 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5DBE08FA1733902A00908658 /* QuartzCore.framework */; };
+		5DBE08FF1733907900908658 /* StackPushBenchmark.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DBE08FE1733907900908658 /* StackPushBenchmark.m */; };
+		5DBE09051733957000908658 /* StackSumBenchmark.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DBE09041733957000908658 /* StackSumBenchmark.m */; };
 		5DC29C35171AFE09000A2096 /* TestOCSquirrelObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DC29C34171AFE09000A2096 /* TestOCSquirrelObject.m */; };
 		5DC29C39171AFE09000A2096 /* OCSquirrelObject.h in Headers */ = {isa = PBXBuildFile; fileRef = 5DC29C37171AFE09000A2096 /* OCSquirrelObject.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		5DC29C3A171AFE09000A2096 /* OCSquirrelObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DC29C38171AFE09000A2096 /* OCSquirrelObject.m */; };
@@ -116,6 +132,13 @@
 			remoteInfo = OCSquirrel;
 		};
 		5DBE08C5173374A000908658 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 5DB09C901719686C00F50257 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 5DB09C9B1719686D00F50257;
+			remoteInfo = OCSquirrel;
+		};
+		5DBE0900173394E600908658 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 5DB09C901719686C00F50257 /* Project object */;
 			proxyType = 1;
@@ -220,6 +243,27 @@
 		5DBE08B31733742200908658 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		5DBE08B51733742300908658 /* OCSquirrelTests-GHUnit-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "OCSquirrelTests-GHUnit-Prefix.pch"; sourceTree = "<group>"; };
 		5DBE08C31733745C00908658 /* GHUnitIOS.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GHUnitIOS.framework; path = "OCSquirrelTests-GHUnit/GHUnitIOS.framework"; sourceTree = "<group>"; };
+		5DBE08D517338E1300908658 /* OCSquirrel-Benchmark.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "OCSquirrel-Benchmark.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		5DBE08DB17338E1300908658 /* OCSquirrel-Benchmark-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "OCSquirrel-Benchmark-Info.plist"; sourceTree = "<group>"; };
+		5DBE08DD17338E1300908658 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		5DBE08DF17338E1300908658 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		5DBE08E117338E1300908658 /* OCSquirrel-Benchmark-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "OCSquirrel-Benchmark-Prefix.pch"; sourceTree = "<group>"; };
+		5DBE08E217338E1300908658 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
+		5DBE08E317338E1300908658 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
+		5DBE08E517338E1300908658 /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Default.png; sourceTree = "<group>"; };
+		5DBE08E717338E1300908658 /* Default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default@2x.png"; sourceTree = "<group>"; };
+		5DBE08E917338E1300908658 /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
+		5DBE08EF17338E6500908658 /* RootViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RootViewController.h; sourceTree = "<group>"; };
+		5DBE08F017338E6500908658 /* RootViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RootViewController.m; sourceTree = "<group>"; };
+		5DBE08F117338E6500908658 /* RootViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = RootViewController.xib; sourceTree = "<group>"; };
+		5DBE08F517338F4300908658 /* BenchmarkViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BenchmarkViewController.h; sourceTree = "<group>"; };
+		5DBE08F617338F4300908658 /* BenchmarkViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BenchmarkViewController.m; sourceTree = "<group>"; };
+		5DBE08F717338F4300908658 /* BenchmarkViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = BenchmarkViewController.xib; sourceTree = "<group>"; };
+		5DBE08FA1733902A00908658 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
+		5DBE08FD1733907900908658 /* StackPushBenchmark.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StackPushBenchmark.h; sourceTree = "<group>"; };
+		5DBE08FE1733907900908658 /* StackPushBenchmark.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StackPushBenchmark.m; sourceTree = "<group>"; };
+		5DBE09031733957000908658 /* StackSumBenchmark.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StackSumBenchmark.h; sourceTree = "<group>"; };
+		5DBE09041733957000908658 /* StackSumBenchmark.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StackSumBenchmark.m; sourceTree = "<group>"; };
 		5DC29C33171AFE09000A2096 /* TestOCSquirrelObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TestOCSquirrelObject.h; sourceTree = "<group>"; };
 		5DC29C34171AFE09000A2096 /* TestOCSquirrelObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TestOCSquirrelObject.m; sourceTree = "<group>"; };
 		5DC29C37171AFE09000A2096 /* OCSquirrelObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OCSquirrelObject.h; sourceTree = "<group>"; };
@@ -273,6 +317,17 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		5DBE08D217338E1300908658 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				5DBE08FB1733902A00908658 /* QuartzCore.framework in Frameworks */,
+				5DBE08D617338E1300908658 /* UIKit.framework in Frameworks */,
+				5DBE08D717338E1300908658 /* Foundation.framework in Frameworks */,
+				5DBE08D817338E1300908658 /* CoreGraphics.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
@@ -283,6 +338,7 @@
 				5DB09CB51719686D00F50257 /* OCSquirrelTests */,
 				5DBE08AD1733742200908658 /* OCSquirrelTests-GHUnit */,
 				5DB09CC6171968A600F50257 /* Vendor */,
+				5DBE08D917338E1300908658 /* OCSquirrel-Benchmark */,
 				5DB09CAB1719686D00F50257 /* Frameworks */,
 				5DB09C9D1719686D00F50257 /* Products */,
 			);
@@ -294,6 +350,7 @@
 				5DB09C9C1719686D00F50257 /* OCSquirrel.framework */,
 				5DB09CAA1719686D00F50257 /* OCSquirrelTests.octest */,
 				5DBE08A61733742200908658 /* OCSquirrelTests-GHUnit.app */,
+				5DBE08D517338E1300908658 /* OCSquirrel-Benchmark.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -538,6 +595,73 @@
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
+		5DBE08D917338E1300908658 /* OCSquirrel-Benchmark */ = {
+			isa = PBXGroup;
+			children = (
+				5DBE09021733955900908658 /* Stack Sum Benchmark */,
+				5DBE08FC1733905D00908658 /* Stack Push Benchmark */,
+				5DBE08F417338F2C00908658 /* Benchmark View Controller */,
+				5DBE08EE17338E5800908658 /* Root View Controller */,
+				5DBE08E217338E1300908658 /* AppDelegate.h */,
+				5DBE08E317338E1300908658 /* AppDelegate.m */,
+				5DBE08DA17338E1300908658 /* Supporting Files */,
+			);
+			path = "OCSquirrel-Benchmark";
+			sourceTree = "<group>";
+		};
+		5DBE08DA17338E1300908658 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				5DBE08FA1733902A00908658 /* QuartzCore.framework */,
+				5DBE08DB17338E1300908658 /* OCSquirrel-Benchmark-Info.plist */,
+				5DBE08DC17338E1300908658 /* InfoPlist.strings */,
+				5DBE08DF17338E1300908658 /* main.m */,
+				5DBE08E117338E1300908658 /* OCSquirrel-Benchmark-Prefix.pch */,
+				5DBE08E517338E1300908658 /* Default.png */,
+				5DBE08E717338E1300908658 /* Default@2x.png */,
+				5DBE08E917338E1300908658 /* Default-568h@2x.png */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		5DBE08EE17338E5800908658 /* Root View Controller */ = {
+			isa = PBXGroup;
+			children = (
+				5DBE08EF17338E6500908658 /* RootViewController.h */,
+				5DBE08F017338E6500908658 /* RootViewController.m */,
+				5DBE08F117338E6500908658 /* RootViewController.xib */,
+			);
+			name = "Root View Controller";
+			sourceTree = "<group>";
+		};
+		5DBE08F417338F2C00908658 /* Benchmark View Controller */ = {
+			isa = PBXGroup;
+			children = (
+				5DBE08F517338F4300908658 /* BenchmarkViewController.h */,
+				5DBE08F617338F4300908658 /* BenchmarkViewController.m */,
+				5DBE08F717338F4300908658 /* BenchmarkViewController.xib */,
+			);
+			name = "Benchmark View Controller";
+			sourceTree = "<group>";
+		};
+		5DBE08FC1733905D00908658 /* Stack Push Benchmark */ = {
+			isa = PBXGroup;
+			children = (
+				5DBE08FD1733907900908658 /* StackPushBenchmark.h */,
+				5DBE08FE1733907900908658 /* StackPushBenchmark.m */,
+			);
+			name = "Stack Push Benchmark";
+			sourceTree = "<group>";
+		};
+		5DBE09021733955900908658 /* Stack Sum Benchmark */ = {
+			isa = PBXGroup;
+			children = (
+				5DBE09031733957000908658 /* StackSumBenchmark.h */,
+				5DBE09041733957000908658 /* StackSumBenchmark.m */,
+			);
+			name = "Stack Sum Benchmark";
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXHeadersBuildPhase section */
@@ -647,6 +771,24 @@
 			productReference = 5DBE08A61733742200908658 /* OCSquirrelTests-GHUnit.app */;
 			productType = "com.apple.product-type.application";
 		};
+		5DBE08D417338E1300908658 /* OCSquirrel-Benchmark */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 5DBE08ED17338E1300908658 /* Build configuration list for PBXNativeTarget "OCSquirrel-Benchmark" */;
+			buildPhases = (
+				5DBE08D117338E1300908658 /* Sources */,
+				5DBE08D217338E1300908658 /* Frameworks */,
+				5DBE08D317338E1300908658 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				5DBE0901173394E600908658 /* PBXTargetDependency */,
+			);
+			name = "OCSquirrel-Benchmark";
+			productName = "OCSquirrel-Benchmark";
+			productReference = 5DBE08D517338E1300908658 /* OCSquirrel-Benchmark.app */;
+			productType = "com.apple.product-type.application";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -671,6 +813,7 @@
 				5DB09C9B1719686D00F50257 /* OCSquirrel */,
 				5DB09CA91719686D00F50257 /* OCSquirrelTests */,
 				5DBE08A51733742200908658 /* OCSquirrelTests-GHUnit */,
+				5DBE08D417338E1300908658 /* OCSquirrel-Benchmark */,
 			);
 		};
 /* End PBXProject section */
@@ -697,6 +840,19 @@
 			buildActionMask = 2147483647;
 			files = (
 				5DBE08B21733742200908658 /* InfoPlist.strings in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		5DBE08D317338E1300908658 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				5DBE08DE17338E1300908658 /* InfoPlist.strings in Resources */,
+				5DBE08E617338E1300908658 /* Default.png in Resources */,
+				5DBE08E817338E1300908658 /* Default@2x.png in Resources */,
+				5DBE08EA17338E1300908658 /* Default-568h@2x.png in Resources */,
+				5DBE08F317338E6500908658 /* RootViewController.xib in Resources */,
+				5DBE08F917338F4300908658 /* BenchmarkViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -829,6 +985,19 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		5DBE08D117338E1300908658 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				5DBE08E017338E1300908658 /* main.m in Sources */,
+				5DBE08E417338E1300908658 /* AppDelegate.m in Sources */,
+				5DBE08F217338E6500908658 /* RootViewController.m in Sources */,
+				5DBE08F817338F4300908658 /* BenchmarkViewController.m in Sources */,
+				5DBE08FF1733907900908658 /* StackPushBenchmark.m in Sources */,
+				5DBE09051733957000908658 /* StackSumBenchmark.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
@@ -841,6 +1010,11 @@
 			isa = PBXTargetDependency;
 			target = 5DB09C9B1719686D00F50257 /* OCSquirrel */;
 			targetProxy = 5DBE08C5173374A000908658 /* PBXContainerItemProxy */;
+		};
+		5DBE0901173394E600908658 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 5DB09C9B1719686D00F50257 /* OCSquirrel */;
+			targetProxy = 5DBE0900173394E600908658 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -865,6 +1039,14 @@
 			isa = PBXVariantGroup;
 			children = (
 				5DBE08B11733742200908658 /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+		5DBE08DC17338E1300908658 /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				5DBE08DD17338E1300908658 /* en */,
 			);
 			name = InfoPlist.strings;
 			sourceTree = "<group>";
@@ -1086,6 +1268,43 @@
 			};
 			name = Release;
 		};
+		5DBE08EB17338E1300908658 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "OCSquirrel-Benchmark/OCSquirrel-Benchmark-Prefix.pch";
+				INFOPLIST_FILE = "OCSquirrel-Benchmark/OCSquirrel-Benchmark-Info.plist";
+				OTHER_LDFLAGS = (
+					"-framework",
+					.fake_fw_testing,
+					"-lstdc++",
+					"-ObjC",
+				);
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Debug;
+		};
+		5DBE08EC17338E1300908658 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "OCSquirrel-Benchmark/OCSquirrel-Benchmark-Prefix.pch";
+				INFOPLIST_FILE = "OCSquirrel-Benchmark/OCSquirrel-Benchmark-Info.plist";
+				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
+				OTHER_LDFLAGS = (
+					"-framework",
+					.fake_fw_testing,
+					"-lstdc++",
+					"-ObjC",
+				);
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -1121,6 +1340,15 @@
 			buildConfigurations = (
 				5DBE08BF1733742300908658 /* Debug */,
 				5DBE08C01733742300908658 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		5DBE08ED17338E1300908658 /* Build configuration list for PBXNativeTarget "OCSquirrel-Benchmark" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				5DBE08EB17338E1300908658 /* Debug */,
+				5DBE08EC17338E1300908658 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 		};
