@@ -21,6 +21,8 @@
 #import "OCSquirrelTable.h"
 #import "OCSquirrelClosure.h"
 
+#import <objc/runtime.h>
+
 
 
 #pragma mark -
@@ -219,12 +221,12 @@ static const void * const kDispatchSpecificKeyOCSquirrelVMQueue = &kDispatchSpec
 #pragma mark -
 #pragma mark bindings
 
-- (OCSquirrelClass *) bindClass: (Class) aClass;
+- (OCSquirrelClass *) bindClass: (Class) nativeClass;
 {
     __block OCSquirrelClass *class = nil;
     
     [self doWaitPreservingStackTop:^{
-        NSString *className = NSStringFromClass(aClass);
+        NSString *className = NSStringFromClass(nativeClass);
         
         class = _classBindings[className];
         
@@ -238,7 +240,7 @@ static const void * const kDispatchSpecificKeyOCSquirrelVMQueue = &kDispatchSpec
             // OCSquirrelVMStackImpl for example to determine whether some
             // particular Squirrel class is actually a bound native class
             // or not and return the corresponding OCSquirrelClass instance
-            [class setClassAttributes: [NSValue valueWithPointer: (__bridge void *)aClass]];
+            [class setClassAttributes: [NSValue valueWithPointer: (__bridge void *)nativeClass]];
             
             // Bind constructor. Note that the constructor only does alloc
             // an instance of the native class without initializing it,
@@ -251,6 +253,7 @@ static const void * const kDispatchSpecificKeyOCSquirrelVMQueue = &kDispatchSpec
             [class setObject: constructor forKey: @"constructor"];
 
             
+            // Temporary solution for binding initializer method.
             id init =
             [[OCSquirrelClosure alloc] initWithSQFUNCTION:
              OCSquirrelVMBindings_InitializerSimpleInvocation
@@ -258,11 +261,50 @@ static const void * const kDispatchSpecificKeyOCSquirrelVMQueue = &kDispatchSpec
                                                squirrelVM: self];
             [class setObject: init forKey: @"init"];
 
-            
+       
+            [self bindInstanceMethodsOfNativeClass: nativeClass
+                                   toSquirrelClass: class];
         }
     }];
     
     return class;
+}
+
+
+#pragma mark bindings: private
+
+/// Assumed to be called within the VM access dispatch queue
+- (void) bindInstanceMethodsOfNativeClass: (Class) nativeClass
+                          toSquirrelClass: (OCSquirrelClass *) class
+{
+    unsigned int methodCount = 0;
+    Method      *methods     = class_copyMethodList(nativeClass, &methodCount);
+    
+    for (NSUInteger index = 0; index < methodCount; ++index)
+    {
+        Method method = methods[index];
+        
+        SEL selector = method_getName(method);
+        
+        NSString *selectorString = NSStringFromSelector(selector);
+        
+        // Exclude initializer methods from the search for now
+        if ((selectorString != nil) && ([selectorString rangeOfString: @"init"].location != 0))
+        {
+            NSArray *components = [selectorString componentsSeparatedByString: @":"];
+            
+            // Simple invocation without parameters or with a single parameter
+            if (components.count == 1)
+            {
+                id closure =
+                [[OCSquirrelClosure alloc] initWithSQFUNCTION:
+                 OCSquirrelVMBindings_Instance_SimpleInvocation
+                                                         name: selectorString
+                                                   squirrelVM: self];
+                [class setObject: closure forKey: selectorString];
+            }
+        }
+    }
 }
 
 

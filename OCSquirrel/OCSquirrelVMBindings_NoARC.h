@@ -11,5 +11,5 @@
 
 SQInteger OCSquirrelVMBindings_Constructor(HSQUIRRELVM vm);
 
-SQInteger OCSquirrelVMBindings_SimpleInvocation(HSQUIRRELVM vm);
+SQInteger OCSquirrelVMBindings_Instance_SimpleInvocation(HSQUIRRELVM vm);
 SQInteger OCSquirrelVMBindings_InitializerSimpleInvocation(HSQUIRRELVM vm);

@@ -21,6 +21,14 @@
 
 @interface SimpleInvocationChecker : NSObject
 @property (readonly, nonatomic) BOOL calledInit;
+
+- (NSInteger) integerMethodNoParams;
+- (float)       floatMethodNoParams;
+- (BOOL)         boolMethodNoParams;
+- (NSString *) stringMethodNoParams;
+- (id)            nilMethodNoParams;
+- (void *)    pointerMethodNoParams;
+
 @end
 
 @implementation SimpleInvocationChecker
@@ -34,6 +42,42 @@
         _calledInit = YES;
     }
     return self;
+}
+
+
+- (NSInteger) integerMethodNoParams
+{
+    return 123456;
+}
+
+
+- (float) floatMethodNoParams
+{
+    return 123.456;
+}
+
+
+- (BOOL) boolMethodNoParams
+{
+    return YES;
+}
+
+
+- (NSString *) stringMethodNoParams
+{
+    return @"test";
+}
+
+
+- (id) nilMethodNoParams
+{
+    return nil;
+}
+
+
+- (void *) pointerMethodNoParams
+{
+    return (__bridge void *)self;
 }
 
 @end
@@ -51,7 +95,6 @@
 }
 
 @end
-
 
 
 #pragma mark -
@@ -278,6 +321,96 @@
     STAssertNil(instance.instanceUP,
                 @"-init method returning a different value for 'self' should actually"
                 @"replace the instance user pointer of the Squirrel class instance.");
+}
+
+
+#pragma mark -
+#pragma mark simple instance invocations: no parameters
+
+- (void) testSimpleInstanceIntReturnValue
+{
+    OCSquirrelClass *class = [_squirrelVM bindClass: [SimpleInvocationChecker class]];
+    [class pushNewInstance];
+    
+    OCSquirrelInstance *instance = [_squirrelVM.stack valueAtPosition: -1];
+    
+    id nativeInstance = instance.instanceUP;
+    
+    STAssertEqualObjects(@([nativeInstance integerMethodNoParams]),
+                         [instance callClosureWithKey: @"integerMethodNoParams"],
+                         @"Bound class should have a method returning integer and accepting no parameters");
+}
+
+
+- (void) testSimpleInstanceFloatReturnValue
+{
+    OCSquirrelClass *class = [_squirrelVM bindClass: [SimpleInvocationChecker class]];
+    [class pushNewInstance];
+    
+    OCSquirrelInstance *instance = [_squirrelVM.stack valueAtPosition: -1];
+    
+    id nativeInstance = instance.instanceUP;
+    
+    STAssertEqualObjects(@([nativeInstance floatMethodNoParams]),
+                         [instance callClosureWithKey: @"floatMethodNoParams"],
+                         @"Bound class should have a method returning float and accepting no parameters");
+}
+
+
+- (void) testSimpleInstanceBOOLReturnValue
+{
+    OCSquirrelClass *class = [_squirrelVM bindClass: [SimpleInvocationChecker class]];
+    [class pushNewInstance];
+    
+    OCSquirrelInstance *instance = [_squirrelVM.stack valueAtPosition: -1];
+    
+    id nativeInstance = instance.instanceUP;
+    
+    STAssertEqualObjects(@([nativeInstance boolMethodNoParams]),
+                         [instance callClosureWithKey: @"boolMethodNoParams"],
+                         @"Bound class should have a method returning bool and accepting no parameters");
+}
+
+
+- (void) testSimpleInstanceStringReturnValue
+{
+    OCSquirrelClass *class = [_squirrelVM bindClass: [SimpleInvocationChecker class]];
+    [class pushNewInstance];
+    
+    OCSquirrelInstance *instance = [_squirrelVM.stack valueAtPosition: -1];
+    
+    id nativeInstance = instance.instanceUP;
+    
+    STAssertEqualObjects([nativeInstance stringMethodNoParams],
+                         [instance callClosureWithKey: @"stringMethodNoParams"],
+                         @"Bound class should have a method returning string and accepting no parameters");
+}
+
+
+- (void) testSimpleInstanceNilReturnValue
+{
+    OCSquirrelClass *class = [_squirrelVM bindClass: [SimpleInvocationChecker class]];
+    [class pushNewInstance];
+    
+    OCSquirrelInstance *instance = [_squirrelVM.stack valueAtPosition: -1];
+    
+    STAssertNil([instance callClosureWithKey: @"nilMethodNoParams"],
+                @"Bound class should have a method returning nil and accepting no parameters");
+}
+
+
+- (void) testSimpleInstanceUserPointerReturnValue
+{
+    OCSquirrelClass *class = [_squirrelVM bindClass: [SimpleInvocationChecker class]];
+    [class pushNewInstance];
+    
+    OCSquirrelInstance *instance = [_squirrelVM.stack valueAtPosition: -1];
+    
+    id nativeInstance = instance.instanceUP;
+    
+    STAssertEquals([nativeInstance pointerMethodNoParams],
+                   [[instance callClosureWithKey: @"pointerMethodNoParams"] pointerValue],
+                   @"Bound class should have a method returning void* and accepting no parameters");
 }
 
 

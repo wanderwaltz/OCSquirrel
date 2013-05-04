@@ -45,7 +45,10 @@ SQInteger OCSquirrelVMBindings_Constructor(HSQUIRRELVM vm)
 }
 
 
-SQInteger OCSquirrelVMBindings_SimpleInvocation(HSQUIRRELVM vm)
+/*! Implementation for instance methods simple invocation. Simple invocations accept zero or one parameter
+    and may return a value.
+ */
+SQInteger OCSquirrelVMBindings_Instance_SimpleInvocation(HSQUIRRELVM vm)
 {
     OCSquirrelVM *squirrelVM = OCSquirrelVMforVM(vm);
     
@@ -66,11 +69,84 @@ SQInteger OCSquirrelVMBindings_SimpleInvocation(HSQUIRRELVM vm)
         invocation.selector      = selector;
         
         [invocation invokeWithTarget: object];
+        
+        
+        if (strcmp(signature.methodReturnType, @encode(int16_t)) == 0)
+        {
+            int16_t result = 0;
+            [invocation getReturnValue: &result];
+            
+            sq_pushinteger(vm, result);
+        }
+        else if (strcmp(signature.methodReturnType, @encode(int32_t)) == 0)
+        {
+            int32_t result = 0;
+            [invocation getReturnValue: &result];
+            
+            sq_pushinteger(vm, result);
+        }
+        else if (strcmp(signature.methodReturnType, @encode(u_int16_t)) == 0)
+        {
+            u_int16_t result = 0;
+            [invocation getReturnValue: &result];
+            
+            sq_pushinteger(vm, result);
+        }
+        else if (strcmp(signature.methodReturnType, @encode(u_int32_t)) == 0)
+        {
+            u_int32_t result = 0;
+            [invocation getReturnValue: &result];
+            
+            sq_pushinteger(vm, result);
+        }
+        else if (strcmp(signature.methodReturnType, @encode(float)) == 0)
+        {
+            float result = 0.0f;
+            [invocation getReturnValue: &result];
+            
+            sq_pushfloat(vm, result);
+        }
+        else if (strcmp(signature.methodReturnType, @encode(double)) == 0)
+        {
+            double result = 0.0;
+            [invocation getReturnValue: &result];
+            
+            sq_pushfloat(vm, result);
+        }
+        else if (strcmp(signature.methodReturnType, @encode(BOOL)) == 0)
+        {
+            BOOL result = NO;
+            [invocation getReturnValue: &result];
+            
+            sq_pushbool(vm, (result == YES) ? SQTrue : SQFalse);
+        }
+        else if (strcmp(signature.methodReturnType, @encode(id)) == 0)
+        {
+            id result = nil;
+            [invocation getReturnValue: &result];
+            
+            // This will automatically call some class checks and
+            // convert NSNumbers to numbers, NSStrings to C strings etc.
+            // If a suitable Squirrel value could not be formed,
+            // a user pointer value will be pushed.
+            [squirrelVM.stack pushValue: result];
+        }
+        else if (strcmp(signature.methodReturnType, @encode(void*)) == 0)
+        {
+            void *result = NULL;
+            [invocation getReturnValue: &result];
+            
+            sq_pushuserpointer(vm, result);
+        }
+        else
+        {
+            return 0;
+        }
+        
+        return 1;
     }
-    
-    sq_push(vm, 1);
-    
-    return 1;
+
+    return 0;
 }
 
 
