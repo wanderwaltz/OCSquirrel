@@ -37,4 +37,16 @@
 #pragma mark Initializer Checker
 
 @interface InitializerChecker : NSObject
+@property (readonly, nonatomic) NSInteger    intProperty;
+@property (readonly, nonatomic) float      floatProperty;
+@property (readonly, nonatomic) BOOL        boolProperty;
+@property (readonly, nonatomic) NSString *stringProperty;
+@property (readonly, nonatomic) void    *pointerProperty;
+
+- (id) initWithInt:     (NSInteger)     intValue;
+- (id) initWithFloat:   (float)       floatValue;
+- (id) initWithBOOL:    (BOOL)         boolValue;
+- (id) initWithString:  (NSString *) stringValue;
+- (id) initWithPointer: (void *)    pointerValue;
+
 @end

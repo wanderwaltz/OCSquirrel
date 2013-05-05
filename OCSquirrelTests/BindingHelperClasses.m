@@ -114,5 +114,65 @@
     return (self = nil);
 }
 
+
+- (id) initWithInt: (NSInteger) intValue
+{
+    self = [super init];
+    
+    if (self != nil)
+    {
+        _intProperty = intValue;
+    }
+    return self;
+}
+
+
+- (id) initWithFloat:  (float) floatValue
+{
+    self = [super init];
+    
+    if (self != nil)
+    {
+        _floatProperty = floatValue;
+    }
+    return self;
+}
+
+
+- (id) initWithBOOL: (BOOL) boolValue
+{
+    self = [super init];
+    
+    if (self != nil)
+    {
+        _boolProperty = boolValue;
+    }
+    return self;
+}
+
+
+- (id) initWithString: (NSString *) stringValue
+{
+    self = [super init];
+    
+    if (self != nil)
+    {
+        _stringProperty = stringValue;
+    }
+    return self;
+}
+
+
+- (id) initWithPointer: (void *) pointerValue
+{
+    self = [super init];
+    
+    if (self != nil)
+    {
+        _pointerProperty = pointerValue;
+    }
+    return self;
+}
+
 @end
 

@@ -251,19 +251,11 @@ static const void * const kDispatchSpecificKeyOCSquirrelVMQueue = &kDispatchSpec
             [[OCSquirrelClosure alloc] initWithSQFUNCTION: OCSquirrelVMBindings_Constructor
                                                squirrelVM: self];
             [class setObject: constructor forKey: @"constructor"];
-
             
-            // Temporary solution for binding initializer method.
-            id init =
-            [[OCSquirrelClosure alloc] initWithSQFUNCTION:
-             OCSquirrelVMBindings_InitializerSimpleInvocation
-                                                     name: @"init"
-                                               squirrelVM: self];
-            [class setObject: init forKey: @"init"];
-
-       
-            [self bindInstanceMethodsOfNativeClass: nativeClass
-                                   toSquirrelClass: class];
+            // Bind all instance methods of the class
+            // including all superclass methods.
+            [self bindInstanceMethodsOfNativeClassHierarchy: nativeClass
+                                            toSquirrelClass: class];
         }
     }];
     
@@ -272,6 +264,21 @@ static const void * const kDispatchSpecificKeyOCSquirrelVMQueue = &kDispatchSpec
 
 
 #pragma mark bindings: private
+
+/// Traverses all superclasses
+- (void) bindInstanceMethodsOfNativeClassHierarchy: (Class) nativeClass
+                                   toSquirrelClass: (OCSquirrelClass *) class
+{
+    if (nativeClass != [NSObject class])
+    {
+        [self bindInstanceMethodsOfNativeClassHierarchy: [nativeClass superclass]
+                                        toSquirrelClass: class];
+    }
+    
+    [self bindInstanceMethodsOfNativeClass: nativeClass
+                           toSquirrelClass: class];
+}
+
 
 /// Assumed to be called within the VM access dispatch queue
 - (void) bindInstanceMethodsOfNativeClass: (Class) nativeClass
@@ -289,22 +296,42 @@ static const void * const kDispatchSpecificKeyOCSquirrelVMQueue = &kDispatchSpec
         NSString *selectorString = NSStringFromSelector(selector);
         
         // Exclude initializer methods from the search for now
-        if ((selectorString != nil) && ([selectorString rangeOfString: @"init"].location != 0))
+        if (selectorString != nil)
         {
             NSArray *components = [selectorString componentsSeparatedByString: @":"];
             
             // Simple invocation without parameters or with a single parameter
             if (components.count <= 2)
             {
+                SQFUNCTION nativeFunction = NULL;
+                
+                if ([selectorString rangeOfString: @"init"].location != 0)
+                {
+                    // Either 'init' substring has not been found or it is not
+                    // in the beginning of the method name. Either way this method
+                    // is not an initializer method, so we bing it as a simple invocation
+                    nativeFunction = OCSquirrelVMBindings_Instance_SimpleInvocation;
+                }
+                else
+                {
+                    // Method name starts with 'init' - we have to bind it as initializer
+                    // method with special treatment of the return value.
+                    nativeFunction = OCSquirrelVMBindings_InitializerSimpleInvocation;
+                }
+                
+                // Set the method name as the selector string including colon if any
                 id closure =
-                [[OCSquirrelClosure alloc] initWithSQFUNCTION:
-                 OCSquirrelVMBindings_Instance_SimpleInvocation
+                [[OCSquirrelClosure alloc] initWithSQFUNCTION: nativeFunction
                                                          name: selectorString
                                                    squirrelVM: self];
+                
+                // Set the method key as the first component (without the colon character)
                 [class setObject: closure forKey: components[0]];
             }
         }
     }
+    
+    free(methods);
 }
 
 

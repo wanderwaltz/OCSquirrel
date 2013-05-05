@@ -20,6 +20,7 @@
 @interface TestBindClass : SenTestCase
 {
     OCSquirrelVM *_squirrelVM;
+    OCSquirrelTable *_rootTable;
 }
 
 @end

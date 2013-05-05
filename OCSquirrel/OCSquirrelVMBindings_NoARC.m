@@ -298,6 +298,15 @@ SQInteger OCSquirrelVMBindings_InitializerSimpleInvocation(HSQUIRRELVM vm)
         NSInvocation *invocation = [NSInvocation invocationWithMethodSignature: signature];
         invocation.selector      = selector;
         
+        for (NSUInteger i = 2; i < signature.numberOfArguments; ++i)
+        {
+            const char *argumentType = [signature getArgumentTypeAtIndex: i];
+            
+            // This function will read an argument from the Squirrel VM stack
+            // and pass it to the invocation.
+            _setArgumentAtIndex(i, vm, squirrelVM, argumentType, invocation);
+        }
+        
         [invocation invokeWithTarget: object];
         
         // Get return value

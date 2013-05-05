@@ -22,11 +22,13 @@
 {
     [super setUp];
     _squirrelVM = [[OCSquirrelVM alloc] init];
+    _rootTable  = [OCSquirrelTable rootTableForVM: _squirrelVM];
 }
 
 
 - (void) tearDown
 {
+    _rootTable  = nil;
     _squirrelVM = nil;
     [super tearDown];
 }
@@ -421,6 +423,95 @@
                    [[instance callClosureWithKey: @"pointerMethodReturnParam"
                                       parameters: @[[NSValue valueWithPointer: (__bridge void *)self]]] pointerValue],
                    @"Bound class should have a method returning the single void* parameter");
+}
+
+
+#pragma mark -
+#pragma mark simple instance initializers: single parameter
+
+- (void) testSimpleInitializerIntParam
+{
+    OCSquirrelClass *class = [_squirrelVM bindClass: [InitializerChecker class]];
+    [_rootTable setObject: class forKey: @"InitializerChecker"];
+    
+
+    OCSquirrelInstance *instance = [_squirrelVM executeSync:
+                                    @"return InitializerChecker().initWithInt(12345);"
+                                                      error: nil];
+    
+    InitializerChecker *object = instance.instanceUP;
+    
+    STAssertEquals(object.intProperty, 12345,
+                   @"Initializer method should exist and accept the int parameter.");
+}
+
+
+- (void) testSimpleInitializerFloatParam
+{
+    OCSquirrelClass *class = [_squirrelVM bindClass: [InitializerChecker class]];
+    [_rootTable setObject: class forKey: @"InitializerChecker"];
+    
+    
+    OCSquirrelInstance *instance = [_squirrelVM executeSync:
+                                    @"return InitializerChecker().initWithFloat(123.456);"
+                                                      error: nil];
+    
+    InitializerChecker *object = instance.instanceUP;
+    
+    STAssertEqualsWithAccuracy(object.floatProperty, 123.456f, 1e-3,
+                               @"Initializer method should exist and accept the float parameter.");
+}
+
+
+- (void) testSimpleInitializerBoolParam
+{
+    OCSquirrelClass *class = [_squirrelVM bindClass: [InitializerChecker class]];
+    [_rootTable setObject: class forKey: @"InitializerChecker"];
+    
+    
+    OCSquirrelInstance *instance = [_squirrelVM executeSync:
+                                    @"return InitializerChecker().initWithBOOL(true);"
+                                                      error: nil];
+    
+    InitializerChecker *object = instance.instanceUP;
+    
+    STAssertEquals(object.boolProperty, YES,
+                   @"Initializer method should exist and accept the BOOL parameter.");
+}
+
+
+- (void) testSimpleInitializerStringParam
+{
+    OCSquirrelClass *class = [_squirrelVM bindClass: [InitializerChecker class]];
+    [_rootTable setObject: class forKey: @"InitializerChecker"];
+    
+    
+    OCSquirrelInstance *instance = [_squirrelVM executeSync:
+                                    @"return InitializerChecker().initWithString(\"string\");"
+                                                      error: nil];
+    
+    InitializerChecker *object = instance.instanceUP;
+    
+    STAssertEqualObjects(object.stringProperty, @"string",
+                         @"Initializer method should exist and accept the NSString parameter.");
+}
+
+
+- (void) testSimpleInitializerPointerParam
+{
+    OCSquirrelClass *class = [_squirrelVM bindClass: [InitializerChecker class]];
+    
+    [class pushNewInstance];
+    
+    OCSquirrelInstance *instance = [_squirrelVM.stack valueAtPosition: -1];
+    
+    [instance callClosureWithKey: @"initWithPointer"
+                      parameters: @[[NSValue valueWithPointer: (__bridge void*)self]]];
+    
+    InitializerChecker *object = instance.instanceUP;
+    
+    STAssertEquals(object.pointerProperty, (__bridge void *)self,
+                   @"Initializer method should exist and accept the void* parameter.");
 }
 
 
