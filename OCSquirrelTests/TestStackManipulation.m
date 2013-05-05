@@ -32,6 +32,9 @@
 }
 
 
+#pragma mark -
+#pragma mark basic tests
+
 - (void) testHasStackProperty
 {
     STAssertNotNil(_squirrelVM.stack,
@@ -306,13 +309,31 @@
 }
 
 
-- (void) testThrowsForUnsupportedTypes
+- (void) testUserPointerForUnsupportedTypesClass
 {
-    STAssertThrowsSpecificNamed([_squirrelVM.stack pushValue: [NSObject new]],
-                                NSException, NSInvalidArgumentException,
-                                @"-pushValue: shoud throw an NSInvalidArgumentException for unsupported "
-                                @"values.");
+    id object = [NSObject new];
+    
+    [_squirrelVM.stack pushValue: object];
+    
+    id value = [_squirrelVM.stack valueAtPosition: -1];
+    
+    STAssertTrue([value isKindOfClass: [NSValue class]],
+                @"-pushValue: shoud push an unsupported value as a user pointer");
 }
+
+
+- (void) testUserPointerForUnsupportedTypesValue
+{
+    id object = [NSObject new];
+    
+    [_squirrelVM.stack pushValue: object];
+    
+    id value = [_squirrelVM.stack valueAtPosition: -1];
+    
+    STAssertEquals((__bridge void *)object, [value pointerValue],
+                   @"-pushValue: shoud push an unsupported value as a user pointer");
+}
+
 
 
 #pragma mark -

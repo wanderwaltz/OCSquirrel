@@ -32,6 +32,9 @@
 }
 
 
+#pragma mark -
+#pragma mark basic tests
+
 - (void) testOCSquirrelTableClassExists
 {
     STAssertTrue([OCSquirrelTable isSubclassOfClass: [OCSquirrelObject class]],

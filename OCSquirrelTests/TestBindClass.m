@@ -13,90 +13,6 @@
 #import "TestBindClass.h"
 #import "OCMock.h"
 
-
-#pragma mark -
-#pragma mark Helper classes
-
-#pragma mark Simple Invocation Checker
-
-@interface SimpleInvocationChecker : NSObject
-@property (readonly, nonatomic) BOOL calledInit;
-
-- (NSInteger) integerMethodNoParams;
-- (float)       floatMethodNoParams;
-- (BOOL)         boolMethodNoParams;
-- (NSString *) stringMethodNoParams;
-- (id)            nilMethodNoParams;
-- (void *)    pointerMethodNoParams;
-
-@end
-
-@implementation SimpleInvocationChecker
-
-- (id) init
-{
-    self = [super init];
-    
-    if (self != nil)
-    {
-        _calledInit = YES;
-    }
-    return self;
-}
-
-
-- (NSInteger) integerMethodNoParams
-{
-    return 123456;
-}
-
-
-- (float) floatMethodNoParams
-{
-    return 123.456;
-}
-
-
-- (BOOL) boolMethodNoParams
-{
-    return YES;
-}
-
-
-- (NSString *) stringMethodNoParams
-{
-    return @"test";
-}
-
-
-- (id) nilMethodNoParams
-{
-    return nil;
-}
-
-
-- (void *) pointerMethodNoParams
-{
-    return (__bridge void *)self;
-}
-
-@end
-
-#pragma mark Initializer Checker
-
-@interface InitializerChecker : NSObject
-@end
-
-@implementation InitializerChecker
-
-- (id) init
-{
-    return (self = nil);
-}
-
-@end
-
-
 #pragma mark -
 #pragma mark TestBindClass implementation
 
@@ -115,6 +31,9 @@
     [super tearDown];
 }
 
+
+#pragma mark -
+#pragma mark basic tests
 
 - (void) testBindClassExists
 {
@@ -411,6 +330,97 @@
     STAssertEquals([nativeInstance pointerMethodNoParams],
                    [[instance callClosureWithKey: @"pointerMethodNoParams"] pointerValue],
                    @"Bound class should have a method returning void* and accepting no parameters");
+}
+
+
+#pragma mark -
+#pragma mark simple instance invocations: single parameter
+
+- (void) testSimpleInstanceIntReturnParam
+{
+    OCSquirrelClass *class = [_squirrelVM bindClass: [SimpleInvocationChecker class]];
+    [class pushNewInstance];
+    
+    OCSquirrelInstance *instance = [_squirrelVM.stack valueAtPosition: -1];
+    
+    STAssertEqualObjects(@12345,
+                         [instance callClosureWithKey: @"integerMethodReturnParam"
+                                           parameters: @[@12345]],
+                         @"Bound class should have a method returning the single integer parameter");
+}
+
+
+- (void) testSimpleInstanceFloatReturnParam
+{
+    OCSquirrelClass *class = [_squirrelVM bindClass: [SimpleInvocationChecker class]];
+    [class pushNewInstance];
+    
+    OCSquirrelInstance *instance = [_squirrelVM.stack valueAtPosition: -1];
+    
+    STAssertEqualObjects(@123.456f,
+                         [instance callClosureWithKey: @"floatMethodReturnParam"
+                                           parameters: @[@123.456f]],
+                         @"Bound class should have a method returning the signle float parameter");
+}
+
+
+- (void) testSimpleInstanceBOOLReturnParam
+{
+    OCSquirrelClass *class = [_squirrelVM bindClass: [SimpleInvocationChecker class]];
+    [class pushNewInstance];
+    
+    OCSquirrelInstance *instance = [_squirrelVM.stack valueAtPosition: -1];
+    
+    STAssertEqualObjects(@YES,
+                         [instance callClosureWithKey: @"boolMethodReturnParam"
+                                           parameters: @[@YES]],
+                         @"Bound class should have a method returning the single BOOL parameter");
+}
+
+
+- (void) testSimpleInstanceStringReturnParam
+{
+    OCSquirrelClass *class = [_squirrelVM bindClass: [SimpleInvocationChecker class]];
+    [class pushNewInstance];
+    
+    OCSquirrelInstance *instance = [_squirrelVM.stack valueAtPosition: -1];
+    
+    STAssertEqualObjects(@"string",
+                         [instance callClosureWithKey: @"stringMethodReturnParam"
+                                           parameters: @[@"string"]],
+                         @"Bound class should have a method returning the single string parameter");
+}
+
+
+
+- (void) testSimpleInstanceObjectReturnParam
+{
+    OCSquirrelClass *class = [_squirrelVM bindClass: [SimpleInvocationChecker class]];
+    [class pushNewInstance];
+    
+    OCSquirrelInstance *instance = [_squirrelVM.stack valueAtPosition: -1];
+    
+    STAssertEqualObjects(self,
+                         // Pointers to a generic Objective-C object are pushed to Squirrel stack
+                         // as user pointers, so are returned as NSValues with the corresponding
+                         // pointer set as pointerValue.
+                         (__bridge id)[[instance callClosureWithKey: @"objectMethodReturnParam"
+                                                         parameters: @[self]] pointerValue],
+                         @"Bound class should have a method returning the single object parameter");
+}
+
+
+- (void) testSimpleInstanceUserPointerReturnParam
+{
+    OCSquirrelClass *class = [_squirrelVM bindClass: [SimpleInvocationChecker class]];
+    [class pushNewInstance];
+    
+    OCSquirrelInstance *instance = [_squirrelVM.stack valueAtPosition: -1];
+    
+    STAssertEquals((__bridge void *)self,
+                   [[instance callClosureWithKey: @"pointerMethodReturnParam"
+                                      parameters: @[[NSValue valueWithPointer: (__bridge void *)self]]] pointerValue],
+                   @"Bound class should have a method returning the single void* parameter");
 }
 
 

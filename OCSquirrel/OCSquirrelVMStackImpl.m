@@ -160,12 +160,15 @@
     }
     else
     {
+        [self pushUserPointer: (__bridge void *)value];
+        /*
         @throw [NSException exceptionWithName: NSInvalidArgumentException
                                        reason:
                 [NSString stringWithFormat:
                  @"*** pushValue: unsupported value of class %@ received: %@",
                  [value class], value]
                                      userInfo: nil];
+         */
     }
 }
 

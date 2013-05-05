@@ -294,14 +294,14 @@ static const void * const kDispatchSpecificKeyOCSquirrelVMQueue = &kDispatchSpec
             NSArray *components = [selectorString componentsSeparatedByString: @":"];
             
             // Simple invocation without parameters or with a single parameter
-            if (components.count == 1)
+            if (components.count <= 2)
             {
                 id closure =
                 [[OCSquirrelClosure alloc] initWithSQFUNCTION:
                  OCSquirrelVMBindings_Instance_SimpleInvocation
                                                          name: selectorString
                                                    squirrelVM: self];
-                [class setObject: closure forKey: selectorString];
+                [class setObject: closure forKey: components[0]];
             }
         }
     }

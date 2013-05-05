@@ -11,6 +11,7 @@
 #endif
 
 #import <OCSquirrel/OCSquirrel.h>
+#import "BindingHelperClasses.h"
 
 
 #pragma mark -

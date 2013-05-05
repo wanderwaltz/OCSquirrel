@@ -32,6 +32,9 @@
 }
 
 
+#pragma mark -
+#pragma mark basic tests
+
 - (void) testOCSquirrelObjectClassExists
 {
     STAssertNotNil([OCSquirrelObject class],

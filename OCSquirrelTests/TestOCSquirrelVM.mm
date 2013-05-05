@@ -330,6 +330,7 @@
 }
 
 
+#pragma mark -
 #pragma mark executeSync: result values
 
 - (void) testExecuteSyncResultString

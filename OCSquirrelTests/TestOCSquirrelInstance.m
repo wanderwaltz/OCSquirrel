@@ -45,6 +45,9 @@
 }
 
 
+#pragma mark -
+#pragma mark basic tests
+
 - (void) testCouldCreateInstance
 {
     id instance = [_squirrelVM executeSync: @"return Test()" error: nil];

@@ -34,6 +34,9 @@
 }
 
 
+#pragma mark -
+#pragma mark basic tests
+
 - (void) testSetAttributeForNilKey
 {
     [_class setClassAttributes: @12345];

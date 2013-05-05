@@ -44,6 +44,9 @@
 }
 
 
+#pragma mark -
+#pragma mark basic tests
+
 - (void) testPrintCallsDelegateMethod
 {
     id delegate = [OCMockObject partialMockForObject: [OCSquirrelPrintDelegate new]];

@@ -56,7 +56,8 @@ SQInteger OCSquirrelVMBindings_Instance_SimpleInvocation(HSQUIRRELVM vm)
     NSString *closureName = [squirrelVM.stack valueAtPosition: -1];
     sq_pop(vm, 1);
     
-    if ([closureName isKindOfClass: [NSString class]])
+    if ([closureName isKindOfClass: [NSString class]] &&
+        ([closureName length] >= 1))
     {
         id object = nil;
         sq_getinstanceup(vm, 1, (SQUserPointer *)&object, 0);
@@ -67,9 +68,103 @@ SQInteger OCSquirrelVMBindings_Instance_SimpleInvocation(HSQUIRRELVM vm)
         
         NSInvocation *invocation = [NSInvocation invocationWithMethodSignature: signature];
         invocation.selector      = selector;
+
+        if (signature.numberOfArguments > 0)
+        {
+            for (NSUInteger i = 2; i < signature.numberOfArguments; ++i)
+            {
+                const char *argumentType = [signature getArgumentTypeAtIndex: i];
+                
+                if (strcmp(argumentType, @encode(int16_t)) == 0)
+                {
+                    SQInteger stackInt = 0;
+                    
+                    sq_getinteger(vm, i, &stackInt);
+                    
+                    int16_t argument = stackInt;
+                    [invocation setArgument: &argument atIndex: i];
+                }
+                else if (strcmp(argumentType, @encode(int32_t)) == 0)
+                {
+                    SQInteger stackInt = 0;
+                    
+                    sq_getinteger(vm, i, &stackInt);
+                    
+                    int32_t argument = stackInt;
+                    [invocation setArgument: &argument atIndex: i];
+                }
+                else if (strcmp(argumentType, @encode(u_int16_t)) == 0)
+                {
+                    SQInteger stackInt = 0;
+                    
+                    sq_getinteger(vm, i, &stackInt);
+                    
+                    u_int16_t argument = stackInt;
+                    [invocation setArgument: &argument atIndex: i];
+                }
+                else if (strcmp(argumentType, @encode(u_int32_t)) == 0)
+                {
+                    SQInteger stackInt = 0;
+                    
+                    sq_getinteger(vm, i, &stackInt);
+                    
+                    u_int32_t argument = stackInt;
+                    [invocation setArgument: &argument atIndex: i];
+                }
+                else if (strcmp(argumentType, @encode(float)) == 0)
+                {
+                    SQFloat stackFloat = 0.0f;
+                    
+                    sq_getfloat(vm, i, &stackFloat);
+                    
+                    float argument = stackFloat;
+                    [invocation setArgument: &argument atIndex: i];
+                }
+                else if (strcmp(argumentType, @encode(double)) == 0)
+                {
+                    SQFloat stackFloat = 0.0f;
+                    
+                    sq_getfloat(vm, i, &stackFloat);
+                    
+                    double argument = stackFloat;
+                    [invocation setArgument: &argument atIndex: i];
+                }
+                else if (strcmp(argumentType, @encode(BOOL)) == 0)
+                {
+                    SQBool stackBool = SQFalse;
+                    
+                    sq_getbool(vm, i, &stackBool);
+                    
+                    BOOL argument = (stackBool == SQTrue);
+                    [invocation setArgument: &argument atIndex: i];
+                }
+                else if (strcmp(argumentType, @encode(id)) == 0)
+                {
+                    id argument = [squirrelVM.stack valueAtPosition: i];
+                    
+                    // Pointers to Objective-C objects are passed as user pointers
+                    // and user pointers are returned as NSValues.
+                    //
+                    // Special cases are NSStrings and NSNumbers which are
+                    // returned directly as NSStrings and NSNumbers.
+                    if ([argument isKindOfClass: [NSValue class]])
+                    {
+                        argument = (id)[argument pointerValue];
+                    }
+                    
+                    [invocation setArgument: &argument atIndex: i];
+                }
+                else if (strcmp(argumentType, @encode(void*)) == 0)
+                {
+                    void *argument = NULL;
+                    sq_getuserpointer(vm, i, &argument);
+                    
+                    [invocation setArgument: &argument atIndex: i];
+                }
+            }
+        }
         
         [invocation invokeWithTarget: object];
-        
         
         if (strcmp(signature.methodReturnType, @encode(int16_t)) == 0)
         {
