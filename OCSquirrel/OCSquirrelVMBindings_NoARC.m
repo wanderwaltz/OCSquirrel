@@ -16,6 +16,13 @@
 #import "OCSquirrelVMFunctions_NoARC.h"
 
 
+/*! Implementation for constructor() method of the Squirrel classes bound to Objective-C classes.
+    This implementation actually only +allocs the instance, but does not initialize it, so the
+    initializer methods should be called afterwards similar to how it would be done in Objective-C
+    with NSObject subclasses.
+ 
+    Because of that semantics, constructor method does not accept any parameters.
+ */
 SQInteger OCSquirrelVMBindings_Constructor(HSQUIRRELVM vm)
 {
     SQUserPointer nativeClassPtr = nil;
@@ -45,6 +52,173 @@ SQInteger OCSquirrelVMBindings_Constructor(HSQUIRRELVM vm)
 }
 
 
+
+/// This function is used internally by other binding implementations
+void _setArgumentAtIndex(NSUInteger i,
+                         HSQUIRRELVM vm,           // Have to pass both HSQUIRRELVM
+                         OCSquirrelVM *squirrelVM, // and OCSquirrelVM here since both
+                         const char *argumentType, // C and Objective-C APIs are used
+                         NSInvocation *invocation)
+{
+    // NSInvocation accepts its arguments as void* buffers, so we
+    // generally have to actually check which type of argument it
+    // expects and give it the buffer of the proper size and layout.
+    // To do that we check the argument type string and compare it
+    // to @encodings of various C types available. If a match is found,
+    // we fetch an SQInteger from the Squirrel VM stack and cast
+    // it to a local variable of the proper type.
+    //
+    // This is done multiple times for various int types of different
+    // sizes and the code is essentially the same, so it is implemented
+    // using parametric #define. This macro is undefined later in this
+    // function.
+    //
+    // For now I don't know a better way to pass arguments from
+    // Squirrel VM to the NSInvocation, but it seems that these runtime
+    // checks will have a significant impact on performance. Should
+    // think about doing this more efficiently.
+    #define OCSQ_TRY_TYPE_INT(Type)                               \
+        if (strcmp(argumentType, @encode(Type)) == 0)             \
+        {                                                         \
+            SQInteger stackInt = 0;                               \
+            sq_getinteger(vm, i, &stackInt);                      \
+            Type argument = stackInt;                             \
+            [invocation setArgument: &argument atIndex: i];       \
+        }
+    
+    // Floating point parameters require the same effort since NSInvocation
+    // may expect either float or double, but Squirrel VM works only in terms
+    // of SQFloats which could be either float or double themselves. So we
+    // have to typecast here to the proper type.
+    #define OCSQ_TRY_TYPE_FLOAT(Type)                             \
+        if (strcmp(argumentType, @encode(Type)) == 0)             \
+        {                                                         \
+            SQFloat stackFloat = 0.0;                             \
+            sq_getfloat(vm, i, &stackFloat);                      \
+            Type argument = stackFloat;                           \
+            [invocation setArgument: &argument atIndex: i];       \
+        }
+
+         OCSQ_TRY_TYPE_INT(   int8_t)
+         OCSQ_TRY_TYPE_INT(  int16_t)
+    else OCSQ_TRY_TYPE_INT(  int32_t)
+    else OCSQ_TRY_TYPE_INT( u_int8_t)
+    else OCSQ_TRY_TYPE_INT(u_int16_t)
+    else OCSQ_TRY_TYPE_INT(u_int32_t)
+        
+    else OCSQ_TRY_TYPE_FLOAT(float)
+    else OCSQ_TRY_TYPE_FLOAT(double)
+        
+    else if (strcmp(argumentType, @encode(BOOL)) == 0)
+    {
+        SQBool stackBool = SQFalse;
+        
+        sq_getbool(vm, i, &stackBool);
+        
+        BOOL argument = (stackBool == SQTrue);
+        [invocation setArgument: &argument atIndex: i];
+    }
+    else if (strcmp(argumentType, @encode(id)) == 0)
+    {
+        id argument = [squirrelVM.stack valueAtPosition: i];
+        
+        // Pointers to Objective-C objects are passed as user pointers
+        // and user pointers are returned as NSValues.
+        //
+        // Special cases are NSStrings and NSNumbers which are
+        // returned directly as NSStrings and NSNumbers.
+        if ([argument isKindOfClass: [NSValue class]])
+        {
+            argument = (id)[argument pointerValue];
+        }
+        
+        [invocation setArgument: &argument atIndex: i];
+    }
+    else if (strcmp(argumentType, @encode(void*)) == 0)
+    {
+        void *argument = NULL;
+        sq_getuserpointer(vm, i, &argument);
+        
+        [invocation setArgument: &argument atIndex: i];
+    }
+    
+    #undef OCSQ_TRY_TYPE_INT
+    #undef OCSQ_TRY_TYPE_FLOAT
+}
+
+
+/*! This function is used internally by other binding implementations.
+    Returns YES if pushed return value to the Squirrel VM stack.
+ */
+BOOL _pushReturnValueAtIndex(HSQUIRRELVM vm,           // Have to pass both HSQUIRRELVM
+                             OCSquirrelVM *squirrelVM, // and OCSquirrelVM here since both
+                             const char   *returnType, // C and Objective-C APIs are used
+                             NSInvocation *invocation)
+{
+    // Similar to the _setArgumentAtIndex we have to check
+    // the actual @encodings of the possible return value types
+    // and read the return value to the buffer of an appropriate
+    // size.
+    #define OCSQ_TRY_TYPE_INT(Type)                 \
+        if (strcmp(returnType, @encode(Type)) == 0) \
+        {                                           \
+            Type result = 0;                        \
+            [invocation getReturnValue: &result];   \
+            sq_pushinteger(vm, (SQInteger)result);  \
+        }
+
+    
+    #define OCSQ_TRY_TYPE_FLOAT(Type)               \
+        if (strcmp(returnType, @encode(Type)) == 0) \
+        {                                           \
+            Type result = 0.0;                      \
+            [invocation getReturnValue: &result];   \
+            sq_pushfloat(vm, (SQFloat)result);      \
+        }
+    
+         OCSQ_TRY_TYPE_INT(   int8_t)
+    else OCSQ_TRY_TYPE_INT(  int16_t)
+    else OCSQ_TRY_TYPE_INT(  int32_t)
+    else OCSQ_TRY_TYPE_INT( u_int8_t)
+    else OCSQ_TRY_TYPE_INT(u_int16_t)
+    else OCSQ_TRY_TYPE_INT(u_int32_t)
+        
+    else OCSQ_TRY_TYPE_FLOAT(float)
+    else OCSQ_TRY_TYPE_FLOAT(double)
+        
+    else if (strcmp(returnType, @encode(BOOL)) == 0)
+    {
+        BOOL result = NO;
+        [invocation getReturnValue: &result];
+        
+        sq_pushbool(vm, (result == YES) ? SQTrue : SQFalse);
+    }
+    else if (strcmp(returnType, @encode(id)) == 0)
+    {
+        id result = nil;
+        [invocation getReturnValue: &result];
+        
+        // This will automatically call some class checks and
+        // convert NSNumbers to numbers, NSStrings to C strings etc.
+        // If a suitable Squirrel value could not be formed,
+        // a user pointer value will be pushed.
+        [squirrelVM.stack pushValue: result];
+    }
+    else if (strcmp(returnType, @encode(void*)) == 0)
+    {
+        void *result = NULL;
+        [invocation getReturnValue: &result];
+        
+        sq_pushuserpointer(vm, result);
+    }
+    else return NO;
+    
+    return YES;
+    
+    #undef OCSQ_TRY_TYPE_INT
+}
+
+
 /*! Implementation for instance methods simple invocation. Simple invocations accept zero or one parameter
     and may return a value.
  */
@@ -69,176 +243,21 @@ SQInteger OCSquirrelVMBindings_Instance_SimpleInvocation(HSQUIRRELVM vm)
         NSInvocation *invocation = [NSInvocation invocationWithMethodSignature: signature];
         invocation.selector      = selector;
 
-        if (signature.numberOfArguments > 0)
+        for (NSUInteger i = 2; i < signature.numberOfArguments; ++i)
         {
-            for (NSUInteger i = 2; i < signature.numberOfArguments; ++i)
-            {
-                const char *argumentType = [signature getArgumentTypeAtIndex: i];
-                
-                if (strcmp(argumentType, @encode(int16_t)) == 0)
-                {
-                    SQInteger stackInt = 0;
-                    
-                    sq_getinteger(vm, i, &stackInt);
-                    
-                    int16_t argument = stackInt;
-                    [invocation setArgument: &argument atIndex: i];
-                }
-                else if (strcmp(argumentType, @encode(int32_t)) == 0)
-                {
-                    SQInteger stackInt = 0;
-                    
-                    sq_getinteger(vm, i, &stackInt);
-                    
-                    int32_t argument = stackInt;
-                    [invocation setArgument: &argument atIndex: i];
-                }
-                else if (strcmp(argumentType, @encode(u_int16_t)) == 0)
-                {
-                    SQInteger stackInt = 0;
-                    
-                    sq_getinteger(vm, i, &stackInt);
-                    
-                    u_int16_t argument = stackInt;
-                    [invocation setArgument: &argument atIndex: i];
-                }
-                else if (strcmp(argumentType, @encode(u_int32_t)) == 0)
-                {
-                    SQInteger stackInt = 0;
-                    
-                    sq_getinteger(vm, i, &stackInt);
-                    
-                    u_int32_t argument = stackInt;
-                    [invocation setArgument: &argument atIndex: i];
-                }
-                else if (strcmp(argumentType, @encode(float)) == 0)
-                {
-                    SQFloat stackFloat = 0.0f;
-                    
-                    sq_getfloat(vm, i, &stackFloat);
-                    
-                    float argument = stackFloat;
-                    [invocation setArgument: &argument atIndex: i];
-                }
-                else if (strcmp(argumentType, @encode(double)) == 0)
-                {
-                    SQFloat stackFloat = 0.0f;
-                    
-                    sq_getfloat(vm, i, &stackFloat);
-                    
-                    double argument = stackFloat;
-                    [invocation setArgument: &argument atIndex: i];
-                }
-                else if (strcmp(argumentType, @encode(BOOL)) == 0)
-                {
-                    SQBool stackBool = SQFalse;
-                    
-                    sq_getbool(vm, i, &stackBool);
-                    
-                    BOOL argument = (stackBool == SQTrue);
-                    [invocation setArgument: &argument atIndex: i];
-                }
-                else if (strcmp(argumentType, @encode(id)) == 0)
-                {
-                    id argument = [squirrelVM.stack valueAtPosition: i];
-                    
-                    // Pointers to Objective-C objects are passed as user pointers
-                    // and user pointers are returned as NSValues.
-                    //
-                    // Special cases are NSStrings and NSNumbers which are
-                    // returned directly as NSStrings and NSNumbers.
-                    if ([argument isKindOfClass: [NSValue class]])
-                    {
-                        argument = (id)[argument pointerValue];
-                    }
-                    
-                    [invocation setArgument: &argument atIndex: i];
-                }
-                else if (strcmp(argumentType, @encode(void*)) == 0)
-                {
-                    void *argument = NULL;
-                    sq_getuserpointer(vm, i, &argument);
-                    
-                    [invocation setArgument: &argument atIndex: i];
-                }
-            }
+            const char *argumentType = [signature getArgumentTypeAtIndex: i];
+            
+            // This function will read an argument from the Squirrel VM stack
+            // and pass it to the invocation.
+            _setArgumentAtIndex(i, vm, squirrelVM, argumentType, invocation);
         }
         
         [invocation invokeWithTarget: object];
         
-        if (strcmp(signature.methodReturnType, @encode(int16_t)) == 0)
-        {
-            int16_t result = 0;
-            [invocation getReturnValue: &result];
-            
-            sq_pushinteger(vm, result);
-        }
-        else if (strcmp(signature.methodReturnType, @encode(int32_t)) == 0)
-        {
-            int32_t result = 0;
-            [invocation getReturnValue: &result];
-            
-            sq_pushinteger(vm, result);
-        }
-        else if (strcmp(signature.methodReturnType, @encode(u_int16_t)) == 0)
-        {
-            u_int16_t result = 0;
-            [invocation getReturnValue: &result];
-            
-            sq_pushinteger(vm, result);
-        }
-        else if (strcmp(signature.methodReturnType, @encode(u_int32_t)) == 0)
-        {
-            u_int32_t result = 0;
-            [invocation getReturnValue: &result];
-            
-            sq_pushinteger(vm, result);
-        }
-        else if (strcmp(signature.methodReturnType, @encode(float)) == 0)
-        {
-            float result = 0.0f;
-            [invocation getReturnValue: &result];
-            
-            sq_pushfloat(vm, result);
-        }
-        else if (strcmp(signature.methodReturnType, @encode(double)) == 0)
-        {
-            double result = 0.0;
-            [invocation getReturnValue: &result];
-            
-            sq_pushfloat(vm, result);
-        }
-        else if (strcmp(signature.methodReturnType, @encode(BOOL)) == 0)
-        {
-            BOOL result = NO;
-            [invocation getReturnValue: &result];
-            
-            sq_pushbool(vm, (result == YES) ? SQTrue : SQFalse);
-        }
-        else if (strcmp(signature.methodReturnType, @encode(id)) == 0)
-        {
-            id result = nil;
-            [invocation getReturnValue: &result];
-            
-            // This will automatically call some class checks and
-            // convert NSNumbers to numbers, NSStrings to C strings etc.
-            // If a suitable Squirrel value could not be formed,
-            // a user pointer value will be pushed.
-            [squirrelVM.stack pushValue: result];
-        }
-        else if (strcmp(signature.methodReturnType, @encode(void*)) == 0)
-        {
-            void *result = NULL;
-            [invocation getReturnValue: &result];
-            
-            sq_pushuserpointer(vm, result);
-        }
-        else
-        {
-            return 0;
-        }
+        BOOL didPushValue = _pushReturnValueAtIndex(vm, squirrelVM,
+                                                    signature.methodReturnType, invocation);
         
-        return 1;
+        return (didPushValue ? 1 : 0);
     }
 
     return 0;
