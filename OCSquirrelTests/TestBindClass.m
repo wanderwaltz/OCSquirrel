@@ -198,24 +198,24 @@
 }
 
 
-- (void) testPushNewInstanceUPHasInitMethod
+- (void) testBindInitNoError
 {
-    OCSquirrelClass *class = [_squirrelVM bindClass: [NSDate class]];
-    OCSquirrelTable *root  = [OCSquirrelTable rootTableForVM: _squirrelVM];
-    [root setObject: class forKey: @"NSDate"];
+    OCSquirrelClass *class = [_squirrelVM bindClass: [SimpleInvocationChecker class]];
     
     NSError *error = nil;
-    [_squirrelVM executeSync: @"return NSDate().init()" error: &error];
+    [class bindInstanceMethodWithSelector: @selector(init) error: &error];
     
     STAssertNil(error,
-                @"All bound class instances should have an init() method similar to Objective-C "
-                @"NSObject classes, got the following error instead: %@.", error);
+                @"Should be able to bind -init method.");
 }
+
 
 
 - (void) testSimpleInvocationIsCalled
 {
     OCSquirrelClass *class = [_squirrelVM bindClass: [SimpleInvocationChecker class]];
+    [class bindInstanceMethodWithSelector: @selector(init) error: nil];
+    
     OCSquirrelTable *root  = [OCSquirrelTable rootTableForVM: _squirrelVM];
     [root setObject: class forKey: @"SimpleInvocationChecker"];
     
@@ -232,6 +232,8 @@
 - (void) testInitMethodReturningNil
 {
     OCSquirrelClass *class = [_squirrelVM bindClass: [InitializerChecker class]];
+    [class bindInstanceMethodWithSelector: @selector(init) error: nil];
+    
     OCSquirrelTable *root  = [OCSquirrelTable rootTableForVM: _squirrelVM];
     [root setObject: class forKey: @"InitializerChecker"];
     
@@ -251,6 +253,8 @@
 - (void) testSimpleInstanceIntReturnValue
 {
     OCSquirrelClass *class = [_squirrelVM bindClass: [SimpleInvocationChecker class]];
+    [class bindInstanceMethodWithSelector: @selector(integerMethodNoParams)
+                                    error: nil];
     [class pushNewInstance];
     
     OCSquirrelInstance *instance = [_squirrelVM.stack valueAtPosition: -1];
@@ -266,6 +270,9 @@
 - (void) testSimpleInstanceFloatReturnValue
 {
     OCSquirrelClass *class = [_squirrelVM bindClass: [SimpleInvocationChecker class]];
+    [class bindInstanceMethodWithSelector: @selector(floatMethodNoParams)
+                                    error: nil];
+    
     [class pushNewInstance];
     
     OCSquirrelInstance *instance = [_squirrelVM.stack valueAtPosition: -1];
@@ -281,6 +288,9 @@
 - (void) testSimpleInstanceBOOLReturnValue
 {
     OCSquirrelClass *class = [_squirrelVM bindClass: [SimpleInvocationChecker class]];
+    [class bindInstanceMethodWithSelector: @selector(boolMethodNoParams)
+                                    error: nil];
+    
     [class pushNewInstance];
     
     OCSquirrelInstance *instance = [_squirrelVM.stack valueAtPosition: -1];
@@ -296,6 +306,9 @@
 - (void) testSimpleInstanceStringReturnValue
 {
     OCSquirrelClass *class = [_squirrelVM bindClass: [SimpleInvocationChecker class]];
+    [class bindInstanceMethodWithSelector: @selector(stringMethodNoParams)
+                                    error: nil];
+    
     [class pushNewInstance];
     
     OCSquirrelInstance *instance = [_squirrelVM.stack valueAtPosition: -1];
@@ -311,6 +324,9 @@
 - (void) testSimpleInstanceNilReturnValue
 {
     OCSquirrelClass *class = [_squirrelVM bindClass: [SimpleInvocationChecker class]];
+    [class bindInstanceMethodWithSelector: @selector(nilMethodNoParams)
+                                    error: nil];
+    
     [class pushNewInstance];
     
     OCSquirrelInstance *instance = [_squirrelVM.stack valueAtPosition: -1];
@@ -323,6 +339,9 @@
 - (void) testSimpleInstanceUserPointerReturnValue
 {
     OCSquirrelClass *class = [_squirrelVM bindClass: [SimpleInvocationChecker class]];
+    [class bindInstanceMethodWithSelector: @selector(pointerMethodNoParams)
+                                    error: nil];
+    
     [class pushNewInstance];
     
     OCSquirrelInstance *instance = [_squirrelVM.stack valueAtPosition: -1];
@@ -341,6 +360,8 @@
 - (void) testSimpleInstanceIntReturnParam
 {
     OCSquirrelClass *class = [_squirrelVM bindClass: [SimpleInvocationChecker class]];
+    [class bindInstanceMethodWithSelector: @selector(integerMethodReturnParam:)
+                                    error: nil];
     [class pushNewInstance];
     
     OCSquirrelInstance *instance = [_squirrelVM.stack valueAtPosition: -1];
@@ -355,6 +376,8 @@
 - (void) testSimpleInstanceFloatReturnParam
 {
     OCSquirrelClass *class = [_squirrelVM bindClass: [SimpleInvocationChecker class]];
+    [class bindInstanceMethodWithSelector: @selector(floatMethodReturnParam:)
+                                    error: nil];
     [class pushNewInstance];
     
     OCSquirrelInstance *instance = [_squirrelVM.stack valueAtPosition: -1];
@@ -369,6 +392,8 @@
 - (void) testSimpleInstanceBOOLReturnParam
 {
     OCSquirrelClass *class = [_squirrelVM bindClass: [SimpleInvocationChecker class]];
+    [class bindInstanceMethodWithSelector: @selector(boolMethodReturnParam:)
+                                    error: nil];
     [class pushNewInstance];
     
     OCSquirrelInstance *instance = [_squirrelVM.stack valueAtPosition: -1];
@@ -383,6 +408,8 @@
 - (void) testSimpleInstanceStringReturnParam
 {
     OCSquirrelClass *class = [_squirrelVM bindClass: [SimpleInvocationChecker class]];
+    [class bindInstanceMethodWithSelector: @selector(stringMethodReturnParam:)
+                                    error: nil];
     [class pushNewInstance];
     
     OCSquirrelInstance *instance = [_squirrelVM.stack valueAtPosition: -1];
@@ -398,6 +425,9 @@
 - (void) testSimpleInstanceObjectReturnParam
 {
     OCSquirrelClass *class = [_squirrelVM bindClass: [SimpleInvocationChecker class]];
+    [class bindInstanceMethodWithSelector: @selector(objectMethodReturnParam:)
+                                    error: nil];
+    
     [class pushNewInstance];
     
     OCSquirrelInstance *instance = [_squirrelVM.stack valueAtPosition: -1];
@@ -415,6 +445,8 @@
 - (void) testSimpleInstanceUserPointerReturnParam
 {
     OCSquirrelClass *class = [_squirrelVM bindClass: [SimpleInvocationChecker class]];
+    [class bindInstanceMethodWithSelector: @selector(pointerMethodReturnParam:)
+                                    error: nil];
     [class pushNewInstance];
     
     OCSquirrelInstance *instance = [_squirrelVM.stack valueAtPosition: -1];
@@ -432,6 +464,9 @@
 - (void) testSimpleInitializerIntParam
 {
     OCSquirrelClass *class = [_squirrelVM bindClass: [InitializerChecker class]];
+    [class bindInstanceMethodWithSelector: @selector(initWithInt:)
+                                    error: nil];
+    
     [_rootTable setObject: class forKey: @"InitializerChecker"];
     
 
@@ -449,6 +484,9 @@
 - (void) testSimpleInitializerFloatParam
 {
     OCSquirrelClass *class = [_squirrelVM bindClass: [InitializerChecker class]];
+    [class bindInstanceMethodWithSelector: @selector(initWithFloat:)
+                                    error: nil];
+    
     [_rootTable setObject: class forKey: @"InitializerChecker"];
     
     
@@ -466,6 +504,9 @@
 - (void) testSimpleInitializerBoolParam
 {
     OCSquirrelClass *class = [_squirrelVM bindClass: [InitializerChecker class]];
+    [class bindInstanceMethodWithSelector: @selector(initWithBOOL:)
+                                    error: nil];
+    
     [_rootTable setObject: class forKey: @"InitializerChecker"];
     
     
@@ -483,6 +524,9 @@
 - (void) testSimpleInitializerStringParam
 {
     OCSquirrelClass *class = [_squirrelVM bindClass: [InitializerChecker class]];
+    [class bindInstanceMethodWithSelector: @selector(initWithString:)
+                                    error: nil];
+    
     [_rootTable setObject: class forKey: @"InitializerChecker"];
     
     
@@ -500,6 +544,8 @@
 - (void) testSimpleInitializerPointerParam
 {
     OCSquirrelClass *class = [_squirrelVM bindClass: [InitializerChecker class]];
+    [class bindInstanceMethodWithSelector: @selector(initWithPointer:)
+                                    error: nil];
     
     [class pushNewInstance];
     

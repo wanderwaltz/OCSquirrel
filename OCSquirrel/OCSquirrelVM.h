@@ -26,7 +26,9 @@
  */
 extern const NSUInteger kOCSquirrelVMDefaultInitialStackSize;
 
-extern NSString * const OCSquirrelVMErrorDomain;
+extern NSString * const OCSquirrelVMErrorDomain;    ///< Domain for general OCSquirrelVM errors
+extern NSString * const OCSquirrelVMBindingsDomain; ///< Domain for class and method binding errors
+
 extern NSString * const OCSquirrelVMErrorCallStackUserInfoKey;
 extern NSString * const OCSquirrelVMErrorLocalsUserInfoKey;
 
@@ -59,7 +61,23 @@ enum : NSInteger
     OCSquirrelVMError_CompilerError      = 0x02,
     
     /// Is returned when a runtime error occurs while calling the compiled Squirrel script.
-    OCSquirrelVMError_RuntimeError       = 0x03
+    OCSquirrelVMError_RuntimeError       = 0x03,
+};
+    
+    
+enum : NSInteger
+{
+    /*! Is returned when trying to bind a selector to a Squirrel class which is
+        not bound to a certain native Objective-C class 
+     */
+    OCSquirrelVMBindingsError_NativeClassNotFound      = 0x01,
+    
+    
+    /*! Is returned when either trying to bind an instance method to a class whose
+        instances do not respond to the selector provided or when trying to bind
+        a class method to a class which does not respond to the provided selector.
+     */
+    OCSquirrelVMBindingsError_DoesNotRespondToSelector = 0x02
 };
 
 

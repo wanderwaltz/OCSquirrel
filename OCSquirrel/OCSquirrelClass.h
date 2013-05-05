@@ -8,6 +8,7 @@
 
 #import "OCSquirrelTable.h"
 
+
 #pragma mark -
 #pragma mark OCSquirrelClass interface
 
@@ -19,5 +20,20 @@
 
 
 - (void) pushNewInstance;
+
+- (void) bindInstanceMethodWithSelector: (SEL) selector
+                                  error: (__autoreleasing NSError **) error;
+
+/*! Uses Objective-C runtime functions to iterate through all methods of the corresponding
+    native class and bind them to the Squirrel class. This is potentially dangerous operation
+    since this also makes 'private', i.e. not usually visible methods accessible and is
+    generally resource consuming especially if `includeSuperclasses` is set to YES (for example
+    traversing the NSObject's list of methods gives us 120 methods to bind).
+ 
+    Use with caution. It is generally safer to bind only several needed methods using 
+    -bindInstanceMethodWithSelector:error:
+ */
+- (void) bindAllInstanceMethodsIncludingSuperclasses: (BOOL) includeSuperclasses
+                                               error: (__autoreleasing NSError **) error;
 
 @end

@@ -11,6 +11,10 @@
 #endif
 
 #import "OCSquirrelClass.h"
+#import "OCSquirrelClosure.h"
+#import "OCSquirrelVMBindings_NoARC.h"
+
+#import <objc/runtime.h>
 
 #pragma mark -
 #pragma mark OCSquirrelClass implementation
@@ -59,6 +63,135 @@
         }];
     }
     return self;
+}
+
+
+#pragma mark -
+#pragma mark bindings
+
+- (void) bindInstanceMethodWithSelector: (SEL) selector
+                                  error: (__autoreleasing NSError **) error
+{
+    Class nativeClass = self.nativeClass;
+    
+    if (nativeClass != nil)
+    {
+        if ([nativeClass instancesRespondToSelector: selector])
+        {
+            [self.squirrelVM doWaitPreservingStackTop: ^{
+                NSString *selectorString = NSStringFromSelector(selector);
+                
+                // Exclude initializer methods from the search for now
+                if (selectorString != nil)
+                {
+                    NSArray *components = [selectorString componentsSeparatedByString: @":"];
+                    
+                    // Simple invocation without parameters or with a single parameter
+                    if (components.count <= 2)
+                    {
+                        SQFUNCTION nativeFunction = NULL;
+                        
+                        if ([selectorString rangeOfString: @"init"].location != 0)
+                        {
+                            // Either 'init' substring has not been found or it is not
+                            // in the beginning of the method name. Either way this method
+                            // is not an initializer method, so we bing it as a simple invocation
+                            nativeFunction = OCSquirrelVMBindings_Instance_SimpleInvocation;
+                        }
+                        else
+                        {
+                            // Method name starts with 'init' - we have to bind it as initializer
+                            // method with special treatment of the return value.
+                            nativeFunction = OCSquirrelVMBindings_InitializerSimpleInvocation;
+                        }
+                        
+                        // Set the method name as the selector string including colon if any
+                        id closure =
+                        [[OCSquirrelClosure alloc] initWithSQFUNCTION: nativeFunction
+                                                                 name: selectorString
+                                                           squirrelVM: self.squirrelVM];
+                        
+                        // Set the method key as the first component (without the colon character)
+                        [self setObject: closure forKey: components[0]];
+                    }
+                }
+            }];
+        }
+        else if (error != nil)
+        {
+            *error = [[NSError alloc] initWithDomain: OCSquirrelVMBindingsDomain
+                                                code: OCSquirrelVMBindingsError_DoesNotRespondToSelector
+                                            userInfo: nil];
+        }
+    }
+    else if (error != nil)
+    {
+        *error = [[NSError alloc] initWithDomain: OCSquirrelVMBindingsDomain
+                                            code: OCSquirrelVMBindingsError_NativeClassNotFound
+                                        userInfo: nil];
+    }
+}
+
+
+- (void) bindAllInstanceMethodsIncludingSuperclasses: (BOOL) includeSuperclasses
+                                               error: (__autoreleasing NSError **) error
+{
+    Class nativeClass = self.nativeClass;
+    
+    if (nativeClass != nil)
+    {
+        [self.squirrelVM doWaitPreservingStackTop: ^{
+            if (includeSuperclasses)
+            {
+                [self bindInstanceMethodsOfNativeClassHierarchy: nativeClass];
+            }
+            else
+            {
+                [self bindInstanceMethodsOfNativeClass: nativeClass];
+            }
+        }];
+    }
+    else if (error != nil)
+    {
+        *error = [[NSError alloc] initWithDomain: OCSquirrelVMBindingsDomain
+                                            code: OCSquirrelVMBindingsError_NativeClassNotFound
+                                        userInfo: nil];
+    }
+}
+
+
+#pragma mark -
+#pragma mark bindings: private
+
+/// Traverses all superclasses
+- (void) bindInstanceMethodsOfNativeClassHierarchy: (Class) nativeClass
+{
+    if (nativeClass != [NSObject class])
+    {
+        [self bindInstanceMethodsOfNativeClassHierarchy: [nativeClass superclass]];
+    }
+    
+    [self bindInstanceMethodsOfNativeClass: nativeClass];
+}
+
+
+/// Assumed to be called within the VM access dispatch queue
+- (void) bindInstanceMethodsOfNativeClass: (Class) nativeClass
+{
+    unsigned int methodCount = 0;
+    Method      *methods     = class_copyMethodList(nativeClass, &methodCount);
+    
+    for (NSUInteger index = 0; index < methodCount; ++index)
+    {
+        Method method = methods[index];
+        
+        SEL selector = method_getName(method);
+        
+        [self bindInstanceMethodWithSelector: selector
+                                       error: nil];
+    }
+    
+    free(methods);
 }
 
 

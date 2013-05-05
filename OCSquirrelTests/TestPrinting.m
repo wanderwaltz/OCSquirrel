@@ -64,7 +64,6 @@
     STAssertNoThrow([delegate verify],
                     @"Delegate method -squirrelVM:didPrintString: should be invoked with the OCSquirrelVM "
                     @"instance which compiled the script and the string which was passed to print function.");
-    [NSThread sleepForTimeInterval:1.0];
 }
 
 
