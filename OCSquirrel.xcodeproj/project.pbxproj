@@ -1248,6 +1248,7 @@
 				GCC_PREFIX_HEADER = "OCSquirrelTests-GHUnit/OCSquirrelTests-GHUnit-Prefix.pch";
 				HEADER_SEARCH_PATHS = "${SRCROOT}/OCSquirrelTests/OCMock";
 				INFOPLIST_FILE = "OCSquirrelTests-GHUnit/OCSquirrelTests-GHUnit-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 6.1;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)/OCSquirrelTests/OCMock\"",
@@ -1259,6 +1260,7 @@
 					"-ObjC",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = "1,2";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -1276,6 +1278,7 @@
 				GCC_PREFIX_HEADER = "OCSquirrelTests-GHUnit/OCSquirrelTests-GHUnit-Prefix.pch";
 				HEADER_SEARCH_PATHS = "${SRCROOT}/OCSquirrelTests/OCMock";
 				INFOPLIST_FILE = "OCSquirrelTests-GHUnit/OCSquirrelTests-GHUnit-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 6.1;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)/OCSquirrelTests/OCMock\"",
@@ -1288,6 +1291,7 @@
 					"-ObjC",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = "1,2";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;
