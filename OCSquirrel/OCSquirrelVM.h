@@ -98,10 +98,16 @@ enum : NSInteger
 #pragma mark -
 #pragma mark OCSquirrelVM interface
 
+/*! An Objective-C wrapper over a single Squirrel virtual machine.
+ */
 @interface OCSquirrelVM : NSObject
+
+/// Delegate for the VM which will receive printing callbacks
 @property (weak, nonatomic) id<OCSquirrelVMDelegate> delegate;
 
+/// Squirrel virtual machine managed by the OCSquirrelVM
 @property (readonly, nonatomic) HSQUIRRELVM vm;
+
 
 /*! Serial dispatch queue which should be used to serialize calls to Squirrel VM.
  
@@ -112,9 +118,10 @@ enum : NSInteger
  */
 @property (readonly, nonatomic) dispatch_queue_t vmQueue;
 
-
+/// Represents stack state of the current VM.
 @property (readonly, nonatomic) id<OCSquirrelVMStack> stack;
 
+/// Last compiler or runtime error represented as an NSError object
 @property (strong, readonly, nonatomic) NSError *lastError;
 
 
