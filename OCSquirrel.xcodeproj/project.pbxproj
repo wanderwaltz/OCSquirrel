@@ -118,6 +118,10 @@
 		5DD79AE017356D6B0008AC33 /* TestOCSquirrelInstance.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DD79ADE17356D6B0008AC33 /* TestOCSquirrelInstance.m */; };
 		5DD79AE417363A650008AC33 /* BindingHelperClasses.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DD79AE317363A650008AC33 /* BindingHelperClasses.m */; };
 		5DD79AE517363A650008AC33 /* BindingHelperClasses.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DD79AE317363A650008AC33 /* BindingHelperClasses.m */; };
+		7C41C06E1766222F004120B6 /* TestOCSquirrelArray.m in Sources */ = {isa = PBXBuildFile; fileRef = 7C41C06D1766222F004120B6 /* TestOCSquirrelArray.m */; };
+		7C41C06F1766222F004120B6 /* TestOCSquirrelArray.m in Sources */ = {isa = PBXBuildFile; fileRef = 7C41C06D1766222F004120B6 /* TestOCSquirrelArray.m */; };
+		7C41C072176622D0004120B6 /* OCSquirrelArray.h in Headers */ = {isa = PBXBuildFile; fileRef = 7C41C070176622D0004120B6 /* OCSquirrelArray.h */; };
+		7C41C073176622D0004120B6 /* OCSquirrelArray.m in Sources */ = {isa = PBXBuildFile; fileRef = 7C41C071176622D0004120B6 /* OCSquirrelArray.m */; };
 		7C94F8C5172A431E00C7BA78 /* OCSquirrelVMFunctions.h in Headers */ = {isa = PBXBuildFile; fileRef = 7C94F8C3172A431E00C7BA78 /* OCSquirrelVMFunctions.h */; };
 		7C94F8C6172A431E00C7BA78 /* OCSquirrelVMFunctions.m in Sources */ = {isa = PBXBuildFile; fileRef = 7C94F8C4172A431E00C7BA78 /* OCSquirrelVMFunctions.m */; };
 		7C94F8C9172A4D0D00C7BA78 /* TestBindClass.m in Sources */ = {isa = PBXBuildFile; fileRef = 7C94F8C8172A4D0D00C7BA78 /* TestBindClass.m */; };
@@ -286,6 +290,10 @@
 		5DD79ADE17356D6B0008AC33 /* TestOCSquirrelInstance.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TestOCSquirrelInstance.m; sourceTree = "<group>"; };
 		5DD79AE217363A650008AC33 /* BindingHelperClasses.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BindingHelperClasses.h; sourceTree = "<group>"; };
 		5DD79AE317363A650008AC33 /* BindingHelperClasses.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BindingHelperClasses.m; sourceTree = "<group>"; };
+		7C41C06C1766222F004120B6 /* TestOCSquirrelArray.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TestOCSquirrelArray.h; sourceTree = "<group>"; };
+		7C41C06D1766222F004120B6 /* TestOCSquirrelArray.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TestOCSquirrelArray.m; sourceTree = "<group>"; };
+		7C41C070176622D0004120B6 /* OCSquirrelArray.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OCSquirrelArray.h; sourceTree = "<group>"; };
+		7C41C071176622D0004120B6 /* OCSquirrelArray.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OCSquirrelArray.m; sourceTree = "<group>"; };
 		7C94F8C3172A431E00C7BA78 /* OCSquirrelVMFunctions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OCSquirrelVMFunctions.h; sourceTree = "<group>"; };
 		7C94F8C4172A431E00C7BA78 /* OCSquirrelVMFunctions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OCSquirrelVMFunctions.m; sourceTree = "<group>"; };
 		7C94F8C7172A4D0D00C7BA78 /* TestBindClass.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TestBindClass.h; sourceTree = "<group>"; };
@@ -405,6 +413,8 @@
 				5DC90422172BB95C009C7082 /* TestOCSquirrelClosure.m */,
 				5DC9041E172BA6B7009C7082 /* TestOCSquirrelClass.h */,
 				5DC9041F172BA6B7009C7082 /* TestOCSquirrelClass.m */,
+				7C41C06C1766222F004120B6 /* TestOCSquirrelArray.h */,
+				7C41C06D1766222F004120B6 /* TestOCSquirrelArray.m */,
 				5D63982E171AA39F00CFECC1 /* TestOCSquirrelTable.h */,
 				5D63982F171AA39F00CFECC1 /* TestOCSquirrelTable.m */,
 				5DC29C33171AFE09000A2096 /* TestOCSquirrelObject.h */,
@@ -534,6 +544,8 @@
 				5DC29C38171AFE09000A2096 /* OCSquirrelObject.m */,
 				5D639831171AA46900CFECC1 /* OCSquirrelTable.h */,
 				5D639832171AA46900CFECC1 /* OCSquirrelTable.m */,
+				7C41C070176622D0004120B6 /* OCSquirrelArray.h */,
+				7C41C071176622D0004120B6 /* OCSquirrelArray.m */,
 				5DC90416172B88E7009C7082 /* OCSquirrelClass.h */,
 				5DC90417172B88E7009C7082 /* OCSquirrelClass.m */,
 				5DC9041A172BA3A8009C7082 /* OCSquirrelInstance.h */,
@@ -727,6 +739,7 @@
 				7C94F8C5172A431E00C7BA78 /* OCSquirrelVMFunctions.h in Headers */,
 				7CA9753C172E4FBE001E58B1 /* OCSquirrelVMFunctions_NoARC.h in Headers */,
 				7CA975D7172F8653001E58B1 /* OCSquirrelVMBindings_NoARC.h in Headers */,
+				7C41C072176622D0004120B6 /* OCSquirrelArray.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -969,6 +982,7 @@
 				5DC90427172BBA95009C7082 /* OCSquirrelClosure.m in Sources */,
 				7CA9753D172E4FBE001E58B1 /* OCSquirrelVMFunctions_NoARC.m in Sources */,
 				7CA975D8172F8653001E58B1 /* OCSquirrelVMBindings_NoARC.m in Sources */,
+				7C41C073176622D0004120B6 /* OCSquirrelArray.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -987,6 +1001,7 @@
 				5DC90423172BB95C009C7082 /* TestOCSquirrelClosure.m in Sources */,
 				5DD79ADF17356D6B0008AC33 /* TestOCSquirrelInstance.m in Sources */,
 				5DD79AE417363A650008AC33 /* BindingHelperClasses.m in Sources */,
+				7C41C06E1766222F004120B6 /* TestOCSquirrelArray.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1006,6 +1021,7 @@
 				5DBE08CF173374B600908658 /* TestRawSquirrelAPI.m in Sources */,
 				5DD79AE017356D6B0008AC33 /* TestOCSquirrelInstance.m in Sources */,
 				5DD79AE517363A650008AC33 /* BindingHelperClasses.m in Sources */,
+				7C41C06F1766222F004120B6 /* TestOCSquirrelArray.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

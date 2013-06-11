@@ -27,6 +27,7 @@
 #import "OCSQuirrelVMStack.h"
 #import "OCSquirrelVM.h"
 #import "OCSquirrelObject.h"
+#import "OCSquirrelArray.h"
 #import "OCSquirrelTable.h"
 #import "OCSquirrelClass.h"
 #import "OCSquirrelInstance.h"
