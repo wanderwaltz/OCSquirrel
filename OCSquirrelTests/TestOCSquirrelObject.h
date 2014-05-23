@@ -6,14 +6,14 @@
 //  Copyright (c) 2013 Egor Chiglintsev. All rights reserved.
 //
 
-#import <SenTestingKit/SenTestingKit.h>
+#import <XCTest/XCTest.h>
 #import <OCSquirrel/OCSquirrel.h>
 
 
 #pragma mark -
 #pragma mark TestOCSquirrelObject interface
 
-@interface TestOCSquirrelObject : SenTestCase
+@interface TestOCSquirrelObject : XCTestCase
 {
     OCSquirrelVM *_squirrelVM;
 }

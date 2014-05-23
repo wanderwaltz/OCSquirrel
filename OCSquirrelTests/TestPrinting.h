@@ -6,7 +6,7 @@
 //  Copyright (c) 2013 Egor Chiglintsev. All rights reserved.
 //
 
-#import <SenTestingKit/SenTestingKit.h>
+#import <XCTest/XCTest.h>
 #import <OCSquirrel/OCSquirrel.h>
 
 
@@ -27,7 +27,7 @@
 #pragma mark -
 #pragma mark TestPrinting interface
 
-@interface TestPrinting : SenTestCase<OCSquirrelVMDelegate>
+@interface TestPrinting : XCTestCase<OCSquirrelVMDelegate>
 {
     OCSquirrelVM *_squirrelVM;
     NSString *_lastPrintedString;

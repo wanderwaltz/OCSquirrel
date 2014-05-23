@@ -83,14 +83,14 @@
 
 - (void) testCreation
 {
-    STAssertNotNil(_squirrelVM,
+    XCTAssertNotNil(_squirrelVM,
                    @"OCSquirrelVM class should be created");
 }
 
 
 - (void) testHasVMProperty
 {
-    STAssertTrue(_squirrelVM.vm != NULL,
+    XCTAssertTrue(_squirrelVM.vm != NULL,
                  @"OCSquirrelVM should have a non-nil vm property.");
 }
 
@@ -99,14 +99,14 @@
 {
     SQUserPointer vmPointer = sq_getforeignptr(_squirrelVM.vm);
 
-    STAssertEquals(vmPointer, (__bridge SQUserPointer)_squirrelVM,
+    XCTAssertEqual(vmPointer, (__bridge SQUserPointer)_squirrelVM,
                    @"OCSquirrelVM should set self as the foreign ptr for the Squirrel VM");
 }
 
 
 - (void) testDefaultInitialStackSize
 {
-    STAssertEquals(_squirrelVM.vm->_stack.capacity(), kOCSquirrelVMDefaultInitialStackSize,
+    XCTAssertEqual(_squirrelVM.vm->_stack.capacity(), kOCSquirrelVMDefaultInitialStackSize,
                    @"Initial stack size of a OCSquirrelVM initialized with -init should be equal to "
                    @"kOCSquirrelVMDefaultInitialStackSize");
 }
@@ -118,7 +118,7 @@
     
     _squirrelVM = [[OCSquirrelVM alloc] initWithStackSize: kCustomStackSize];
     
-    STAssertEquals(_squirrelVM.vm->_stack.capacity(), kCustomStackSize,
+    XCTAssertEqual(_squirrelVM.vm->_stack.capacity(), kCustomStackSize,
                    @"Initial stack size of a OCSquirrelVM initialized with -initWithStackSize: "
                    @"should be equal to kCustomStackSize");
 }
@@ -131,7 +131,7 @@
     // the kOCSquirrelVMDefaultInitialStackSize constant as parameter.
     OCSquirrelVMInitWithStackSizeOverride *vm = [OCSquirrelVMInitWithStackSizeOverride new];
     
-    STAssertTrue(vm.calledInitWithStackSize,
+    XCTAssertTrue(vm.calledInitWithStackSize,
                  @"-init method should have called -initWithStackSize: with "
                  @"kOCSquirrelVMDefaultInitialStackSize param value");
 }
@@ -139,14 +139,14 @@
 
 - (void) testHasDispatchQueue
 {
-    STAssertNotNil(_squirrelVM.vmQueue,
+    XCTAssertNotNil(_squirrelVM.vmQueue,
                    @"OCSquirrelVM should have a dispatch queue to serialize calls to the vm");
 }
 
 
 - (void) testHasDelegateProperty
 {
-    STAssertTrue([OCSquirrelVM instancesRespondToSelector: @selector(setDelegate:)] &&
+    XCTAssertTrue([OCSquirrelVM instancesRespondToSelector: @selector(setDelegate:)] &&
                  [OCSquirrelVM instancesRespondToSelector: @selector(delegate)],
                  @"OCSquirrelVM should have a readwrite delegate property");
 }
@@ -154,7 +154,7 @@
 
 - (void) testThrowsIfDelegateWrongProtocol
 {
-    STAssertThrowsSpecificNamed(_squirrelVM.delegate = (id)[NSObject new],
+    XCTAssertThrowsSpecificNamed(_squirrelVM.delegate = (id)[NSObject new],
                                 NSException, NSInvalidArgumentException,
                                 @"OCSquirrelVM should throw and NSIvalidArgumentException if a delegate "
                                 @"not conforming to OCSquirrelVMDelegate protocol is set.");
@@ -165,7 +165,7 @@
 {
     id delegate = [OCMockObject mockForProtocol: @protocol(OCSquirrelVMDelegate)];
     
-    STAssertNoThrow(_squirrelVM.delegate = delegate,
+    XCTAssertNoThrow(_squirrelVM.delegate = delegate,
                     @"OCSquirrelVM does not throw an exception if a delegate conforming to "
                     @"OCSquireelVMDelegate protocol is set.");
 }
@@ -176,14 +176,14 @@
 
 - (void) testExecuteSyncValidNoThrow
 {
-    STAssertNoThrow([_squirrelVM executeSync: @"local x = 0;"],
+    XCTAssertNoThrow([_squirrelVM executeSync: @"local x = 0;"],
                     @"OCSquirrelVM -executeSync: should not throw exception for a valid Squirrel script.");
 }
 
 
 - (void) testExecuteSyncInvalidThrows
 {
-    STAssertThrowsSpecificNamed([_squirrelVM executeSync: @"local x + 0"],
+    XCTAssertThrowsSpecificNamed([_squirrelVM executeSync: @"local x + 0"],
                                 NSException, NSInvalidArgumentException,
                                 @"OCSquirrelVM -executeSync: should throw an NSInvalidArgumentException "
                                 @"for an invalid Squirrel script.");

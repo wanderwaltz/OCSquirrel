@@ -30,7 +30,7 @@ extern "C" {
 #define SQUIRREL_API extern
 #endif
 
-#if (defined(_WIN64) || defined(_LP64))
+#if (defined(_WIN64) || defined(_LP64) || (defined(__LP64__) && __LP64__) || defined(__arm64__))
 #ifndef _SQ64
 #define _SQ64
 #endif
