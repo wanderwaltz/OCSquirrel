@@ -142,7 +142,7 @@
     OCSquirrelTable *table = [[OCSquirrelTable alloc] initWithHSQOBJECT: sqTable
                                                                    inVM: _squirrelVM];
     
-    XCTAssertEqual([[table objectForKey: @"someKey"] integerValue], 1234,
+    XCTAssertEqual((NSInteger)[[table objectForKey: @"someKey"] integerValue], (NSInteger)1234,
                  @"-objectForKey: should return the appropriate NSNumber for integer value");
 }
 
@@ -354,7 +354,7 @@
     OCSquirrelTable *table = [[OCSquirrelTable alloc] initWithHSQOBJECT: sqTable
                                                                    inVM: _squirrelVM];
     
-    XCTAssertEqual([table integerForKey: @"someKey"], 1234,
+    XCTAssertEqual((SQInteger)[table integerForKey: @"someKey"], (SQInteger)1234,
                    @"The value set through Squirrel API should be accessible "
                    @"using OCSquirrelTable methods");
 }
@@ -374,7 +374,7 @@
     OCSquirrelTable *table = [[OCSquirrelTable alloc] initWithHSQOBJECT: sqTable
                                                                    inVM: _squirrelVM];
     
-    XCTAssertEqual([table integerForKey: @5678], 1234,
+    XCTAssertEqual((SQInteger)[table integerForKey: @5678], (SQInteger)1234,
                    @"The value set through Squirrel API should be accessible "
                    @"using OCSquirrelTable methods");
 }
@@ -469,7 +469,7 @@
     
     [table setObject: @1234 forKey: @"key"];
     
-    XCTAssertEqual([table integerForKey: @"key"], 1234,
+    XCTAssertEqual((SQInteger)[table integerForKey: @"key"], (SQInteger)1234,
                    @"Integer value should be properly set by setObject:forKey:");
 }
 
@@ -481,7 +481,7 @@
     [table setObject: @1234 forKey: @"key"];
     [table setObject: @5678 forKey: @"key"];
     
-    XCTAssertEqual([table integerForKey: @"key"], 5678,
+    XCTAssertEqual((SQInteger)[table integerForKey: @"key"], (SQInteger)5678,
                    @"Should be able to reassign the value for the same key");
 }
 
@@ -549,7 +549,7 @@
     OCSquirrelTable *table = [[OCSquirrelTable alloc] initWithVM: _squirrelVM];
     [table setInteger: 1234 forKey: @"key"];
     
-    XCTAssertEqual([table integerForKey: @"key"], 1234,
+    XCTAssertEqual((SQInteger)[table integerForKey: @"key"], (SQInteger)1234,
                    @"Integer value should be properly set by a type-specific method");
 }
 
@@ -602,7 +602,7 @@
     OCSquirrelTable *table = [[OCSquirrelTable alloc] initWithVM: _squirrelVM];
     [table setInteger: 12345 forKey: @"key"];
     
-    XCTAssertEqual([[table valueForKey: @"key"] integerValue], 12345,
+    XCTAssertEqual((NSInteger)[[table valueForKey: @"key"] integerValue], (NSInteger)12345,
                    @"Integer value should be properly read with valueForKey:");
 }
 
@@ -655,7 +655,7 @@
     OCSquirrelTable *table = [[OCSquirrelTable alloc] initWithVM: _squirrelVM];
     [table setValue: @12345 forKey: @"key"];
     
-    XCTAssertEqual([[table valueForKey: @"key"] integerValue], 12345,
+    XCTAssertEqual((SQInteger)[[table valueForKey: @"key"] integerValue], (SQInteger)12345,
                    @"Integer value should be properly set with setValue:forKey:");
 }
 
@@ -751,7 +751,7 @@
          *stop = YES;         
      }];
     
-    XCTAssertEqual(iterations, 1u,
+    XCTAssertEqual((NSUInteger)iterations, (NSUInteger)1,
                    @"enumerateObjectsAndKeysUsingBlock should stop if stop parameter of the block is "
                    @"set to YES");
 }

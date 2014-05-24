@@ -63,7 +63,7 @@
 {
     OCSquirrelArray *array = [[OCSquirrelArray alloc] initWithVM: _squirrelVM];
     
-    XCTAssertEqual(array.count, 0u,
+    XCTAssertEqual((NSUInteger)array.count, (NSUInteger)0,
                    @"Number of elements should be zero after creating a new empty array.");
 }
 
@@ -74,7 +74,7 @@
     
     [array addObject: @123];
     
-    XCTAssertEqual(array.count, 1u,
+    XCTAssertEqual((NSUInteger)array.count, (NSUInteger)1,
                    @"Number of elements should be 1 after inserting an object into empty array");
     
 }

@@ -476,7 +476,7 @@
     
     InitializerChecker *object = instance.instanceUP;
     
-    XCTAssertEqual(object.intProperty, 12345,
+    XCTAssertEqual((NSInteger)object.intProperty, (NSInteger)12345,
                    @"Initializer method should exist and accept the int parameter.");
 }
 

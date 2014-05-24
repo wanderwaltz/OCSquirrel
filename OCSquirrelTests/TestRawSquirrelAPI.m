@@ -41,17 +41,17 @@
     
     sq_getstackobj(_vm, -1, &root);
     
-    XCTAssertEqual(sq_getrefcount(_vm, &root), 0u,
+    XCTAssertEqual((SQUnsignedInteger)sq_getrefcount(_vm, &root), (SQUnsignedInteger)0,
                    @"Reference count of the root table should be equal to 0 before adding ref");
     
     sq_addref(_vm, &root);
     
-    XCTAssertEqual(sq_getrefcount(_vm, &root), 1u,
+    XCTAssertEqual((SQUnsignedInteger)sq_getrefcount(_vm, &root), (SQUnsignedInteger)1,
                    @"Reference count of the root table should be equal to 1 after adding ref");
     
     sq_release(_vm, &root);
     
-    XCTAssertEqual(sq_getrefcount(_vm, &root), 0u,
+    XCTAssertEqual((SQUnsignedInteger)sq_getrefcount(_vm, &root), (SQUnsignedInteger)0,
                    @"Reference count of the root table should be equal to 0 after releasing ref");
 }
 
@@ -68,7 +68,7 @@
     
     sq_addref(_vm, &root1);
     
-    XCTAssertEqual(sq_getrefcount(_vm, &root2), 1u,
+    XCTAssertEqual((SQUnsignedInteger)sq_getrefcount(_vm, &root2), (SQUnsignedInteger)1,
                    @"Reference count should be retrieved regardless of which instance of HSQOBJECT "
                    @"we are working with.");
 }
@@ -86,7 +86,7 @@
     
     sq_addref(_vm, &root1);
     
-    XCTAssertEqual(sq_getrefcount(_vm, &root2), 1u,
+    XCTAssertEqual((SQUnsignedInteger)sq_getrefcount(_vm, &root2), (SQUnsignedInteger)1,
                    @"Reference count should be retrieved regardless of which instance of HSQOBJECT "
                    @"we are working with.");
 }

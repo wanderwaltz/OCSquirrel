@@ -80,7 +80,7 @@
 {
     sq_pushroottable(_squirrelVM.vm);
     _squirrelVM.stack.top = 0;
-    XCTAssertEqual(_squirrelVM.stack.top, 0,
+    XCTAssertEqual((NSInteger)_squirrelVM.stack.top, (NSInteger)0,
                    @"Stack top value of the OCSquirrelVMStack should be equal to 0 after "
                    @"explicitly setting it to this value.");
 }
@@ -95,7 +95,7 @@
     SQInteger value = 0;
     sq_getinteger(_squirrelVM.vm, -1, &value);
     
-    XCTAssertEqual(value, 12345,
+    XCTAssertEqual((SQInteger)value, (SQInteger)12345,
                    @"-pushInteger: should push the expected value to the Squirrel VM stack.");
 }
 
@@ -187,7 +187,7 @@
     
     sq_getinteger(_squirrelVM.vm, -1, &value);
     
-    XCTAssertEqual(value, 1234,
+    XCTAssertEqual((SQInteger)value, (SQInteger)1234,
                    @"-pushValue: should be capable of pushing integer NSNumbers");
 }
 
@@ -343,7 +343,7 @@
 - (void) testIntegerAtPosition
 {
     [_squirrelVM.stack pushInteger: 12345];
-    XCTAssertEqual(12345, [_squirrelVM.stack integerAtPosition: -1],
+    XCTAssertEqual((SQInteger)12345, (SQInteger)[_squirrelVM.stack integerAtPosition: -1],
                    @"-integerAtPosition: should return the pushed value.");
 }
 
@@ -413,7 +413,7 @@
 - (void) testReadValueIntegerValue
 {
     [_squirrelVM.stack pushInteger: 1234];
-    XCTAssertEqual([[_squirrelVM.stack valueAtPosition: -1] integerValue], 1234,
+    XCTAssertEqual((NSInteger)[[_squirrelVM.stack valueAtPosition: -1] integerValue], (NSInteger)1234,
                  @"-valueAtPosition: should return the corresponding NSNumber for integer stack values");
 }
 
@@ -688,7 +688,7 @@ static SQInteger NativeClosure(HSQUIRRELVM vm)
 - (void) testReadIntegerFailure
 {
     [_squirrelVM.stack pushString: @"string"];
-    XCTAssertEqual(0, [_squirrelVM.stack integerAtPosition: -1],
+    XCTAssertEqual((SQInteger)0, (SQInteger)[_squirrelVM.stack integerAtPosition: -1],
                    @"If failed to read an integer, OCSquirrelVMStack is expected to return 0.");
 }
 
@@ -696,7 +696,7 @@ static SQInteger NativeClosure(HSQUIRRELVM vm)
 - (void) testReadFloatFailure
 {
     [_squirrelVM.stack pushNull];
-    XCTAssertEqual([_squirrelVM.stack floatAtPosition: -1], 0.0f,
+    XCTAssertEqualWithAccuracy([_squirrelVM.stack floatAtPosition: -1], 0.0, 1e-8,
                 @"If failed to read a float, OCSquirrelVMStack is expected to return 0.0");
 }
 

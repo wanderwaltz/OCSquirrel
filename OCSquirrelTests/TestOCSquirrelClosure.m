@@ -232,7 +232,7 @@ static SQInteger IntClosureNoParamsCheckEnvironment(HSQUIRRELVM vm)
     OCSquirrelClosure *closure = [_root objectForKey: @"VoidNoParams"];
     [closure call];
     
-    XCTAssertEqual([_root integerForKey: @"called"], 12345,
+    XCTAssertEqual((SQInteger)[_root integerForKey: @"called"], (SQInteger)12345,
                  @"call method should call the Squirrel closure");
 }
 
