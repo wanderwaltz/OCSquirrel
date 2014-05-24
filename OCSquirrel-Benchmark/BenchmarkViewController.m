@@ -51,6 +51,7 @@
     if (self != nil)
     {
         _squirrelVM = [[OCSquirrelVM alloc] initWithStackSize: 20480];
+        self.edgesForExtendedLayout = UIRectEdgeNone;
     }
     return self;
 }

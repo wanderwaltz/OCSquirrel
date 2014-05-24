@@ -32,6 +32,7 @@
     if (self != nil)
     {
         self.title = @"OCSquirrel Benchmark";
+        self.edgesForExtendedLayout = UIRectEdgeNone;
         self.navigationItem.backBarButtonItem =
         [[UIBarButtonItem alloc] initWithTitle: @"Back"
                                          style: UIBarButtonItemStyleBordered
