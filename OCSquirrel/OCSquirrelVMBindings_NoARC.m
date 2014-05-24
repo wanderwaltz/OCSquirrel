@@ -42,6 +42,10 @@ SQInteger OCSquirrelVMBindings_Constructor(HSQUIRRELVM vm)
         [instance release]; // Retain count -1
         sq_setreleasehook(vm, 1, OCSquirrelVM_InstanceUPReleaseHook);
     }
+    else {
+        [instance release]; // Retain count -1
+        return SQ_ERROR;
+    }
     
     // Total retain count delta of the instance should be +1 at this point
     // The last retain should be compensated by the release in
