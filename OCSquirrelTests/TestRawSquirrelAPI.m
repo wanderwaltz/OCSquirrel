@@ -29,7 +29,7 @@
 
 - (void) testSquirrelVMExists
 {
-    STAssertTrue(_vm != NULL, @"Squirrel VM should exist.");
+    XCTAssertTrue(_vm != NULL, @"Squirrel VM should exist.");
 }
 
 
@@ -41,17 +41,17 @@
     
     sq_getstackobj(_vm, -1, &root);
     
-    STAssertEquals(sq_getrefcount(_vm, &root), 0u,
+    XCTAssertEqual(sq_getrefcount(_vm, &root), 0u,
                    @"Reference count of the root table should be equal to 0 before adding ref");
     
     sq_addref(_vm, &root);
     
-    STAssertEquals(sq_getrefcount(_vm, &root), 1u,
+    XCTAssertEqual(sq_getrefcount(_vm, &root), 1u,
                    @"Reference count of the root table should be equal to 1 after adding ref");
     
     sq_release(_vm, &root);
     
-    STAssertEquals(sq_getrefcount(_vm, &root), 0u,
+    XCTAssertEqual(sq_getrefcount(_vm, &root), 0u,
                    @"Reference count of the root table should be equal to 0 after releasing ref");
 }
 
@@ -68,7 +68,7 @@
     
     sq_addref(_vm, &root1);
     
-    STAssertEquals(sq_getrefcount(_vm, &root2), 1u,
+    XCTAssertEqual(sq_getrefcount(_vm, &root2), 1u,
                    @"Reference count should be retrieved regardless of which instance of HSQOBJECT "
                    @"we are working with.");
 }
@@ -86,7 +86,7 @@
     
     sq_addref(_vm, &root1);
     
-    STAssertEquals(sq_getrefcount(_vm, &root2), 1u,
+    XCTAssertEqual(sq_getrefcount(_vm, &root2), 1u,
                    @"Reference count should be retrieved regardless of which instance of HSQOBJECT "
                    @"we are working with.");
 }
@@ -117,7 +117,7 @@
     
     sq_getinteger(_vm, -1, &readValue);
     
-    STAssertEquals(readValue, value,
+    XCTAssertEqual(readValue, value,
                    @"Should be able to create slots with non-string based keys");
 }
 
@@ -138,7 +138,7 @@ SQInteger ReleaseHook(SQUserPointer pointer, SQInteger size)
     sq_setreleasehook(_vm, -1, ReleaseHook);
     sq_pop(_vm, 1);
     
-    STAssertTrue(g_ReleaseHookCalled,
+    XCTAssertTrue(g_ReleaseHookCalled,
                  @"Release hook function should be called after popping the newly created "
                  @"user data object from the stack.");
 }

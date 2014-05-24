@@ -11,6 +11,7 @@
 #endif
 
 #import "TestOCSquirrelTable.h"
+#import "SenTestingKitCompatibility.h"
 
 
 #pragma mark -
@@ -37,7 +38,7 @@
 
 - (void) testOCSquirrelTableClassExists
 {
-    STAssertTrue([OCSquirrelTable isSubclassOfClass: [OCSquirrelObject class]],
+    XCTAssertTrue([OCSquirrelTable isSubclassOfClass: [OCSquirrelObject class]],
                 @"OCSquirrelTable class should exist and be a subclass of OCSquirrelObject");
 }
 
@@ -50,9 +51,9 @@
     
     OCSquirrelTable *table = [OCSquirrelTable rootTableForVM: _squirrelVM];
     
-    STAssertEquals(*table.obj, root,
-                   @"+rootTableForVM: method should return an OCSquirrelTable set to the root "
-                   @"talbe of the given VM");
+    XCTAssertEqualStructs(*table.obj, root,
+                          @"+rootTableForVM: method should return an OCSquirrelTable set to the root "
+                          @"talbe of the given VM");
 }
 
 
@@ -64,9 +65,9 @@
     
     OCSquirrelTable *table = [OCSquirrelTable registryTableForVM: _squirrelVM];
     
-    STAssertEquals(*table.obj, registry,
-                   @"+registryTableForVM: method should return an OCSquirrelTable set to the "
-                   @"registry talbe of the given VM");
+    XCTAssertEqualStructs(*table.obj, registry,
+                          @"+registryTableForVM: method should return an OCSquirrelTable set to the "
+                          @"registry talbe of the given VM");
 }
 
 
@@ -74,7 +75,7 @@
 {
     OCSquirrelTable *table = [[OCSquirrelTable alloc] initWithVM: _squirrelVM];
     
-    STAssertEquals(sq_type(*table.obj), OT_TABLE,
+    XCTAssertEqual(sq_type(*table.obj), OT_TABLE,
                    @"OCSquirrelTable obj property should be of OT_TABLE type.");
 }
 
@@ -88,7 +89,7 @@
     OCSquirrelTable *table = [[OCSquirrelTable alloc] initWithHSQOBJECT: root
                                                                    inVM: _squirrelVM];
     
-    STAssertNotNil(table,
+    XCTAssertNotNil(table,
                    @"OCSquirrelTable should support initializing with an existing table HSQOBJECT");
 }
 
@@ -100,7 +101,7 @@
     
     OCSquirrelTable *table = [[OCSquirrelTable alloc] initWithHSQOBJECT: obj
                                                                    inVM: _squirrelVM];
-    STAssertNil(table,
+    XCTAssertNil(table,
                 @"OCSquirrelTable should return nil when initializing with a `null` HSQOBJECT");
 }
 
@@ -122,7 +123,7 @@
     OCSquirrelTable *table = [[OCSquirrelTable alloc] initWithHSQOBJECT: sqTable
                                                                    inVM: _squirrelVM];
     
-    STAssertTrue([[table objectForKey: @"someKey"] isKindOfClass: [NSNumber class]],
+    XCTAssertTrue([[table objectForKey: @"someKey"] isKindOfClass: [NSNumber class]],
                    @"-objectForKey: should return an NSNumber for integer value");
 }
 
@@ -141,7 +142,7 @@
     OCSquirrelTable *table = [[OCSquirrelTable alloc] initWithHSQOBJECT: sqTable
                                                                    inVM: _squirrelVM];
     
-    STAssertEquals([[table objectForKey: @"someKey"] integerValue], 1234,
+    XCTAssertEqual([[table objectForKey: @"someKey"] integerValue], 1234,
                  @"-objectForKey: should return the appropriate NSNumber for integer value");
 }
 
@@ -160,7 +161,7 @@
     OCSquirrelTable *table = [[OCSquirrelTable alloc] initWithHSQOBJECT: sqTable
                                                                    inVM: _squirrelVM];
     
-    STAssertTrue([[table objectForKey: @"someKey"] isKindOfClass: [NSNumber class]],
+    XCTAssertTrue([[table objectForKey: @"someKey"] isKindOfClass: [NSNumber class]],
                  @"-objectForKey: should return an NSNumber for float value");
 }
 
@@ -179,7 +180,7 @@
     OCSquirrelTable *table = [[OCSquirrelTable alloc] initWithHSQOBJECT: sqTable
                                                                    inVM: _squirrelVM];
     
-    STAssertEquals([[table objectForKey: @"someKey"] floatValue], 123.456f,
+    XCTAssertEqual([[table objectForKey: @"someKey"] floatValue], 123.456f,
                    @"-objectForKey: should return the appropriate NSNumber for float value");
 }
 
@@ -198,7 +199,7 @@
     OCSquirrelTable *table = [[OCSquirrelTable alloc] initWithHSQOBJECT: sqTable
                                                                    inVM: _squirrelVM];
     
-    STAssertTrue([[table objectForKey: @"someKey"] isKindOfClass: [NSNumber class]],
+    XCTAssertTrue([[table objectForKey: @"someKey"] isKindOfClass: [NSNumber class]],
                  @"-objectForKey: should return an NSNumber for BOOL value");
 }
 
@@ -217,7 +218,7 @@
     OCSquirrelTable *table = [[OCSquirrelTable alloc] initWithHSQOBJECT: sqTable
                                                                    inVM: _squirrelVM];
     
-    STAssertEquals([[table objectForKey: @"someKey"] boolValue], YES,
+    XCTAssertEqual([[table objectForKey: @"someKey"] boolValue], YES,
                    @"-objectForKey: should return the appropriate NSNumber for BOOL value");
 }
 
@@ -236,7 +237,7 @@
     OCSquirrelTable *table = [[OCSquirrelTable alloc] initWithHSQOBJECT: sqTable
                                                                    inVM: _squirrelVM];
     
-    STAssertTrue([[table objectForKey: @"someKey"] isKindOfClass: [NSString class]],
+    XCTAssertTrue([[table objectForKey: @"someKey"] isKindOfClass: [NSString class]],
                  @"-objectForKey: should return an NSString for string value");
 }
 
@@ -255,7 +256,7 @@
     OCSquirrelTable *table = [[OCSquirrelTable alloc] initWithHSQOBJECT: sqTable
                                                                    inVM: _squirrelVM];
     
-    STAssertEqualObjects([table objectForKey: @"someKey"], @"someValue",
+    XCTAssertEqualObjects([table objectForKey: @"someKey"], @"someValue",
                          @"-objectForKey: should return the appropriate NSString for string value");
 }
 
@@ -274,7 +275,7 @@
     OCSquirrelTable *table = [[OCSquirrelTable alloc] initWithHSQOBJECT: sqTable
                                                                    inVM: _squirrelVM];
     
-    STAssertTrue([[table objectForKey: @"someKey"] isKindOfClass: [NSValue class]],
+    XCTAssertTrue([[table objectForKey: @"someKey"] isKindOfClass: [NSValue class]],
                  @"-objectForKey: should return an NSValue for userPointer value");
 }
 
@@ -293,7 +294,7 @@
     OCSquirrelTable *table = [[OCSquirrelTable alloc] initWithHSQOBJECT: sqTable
                                                                    inVM: _squirrelVM];
     
-    STAssertEquals([[table objectForKey: @"someKey"] pointerValue], (__bridge void *)self,
+    XCTAssertEqual([[table objectForKey: @"someKey"] pointerValue], (__bridge void *)self,
                    @"-objectForKey: should return the appropriate NSValue for userPointer value");
 }
 
@@ -312,7 +313,7 @@
     OCSquirrelTable *table = [[OCSquirrelTable alloc] initWithHSQOBJECT: sqTable
                                                                    inVM: _squirrelVM];
     
-    STAssertNil([table objectForKey: @"someKey"],
+    XCTAssertNil([table objectForKey: @"someKey"],
                  @"-objectForKey: should return nil for `null` value");
 }
 
@@ -331,7 +332,7 @@
     OCSquirrelTable *table = [[OCSquirrelTable alloc] initWithHSQOBJECT: sqTable
                                                                    inVM: _squirrelVM];
     
-    STAssertNil([table objectForKey: @"undefinedKey"],
+    XCTAssertNil([table objectForKey: @"undefinedKey"],
                 @"-objectForKey: should return nil for undefined key");
 }
 
@@ -353,7 +354,7 @@
     OCSquirrelTable *table = [[OCSquirrelTable alloc] initWithHSQOBJECT: sqTable
                                                                    inVM: _squirrelVM];
     
-    STAssertEquals([table integerForKey: @"someKey"], 1234,
+    XCTAssertEqual([table integerForKey: @"someKey"], 1234,
                    @"The value set through Squirrel API should be accessible "
                    @"using OCSquirrelTable methods");
 }
@@ -373,7 +374,7 @@
     OCSquirrelTable *table = [[OCSquirrelTable alloc] initWithHSQOBJECT: sqTable
                                                                    inVM: _squirrelVM];
     
-    STAssertEquals([table integerForKey: @5678], 1234,
+    XCTAssertEqual([table integerForKey: @5678], 1234,
                    @"The value set through Squirrel API should be accessible "
                    @"using OCSquirrelTable methods");
 }
@@ -393,7 +394,7 @@
     OCSquirrelTable *table = [[OCSquirrelTable alloc] initWithHSQOBJECT: sqTable
                                                                    inVM: _squirrelVM];
     
-    STAssertEquals([table floatForKey: @"someKey"], 123.456f,
+    XCTAssertEqual([table floatForKey: @"someKey"], 123.456f,
                    @"The value set through Squirrel API should be accessible "
                    @"using OCSquirrelTable methods");
 }
@@ -413,7 +414,7 @@
     OCSquirrelTable *table = [[OCSquirrelTable alloc] initWithHSQOBJECT: sqTable
                                                                    inVM: _squirrelVM];
     
-    STAssertEquals([table boolForKey: @"someKey"], YES,
+    XCTAssertEqual([table boolForKey: @"someKey"], YES,
                    @"The value set through Squirrel API should be accessible "
                    @"using OCSquirrelTable methods");
 }
@@ -433,7 +434,7 @@
     OCSquirrelTable *table = [[OCSquirrelTable alloc] initWithHSQOBJECT: sqTable
                                                                    inVM: _squirrelVM];
     
-    STAssertEqualObjects([table stringForKey: @"someKey"], @"someValue",
+    XCTAssertEqualObjects([table stringForKey: @"someKey"], @"someValue",
                          @"The value set through Squirrel API should be accessible "
                          @"using OCSquirrelTable methods");
 }
@@ -453,7 +454,7 @@
     OCSquirrelTable *table = [[OCSquirrelTable alloc] initWithHSQOBJECT: sqTable
                                                                    inVM: _squirrelVM];
     
-    STAssertEquals([table userPointerForKey: @"someKey"], (__bridge SQUserPointer)self,
+    XCTAssertEqual([table userPointerForKey: @"someKey"], (__bridge SQUserPointer)self,
                    @"The value set through Squirrel API should be accessible "
                    @"using OCSquirrelTable methods");
 }
@@ -468,7 +469,7 @@
     
     [table setObject: @1234 forKey: @"key"];
     
-    STAssertEquals([table integerForKey: @"key"], 1234,
+    XCTAssertEqual([table integerForKey: @"key"], 1234,
                    @"Integer value should be properly set by setObject:forKey:");
 }
 
@@ -480,7 +481,7 @@
     [table setObject: @1234 forKey: @"key"];
     [table setObject: @5678 forKey: @"key"];
     
-    STAssertEquals([table integerForKey: @"key"], 5678,
+    XCTAssertEqual([table integerForKey: @"key"], 5678,
                    @"Should be able to reassign the value for the same key");
 }
 
@@ -491,7 +492,7 @@
     
     [table setObject: @123.456 forKey: @"key"];
     
-    STAssertEquals([table floatForKey: @"key"], 123.456f,
+    XCTAssertEqual([table floatForKey: @"key"], 123.456f,
                    @"Float value should be properly set by setObject:forKey:");
 }
 
@@ -502,7 +503,7 @@
     
     [table setObject: @YES forKey: @"key"];
     
-    STAssertEquals([table boolForKey: @"key"], YES,
+    XCTAssertEqual([table boolForKey: @"key"], YES,
                    @"Bool value should be properly set by setObject:forKey:");
 }
 
@@ -513,7 +514,7 @@
     
     [table setObject: [NSValue valueWithPointer: (__bridge void *)self] forKey: @"key"];
     
-    STAssertEquals([table userPointerForKey: @"key"], (__bridge SQUserPointer)self,
+    XCTAssertEqual([table userPointerForKey: @"key"], (__bridge SQUserPointer)self,
                    @"UserPoniter value should be properly set by setObject:forKey:");
 }
 
@@ -524,7 +525,7 @@
     
     [table setObject: @"value" forKey: @"key"];
     
-    STAssertEqualObjects([table stringForKey: @"key"], @"value",
+    XCTAssertEqualObjects([table stringForKey: @"key"], @"value",
                          @"String value should be properly set by setObject:forKey:");
 }
 
@@ -535,7 +536,7 @@
     
     [table setObject: nil forKey: @"key"];
     
-    STAssertNil([table objectForKey: @"key"],
+    XCTAssertNil([table objectForKey: @"key"],
                 @"nil value should be properly set by setObject:forKey:");
 }
 
@@ -548,7 +549,7 @@
     OCSquirrelTable *table = [[OCSquirrelTable alloc] initWithVM: _squirrelVM];
     [table setInteger: 1234 forKey: @"key"];
     
-    STAssertEquals([table integerForKey: @"key"], 1234,
+    XCTAssertEqual([table integerForKey: @"key"], 1234,
                    @"Integer value should be properly set by a type-specific method");
 }
 
@@ -558,7 +559,7 @@
     OCSquirrelTable *table = [[OCSquirrelTable alloc] initWithVM: _squirrelVM];
     [table setFloat: 123.456 forKey: @"key"];
     
-    STAssertEquals([table floatForKey: @"key"], 123.456f,
+    XCTAssertEqual([table floatForKey: @"key"], 123.456f,
                    @"Float value should be properly set by a type-specific method");
 }
 
@@ -568,7 +569,7 @@
     OCSquirrelTable *table = [[OCSquirrelTable alloc] initWithVM: _squirrelVM];
     [table setBool: YES forKey: @"key"];
     
-    STAssertEquals([table boolForKey: @"key"], YES,
+    XCTAssertEqual([table boolForKey: @"key"], YES,
                    @"Bool value should be properly set by a type-specific method");
 }
 
@@ -578,7 +579,7 @@
     OCSquirrelTable *table = [[OCSquirrelTable alloc] initWithVM: _squirrelVM];
     [table setUserPointer: (__bridge SQUserPointer)self forKey: @"key"];
     
-    STAssertEquals([table userPointerForKey: @"key"], (__bridge SQUserPointer)self,
+    XCTAssertEqual([table userPointerForKey: @"key"], (__bridge SQUserPointer)self,
                    @"UserPointer value should be properly set by a type-specific method");
 }
 
@@ -588,7 +589,7 @@
     OCSquirrelTable *table = [[OCSquirrelTable alloc] initWithVM: _squirrelVM];
     [table setString: @"value" forKey: @"key"];
     
-    STAssertEqualObjects([table stringForKey: @"key"], @"value",
+    XCTAssertEqualObjects([table stringForKey: @"key"], @"value",
                          @"String value should be properly set by a type-specific method");
 }
 
@@ -601,7 +602,7 @@
     OCSquirrelTable *table = [[OCSquirrelTable alloc] initWithVM: _squirrelVM];
     [table setInteger: 12345 forKey: @"key"];
     
-    STAssertEquals([[table valueForKey: @"key"] integerValue], 12345,
+    XCTAssertEqual([[table valueForKey: @"key"] integerValue], 12345,
                    @"Integer value should be properly read with valueForKey:");
 }
 
@@ -611,7 +612,7 @@
     OCSquirrelTable *table = [[OCSquirrelTable alloc] initWithVM: _squirrelVM];
     [table setFloat: 123.456 forKey: @"key"];
     
-    STAssertEqualsWithAccuracy([[table valueForKey: @"key"] floatValue], 123.456f, 1e-3,
+    XCTAssertEqualWithAccuracy([[table valueForKey: @"key"] floatValue], 123.456f, 1e-3,
                                @"Float value should be properly read with valueForKey:");
 }
 
@@ -621,7 +622,7 @@
     OCSquirrelTable *table = [[OCSquirrelTable alloc] initWithVM: _squirrelVM];
     [table setBool: YES forKey: @"key"];
     
-    STAssertEquals([[table valueForKey: @"key"] boolValue], YES,
+    XCTAssertEqual([[table valueForKey: @"key"] boolValue], YES,
                    @"BOOL value should be properly read with valueForKey:");
 }
 
@@ -631,7 +632,7 @@
     OCSquirrelTable *table = [[OCSquirrelTable alloc] initWithVM: _squirrelVM];
     [table setUserPointer: (__bridge SQUserPointer)self forKey: @"key"];
     
-    STAssertEquals([[table valueForKey: @"key"] pointerValue], (__bridge SQUserPointer)self,
+    XCTAssertEqual([[table valueForKey: @"key"] pointerValue], (__bridge SQUserPointer)self,
                    @"UserPointer value should be properly read with valueForKey:");
 }
 
@@ -641,7 +642,7 @@
     OCSquirrelTable *table = [[OCSquirrelTable alloc] initWithVM: _squirrelVM];
     [table setString: @"value" forKey: @"key"];
     
-    STAssertEqualObjects([table valueForKey: @"key"], @"value",
+    XCTAssertEqualObjects([table valueForKey: @"key"], @"value",
                          @"String value should be properly read with valueForKey:");
 }
 
@@ -654,7 +655,7 @@
     OCSquirrelTable *table = [[OCSquirrelTable alloc] initWithVM: _squirrelVM];
     [table setValue: @12345 forKey: @"key"];
     
-    STAssertEquals([[table valueForKey: @"key"] integerValue], 12345,
+    XCTAssertEqual([[table valueForKey: @"key"] integerValue], 12345,
                    @"Integer value should be properly set with setValue:forKey:");
 }
 
@@ -664,7 +665,7 @@
     OCSquirrelTable *table = [[OCSquirrelTable alloc] initWithVM: _squirrelVM];
     [table setValue: @123.456 forKey: @"key"];
     
-    STAssertEqualsWithAccuracy([[table valueForKey: @"key"] floatValue], 123.456f, 1e-3,
+    XCTAssertEqualWithAccuracy([[table valueForKey: @"key"] floatValue], 123.456f, 1e-3,
                                @"Float value should be properly set with setValue:forKey:");
 }
 
@@ -674,7 +675,7 @@
     OCSquirrelTable *table = [[OCSquirrelTable alloc] initWithVM: _squirrelVM];
     [table setValue: @YES forKey: @"key"];
     
-    STAssertEquals([[table valueForKey: @"key"] boolValue], YES,
+    XCTAssertEqual([[table valueForKey: @"key"] boolValue], YES,
                    @"BOOL value should be properly set with setValue:forKey:");
 }
 
@@ -684,7 +685,7 @@
     OCSquirrelTable *table = [[OCSquirrelTable alloc] initWithVM: _squirrelVM];
     [table setValue: [NSValue valueWithPointer: (__bridge SQUserPointer)self] forKey: @"key"];
     
-    STAssertEquals([[table valueForKey: @"key"] pointerValue], (__bridge SQUserPointer)self,
+    XCTAssertEqual([[table valueForKey: @"key"] pointerValue], (__bridge SQUserPointer)self,
                    @"UserPointer value should be properly set with setValue:forKey:");
 }
 
@@ -694,7 +695,7 @@
     OCSquirrelTable *table = [[OCSquirrelTable alloc] initWithVM: _squirrelVM];
     [table setValue: @"value" forKey: @"key"];
     
-    STAssertEqualObjects([table valueForKey: @"key"], @"value",
+    XCTAssertEqualObjects([table valueForKey: @"key"], @"value",
                          @"String value should be properly set with setValue:forKey:");
 }
 
@@ -728,7 +729,7 @@
          enumerated[key] = value;
      }];
     
-    STAssertEqualObjects(valuesAndKeys, enumerated,
+    XCTAssertEqualObjects(valuesAndKeys, enumerated,
                          @"enumerateObjectsAndKeysUsingBlock should enumerate all table elements");
 }
 
@@ -750,7 +751,7 @@
          *stop = YES;         
      }];
     
-    STAssertEquals(iterations, 1u,
+    XCTAssertEqual(iterations, 1u,
                    @"enumerateObjectsAndKeysUsingBlock should stop if stop parameter of the block is "
                    @"set to YES");
 }
@@ -767,7 +768,7 @@
     
     [table callClosureWithKey: @"closure"];
     
-    STAssertTrue([table boolForKey: @"value"],
+    XCTAssertTrue([table boolForKey: @"value"],
                  @"Closure with the given key should be called with the table passed as 'this'");
 }
 
@@ -780,7 +781,7 @@
     
     id result = [table callClosureWithKey: @"closure"];
     
-    STAssertEqualObjects(result, @1234,
+    XCTAssertEqualObjects(result, @1234,
                          @"Closure with the given key should be called with the "
                          @"table passed as 'this'");
 
@@ -796,7 +797,7 @@
     id result = [table callClosureWithKey: @"closure"
                                parameters: @[@4, @5]];
     
-    STAssertEqualObjects(result, @10,
+    XCTAssertEqualObjects(result, @10,
                          @"Closure with the given key should be called with the "
                          @"table passed as 'this' and the parameters array should "
                          @"be properly passed");

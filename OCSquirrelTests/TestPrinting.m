@@ -61,7 +61,7 @@
     
     [_squirrelVM executeSync: printHelloWorld error: nil];
     
-    STAssertNoThrow([delegate verify],
+    XCTAssertNoThrow([delegate verify],
                     @"Delegate method -squirrelVM:didPrintString: should be invoked with the OCSquirrelVM "
                     @"instance which compiled the script and the string which was passed to print function.");
 }
@@ -75,7 +75,7 @@
     
     [_squirrelVM executeSync: printEnglishString error: nil];
     
-    STAssertEqualObjects(_lastPrintedString, kEnglishString,
+    XCTAssertEqualObjects(_lastPrintedString, kEnglishString,
                          @"String containing only letters from English alphabet should be "
                          @"printed to an NSString from a Squirrel script unchanged.");
 }
@@ -90,7 +90,7 @@
     
     [_squirrelVM executeSync: printUnicodeString error: nil];
     
-    STAssertEqualObjects(_lastPrintedString, kUnicodeString,
+    XCTAssertEqualObjects(_lastPrintedString, kUnicodeString,
                          @"String containing unicode characters should be "
                          @"printed to an NSString from a Squirrel script unchanged.");
 }

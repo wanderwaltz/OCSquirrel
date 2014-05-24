@@ -52,14 +52,14 @@
 {
     id instance = [_squirrelVM executeSync: @"return Test()" error: nil];
     
-    STAssertTrue([instance isKindOfClass: [OCSquirrelInstance class]],
+    XCTAssertTrue([instance isKindOfClass: [OCSquirrelInstance class]],
                  @"Should be able to create instances of the class declared in setUp method.");
 }
 
 
 - (void) testCaseProperlySetUp
 {
-    STAssertTrue([_instance isKindOfClass: [OCSquirrelInstance class]],
+    XCTAssertTrue([_instance isKindOfClass: [OCSquirrelInstance class]],
                  @"setUp method should have created an instance of the class");
 }
 
@@ -69,28 +69,28 @@
 
 - (void) testGetIvarInt
 {
-    STAssertEqualObjects([_instance objectForKey: @"memberInt"], @12345,
+    XCTAssertEqualObjects([_instance objectForKey: @"memberInt"], @12345,
                          @"Should be able to access Squirrel class instance member of int type");
 }
 
 
 - (void) testGetIvarFloat
 {
-    STAssertEqualsWithAccuracy([[_instance objectForKey: @"memberFloat"] floatValue], 123.456f, 1e-3,
+    XCTAssertEqualWithAccuracy([[_instance objectForKey: @"memberFloat"] floatValue], 123.456f, 1e-3,
                          @"Should be able to access Squirrel class instance member of float type");
 }
 
 
 - (void) testGetIvarBool
 {
-    STAssertEqualObjects([_instance objectForKey: @"memberBool"], @YES,
+    XCTAssertEqualObjects([_instance objectForKey: @"memberBool"], @YES,
                          @"Should be able to access Squirrel class instance member of bool type");
 }
 
 
 - (void) testGetIvarString
 {
-    STAssertEqualObjects([_instance objectForKey: @"memberString"], @"string",
+    XCTAssertEqualObjects([_instance objectForKey: @"memberString"], @"string",
                          @"Should be able to access Squirrel class instance member of string type");
 }
 
@@ -99,28 +99,28 @@
 
 - (void) testCallMethodResultInt
 {
-    STAssertEqualObjects([_instance callClosureWithKey: @"functionInt"], @12345,
+    XCTAssertEqualObjects([_instance callClosureWithKey: @"functionInt"], @12345,
                          @"Should be able to call Squirrel class instance method with int return type");
 }
 
 
 - (void) testCallMethodResultFloat
 {
-    STAssertEqualsWithAccuracy([[_instance callClosureWithKey: @"functionFloat"] floatValue], 123.456f, 1e-3,
+    XCTAssertEqualWithAccuracy([[_instance callClosureWithKey: @"functionFloat"] floatValue], 123.456f, 1e-3,
                          @"Should be able to call Squirrel class instance method with float return type");
 }
 
 
 - (void) testCallMethodResultBool
 {
-    STAssertEqualObjects([_instance callClosureWithKey: @"functionBool"], @YES,
+    XCTAssertEqualObjects([_instance callClosureWithKey: @"functionBool"], @YES,
                          @"Should be able to call Squirrel class instance method with bool return type");
 }
 
 
 - (void) testCallMethodResultString
 {
-    STAssertEqualObjects([_instance callClosureWithKey: @"functionString"], @"string",
+    XCTAssertEqualObjects([_instance callClosureWithKey: @"functionString"], @"string",
                          @"Should be able to call Squirrel class instance method with string return type");
 }
 

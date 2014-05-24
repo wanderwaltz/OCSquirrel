@@ -44,7 +44,7 @@
     [_class push];
     [_squirrelVM.stack pushValue: nil];
     sq_getattributes(_squirrelVM.vm, -2);
-    STAssertEqualObjects([_squirrelVM.stack valueAtPosition: -1], @12345,
+    XCTAssertEqualObjects([_squirrelVM.stack valueAtPosition: -1], @12345,
                          @"-setClassAttributes: should set the class attributes.");
 }
 
@@ -53,7 +53,7 @@
 {
     [_class setClassAttributes: @12345];
     
-    STAssertEqualObjects([_class classAttributes], @12345,
+    XCTAssertEqualObjects([_class classAttributes], @12345,
                          @"-classAttributes should get the class attributes.");
 }
 
@@ -66,7 +66,7 @@
     
     id instance = [_squirrelVM.stack valueAtPosition: -1];
     
-    STAssertTrue([instance isKindOfClass: [OCSquirrelInstance class]],
+    XCTAssertTrue([instance isKindOfClass: [OCSquirrelInstance class]],
                  @"pushNewInstance method should push an instance of the class "
                  @"to the OCSquirrelVM stack.");
 }
@@ -80,7 +80,7 @@
     
     OCSquirrelInstance *instance = [_squirrelVM.stack valueAtPosition: -1];
     
-    STAssertNil(instance.instanceUP,
+    XCTAssertNil(instance.instanceUP,
                 @"New class instance should not have a instanceUP userpointer.");
 }
 

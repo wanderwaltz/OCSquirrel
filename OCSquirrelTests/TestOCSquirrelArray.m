@@ -37,7 +37,7 @@
 
 - (void) testOCSquirrelArrayClassExists
 {
-    STAssertTrue([OCSquirrelArray isSubclassOfClass: [OCSquirrelObject class]],
+    XCTAssertTrue([OCSquirrelArray isSubclassOfClass: [OCSquirrelObject class]],
                  @"OCSquirrelArray class should exist and be a subclass of OCSquirrelObject");
 }
 
@@ -46,7 +46,7 @@
 {
     OCSquirrelArray *array = [[OCSquirrelArray alloc] initWithVM: _squirrelVM];
     
-    STAssertNotNil(array, @"Should be able to create OCSquirrelArray instances");
+    XCTAssertNotNil(array, @"Should be able to create OCSquirrelArray instances");
 }
 
 
@@ -54,7 +54,7 @@
 {
     OCSquirrelArray *array = [[OCSquirrelArray alloc] initWithVM: _squirrelVM];
     
-    STAssertEquals(array.type, OT_ARRAY,
+    XCTAssertEqual(array.type, OT_ARRAY,
                    @"OCSquirrelArray should be a wrapper for OT_ARRAY HSQOBJECT");
 }
 
@@ -63,7 +63,7 @@
 {
     OCSquirrelArray *array = [[OCSquirrelArray alloc] initWithVM: _squirrelVM];
     
-    STAssertEquals(array.count, 0u,
+    XCTAssertEqual(array.count, 0u,
                    @"Number of elements should be zero after creating a new empty array.");
 }
 
@@ -74,7 +74,7 @@
     
     [array addObject: @123];
     
-    STAssertEquals(array.count, 1u,
+    XCTAssertEqual(array.count, 1u,
                    @"Number of elements should be 1 after inserting an object into empty array");
     
 }

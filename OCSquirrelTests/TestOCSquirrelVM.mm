@@ -83,14 +83,14 @@
 
 - (void) testCreation
 {
-    STAssertNotNil(_squirrelVM,
+    XCTAssertNotNil(_squirrelVM,
                    @"OCSquirrelVM class should be created");
 }
 
 
 - (void) testHasVMProperty
 {
-    STAssertTrue(_squirrelVM.vm != NULL,
+    XCTAssertTrue(_squirrelVM.vm != NULL,
                  @"OCSquirrelVM should have a non-nil vm property.");
 }
 
@@ -99,14 +99,14 @@
 {
     SQUserPointer vmPointer = sq_getforeignptr(_squirrelVM.vm);
 
-    STAssertEquals(vmPointer, (__bridge SQUserPointer)_squirrelVM,
+    XCTAssertEqual(vmPointer, (__bridge SQUserPointer)_squirrelVM,
                    @"OCSquirrelVM should set self as the foreign ptr for the Squirrel VM");
 }
 
 
 - (void) testDefaultInitialStackSize
 {
-    STAssertEquals(_squirrelVM.vm->_stack.capacity(), kOCSquirrelVMDefaultInitialStackSize,
+    XCTAssertEqual(_squirrelVM.vm->_stack.capacity(), kOCSquirrelVMDefaultInitialStackSize,
                    @"Initial stack size of a OCSquirrelVM initialized with -init should be equal to "
                    @"kOCSquirrelVMDefaultInitialStackSize");
 }
@@ -118,7 +118,7 @@
     
     _squirrelVM = [[OCSquirrelVM alloc] initWithStackSize: kCustomStackSize];
     
-    STAssertEquals(_squirrelVM.vm->_stack.capacity(), kCustomStackSize,
+    XCTAssertEqual(_squirrelVM.vm->_stack.capacity(), kCustomStackSize,
                    @"Initial stack size of a OCSquirrelVM initialized with -initWithStackSize: "
                    @"should be equal to kCustomStackSize");
 }
@@ -131,7 +131,7 @@
     // the kOCSquirrelVMDefaultInitialStackSize constant as parameter.
     OCSquirrelVMInitWithStackSizeOverride *vm = [OCSquirrelVMInitWithStackSizeOverride new];
     
-    STAssertTrue(vm.calledInitWithStackSize,
+    XCTAssertTrue(vm.calledInitWithStackSize,
                  @"-init method should have called -initWithStackSize: with "
                  @"kOCSquirrelVMDefaultInitialStackSize param value");
 }
@@ -139,14 +139,14 @@
 
 - (void) testHasDispatchQueue
 {
-    STAssertNotNil(_squirrelVM.vmQueue,
+    XCTAssertNotNil(_squirrelVM.vmQueue,
                    @"OCSquirrelVM should have a dispatch queue to serialize calls to the vm");
 }
 
 
 - (void) testHasDelegateProperty
 {
-    STAssertTrue([OCSquirrelVM instancesRespondToSelector: @selector(setDelegate:)] &&
+    XCTAssertTrue([OCSquirrelVM instancesRespondToSelector: @selector(setDelegate:)] &&
                  [OCSquirrelVM instancesRespondToSelector: @selector(delegate)],
                  @"OCSquirrelVM should have a readwrite delegate property");
 }
@@ -154,7 +154,7 @@
 
 - (void) testThrowsIfDelegateWrongProtocol
 {
-    STAssertThrowsSpecificNamed(_squirrelVM.delegate = (id)[NSObject new],
+    XCTAssertThrowsSpecificNamed(_squirrelVM.delegate = (id)[NSObject new],
                                 NSException, NSInvalidArgumentException,
                                 @"OCSquirrelVM should throw and NSIvalidArgumentException if a delegate "
                                 @"not conforming to OCSquirrelVMDelegate protocol is set.");
@@ -165,7 +165,7 @@
 {
     id delegate = [OCMockObject mockForProtocol: @protocol(OCSquirrelVMDelegate)];
     
-    STAssertNoThrow(_squirrelVM.delegate = delegate,
+    XCTAssertNoThrow(_squirrelVM.delegate = delegate,
                     @"OCSquirrelVM does not throw an exception if a delegate conforming to "
                     @"OCSquireelVMDelegate protocol is set.");
 }
@@ -176,7 +176,7 @@
 
 - (void) testExecuteSyncValidNoThrow
 {
-    STAssertNoThrow([_squirrelVM executeSync: @"local x = 0;" error: nil],
+    XCTAssertNoThrow([_squirrelVM executeSync: @"local x = 0;" error: nil],
                     @"OCSquirrelVM -executeSync: should not throw exception for a valid Squirrel script.");
 }
 
@@ -186,7 +186,7 @@
     NSError *error = nil;
     [_squirrelVM executeSync: @"local x + 0" error: &error];
     
-    STAssertNotNil(error,
+    XCTAssertNotNil(error,
                    @"OCSquirrelVM -executeSync: should return a not nil NSError "
                    @"for an invalid Squirrel script.");
 }
@@ -197,7 +197,7 @@
     NSError *error = nil;
     [_squirrelVM executeSync: @"local x + 0" error: &error];
     
-    STAssertEqualObjects(error, _squirrelVM.lastError,
+    XCTAssertEqualObjects(error, _squirrelVM.lastError,
                          @"OCSquirrelVM -executeSync: should return a not nil NSError "
                          @"and have a lastError property with the same error.");
 }
@@ -208,7 +208,7 @@
     NSError *error = nil;
     [_squirrelVM executeSync: @"local x + 0" error: &error];
     
-    STAssertEqualObjects(error.domain, OCSquirrelVMErrorDomain,
+    XCTAssertEqualObjects(error.domain, OCSquirrelVMErrorDomain,
                          @"Error returned by OCSquirrelVM should have OCSquirrelVMErrorDomain domain.");
 }
 
@@ -218,7 +218,7 @@
     NSError *error = nil;
     [_squirrelVM executeSync: nil error: &error];
     
-    STAssertEquals(error.code, OCSquirrelVMError_FailedToGetCString,
+    XCTAssertEqual(error.code, OCSquirrelVMError_FailedToGetCString,
                    @"When a C string could not be retrieved for a script, returned error code "
                    @"should be equal to OCSquirrelVMError_FailedToGetCString");
 }
@@ -229,7 +229,7 @@
     NSError *error = nil;
     [_squirrelVM executeSync: @"local x + 0" error: &error];
     
-    STAssertEquals(error.code, OCSquirrelVMError_CompilerError,
+    XCTAssertEqual(error.code, OCSquirrelVMError_CompilerError,
                    @"When compiling script fails, returned error code "
                    @"should be equal to OCSquirrelVMError_CompilerError");
 }
@@ -240,7 +240,7 @@
     NSError *error = nil;
     [_squirrelVM executeSync: @"local x = y;" error: &error];
     
-    STAssertEquals(error.code, OCSquirrelVMError_RuntimeError,
+    XCTAssertEqual(error.code, OCSquirrelVMError_RuntimeError,
                    @"When a runtime error occurs, returned error code "
                    @"should be equal to OCSquirrelVMError_RuntimeError");
 }
@@ -251,7 +251,7 @@
     NSError *error = nil;
     [_squirrelVM executeSync: @"local x = y;" error: &error];
     
-    STAssertNotNil(error.userInfo[OCSquirrelVMErrorCallStackUserInfoKey],
+    XCTAssertNotNil(error.userInfo[OCSquirrelVMErrorCallStackUserInfoKey],
                    @"When a runtime error occurs, userInfo dictionary should "
                    @"contain call stack info.");
 }
@@ -264,7 +264,7 @@
     
     for (id contents in error.userInfo[OCSquirrelVMErrorCallStackUserInfoKey])
     {
-        STAssertTrue([contents isKindOfClass: [NSDictionary class]],
+        XCTAssertTrue([contents isKindOfClass: [NSDictionary class]],
                      @"Call stack array should contain NSDictionary elements.");
     }
 }
@@ -277,7 +277,7 @@
     
     NSArray *callStack = error.userInfo[OCSquirrelVMErrorCallStackUserInfoKey];
     
-    STAssertTrue([[callStack valueForKey: OCSquirrelVMCallStackFunctionKey] containsObject: @"func"],
+    XCTAssertTrue([[callStack valueForKey: OCSquirrelVMCallStackFunctionKey] containsObject: @"func"],
                  @"Call stack should contain the function in which the error has occurred.");
 }
 
@@ -287,7 +287,7 @@
     NSError *error = nil;
     [_squirrelVM executeSync: @"local x = y;" error: &error];
     
-    STAssertNotNil(error.userInfo[OCSquirrelVMErrorLocalsUserInfoKey],
+    XCTAssertNotNil(error.userInfo[OCSquirrelVMErrorLocalsUserInfoKey],
                    @"When a runtime error occurs, userInfo dictionary should "
                    @"contain locals info.");
 }
@@ -300,7 +300,7 @@
     
     for (id contents in error.userInfo[OCSquirrelVMErrorLocalsUserInfoKey])
     {
-        STAssertTrue([contents isKindOfClass: [NSDictionary class]],
+        XCTAssertTrue([contents isKindOfClass: [NSDictionary class]],
                      @"Locals array should contain NSDictionary elements.");
     }
 }
@@ -313,7 +313,7 @@
     
     NSArray *locals = error.userInfo[OCSquirrelVMErrorLocalsUserInfoKey];
     
-    STAssertTrue([[locals valueForKey: OCSquirrelVMLocalValueKey] containsObject: @"qwerty"],
+    XCTAssertTrue([[locals valueForKey: OCSquirrelVMLocalValueKey] containsObject: @"qwerty"],
                  @"Locals array should contain local variables from the scope of the function "
                  @"where an error has occurred.");
 }
@@ -324,7 +324,7 @@
 {
     id result = [_squirrelVM executeSync: @"local x + 0" error: nil];
     
-    STAssertNil(result,
+    XCTAssertNil(result,
                 @"OCSquirrelVM -executeSync: should return a nil result "
                 @"for an invalid Squirrel script.");
 }
@@ -337,7 +337,7 @@
 {
     id result = [_squirrelVM executeSync: @"return \"some string\";" error: nil];
     
-    STAssertEqualObjects(result, @"some string",
+    XCTAssertEqualObjects(result, @"some string",
                          @"-executeSync should return the value which the Squirrel script "
                          @"has returned.");
 }
@@ -347,7 +347,7 @@
 {
     id result = [_squirrelVM executeSync: @"return 12345;" error: nil];
     
-    STAssertEqualObjects(result, @12345,
+    XCTAssertEqualObjects(result, @12345,
                          @"-executeSync should return the value which the Squirrel script "
                          @"has returned.");
 }
@@ -357,7 +357,7 @@
 {
     id result = [_squirrelVM executeSync: @"return 123.456;" error: nil];
     
-    STAssertEqualsWithAccuracy([result floatValue], 123.456f, 1e-3,
+    XCTAssertEqualWithAccuracy([result floatValue], 123.456f, 1e-3,
                                @"-executeSync should return the value which the Squirrel script "
                                @"has returned.");
 }
@@ -367,7 +367,7 @@
 {
     id result = [_squirrelVM executeSync: @"return true;" error: nil];
     
-    STAssertEqualObjects(result, @YES,
+    XCTAssertEqualObjects(result, @YES,
                          @"-executeSync should return the value which the Squirrel script "
                          @"has returned.");
 }
@@ -377,7 +377,7 @@
 {
     id result = [_squirrelVM executeSync: @"return null;" error: nil];
     
-    STAssertNil(result,
+    XCTAssertNil(result,
                 @"-executeSync should return the value which the Squirrel script "
                 @"has returned.");
 }
@@ -387,7 +387,7 @@
 {
     id result = [_squirrelVM executeSync: @"local x = 0;" error: nil];
     
-    STAssertNil(result,
+    XCTAssertNil(result,
                 @"-executeSync should nil if the script does not return anything.");
 }
 

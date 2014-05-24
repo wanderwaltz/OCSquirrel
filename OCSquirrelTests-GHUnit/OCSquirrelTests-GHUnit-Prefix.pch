@@ -21,31 +21,32 @@
     // Compatibility defines for the SenTestingKit -> GHUnitIOS conversion
     // With these defines we could reuse the test case classes without
     // modification.
-    #define    SenTestCase                     GHTestCase
+    #define    XCTestCase                       GHTestCase
 
-    #define    STFail                          GHFail
+    #define    XCTFail                          GHFail
 
-    #define    STAssertNil                     GHAssertNil
+    #define    XCTAssertNil                     GHAssertNil
 
-    #define    STAssertNotNil                  GHAssertNotNil
+    #define    XCTAssertNotNil                  GHAssertNotNil
 
-    #define    STAssertTrue                    GHAssertTrue
+    #define    XCTAssertTrue                    GHAssertTrue
 
-    #define    STAssertFalse                   GHAssertFalse
+    #define    XCTAssertFalse                   GHAssertFalse
 
-    #define    STAssertEquals                  GHAssertEquals
-    #define    STAssertEqualObjects            GHAssertEqualObjects
-    #define    STAssertEqualsWithAccuracy      GHAssertEqualsWithAccuracy
+    #define    XCTAssertEqual                   GHAssertEquals
+    #define    XCTAssertEqualStructs            GHAssertEquals
+    #define    XCTAssertEqualObjects            GHAssertEqualObjects
+    #define    XCTAssertEqualWithAccuracy       GHAssertEqualsWithAccuracy
 
-    #define    STAssertThrows                  GHAssertThrows
-    #define    STAssertThrowsSpecific          GHAssertThrowsSpecific
-    #define    STAssertThrowsSpecificNamed     GHAssertThrowsSpecificNamed
+    #define    XCTAssertThrows                  GHAssertThrows
+    #define    XCTAssertThrowsSpecific          GHAssertThrowsSpecific
+    #define    XCTAssertThrowsSpecificNamed     GHAssertThrowsSpecificNamed
 
-    #define    STAssertNoThrow                 GHAssertNoThrow
-    #define    STAssertNoThrowSpecific         GHAssertNoThrowSpecific
-    #define    STAssertNoThrowSpecificNamed    GHAssertNoThrowSpecificNamed
+    #define    XCTAssertNoThrow                 GHAssertNoThrow
+    #define    XCTAssertNoThrowSpecific         GHAssertNoThrowSpecific
+    #define    XCTAssertNoThrowSpecificNamed    GHAssertNoThrowSpecificNamed
 
-    #define    STAssertTrueNoThrow             GHAssertTrueNoThrow
+    #define    XCTAssertTrueNoThrow             GHAssertTrueNoThrow
 
-    #define    STAssertFalseNoThrow            GHAssertFalseNoThrow
+    #define    XCTAssertFalseNoThrow            GHAssertFalseNoThrow
 #endif

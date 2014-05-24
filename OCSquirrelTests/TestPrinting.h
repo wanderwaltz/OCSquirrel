@@ -7,7 +7,7 @@
 //
 
 #ifndef GHUnit_Target
-    #import <SenTestingKit/SenTestingKit.h>
+    #import <XCTest/XCTest.h>
 #endif
 
 #import <OCSquirrel/OCSquirrel.h>
@@ -30,7 +30,7 @@
 #pragma mark -
 #pragma mark TestPrinting interface
 
-@interface TestPrinting : SenTestCase<OCSquirrelVMDelegate>
+@interface TestPrinting : XCTestCase<OCSquirrelVMDelegate>
 {
     OCSquirrelVM *_squirrelVM;
     NSString *_lastPrintedString;

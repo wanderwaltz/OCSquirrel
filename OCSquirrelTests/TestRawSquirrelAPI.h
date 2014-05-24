@@ -7,7 +7,7 @@
 //
 
 #ifndef GHUnit_Target
-    #import <SenTestingKit/SenTestingKit.h>
+    #import <XCTest/XCTest.h>
 #endif
 
 #import <OCSquirrel/OCSquirrel.h>
@@ -17,7 +17,7 @@
 
 /*! General Squirrel API tests will be included here. Obviously testing the Squirrel itself completely is somewhat out of scope of this project, but to some extent it may be useful to test parts of the Squirrel functionality which are actually used by the OCSquirrel.
  */
-@interface TestRawSquirrelAPI : SenTestCase
+@interface TestRawSquirrelAPI : XCTestCase
 {
     HSQUIRRELVM _vm;
 }

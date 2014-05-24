@@ -7,7 +7,7 @@
 //
 
 #ifndef GHUnit_Target
-    #import <SenTestingKit/SenTestingKit.h>
+    #import <XCTest/XCTest.h>
 #endif
 
 #import <OCSquirrel/OCSquirrel.h>
@@ -16,7 +16,7 @@
 #pragma mark -
 #pragma mark TestOCSquirrelClosure interface
 
-@interface TestOCSquirrelClosure : SenTestCase
+@interface TestOCSquirrelClosure : XCTestCase
 {
     OCSquirrelVM *_squirrelVM;
     OCSquirrelTable *_root;

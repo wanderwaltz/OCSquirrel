@@ -11,6 +11,7 @@
 #endif
 
 #import "TestOCSquirrelObject.h"
+#import "SenTestingKitCompatibility.h"
 
 
 #pragma mark -
@@ -37,14 +38,14 @@
 
 - (void) testOCSquirrelObjectClassExists
 {
-    STAssertNotNil([OCSquirrelObject class],
+    XCTAssertNotNil([OCSquirrelObject class],
                    @"OCSquirrelObject class should exist.");
 }
 
 
 - (void) testHasReadonlySquirrelVMProperty
 {
-    STAssertTrue( [OCSquirrelObject instancesRespondToSelector: @selector(squirrelVM)] &&
+    XCTAssertTrue( [OCSquirrelObject instancesRespondToSelector: @selector(squirrelVM)] &&
                  ![OCSquirrelObject instancesRespondToSelector: @selector(setSquirrelVM:)],
                  @"OCSquirrelObject class should have a squirrelVM property.");
 }
@@ -52,7 +53,7 @@
 
 - (void) testInitWithVMMethodExists
 {
-    STAssertNotNil([[OCSquirrelObject alloc] initWithVM: _squirrelVM],
+    XCTAssertNotNil([[OCSquirrelObject alloc] initWithVM: _squirrelVM],
                    @"OCSquirrelObject should have an -initWithSquirrelVM initializer method.");
 }
 
@@ -60,14 +61,14 @@
 - (void) testNoThrowWhenVMSet
 {
     OCSquirrelObject *object = [[OCSquirrelObject alloc] initWithVM: _squirrelVM];
-    STAssertEqualObjects(object.squirrelVM, _squirrelVM,
+    XCTAssertEqualObjects(object.squirrelVM, _squirrelVM,
                          @"Should not throw exception if VM has been set in initializer.");
 }
 
 
 - (void) testHasReadonlyObjProperty
 {
-    STAssertTrue( [OCSquirrelObject instancesRespondToSelector: @selector(obj)] &&
+    XCTAssertTrue( [OCSquirrelObject instancesRespondToSelector: @selector(obj)] &&
                  ![OCSquirrelObject instancesRespondToSelector: @selector(setObj:)],
                  @"OCSquirrelObject should have a readonly obj property.");
 }
@@ -76,7 +77,7 @@
 - (void) testNotNULLObjWhenCreated
 {
     OCSquirrelObject *object = [[OCSquirrelObject alloc] initWithVM: _squirrelVM];
-    STAssertTrue(object.obj != NULL,
+    XCTAssertTrue(object.obj != NULL,
                  @"OCSquirrelObject should have a non-NULL obj property value when created.");
 }
 
@@ -84,7 +85,7 @@
 - (void) testNotNULLObjWhenCreatedWithClassMethod
 {
     OCSquirrelObject *object = [OCSquirrelObject newWithVM: _squirrelVM];
-    STAssertTrue(object.obj != NULL,
+    XCTAssertTrue(object.obj != NULL,
                  @"OCSquirrelObject should have a non-NULL obj property value when created.");
 }
 
@@ -92,7 +93,7 @@
 - (void) testSQNullWhenCreated
 {
     OCSquirrelObject *object = [[OCSquirrelObject alloc] initWithVM: _squirrelVM];
-    STAssertTrue(sq_isnull(*object.obj),
+    XCTAssertTrue(sq_isnull(*object.obj),
                  @"OCSquirrelObject's obj property should have a default `null` value in Squirrel VM.");
 }
 
@@ -100,7 +101,7 @@
 - (void) testSQNullWhenCreatedWithClassObject
 {
     OCSquirrelObject *object = [OCSquirrelObject newWithVM: _squirrelVM];
-    STAssertTrue(sq_isnull(*object.obj),
+    XCTAssertTrue(sq_isnull(*object.obj),
                  @"OCSquirrelObject's obj property should have a default `null` value in Squirrel VM.");
 }
 
@@ -108,7 +109,7 @@
 - (void) testIsNullWhenCreated
 {
     OCSquirrelObject *object = [[OCSquirrelObject alloc] initWithVM: _squirrelVM];
-    STAssertTrue(object.isNull,
+    XCTAssertTrue(object.isNull,
                  @"isNull property should be YES by default for OCSquirrelObject");
 }
 
@@ -121,8 +122,8 @@
     
     OCSquirrelObject *object = [[OCSquirrelObject alloc] initWithHSQOBJECT: root
                                                                       inVM: _squirrelVM];
-    STAssertEquals(*object.obj, root,
-                   @"OCSquirrelObject should support initialization with an existing HSQOBJECT");
+    XCTAssertEqualStructs(*object.obj, root,
+                          @"OCSquirrelObject should support initialization with an existing HSQOBJECT");
 }
 
 
@@ -134,8 +135,8 @@
     
     OCSquirrelObject *object = [OCSquirrelObject newWithHSQOBJECT: root
                                                              inVM: _squirrelVM];
-    STAssertEquals(*object.obj, root,
-                   @"OCSquirrelObject should support initialization with an existing HSQOBJECT");
+    XCTAssertEqualStructs(*object.obj, root,
+                          @"OCSquirrelObject should support initialization with an existing HSQOBJECT");
 }
 
 
@@ -147,7 +148,7 @@
     
     OCSquirrelObject *object = [[OCSquirrelObject alloc] initWithHSQOBJECT: root
                                                                       inVM: _squirrelVM];
-    STAssertFalse(object.isNull,
+    XCTAssertFalse(object.isNull,
                   @"-isNull shoud return NO when initializing with a non-null HSQOBJECT such as "
                   @"the Squirrel VM's root table.");
 }
@@ -164,7 +165,7 @@
     OCSquirrelObject *object = [[OCSquirrelObject alloc] initWithHSQOBJECT: root
                                                                       inVM: _squirrelVM];
     
-    STAssertEquals(refCountInitial+1, sq_getrefcount(_squirrelVM.vm, &root),
+    XCTAssertEqual(refCountInitial+1, sq_getrefcount(_squirrelVM.vm, &root),
                    @"When initializing with and existing HSQOBJECT, OCSquirrelObject should "
                    @"increase the ref count by 1.");
     
@@ -184,7 +185,7 @@
                                                                       inVM: _squirrelVM];
     object = nil;
     
-    STAssertEquals(refCountInitial, sq_getrefcount(_squirrelVM.vm, &root),
+    XCTAssertEqual(refCountInitial, sq_getrefcount(_squirrelVM.vm, &root),
                    @"When OCSquirrelObject deallocs it should release the HSQOBJECT");
 }
 
@@ -197,7 +198,7 @@
     
     [object push];
     
-    STAssertEquals(_squirrelVM.stack.top, top+1,
+    XCTAssertEqual(_squirrelVM.stack.top, top+1,
                    @"Squirrel VM stack top value should increase after pushing a OCSquirrelObject");
 }
 

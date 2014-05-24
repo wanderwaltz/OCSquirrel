@@ -102,7 +102,7 @@ static SQInteger IntClosureNoParamsCheckEnvironment(HSQUIRRELVM vm)
     OCSquirrelClosure *closure = [[OCSquirrelClosure alloc] initWithSQFUNCTION: VoidClosureNoParams
                                                                     squirrelVM: _squirrelVM];
     
-    STAssertNotNil(closure,
+    XCTAssertNotNil(closure,
                    @"OCSquirrelClosure class should exist.");
 }
 
@@ -112,7 +112,7 @@ static SQInteger IntClosureNoParamsCheckEnvironment(HSQUIRRELVM vm)
     OCSquirrelClosure *closure = [[OCSquirrelClosure alloc] initWithSQFUNCTION: VoidClosureNoParams
                                                                     squirrelVM: _squirrelVM];
     
-    STAssertEquals(closure.type, OT_NATIVECLOSURE,
+    XCTAssertEqual(closure.type, OT_NATIVECLOSURE,
                    @"OCSquirrelClosure created with a native function should have OT_NATIVECLOSURE type.");
 }
 
@@ -125,7 +125,7 @@ static SQInteger IntClosureNoParamsCheckEnvironment(HSQUIRRELVM vm)
     [closure push];
     sq_getclosurename(_squirrelVM.vm, -1);
     
-    STAssertEqualObjects([_squirrelVM.stack valueAtPosition: -1], @"some name",
+    XCTAssertEqualObjects([_squirrelVM.stack valueAtPosition: -1], @"some name",
                          @"OCSquirrelClosure native closure name should be properly set.");
 }
 
@@ -135,7 +135,7 @@ static SQInteger IntClosureNoParamsCheckEnvironment(HSQUIRRELVM vm)
     OCSquirrelClosure *closure = [[OCSquirrelClosure alloc] initWithSQFUNCTION: VoidClosureNoParams
                                                                     squirrelVM: _squirrelVM];
     [closure call];
-    STAssertTrue(_closureCalled,
+    XCTAssertTrue(_closureCalled,
                  @"call method should call the native C function bound to Squirrel closure.");
 }
 
@@ -148,7 +148,7 @@ static SQInteger IntClosureNoParamsCheckEnvironment(HSQUIRRELVM vm)
     OCSquirrelClosure *closure = [[OCSquirrelClosure alloc] initWithSQFUNCTION: VoidClosureNoParams
                                                                     squirrelVM: _squirrelVM];
     id result = [closure call];
-    STAssertNil(result,
+    XCTAssertNil(result,
                 @"For a closure which does not push a result to the Squirrel stack, "
                 @"the return value of call should be nil.");
 }
@@ -162,7 +162,7 @@ static SQInteger IntClosureNoParamsCheckEnvironment(HSQUIRRELVM vm)
     OCSquirrelClosure *closure = [[OCSquirrelClosure alloc] initWithSQFUNCTION: IntClosureNoParams
                                                                     squirrelVM: _squirrelVM];
     id result = [closure call];
-    STAssertEqualObjects(result, @(kNativeIntegerReturnValue),
+    XCTAssertEqualObjects(result, @(kNativeIntegerReturnValue),
                          @"For a closure which does push a result to the Squirrel stack, "
                          @"the return value of call should be the value pushed by the closure.");
 }
@@ -176,7 +176,7 @@ static SQInteger IntClosureNoParamsCheckEnvironment(HSQUIRRELVM vm)
     OCSquirrelClosure *closure = [[OCSquirrelClosure alloc] initWithSQFUNCTION: IntClosureNoParams
                                                                     squirrelVM: _squirrelVM];
     [closure call];
-    STAssertEqualsWithAccuracy(13.37f, [[_squirrelVM.stack valueAtPosition: -1] floatValue], 1e-3,
+    XCTAssertEqualWithAccuracy(13.37f, [[_squirrelVM.stack valueAtPosition: -1] floatValue], 1e-3,
                                @"The stack state should not change after calling the closure.");
 }
 
@@ -186,7 +186,7 @@ static SQInteger IntClosureNoParamsCheckEnvironment(HSQUIRRELVM vm)
     OCSquirrelClosure *closure = [[OCSquirrelClosure alloc] initWithSQFUNCTION: IntClosureReturn1IntParam
                                                                     squirrelVM: _squirrelVM];
     id result = [closure call: @[@12345]];
-    STAssertEqualObjects(result, @12345,
+    XCTAssertEqualObjects(result, @12345,
                          @"Native closure should receive the parameter and return the appropriate "
                          @"result value.");
 }
@@ -200,7 +200,7 @@ static SQInteger IntClosureNoParamsCheckEnvironment(HSQUIRRELVM vm)
                                   IntClosureNoParamsCheckEnvironment
                                                                     squirrelVM: _squirrelVM];
     id result = [closure callWithThis: _root];
-    STAssertEqualObjects(result, @12345,
+    XCTAssertEqualObjects(result, @12345,
                          @"IntClosureNoParamsCheckEnvironment should read the value from "
                          @"the environment table passed to it by callWithEnvironment:");
 }
@@ -219,7 +219,7 @@ static SQInteger IntClosureNoParamsCheckEnvironment(HSQUIRRELVM vm)
                                   IntClosureNoParamsCheckEnvironment
                                                                     squirrelVM: _squirrelVM];
     id result = [closure callWithThis: otherEnvironment];
-    STAssertEqualObjects(result, @6789,
+    XCTAssertEqualObjects(result, @6789,
                          @"IntClosureNoParamsCheckEnvironment should read the value from "
                          @"the environment table passed to it by callWithEnvironment:");
 }
@@ -232,7 +232,7 @@ static SQInteger IntClosureNoParamsCheckEnvironment(HSQUIRRELVM vm)
     OCSquirrelClosure *closure = [_root objectForKey: @"VoidNoParams"];
     [closure call];
     
-    STAssertEquals([_root integerForKey: @"called"], 12345,
+    XCTAssertEqual([_root integerForKey: @"called"], 12345,
                  @"call method should call the Squirrel closure");
 }
 
@@ -246,7 +246,7 @@ static SQInteger IntClosureNoParamsCheckEnvironment(HSQUIRRELVM vm)
     
     OCSquirrelClosure *closure = [_root objectForKey: @"VoidNoParams"];
     id result = [closure call];
-    STAssertNil(result,
+    XCTAssertNil(result,
                 @"For a closure which does not push a result to the Squirrel stack, "
                 @"the return value of call should be nil.");
 }
@@ -262,7 +262,7 @@ static SQInteger IntClosureNoParamsCheckEnvironment(HSQUIRRELVM vm)
     OCSquirrelClosure *closure = [_root objectForKey: @"IntNoParams"];
     
     id result = [closure call];
-    STAssertEqualObjects(result, @(12345),
+    XCTAssertEqualObjects(result, @(12345),
                          @"For a closure which does push a result to the Squirrel stack, "
                          @"the return value of call should be the value pushed by the closure.");
 }
@@ -278,7 +278,7 @@ static SQInteger IntClosureNoParamsCheckEnvironment(HSQUIRRELVM vm)
     OCSquirrelClosure *closure = [_root objectForKey: @"IntNoParams"];
     
     [closure call];
-    STAssertEqualsWithAccuracy(13.37f, [[_squirrelVM.stack valueAtPosition: -1] floatValue], 1e-3,
+    XCTAssertEqualWithAccuracy(13.37f, [[_squirrelVM.stack valueAtPosition: -1] floatValue], 1e-3,
                                @"The stack state should not change after calling the closure.");
 }
 
@@ -290,7 +290,7 @@ static SQInteger IntClosureNoParamsCheckEnvironment(HSQUIRRELVM vm)
     OCSquirrelClosure *closure = [_root objectForKey: @"IntReturn1IntParam"];
     
     id result = [closure call: @[@12345]];
-    STAssertEqualObjects(result, @12345,
+    XCTAssertEqualObjects(result, @12345,
                          @"Native closure should receive the parameter and return the appropriate "
                          @"result value.");
 }
@@ -305,7 +305,7 @@ static SQInteger IntClosureNoParamsCheckEnvironment(HSQUIRRELVM vm)
     OCSquirrelClosure *closure = [_root objectForKey: @"ReturnEnvironmentX"];
     
     id result = [closure callWithThis: _root];
-    STAssertEqualObjects(result, @12345,
+    XCTAssertEqualObjects(result, @12345,
                          @"Squirrel closure should read the value from "
                          @"the environment table passed to it by callWithEnvironment:");
 }
@@ -325,7 +325,7 @@ static SQInteger IntClosureNoParamsCheckEnvironment(HSQUIRRELVM vm)
     OCSquirrelClosure *closure = [_root objectForKey: @"ReturnEnvironmentX"];
     
     id result = [closure callWithThis: otherEnvironment];
-    STAssertEqualObjects(result, @6789,
+    XCTAssertEqualObjects(result, @6789,
                          @"Squirrel closure should read the value from "
                          @"the environment table passed to it by callWithEnvironment:");
 }

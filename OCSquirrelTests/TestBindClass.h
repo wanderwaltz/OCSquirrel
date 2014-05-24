@@ -7,7 +7,7 @@
 //
 
 #ifndef GHUnit_Target
-    #import <SenTestingKit/SenTestingKit.h>
+    #import <XCTest/XCTest.h>
 #endif
 
 #import <OCSquirrel/OCSquirrel.h>
@@ -17,7 +17,7 @@
 #pragma mark -
 #pragma mark TestBindClass interface
 
-@interface TestBindClass : SenTestCase
+@interface TestBindClass : XCTestCase
 {
     OCSquirrelVM *_squirrelVM;
     OCSquirrelTable *_rootTable;

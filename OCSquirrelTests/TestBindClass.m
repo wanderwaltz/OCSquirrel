@@ -39,14 +39,14 @@
 
 - (void) testBindClassExists
 {
-    STAssertTrue([OCSquirrelVM instancesRespondToSelector: @selector(bindClass:)],
+    XCTAssertTrue([OCSquirrelVM instancesRespondToSelector: @selector(bindClass:)],
                  @"OCSquirrelVM should have a -bindClass: method");
 }
 
 
 - (void) testBindClassNoThrow
 {
-    STAssertNoThrow([_squirrelVM bindClass: [NSDate class]],
+    XCTAssertNoThrow([_squirrelVM bindClass: [NSDate class]],
                     @"OCSquirrelVM should not throw exception when binding a class");
 }
 
@@ -55,7 +55,7 @@
 {
     OCSquirrelClass *class = [_squirrelVM bindClass: [NSDate class]];
     
-    STAssertNotNil(class,
+    XCTAssertNotNil(class,
                    @"bindClass should return an OCSquirrelClass instance");
 }
 
@@ -65,7 +65,7 @@
     OCSquirrelClass *class1 = [_squirrelVM bindClass: [NSDate class]];
     OCSquirrelClass *class2 = [_squirrelVM bindClass: [NSDate class]];
     
-    STAssertEqualObjects(class1, class2,
+    XCTAssertEqualObjects(class1, class2,
                          @"bindClass should return the same OCSquirrelClass "
                          @"for the same Objective-C classes");
 }
@@ -75,7 +75,7 @@
 {
     OCSquirrelClass *class = [_squirrelVM bindClass: [NSDate class]];
     
-    STAssertEquals(class.type, OT_CLASS,
+    XCTAssertEqual(class.type, OT_CLASS,
                    @"bindClass should return an OCSquirrelObject of type OT_CLASS");
 }
 
@@ -84,7 +84,7 @@
 {
     OCSquirrelClass *class = [_squirrelVM bindClass: [NSDate class]];
     
-    STAssertEquals(class.nativeClass, [NSDate class],
+    XCTAssertEqual(class.nativeClass, [NSDate class],
                    @"OCSquirrelClass instances should have a native class property "
                    @"pointing to the Objective-C class for bound classes.");
 }
@@ -94,9 +94,9 @@
 {
     OCSquirrelClass *class = [[OCSquirrelClass alloc] initWithVM: _squirrelVM];
     
-    STAssertNil(class.nativeClass, nil,
-                @"OCSquirrelClass instances should have a native class property "
-                @"with nil value for classes not bound with any native Objective-C class");
+    XCTAssertNil(class.nativeClass,
+                 @"OCSquirrelClass instances should have a native class property "
+                 @"with nil value for classes not bound with any native Objective-C class");
 }
 
 
@@ -108,7 +108,7 @@
     
     OCSquirrelClass *other = [_squirrelVM.stack valueAtPosition: -1];
     
-    STAssertEqualObjects(class, other,
+    XCTAssertEqualObjects(class, other,
                          @"OCSquirrelStack should return the same instance of the bound class "
                          @"as the instance which is returned by bindClass");
 }
@@ -121,7 +121,7 @@
     
     OCSquirrelInstance *instance = [_squirrelVM.stack valueAtPosition: -1];
     
-    STAssertNotNil(instance,
+    XCTAssertNotNil(instance,
                    @"OCSquirrelClass should be able to create instances of the bound class.");
 }
 
@@ -136,7 +136,7 @@
     NSError *error = nil;
     [_squirrelVM executeSync: @"return NSDate();" error: &error];
     
-    STAssertNil(error,
+    XCTAssertNil(error,
                 @"Squirrel script should be able to create instances of the bound class.");
 }
 
@@ -152,7 +152,7 @@
     NSError *error = nil;
     id result = [_squirrelVM executeSync: @"return NSDate();" error: &error];
     
-    STAssertTrue([result isKindOfClass: [OCSquirrelInstance class]],
+    XCTAssertTrue([result isKindOfClass: [OCSquirrelInstance class]],
                 @"Creating an instance of a class should return OCSquirrelInstance");
 }
 
@@ -166,7 +166,7 @@
     NSError *error = nil;
     OCSquirrelInstance *instance = [_squirrelVM executeSync: @"return NSDate();" error: &error];
     
-    STAssertNotNil(instance.instanceUP,
+    XCTAssertNotNil(instance.instanceUP,
                    @"Creating an instance of a native bound class should return OCSquirrelInstance "
                    @"with a non-nil instance user pointer.");
 }
@@ -179,7 +179,7 @@
     
     OCSquirrelInstance *instance = [_squirrelVM.stack valueAtPosition: -1];
     
-    STAssertNotNil(instance.instanceUP,
+    XCTAssertNotNil(instance.instanceUP,
                    @"Creating an instance of a native bound class should return OCSquirrelInstance "
                    @"with a non-nil instance user pointer.");
 }
@@ -192,7 +192,7 @@
     
     OCSquirrelInstance *instance = [_squirrelVM.stack valueAtPosition: -1];
     
-    STAssertTrue([instance.instanceUP isKindOfClass: [NSDate class]],
+    XCTAssertTrue([instance.instanceUP isKindOfClass: [NSDate class]],
                  @"Creating an instance of a native bound class should return OCSquirrelInstance "
                  @"with a non-nil instance user pointer of the said native class.");
 }
@@ -205,7 +205,7 @@
     NSError *error = nil;
     [class bindInstanceMethodWithSelector: @selector(init) error: &error];
     
-    STAssertNil(error,
+    XCTAssertNil(error,
                 @"Should be able to bind -init method.");
 }
 
@@ -223,7 +223,7 @@
     OCSquirrelInstance *instance =
     [_squirrelVM executeSync: @"return SimpleInvocationChecker().init()" error: &error];
     
-    STAssertTrue([instance.instanceUP calledInit],
+    XCTAssertTrue([instance.instanceUP calledInit],
                 @"Calling init() method from Squirrel should actually invoke -init on the "
                 @"corresponding Objective-C object");
 }
@@ -241,7 +241,7 @@
     OCSquirrelInstance *instance =
     [_squirrelVM executeSync: @"return InitializerChecker().init()" error: &error];
     
-    STAssertNil(instance.instanceUP,
+    XCTAssertNil(instance.instanceUP,
                 @"-init method returning a different value for 'self' should actually"
                 @"replace the instance user pointer of the Squirrel class instance.");
 }
@@ -261,7 +261,7 @@
     
     id nativeInstance = instance.instanceUP;
     
-    STAssertEqualObjects(@([nativeInstance integerMethodNoParams]),
+    XCTAssertEqualObjects(@([nativeInstance integerMethodNoParams]),
                          [instance callClosureWithKey: @"integerMethodNoParams"],
                          @"Bound class should have a method returning integer and accepting no parameters");
 }
@@ -279,7 +279,7 @@
     
     id nativeInstance = instance.instanceUP;
     
-    STAssertEqualObjects(@([nativeInstance floatMethodNoParams]),
+    XCTAssertEqualObjects(@([nativeInstance floatMethodNoParams]),
                          [instance callClosureWithKey: @"floatMethodNoParams"],
                          @"Bound class should have a method returning float and accepting no parameters");
 }
@@ -297,7 +297,7 @@
     
     id nativeInstance = instance.instanceUP;
     
-    STAssertEqualObjects(@([nativeInstance boolMethodNoParams]),
+    XCTAssertEqualObjects(@([nativeInstance boolMethodNoParams]),
                          [instance callClosureWithKey: @"boolMethodNoParams"],
                          @"Bound class should have a method returning bool and accepting no parameters");
 }
@@ -315,7 +315,7 @@
     
     id nativeInstance = instance.instanceUP;
     
-    STAssertEqualObjects([nativeInstance stringMethodNoParams],
+    XCTAssertEqualObjects([nativeInstance stringMethodNoParams],
                          [instance callClosureWithKey: @"stringMethodNoParams"],
                          @"Bound class should have a method returning string and accepting no parameters");
 }
@@ -331,7 +331,7 @@
     
     OCSquirrelInstance *instance = [_squirrelVM.stack valueAtPosition: -1];
     
-    STAssertNil([instance callClosureWithKey: @"nilMethodNoParams"],
+    XCTAssertNil([instance callClosureWithKey: @"nilMethodNoParams"],
                 @"Bound class should have a method returning nil and accepting no parameters");
 }
 
@@ -348,7 +348,7 @@
     
     id nativeInstance = instance.instanceUP;
     
-    STAssertEquals([nativeInstance pointerMethodNoParams],
+    XCTAssertEqual([nativeInstance pointerMethodNoParams],
                    [[instance callClosureWithKey: @"pointerMethodNoParams"] pointerValue],
                    @"Bound class should have a method returning void* and accepting no parameters");
 }
@@ -366,7 +366,7 @@
     
     OCSquirrelInstance *instance = [_squirrelVM.stack valueAtPosition: -1];
     
-    STAssertEqualObjects(@12345,
+    XCTAssertEqualObjects(@12345,
                          [instance callClosureWithKey: @"integerMethodReturnParam"
                                            parameters: @[@12345]],
                          @"Bound class should have a method returning the single integer parameter");
@@ -382,7 +382,7 @@
     
     OCSquirrelInstance *instance = [_squirrelVM.stack valueAtPosition: -1];
     
-    STAssertEqualObjects(@123.456f,
+    XCTAssertEqualObjects(@123.456f,
                          [instance callClosureWithKey: @"floatMethodReturnParam"
                                            parameters: @[@123.456f]],
                          @"Bound class should have a method returning the signle float parameter");
@@ -398,7 +398,7 @@
     
     OCSquirrelInstance *instance = [_squirrelVM.stack valueAtPosition: -1];
     
-    STAssertEqualObjects(@YES,
+    XCTAssertEqualObjects(@YES,
                          [instance callClosureWithKey: @"boolMethodReturnParam"
                                            parameters: @[@YES]],
                          @"Bound class should have a method returning the single BOOL parameter");
@@ -414,7 +414,7 @@
     
     OCSquirrelInstance *instance = [_squirrelVM.stack valueAtPosition: -1];
     
-    STAssertEqualObjects(@"string",
+    XCTAssertEqualObjects(@"string",
                          [instance callClosureWithKey: @"stringMethodReturnParam"
                                            parameters: @[@"string"]],
                          @"Bound class should have a method returning the single string parameter");
@@ -432,7 +432,7 @@
     
     OCSquirrelInstance *instance = [_squirrelVM.stack valueAtPosition: -1];
     
-    STAssertEqualObjects(self,
+    XCTAssertEqualObjects(self,
                          // Pointers to a generic Objective-C object are pushed to Squirrel stack
                          // as user pointers, so are returned as NSValues with the corresponding
                          // pointer set as pointerValue.
@@ -451,7 +451,7 @@
     
     OCSquirrelInstance *instance = [_squirrelVM.stack valueAtPosition: -1];
     
-    STAssertEquals((__bridge void *)self,
+    XCTAssertEqual((__bridge void *)self,
                    [[instance callClosureWithKey: @"pointerMethodReturnParam"
                                       parameters: @[[NSValue valueWithPointer: (__bridge void *)self]]] pointerValue],
                    @"Bound class should have a method returning the single void* parameter");
@@ -476,7 +476,7 @@
     
     InitializerChecker *object = instance.instanceUP;
     
-    STAssertEquals(object.intProperty, 12345,
+    XCTAssertEqual(object.intProperty, 12345,
                    @"Initializer method should exist and accept the int parameter.");
 }
 
@@ -496,7 +496,7 @@
     
     InitializerChecker *object = instance.instanceUP;
     
-    STAssertEqualsWithAccuracy(object.floatProperty, 123.456f, 1e-3,
+    XCTAssertEqualWithAccuracy(object.floatProperty, 123.456f, 1e-3,
                                @"Initializer method should exist and accept the float parameter.");
 }
 
@@ -516,7 +516,7 @@
     
     InitializerChecker *object = instance.instanceUP;
     
-    STAssertEquals(object.boolProperty, YES,
+    XCTAssertEqual(object.boolProperty, YES,
                    @"Initializer method should exist and accept the BOOL parameter.");
 }
 
@@ -536,7 +536,7 @@
     
     InitializerChecker *object = instance.instanceUP;
     
-    STAssertEqualObjects(object.stringProperty, @"string",
+    XCTAssertEqualObjects(object.stringProperty, @"string",
                          @"Initializer method should exist and accept the NSString parameter.");
 }
 
@@ -556,7 +556,7 @@
     
     InitializerChecker *object = instance.instanceUP;
     
-    STAssertEquals(object.pointerProperty, (__bridge void *)self,
+    XCTAssertEqual(object.pointerProperty, (__bridge void *)self,
                    @"Initializer method should exist and accept the void* parameter.");
 }
 
