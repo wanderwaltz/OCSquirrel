@@ -12,6 +12,7 @@
 
 #import "OCSquirrelVMStackImpl.h"
 #import "OCSquirrelVM+Protected.h"
+#import "OCSquirrel.h"
 
 #pragma mark -
 #pragma mark OCSquirrelVMStackImpl implementation
@@ -118,7 +119,11 @@
 
 - (void) pushValue: (id) value
 {
-    if ([value isKindOfClass: [NSNumber class]])
+    if ([value isKindOfClass: [OCSquirrelObject class]])
+    {
+        [value push];
+    }
+    else if ([value isKindOfClass: [NSNumber class]])
     {
         const char *objCType = [value objCType];
         
@@ -127,7 +132,9 @@
         {
             [self pushFloat: (SQFloat)[value doubleValue]];
         }
-        else if (strcmp(objCType, @encode(BOOL)) == 0)
+        else if ((strcmp(objCType, @encode(BOOL)) == 0) ||
+                 (strcmp(objCType, @encode(bool)) == 0) ||
+                 (strcmp(objCType, [@YES objCType]) == 0))
         {
             [self pushBool: [value boolValue]];
         }
@@ -155,12 +162,15 @@
     }
     else
     {
+        [self pushUserPointer: (__bridge void *)value];
+        /*
         @throw [NSException exceptionWithName: NSInvalidArgumentException
                                        reason:
                 [NSString stringWithFormat:
                  @"*** pushValue: unsupported value of class %@ received: %@",
                  [value class], value]
                                      userInfo: nil];
+         */
     }
 }
 
@@ -290,6 +300,59 @@
                 value = [[OCSquirrelTable alloc] initWithHSQOBJECT: table
                                                               inVM: _squirrelVM];
             } break;
+                
+            case OT_CLASS:
+            {
+                HSQOBJECT class = [self sqObjectAtPosition: position];
+                
+                
+                // First check if the class is one of the bound classes,
+                // then we already have an OCSquirrelClass instance corresponding
+                // to it and there is no need to create more.
+                SQUserPointer nativeClass = NULL;
+                
+                SQInteger top = sq_gettop(_squirrelVM.vm);
+                SQInteger positivePosition = (position > 0) ? position : top+position+1;
+                sq_pushnull(_squirrelVM.vm);
+                sq_getattributes(_squirrelVM.vm, positivePosition);
+                sq_getuserpointer(_squirrelVM.vm, -1, &nativeClass);
+                sq_settop(_squirrelVM.vm, top);
+                
+                if (nativeClass != NULL)
+                {
+                    Class class = (__bridge Class)nativeClass;
+                    NSString *className = NSStringFromClass(class);
+                    
+                    if (className != nil)
+                    {
+                        value = _squirrelVM.classBindings[className];
+                    }
+                }
+                
+                // If existing instance was not found, return a new one.
+                if (value == nil)
+                    value = [[OCSquirrelClass alloc] initWithHSQOBJECT: class
+                                                                  inVM: _squirrelVM];
+            } break;
+                
+            case OT_INSTANCE:
+            {
+                HSQOBJECT instance = [self sqObjectAtPosition: position];
+                
+                value = [[OCSquirrelInstance alloc] initWithHSQOBJECT: instance
+                                                                 inVM: _squirrelVM];
+            } break;
+                
+                
+            case OT_CLOSURE:
+            case OT_NATIVECLOSURE:
+            {
+                HSQOBJECT instance = [self sqObjectAtPosition: position];
+                
+                value = [[OCSquirrelClosure alloc] initWithHSQOBJECT: instance
+                                                                inVM: _squirrelVM];
+            } break;
+                
      
             default:
             {

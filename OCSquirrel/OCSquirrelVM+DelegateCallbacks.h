@@ -15,5 +15,6 @@
 @interface OCSquirrelVM (DelegateCallbacks)
 
 - (void) _delegate_didPrintString: (NSString *) string;
+- (void) _delegate_didPrintError:  (NSString *) error;
 
 @end

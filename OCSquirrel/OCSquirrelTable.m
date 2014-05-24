@@ -11,6 +11,7 @@
 #endif
 
 #import "OCSquirrelTable.h"
+#import "OCSquirrelClosure.h"
 
 
 #pragma mark -
@@ -19,24 +20,46 @@
 @implementation OCSquirrelTable
 
 #pragma mark -
+#pragma mark class methods
+
++ (BOOL) isAllowedToInitWithSQObjectOfType: (SQObjectType) type
+{
+    return (type == OT_TABLE);
+}
+
+
+#pragma mark -
 #pragma mark initialization methods
 
 + (id) rootTableForVM: (OCSquirrelVM *) squirrelVM
 {
     __block id table = nil;
     
-    [squirrelVM doWait: ^{
-        
-        SQInteger top = squirrelVM.stack.top;
-        
+    [squirrelVM doWaitPreservingStackTop: ^{
         sq_pushroottable(squirrelVM.vm);
         
         HSQOBJECT root = [squirrelVM.stack sqObjectAtPosition: -1];
         
         table = [[self alloc] initWithHSQOBJECT: root
                                            inVM: squirrelVM];
+    }];
+    
+    
+    return table;
+}
+
+
++ (id) registryTableForVM: (OCSquirrelVM *) squirrelVM
+{
+    __block id table = nil;
+    
+    [squirrelVM doWaitPreservingStackTop: ^{
+        sq_pushregistrytable(squirrelVM.vm);
         
-        squirrelVM.stack.top = top;
+        HSQOBJECT registry = [squirrelVM.stack sqObjectAtPosition: -1];
+        
+        table = [[self alloc] initWithHSQOBJECT: registry
+                                           inVM: squirrelVM];
     }];
     
     
@@ -50,31 +73,13 @@
     
     if (self != nil)
     {
-        [squirrelVM doWait: ^{
-            
-            SQInteger top = squirrelVM.stack.top;
-            
+        [squirrelVM doWaitPreservingStackTop: ^{
             sq_newtable(squirrelVM.vm);
             _obj = [squirrelVM.stack sqObjectAtPosition: -1];
             sq_addref(squirrelVM.vm, &_obj);
-            
-            squirrelVM.stack.top = top;
-            
         }];
     }
     return self;
-}
-
-
-- (id) initWithHSQOBJECT: (HSQOBJECT) object
-                    inVM: (OCSquirrelVM *) squirrelVM
-{
-    if (sq_type(object) == OT_TABLE)
-    {
-        return [super initWithHSQOBJECT: object
-                                   inVM: squirrelVM];
-    }
-    else return nil;
 }
 
 
@@ -147,9 +152,7 @@
     
     OCSquirrelVM *squirrelVM = self.squirrelVM;
     
-    [squirrelVM doWait: ^{
-        
-        NSInteger top = squirrelVM.stack.top;
+    [squirrelVM doWaitPreservingStackTop: ^{
         [self push];
         
         [squirrelVM.stack pushValue: key];
@@ -158,8 +161,6 @@
         {
             object = [squirrelVM.stack valueAtPosition: -1];
         }
-        
-        squirrelVM.stack.top = top;
     }];
     
     return object;
@@ -173,16 +174,12 @@
 {
     OCSquirrelVM *squirrelVM = self.squirrelVM;
     
-    [squirrelVM doWait: ^{
-        NSInteger top = squirrelVM.stack.top;
-        
+    [squirrelVM doWaitPreservingStackTop: ^{
         [self push];
         [squirrelVM.stack pushValue: key];
         [squirrelVM.stack pushValue: object];
         
         sq_newslot(squirrelVM.vm, -3, SQFalse);
-        
-        squirrelVM.stack.top = top;
     }];
 }
 
@@ -214,6 +211,85 @@
 - (void) setUserPointer: (SQUserPointer) pointer forKey: (id) key
 {
     [self setObject: [NSValue valueWithPointer: pointer] forKey: key];
+}
+
+
+#pragma mark -
+#pragma mark key-value coding
+
+- (id) valueForUndefinedKey: (NSString *) key
+{
+    // Tries to get the value from the underlying Squirrel table.
+    return [self objectForKey: key];
+}
+
+
+- (void) setValue: (id) value
+  forUndefinedKey: (NSString *) key
+{
+    // Tries to set the corresponding slot of the underlying Squirrel table
+    [self setObject: value forKey: key];
+}
+
+
+#pragma mark -
+#pragma mark enumeration
+
+- (void) enumerateObjectsAndKeysUsingBlock: (void (^)(id key, id value, BOOL *stop)) block
+{
+    if (block != nil)
+    {
+        OCSquirrelVM *squirrelVM = self.squirrelVM;
+        
+        [squirrelVM doWaitPreservingStackTop:^{
+            
+            [self push];
+            sq_pushnull(squirrelVM.vm);
+            
+            while(SQ_SUCCEEDED(sq_next(squirrelVM.vm, -2)))
+            {
+                id key   = [squirrelVM.stack valueAtPosition: -2];
+                id value = [squirrelVM.stack valueAtPosition: -1];
+                
+                sq_pop(squirrelVM.vm,2);
+                
+                BOOL stop = NO;
+                
+                block(key, value, &stop);
+            
+                if (stop) break;
+            }
+        }];
+    }
+}
+
+
+#pragma mark -
+#pragma mark calls
+
+- (id) callClosureWithKey: (id) key
+{
+    id closure = [self objectForKey: key];
+    
+    if ([closure isKindOfClass: [OCSquirrelClosure class]])
+    {
+        return [closure callWithThis: self];
+    }
+    else return nil;
+}
+
+
+- (id) callClosureWithKey: (id) key
+               parameters: (NSArray *) parameters
+{
+    id closure = [self objectForKey: key];
+    
+    if ([closure isKindOfClass: [OCSquirrelClosure class]])
+    {
+        return [closure callWithThis: self
+                          parameters: parameters];
+    }
+    else return nil;
 }
 
 

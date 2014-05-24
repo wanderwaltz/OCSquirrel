@@ -6,7 +6,10 @@
 //  Copyright (c) 2013 Egor Chiglintsev. All rights reserved.
 //
 
-#import <XCTest/XCTest.h>
+#ifndef GHUnit_Target
+    #import <XCTest/XCTest.h>
+#endif
+
 #import <OCSquirrel/OCSquirrel.h>
 
 

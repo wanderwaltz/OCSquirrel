@@ -14,12 +14,37 @@
 #import "OCSquirrelVM+Protected.h"
 #import "OCSquirrelVM+DelegateCallbacks.h"
 #import "OCSquirrelVMStackImpl.h"
+#import "OCSquirrelVMFunctions.h"
+#import "OCSquirrelVMBindings_NoARC.h"
+
+#import "OCSquirrelClass.h"
+#import "OCSquirrelTable.h"
+#import "OCSquirrelClosure.h"
 
 
 #pragma mark -
 #pragma mark Constants
 
 const NSUInteger kOCSquirrelVMDefaultInitialStackSize = 1024;
+
+NSString * const OCSquirrelVMErrorDomain    = @"com.frostbit.OCSquirrelVM.error.domain.general";
+NSString * const OCSquirrelVMBindingsDomain = @"com.frostbit.OCSquirrelVM.error.domain.bindings";
+
+NSString * const OCSquirrelVMErrorCallStackUserInfoKey =
+    @"com.frostbit.OCSquirrelVM.error.userInfo.callStack";
+
+NSString * const OCSquirrelVMErrorLocalsUserInfoKey =
+    @"com.frostbit.OCSquirrelVM.error.userInfo.locals";
+
+
+NSString * const OCSquirrelVMCallStackFunctionKey = @"function";
+NSString * const OCSquirrelVMCallStackLineKey     = @"line";
+NSString * const OCSquirrelVMCallStackSourceKey   = @"source";
+
+
+NSString * const OCSquirrelVMLocalNameKey  = @"name";
+NSString * const OCSquirrelVMLocalValueKey = @"value";
+
 
 
 /// A source name used when compiling a script from NSString.
@@ -34,33 +59,6 @@ static const SQChar * const kOCSquirrelVMCompileBufferSourceName = _SC("buffer")
  is needed to allow synchronous calls which do not result in a deadlock when called on the same queue. 
  */
 static const void * const kDispatchSpecificKeyOCSquirrelVMQueue = &kDispatchSpecificKeyOCSquirrelVMQueue;
-
-
-#pragma mark -
-#pragma mark Squirrel bindings
-
-void OCSquirrelVMPrintfunc(HSQUIRRELVM vm, const SQChar *s, ...)
-{
-    SQChar buffer[4096] = {0};
-    
-	va_list vl;
-	va_start(vl, s);
-	vsprintf(buffer, s, vl);
-	va_end(vl);
-    
-    SQUserPointer squirrelVMCPointer = sq_getforeignptr(vm);
-        
-    OCSquirrelVM *squirrelVM = (__bridge id)squirrelVMCPointer;
-    [squirrelVM _delegate_didPrintString:
-     [[NSString alloc] initWithCString: buffer
-                              encoding: NSUTF8StringEncoding]];
-}
-
-
-void OCSquirrelVMErrorfunc(HSQUIRRELVM vm, const SQChar *s, ...)
-{
-    // TODO: implement
-}
 
 
 #pragma mark -
@@ -84,6 +82,13 @@ void OCSquirrelVMErrorfunc(HSQUIRRELVM vm, const SQChar *s, ...)
     _delegate = delegate;
 }
 
+
+- (NSDictionary *) classBindings
+{
+    return _classBindings;
+}
+
+
 #pragma mark -
 #pragma mark initialization methods
 
@@ -105,12 +110,20 @@ void OCSquirrelVMErrorfunc(HSQUIRRELVM vm, const SQChar *s, ...)
                                     _vm, NULL);
         
         _stack = [[OCSquirrelVMStackImpl alloc] initWithSquirrelVM: self];
+        _classBindings = [NSMutableDictionary dictionary];
         
         [self doWait: ^{
-            sqstd_seterrorhandlers(_vm);
             
+            // Adding custom implementations of compiler and runtime error
+            // handlers since we need something a bit different than the
+            // sqstdaux implementations can provide.
+            sq_setcompilererrorhandler(_vm, OCSquirrelVMCompilerErrorHandler);
+            sq_newclosure(_vm, OCSquirrelVMRuntimeErrorHandler, 0);
+            sq_seterrorhandler(_vm);
+            
+            // Print and error functions
             sq_setforeignptr(_vm, (__bridge SQUserPointer)self);
-            sq_setprintfunc (_vm, OCSquirrelVMPrintfunc, OCSquirrelVMErrorfunc);
+            sq_setprintfunc (_vm, OCSquirrelVMPrintFunc, OCSquirrelVMErrorFunc);
         }];
     }
     return self;
@@ -119,7 +132,8 @@ void OCSquirrelVMErrorfunc(HSQUIRRELVM vm, const SQChar *s, ...)
 
 - (void) dealloc
 {
-    _vmQueue = nil;
+    _classBindings = nil;
+    _vmQueue       = nil;
     
     if (_vm != nil)
         sq_close(_vm);
@@ -129,11 +143,11 @@ void OCSquirrelVMErrorfunc(HSQUIRRELVM vm, const SQChar *s, ...)
 #pragma mark -
 #pragma mark script execution
 
-- (id) executeSync: (NSString *) script
+- (id) executeSync: (NSString *) script error: (__autoreleasing NSError **) outError
 {
-    __block BOOL      success         = NO;
-    __block NSString *exceptionReason = nil;
-    __block NSString *exceptionName   = nil;
+    __block BOOL    success = NO;
+    __block NSError *error  = nil;
+    __block id      result  = nil;
     
     [self doWait: ^{
         
@@ -147,41 +161,98 @@ void OCSquirrelVMErrorfunc(HSQUIRRELVM vm, const SQChar *s, ...)
                                               kOCSquirrelVMCompileBufferSourceName, SQTrue)))
             {
                 sq_pushroottable(_vm);
-                if (SQ_SUCCEEDED(sq_call(_vm, 1, SQFalse, SQTrue)))
+                if (SQ_SUCCEEDED(sq_call(_vm, 1, SQTrue, SQTrue)))
                 {
                     success = YES;
+                    result  = [self.stack valueAtPosition: -1];
                 }
                 else
                 {
-                    exceptionName   = NSInternalInconsistencyException;
-                    exceptionReason = @"*** executeSync: failed to call compiled script function";
+                    if (self.lastError != nil)
+                    {
+                        error = self.lastError;
+                    }
+                    else
+                    {
+                        error = [NSError errorWithDomain: OCSquirrelVMErrorDomain
+                                                    code: OCSquirrelVMError_RuntimeError
+                                                userInfo: nil];
+                    }
                 }
-                
             }
             else
             {
-                exceptionName   = NSInvalidArgumentException;
-                exceptionReason = @"*** executeSync: failed to compile script";
+                if (self.lastError != nil)
+                {
+                    error = self.lastError;
+                }
+                else
+                {
+                    error = [NSError errorWithDomain: OCSquirrelVMErrorDomain
+                                                code: OCSquirrelVMError_CompilerError
+                                            userInfo: nil];
+                }
             }
             
             self.stack.top = top;
         }
         else
         {
-            exceptionName   = NSInvalidArgumentException;
-            exceptionReason = @"*** executeSync: failed to convert NSString "
-                              @"to a format accepted by Squirrel";
+            error = [NSError errorWithDomain: OCSquirrelVMErrorDomain
+                                        code: OCSquirrelVMError_FailedToGetCString
+                                    userInfo: nil];
         }
     }];
     
     if (!success)
     {
-        @throw [NSException exceptionWithName: exceptionName
-                                       reason: exceptionReason
-                                     userInfo: nil];
+        if (outError != nil)
+        {
+            *outError = error;
+        }
     }
     
-    return nil;
+    return result;
+}
+
+
+#pragma mark -
+#pragma mark bindings
+
+- (OCSquirrelClass *) bindClass: (Class) nativeClass;
+{
+    __block OCSquirrelClass *class = nil;
+    
+    [self doWaitPreservingStackTop:^{
+        NSString *className = NSStringFromClass(nativeClass);
+        
+        class = _classBindings[className];
+        
+        if (class == nil)
+        {
+            class = [[OCSquirrelClass alloc] initWithVM: self];
+            _classBindings[className] = class;
+            
+            // Set the top level class attributes to the Objective-C class
+            // pointer for easy access if needed. This is used by the
+            // OCSquirrelVMStackImpl for example to determine whether some
+            // particular Squirrel class is actually a bound native class
+            // or not and return the corresponding OCSquirrelClass instance
+            [class setClassAttributes: [NSValue valueWithPointer: (__bridge void *)nativeClass]];
+            
+            // Bind constructor. Note that the constructor only does alloc
+            // an instance of the native class without initializing it,
+            // so further calls to -init or other initializers should be
+            // then immediately performed using one of the bound initializer
+            // methods.
+            id constructor =
+            [[OCSquirrelClosure alloc] initWithSQFUNCTION: OCSquirrelVMBindings_Constructor
+                                               squirrelVM: self];
+            [class setObject: constructor forKey: @"constructor"];
+        }
+    }];
+    
+    return class;
 }
 
 
@@ -203,6 +274,18 @@ void OCSquirrelVMErrorfunc(HSQUIRRELVM vm, const SQChar *s, ...)
         else
             block();
     }
+}
+
+
+- (void) doWaitPreservingStackTop: (dispatch_block_t) block
+{
+    [self doWait: ^{
+        NSInteger top = self.stack.top;
+        
+        [self doWait: block];
+        
+        self.stack.top = top;
+    }];
 }
 
 @end

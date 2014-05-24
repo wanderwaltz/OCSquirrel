@@ -172,21 +172,223 @@
 
 
 #pragma mark -
-#pragma mark tests for script string execution
+#pragma mark executeSync: errors
 
 - (void) testExecuteSyncValidNoThrow
 {
-    XCTAssertNoThrow([_squirrelVM executeSync: @"local x = 0;"],
+    XCTAssertNoThrow([_squirrelVM executeSync: @"local x = 0;" error: nil],
                     @"OCSquirrelVM -executeSync: should not throw exception for a valid Squirrel script.");
 }
 
 
-- (void) testExecuteSyncInvalidThrows
+- (void) testExecuteSyncInvalidError
 {
-    XCTAssertThrowsSpecificNamed([_squirrelVM executeSync: @"local x + 0"],
-                                NSException, NSInvalidArgumentException,
-                                @"OCSquirrelVM -executeSync: should throw an NSInvalidArgumentException "
-                                @"for an invalid Squirrel script.");
+    NSError *error = nil;
+    [_squirrelVM executeSync: @"local x + 0" error: &error];
+    
+    XCTAssertNotNil(error,
+                   @"OCSquirrelVM -executeSync: should return a not nil NSError "
+                   @"for an invalid Squirrel script.");
+}
+
+
+- (void) testExecuteSyncInvalidLastError
+{
+    NSError *error = nil;
+    [_squirrelVM executeSync: @"local x + 0" error: &error];
+    
+    XCTAssertEqualObjects(error, _squirrelVM.lastError,
+                         @"OCSquirrelVM -executeSync: should return a not nil NSError "
+                         @"and have a lastError property with the same error.");
+}
+
+
+- (void) testExecuteSyncInvalidErrorDomain
+{
+    NSError *error = nil;
+    [_squirrelVM executeSync: @"local x + 0" error: &error];
+    
+    XCTAssertEqualObjects(error.domain, OCSquirrelVMErrorDomain,
+                         @"Error returned by OCSquirrelVM should have OCSquirrelVMErrorDomain domain.");
+}
+
+
+- (void) testExecuteSyncInvalidErrorCodeFailedGetCString
+{
+    NSError *error = nil;
+    [_squirrelVM executeSync: nil error: &error];
+    
+    XCTAssertEqual(error.code, OCSquirrelVMError_FailedToGetCString,
+                   @"When a C string could not be retrieved for a script, returned error code "
+                   @"should be equal to OCSquirrelVMError_FailedToGetCString");
+}
+
+
+- (void) testExecuteSyncInvalidErrorCodeCompilerError
+{
+    NSError *error = nil;
+    [_squirrelVM executeSync: @"local x + 0" error: &error];
+    
+    XCTAssertEqual(error.code, OCSquirrelVMError_CompilerError,
+                   @"When compiling script fails, returned error code "
+                   @"should be equal to OCSquirrelVMError_CompilerError");
+}
+
+
+- (void) testExecuteSyncInvalidErrorCodeRuntimeError
+{
+    NSError *error = nil;
+    [_squirrelVM executeSync: @"local x = y;" error: &error];
+    
+    XCTAssertEqual(error.code, OCSquirrelVMError_RuntimeError,
+                   @"When a runtime error occurs, returned error code "
+                   @"should be equal to OCSquirrelVMError_RuntimeError");
+}
+
+
+- (void) testExecuteSyncRuntimeErrorCallStack
+{
+    NSError *error = nil;
+    [_squirrelVM executeSync: @"local x = y;" error: &error];
+    
+    XCTAssertNotNil(error.userInfo[OCSquirrelVMErrorCallStackUserInfoKey],
+                   @"When a runtime error occurs, userInfo dictionary should "
+                   @"contain call stack info.");
+}
+
+
+- (void) testExecuteSyncRuntimeErrorCallStackContentClass
+{
+    NSError *error = nil;
+    [_squirrelVM executeSync: @"function func() { local x = y; } func();" error: &error];
+    
+    for (id contents in error.userInfo[OCSquirrelVMErrorCallStackUserInfoKey])
+    {
+        XCTAssertTrue([contents isKindOfClass: [NSDictionary class]],
+                     @"Call stack array should contain NSDictionary elements.");
+    }
+}
+
+
+- (void) testExecuteSyncRuntimeErrorCallStackContents
+{
+    NSError *error = nil;
+    [_squirrelVM executeSync: @"function func() { local x = y; } func();" error: &error];
+    
+    NSArray *callStack = error.userInfo[OCSquirrelVMErrorCallStackUserInfoKey];
+    
+    XCTAssertTrue([[callStack valueForKey: OCSquirrelVMCallStackFunctionKey] containsObject: @"func"],
+                 @"Call stack should contain the function in which the error has occurred.");
+}
+
+
+- (void) testExecuteSyncRuntimeErrorLocals
+{
+    NSError *error = nil;
+    [_squirrelVM executeSync: @"local x = y;" error: &error];
+    
+    XCTAssertNotNil(error.userInfo[OCSquirrelVMErrorLocalsUserInfoKey],
+                   @"When a runtime error occurs, userInfo dictionary should "
+                   @"contain locals info.");
+}
+
+
+- (void) testExecuteSyncRuntimeErrorLocalsContentClass
+{
+    NSError *error = nil;
+    [_squirrelVM executeSync: @"local x = y;" error: &error];
+    
+    for (id contents in error.userInfo[OCSquirrelVMErrorLocalsUserInfoKey])
+    {
+        XCTAssertTrue([contents isKindOfClass: [NSDictionary class]],
+                     @"Locals array should contain NSDictionary elements.");
+    }
+}
+
+
+- (void) testExecuteSyncRuntimeErrorLocalsContents
+{
+    NSError *error = nil;
+    [_squirrelVM executeSync: @"local z = \"qwerty\"; local x = y;" error: &error];
+    
+    NSArray *locals = error.userInfo[OCSquirrelVMErrorLocalsUserInfoKey];
+    
+    XCTAssertTrue([[locals valueForKey: OCSquirrelVMLocalValueKey] containsObject: @"qwerty"],
+                 @"Locals array should contain local variables from the scope of the function "
+                 @"where an error has occurred.");
+}
+
+
+
+- (void) testExecuteSyncInvalidResult
+{
+    id result = [_squirrelVM executeSync: @"local x + 0" error: nil];
+    
+    XCTAssertNil(result,
+                @"OCSquirrelVM -executeSync: should return a nil result "
+                @"for an invalid Squirrel script.");
+}
+
+
+#pragma mark -
+#pragma mark executeSync: result values
+
+- (void) testExecuteSyncResultString
+{
+    id result = [_squirrelVM executeSync: @"return \"some string\";" error: nil];
+    
+    XCTAssertEqualObjects(result, @"some string",
+                         @"-executeSync should return the value which the Squirrel script "
+                         @"has returned.");
+}
+
+
+- (void) testExecuteSyncResultInteger
+{
+    id result = [_squirrelVM executeSync: @"return 12345;" error: nil];
+    
+    XCTAssertEqualObjects(result, @12345,
+                         @"-executeSync should return the value which the Squirrel script "
+                         @"has returned.");
+}
+
+
+- (void) testExecuteSyncResultFloat
+{
+    id result = [_squirrelVM executeSync: @"return 123.456;" error: nil];
+    
+    XCTAssertEqualWithAccuracy([result floatValue], 123.456f, 1e-3,
+                               @"-executeSync should return the value which the Squirrel script "
+                               @"has returned.");
+}
+
+
+- (void) testExecuteSyncResultBool
+{
+    id result = [_squirrelVM executeSync: @"return true;" error: nil];
+    
+    XCTAssertEqualObjects(result, @YES,
+                         @"-executeSync should return the value which the Squirrel script "
+                         @"has returned.");
+}
+
+
+- (void) testExecuteSyncResultNull
+{
+    id result = [_squirrelVM executeSync: @"return null;" error: nil];
+    
+    XCTAssertNil(result,
+                @"-executeSync should return the value which the Squirrel script "
+                @"has returned.");
+}
+
+
+- (void) testExecuteSyncResultNone
+{
+    id result = [_squirrelVM executeSync: @"local x = 0;" error: nil];
+    
+    XCTAssertNil(result,
+                @"-executeSync should nil if the script does not return anything.");
 }
 
 @end

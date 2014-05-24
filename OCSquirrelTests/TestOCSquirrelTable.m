@@ -11,7 +11,7 @@
 #endif
 
 #import "TestOCSquirrelTable.h"
-#import "AdditionalTestAsserts.h"
+#import "SenTestingKitCompatibility.h"
 
 
 #pragma mark -
@@ -33,6 +33,9 @@
 }
 
 
+#pragma mark -
+#pragma mark basic tests
+
 - (void) testOCSquirrelTableClassExists
 {
     XCTAssertTrue([OCSquirrelTable isSubclassOfClass: [OCSquirrelObject class]],
@@ -51,6 +54,20 @@
     XCTAssertEqualStructs(*table.obj, root,
                           @"+rootTableForVM: method should return an OCSquirrelTable set to the root "
                           @"talbe of the given VM");
+}
+
+
+- (void) testRegistryTable
+{
+    sq_pushregistrytable(_squirrelVM.vm);
+    
+    HSQOBJECT registry = [_squirrelVM.stack sqObjectAtPosition: -1];
+    
+    OCSquirrelTable *table = [OCSquirrelTable registryTableForVM: _squirrelVM];
+    
+    XCTAssertEqualStructs(*table.obj, registry,
+                          @"+registryTableForVM: method should return an OCSquirrelTable set to the "
+                          @"registry talbe of the given VM");
 }
 
 
@@ -377,7 +394,7 @@
     OCSquirrelTable *table = [[OCSquirrelTable alloc] initWithHSQOBJECT: sqTable
                                                                    inVM: _squirrelVM];
     
-    XCTAssertEqual([table floatForKey: @"someKey"], 123.456f,
+    XCTAssertEqual([table floatForKey: @"someKey"], 123.456,
                    @"The value set through Squirrel API should be accessible "
                    @"using OCSquirrelTable methods");
 }
@@ -475,7 +492,7 @@
     
     [table setObject: @123.456 forKey: @"key"];
     
-    XCTAssertEqual([table floatForKey: @"key"], 123.456f,
+    XCTAssertEqual([table floatForKey: @"key"], 123.456,
                    @"Float value should be properly set by setObject:forKey:");
 }
 
@@ -542,7 +559,7 @@
     OCSquirrelTable *table = [[OCSquirrelTable alloc] initWithVM: _squirrelVM];
     [table setFloat: 123.456 forKey: @"key"];
     
-    XCTAssertEqual([table floatForKey: @"key"], 123.456f,
+    XCTAssertEqual([table floatForKey: @"key"], 123.456,
                    @"Float value should be properly set by a type-specific method");
 }
 
@@ -574,6 +591,217 @@
     
     XCTAssertEqualObjects([table stringForKey: @"key"], @"value",
                          @"String value should be properly set by a type-specific method");
+}
+
+
+#pragma mark -
+#pragma mark key-value coding (read)
+
+- (void) testIntegerValueForKey
+{
+    OCSquirrelTable *table = [[OCSquirrelTable alloc] initWithVM: _squirrelVM];
+    [table setInteger: 12345 forKey: @"key"];
+    
+    XCTAssertEqual([[table valueForKey: @"key"] integerValue], 12345,
+                   @"Integer value should be properly read with valueForKey:");
+}
+
+
+- (void) testFloatValueForKey
+{
+    OCSquirrelTable *table = [[OCSquirrelTable alloc] initWithVM: _squirrelVM];
+    [table setFloat: 123.456 forKey: @"key"];
+    
+    XCTAssertEqualWithAccuracy([[table valueForKey: @"key"] floatValue], 123.456f, 1e-3,
+                               @"Float value should be properly read with valueForKey:");
+}
+
+
+- (void) testBoolValueForKey
+{
+    OCSquirrelTable *table = [[OCSquirrelTable alloc] initWithVM: _squirrelVM];
+    [table setBool: YES forKey: @"key"];
+    
+    XCTAssertEqual([[table valueForKey: @"key"] boolValue], YES,
+                   @"BOOL value should be properly read with valueForKey:");
+}
+
+
+- (void) testUserPointerValueForKey
+{
+    OCSquirrelTable *table = [[OCSquirrelTable alloc] initWithVM: _squirrelVM];
+    [table setUserPointer: (__bridge SQUserPointer)self forKey: @"key"];
+    
+    XCTAssertEqual([[table valueForKey: @"key"] pointerValue], (__bridge SQUserPointer)self,
+                   @"UserPointer value should be properly read with valueForKey:");
+}
+
+
+- (void) testStringValueForKey
+{
+    OCSquirrelTable *table = [[OCSquirrelTable alloc] initWithVM: _squirrelVM];
+    [table setString: @"value" forKey: @"key"];
+    
+    XCTAssertEqualObjects([table valueForKey: @"key"], @"value",
+                         @"String value should be properly read with valueForKey:");
+}
+
+
+#pragma mark -
+#pragma mark key-value coding (write)
+
+- (void) testSetIntegerValueForKey
+{
+    OCSquirrelTable *table = [[OCSquirrelTable alloc] initWithVM: _squirrelVM];
+    [table setValue: @12345 forKey: @"key"];
+    
+    XCTAssertEqual([[table valueForKey: @"key"] integerValue], 12345,
+                   @"Integer value should be properly set with setValue:forKey:");
+}
+
+
+- (void) testSetFloatValueForKey
+{
+    OCSquirrelTable *table = [[OCSquirrelTable alloc] initWithVM: _squirrelVM];
+    [table setValue: @123.456 forKey: @"key"];
+    
+    XCTAssertEqualWithAccuracy([[table valueForKey: @"key"] floatValue], 123.456f, 1e-3,
+                               @"Float value should be properly set with setValue:forKey:");
+}
+
+
+- (void) testSetBoolValueForKey
+{
+    OCSquirrelTable *table = [[OCSquirrelTable alloc] initWithVM: _squirrelVM];
+    [table setValue: @YES forKey: @"key"];
+    
+    XCTAssertEqual([[table valueForKey: @"key"] boolValue], YES,
+                   @"BOOL value should be properly set with setValue:forKey:");
+}
+
+
+- (void) testSetUserPointerValueForKey
+{
+    OCSquirrelTable *table = [[OCSquirrelTable alloc] initWithVM: _squirrelVM];
+    [table setValue: [NSValue valueWithPointer: (__bridge SQUserPointer)self] forKey: @"key"];
+    
+    XCTAssertEqual([[table valueForKey: @"key"] pointerValue], (__bridge SQUserPointer)self,
+                   @"UserPointer value should be properly set with setValue:forKey:");
+}
+
+
+- (void) testSetStringValueForKey
+{
+    OCSquirrelTable *table = [[OCSquirrelTable alloc] initWithVM: _squirrelVM];
+    [table setValue: @"value" forKey: @"key"];
+    
+    XCTAssertEqualObjects([table valueForKey: @"key"], @"value",
+                         @"String value should be properly set with setValue:forKey:");
+}
+
+
+#pragma mark -
+#pragma mark enumeration
+
+- (void) testEnumerateObjectsAndKeys
+{
+    OCSquirrelTable *table = [[OCSquirrelTable alloc] initWithVM: _squirrelVM];
+    
+    NSDictionary *valuesAndKeys =
+    @{
+      @"key"   : @"value",
+      @12345   : @6789,
+      @"other" : [NSNull null]
+    };
+    
+    [table setObject: nil      forKey: @"other"];
+    [table setObject: @"value" forKey: @"key"];
+    [table setObject: @6789    forKey: @12345];
+    
+    NSMutableDictionary *enumerated = [NSMutableDictionary dictionary];
+    
+    [table enumerateObjectsAndKeysUsingBlock:
+     ^(id key, id value, BOOL *stop)
+     {
+         if (key   == nil) key   = [NSNull null];
+         if (value == nil) value = [NSNull null];
+         
+         enumerated[key] = value;
+     }];
+    
+    XCTAssertEqualObjects(valuesAndKeys, enumerated,
+                         @"enumerateObjectsAndKeysUsingBlock should enumerate all table elements");
+}
+
+
+- (void) testEnumerateObjectsAndKeysStop
+{
+    OCSquirrelTable *table = [[OCSquirrelTable alloc] initWithVM: _squirrelVM];
+    
+    [table setObject: nil      forKey: @"other"];
+    [table setObject: @"value" forKey: @"key"];
+    [table setObject: @6789    forKey: @12345];
+    
+    __block NSUInteger iterations = 0;
+    
+    [table enumerateObjectsAndKeysUsingBlock:
+     ^(id key, id value, BOOL *stop)
+     {
+         iterations++;
+         *stop = YES;         
+     }];
+    
+    XCTAssertEqual(iterations, 1u,
+                   @"enumerateObjectsAndKeysUsingBlock should stop if stop parameter of the block is "
+                   @"set to YES");
+}
+
+
+#pragma mark -
+#pragma mark calls
+
+- (void) testCallClosureWithKey
+{
+    OCSquirrelTable *table = [_squirrelVM executeSync:
+                               @"return { value = false, closure = function() { value = true; } }"
+                                   error: nil];
+    
+    [table callClosureWithKey: @"closure"];
+    
+    XCTAssertTrue([table boolForKey: @"value"],
+                 @"Closure with the given key should be called with the table passed as 'this'");
+}
+
+
+- (void) testCallClosureWithKeyResult
+{
+    OCSquirrelTable *table = [_squirrelVM executeSync:
+                              @"return { value = 1234, closure = function() { return value; } }"
+                                                error: nil];
+    
+    id result = [table callClosureWithKey: @"closure"];
+    
+    XCTAssertEqualObjects(result, @1234,
+                         @"Closure with the given key should be called with the "
+                         @"table passed as 'this'");
+
+}
+
+
+- (void) testCallClosureWithKeyParametersResult
+{
+    OCSquirrelTable *table = [_squirrelVM executeSync:
+                              @"return { value = 1, closure = function(x, y) { return x+y+value; } }"
+                                                error: nil];
+    
+    id result = [table callClosureWithKey: @"closure"
+                               parameters: @[@4, @5]];
+    
+    XCTAssertEqualObjects(result, @10,
+                         @"Closure with the given key should be called with the "
+                         @"table passed as 'this' and the parameters array should "
+                         @"be properly passed");
+    
 }
 
 @end

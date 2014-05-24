@@ -11,7 +11,7 @@
 #endif
 
 #import "TestStackManipulation.h"
-#import "AdditionalTestAsserts.h"
+#import "SenTestingKitCompatibility.h"
 
 
 #pragma mark -
@@ -32,6 +32,9 @@
     [super tearDown];
 }
 
+
+#pragma mark -
+#pragma mark basic tests
 
 - (void) testHasStackProperty
 {
@@ -103,7 +106,7 @@
     SQFloat value = 0.0;
     sq_getfloat(_squirrelVM.vm, -1, &value);
     
-    XCTAssertEqual(value, 123.456f,
+    XCTAssertEqual(value, 123.456,
                    @"-pushFloat: should push the expected value to the Squirrel VM stack");
 }
 
@@ -144,7 +147,7 @@
 {
     HSQOBJECT object;
     sq_resetobject(&object);
-    
+
     [_squirrelVM.stack pushSQObject: object];
     
     HSQOBJECT other;
@@ -197,7 +200,7 @@
     
     sq_getfloat(_squirrelVM.vm, -1, &value);
     
-    XCTAssertEqual(value, 123.456f,
+    XCTAssertEqual(value, 123.456,
                    @"-pushValue: should be capable of pushing float NSNumbers");
 }
 
@@ -295,13 +298,43 @@
 }
 
 
-- (void) testThrowsForUnsupportedTypes
+- (void) testPushValueOCSquirrelObject
 {
-    XCTAssertThrowsSpecificNamed([_squirrelVM.stack pushValue: [NSObject new]],
-                                NSException, NSInvalidArgumentException,
-                                @"-pushValue: shoud throw an NSInvalidArgumentException for unsupported "
-                                @"values.");
+    OCSquirrelObject *object = [OCSquirrelTable rootTableForVM: _squirrelVM];
+    [_squirrelVM.stack pushValue: object];
+    
+    OCSquirrelObject *value = [_squirrelVM.stack valueAtPosition: -1];
+    
+    XCTAssertEqualStructs(*value.obj, *object.obj,
+                          @"-pushValue: should be capable of pushing OCSquirrelObjects");
 }
+
+
+- (void) testUserPointerForUnsupportedTypesClass
+{
+    id object = [NSObject new];
+    
+    [_squirrelVM.stack pushValue: object];
+    
+    id value = [_squirrelVM.stack valueAtPosition: -1];
+    
+    XCTAssertTrue([value isKindOfClass: [NSValue class]],
+                @"-pushValue: shoud push an unsupported value as a user pointer");
+}
+
+
+- (void) testUserPointerForUnsupportedTypesValue
+{
+    id object = [NSObject new];
+    
+    [_squirrelVM.stack pushValue: object];
+    
+    id value = [_squirrelVM.stack valueAtPosition: -1];
+    
+    XCTAssertEqual((__bridge void *)object, [value pointerValue],
+                   @"-pushValue: shoud push an unsupported value as a user pointer");
+}
+
 
 
 #pragma mark -
@@ -318,7 +351,7 @@
 - (void) testFloatAtPosition
 {
     [_squirrelVM.stack pushFloat: 123.456];
-    XCTAssertEqual(123.456f, [_squirrelVM.stack floatAtPosition: -1],
+    XCTAssertEqual(123.456, [_squirrelVM.stack floatAtPosition: -1],
                    @"-floatAtPosition: should return the pushed value.");
 }
 
@@ -497,6 +530,158 @@
 }
 
 
+- (void) testReadValueClassClass
+{
+    sq_newclass(_squirrelVM.vm, SQFalse);
+    
+    id value = [_squirrelVM.stack valueAtPosition: -1];
+    
+    XCTAssertTrue([value isKindOfClass: [OCSquirrelClass class]],
+                 @"-valueAtPosition: should return an OCSquirrelClass for class stack values, "
+                 @"got %@ instead", value);
+}
+
+
+- (void) testReadValueClassValue
+{
+    sq_newclass(_squirrelVM.vm, SQFalse);
+    
+    HSQOBJECT class;
+    sq_getstackobj(_squirrelVM.vm, -1, &class);
+    
+    id value = [_squirrelVM.stack valueAtPosition: -1];
+    
+    XCTAssertEqualStructs(*[value obj], class,
+                          @"-valueAtPosition: should return the corresponding OCSquirrelClass for "
+                          @"class stack values");
+}
+
+
+- (void) testReadValueInstanceClass
+{
+    sq_newclass(_squirrelVM.vm, SQFalse);
+    sq_createinstance(_squirrelVM.vm, -1);
+    
+    id value = [_squirrelVM.stack valueAtPosition: -1];
+    
+    XCTAssertTrue([value isKindOfClass: [OCSquirrelInstance class]],
+                 @"-valueAtPosition: should return an OCSquirrelInstance for instance stack values");
+}
+
+
+- (void) testReadValueInstanceValue
+{
+    sq_newclass(_squirrelVM.vm, SQFalse);
+    sq_createinstance(_squirrelVM.vm, -1);
+    
+    HSQOBJECT instance;
+    sq_getstackobj(_squirrelVM.vm, -1, &instance);
+    
+    id value = [_squirrelVM.stack valueAtPosition: -1];
+    
+    XCTAssertEqualStructs(*[value obj], instance,
+                          @"-valueAtPosition: should return the corresponding OCSquirrelInstance for "
+                          @"instance stack values");
+}
+
+
+static SQInteger NativeClosure(HSQUIRRELVM vm)
+{
+    return 0;
+}
+
+
+- (void) testReadValueNativeClosureClass
+{
+    sq_newclosure(_squirrelVM.vm, NativeClosure, 0);
+    
+    id value = [_squirrelVM.stack valueAtPosition: -1];
+    
+    XCTAssertTrue([value isKindOfClass: [OCSquirrelClosure class]],
+                 @"-valueAtPosition: should return an OCSquirrelClosure for closure stack values");
+}
+
+
+- (void) testReadValueNativeClosureType
+{
+    sq_newclosure(_squirrelVM.vm, NativeClosure, 0);
+    
+    OCSquirrelClosure *value = [_squirrelVM.stack valueAtPosition: -1];
+    
+    XCTAssertEqual(value.type, OT_NATIVECLOSURE,
+                   @"-valueAtPosition: should return an OCSquirrelClosure of OT_NATIVECLOSURE "
+                   @"type for native closures");
+}
+
+
+- (void) testReadValueNativeClosureValue
+{
+    sq_newclosure(_squirrelVM.vm, NativeClosure, 0);
+    
+    HSQOBJECT closure;
+    sq_getstackobj(_squirrelVM.vm, -1, &closure);
+    
+    id value = [_squirrelVM.stack valueAtPosition: -1];
+    
+    XCTAssertEqualStructs(*[value obj], closure,
+                          @"-valueAtPosition: should return the corresponding OCSquirrelClosure for "
+                          @"native closure stack values");
+}
+
+
+- (void) testReadValueSquirrelClosureClass
+{
+    [_squirrelVM executeSync: @"function SquirrelClosure() {}" error: nil];
+    
+    sq_pushroottable(_squirrelVM.vm);
+    [_squirrelVM.stack pushString: @"SquirrelClosure"];
+    sq_get(_squirrelVM.vm, -2);
+    
+    id value = [_squirrelVM.stack valueAtPosition: -1];
+    
+    XCTAssertTrue([value isKindOfClass: [OCSquirrelClosure class]],
+                 @"-valueAtPosition: should return an OCSquirrelClosure for closure stack values");
+}
+
+
+- (void) testReadValueSquirrelClosureType
+{
+    [_squirrelVM executeSync: @"function SquirrelClosure() {}" error: nil];
+    
+    sq_pushroottable(_squirrelVM.vm);
+    [_squirrelVM.stack pushString: @"SquirrelClosure"];
+    sq_get(_squirrelVM.vm, -2);
+
+    
+    OCSquirrelClosure *value = [_squirrelVM.stack valueAtPosition: -1];
+    
+    XCTAssertEqual(value.type, OT_CLOSURE,
+                   @"-valueAtPosition: should return an OCSquirrelClosure of OT_CLOSURE "
+                   @"type for Squirrel closures");
+}
+
+
+- (void) testReadValueSquirrelClosureValue
+{
+    [_squirrelVM executeSync: @"function SquirrelClosure() {}" error: nil];
+    
+    sq_pushroottable(_squirrelVM.vm);
+    [_squirrelVM.stack pushString: @"SquirrelClosure"];
+    sq_get(_squirrelVM.vm, -2);
+
+    
+    HSQOBJECT closure;
+    sq_getstackobj(_squirrelVM.vm, -1, &closure);
+    
+    id value = [_squirrelVM.stack valueAtPosition: -1];
+    
+    XCTAssertEqualStructs(*[value obj], closure,
+                          @"-valueAtPosition: should return the corresponding OCSquirrelClosure for "
+                          @"Squirrel closure stack values");
+}
+
+
+
 #pragma mark -
 #pragma mark reading failures tests
 
@@ -548,6 +733,26 @@
     [_squirrelVM.stack pushNull];
     XCTAssertTrue([_squirrelVM.stack isNullAtPosition: -1],
                  @"-isNullAtPosition: should be YES for `null` values pushed to stack.");
+}
+
+
+#pragma mark -
+#pragma mark stack-related dispatch
+
+- (void) testDoWaitPreservingStackTop
+{
+    NSInteger topBefore = _squirrelVM.stack.top;
+    
+    [_squirrelVM doWaitPreservingStackTop: ^{
+        [_squirrelVM.stack pushNull];
+        [_squirrelVM.stack pushFloat:  123.456];
+        [_squirrelVM.stack pushInteger: 123456];
+     }];
+    
+    NSInteger topAfter = _squirrelVM.stack.top;
+    
+    XCTAssertEqual(topBefore, topAfter,
+                   @"doWaitPreservingStackTop should not modify the Squirrel VM's stack.");
 }
 
 @end

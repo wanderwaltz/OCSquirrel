@@ -22,6 +22,8 @@ THE SOFTWARE.
 #ifndef _SQUIRREL_H_
 #define _SQUIRREL_H_
 
+#include <stdint.h>
+
 #ifdef __cplusplus
 extern "C" {
 #endif
@@ -29,6 +31,9 @@ extern "C" {
 #ifndef SQUIRREL_API
 #define SQUIRREL_API extern
 #endif
+    
+#define SQUSEDOUBLE
+
 
 #if (defined(_WIN64) || defined(_LP64) || (defined(__LP64__) && __LP64__) || defined(__arm64__))
 #ifndef _SQ64
@@ -43,12 +48,13 @@ typedef __int64 SQInteger;
 typedef unsigned __int64 SQUnsignedInteger;
 typedef unsigned __int64 SQHash; /*should be the same size of a pointer*/
 #else
-typedef long long SQInteger;
-typedef unsigned long long SQUnsignedInteger;
-typedef unsigned long long SQHash; /*should be the same size of a pointer*/
+typedef int64_t SQInteger;
+typedef uint64_t SQUnsignedInteger;
+typedef uint64_t SQHash; /*should be the same size of a pointer*/
 #endif
-typedef int SQInt32; 
-typedef unsigned int SQUnsignedInteger32;
+    
+typedef int32_t SQInt32;
+typedef uint32_t SQUnsignedInteger32;
 #else 
 typedef int SQInteger;
 typedef int SQInt32; /*must be 32 bits(also on 64bits processors)*/
@@ -222,7 +228,7 @@ typedef char SQChar;
 #define _RT_WEAKREF			0x00010000
 #define _RT_OUTER			0x00020000
 
-typedef enum tagSQObjectType{
+typedef enum tagSQObjectType : SQInteger {
 	OT_NULL =			(_RT_NULL|SQOBJECT_CANBEFALSE),
 	OT_INTEGER =		(_RT_INTEGER|SQOBJECT_NUMERIC|SQOBJECT_CANBEFALSE),
 	OT_FLOAT =			(_RT_FLOAT|SQOBJECT_NUMERIC|SQOBJECT_CANBEFALSE),

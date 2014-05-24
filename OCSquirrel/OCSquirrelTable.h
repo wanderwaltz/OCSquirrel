@@ -14,7 +14,8 @@
 
 @interface OCSquirrelTable : OCSquirrelObject
 
-+ (id) rootTableForVM: (OCSquirrelVM *) squirrelVM;
++ (id) rootTableForVM:     (OCSquirrelVM *) squirrelVM;
++ (id) registryTableForVM: (OCSquirrelVM *) squirrelVM;
 
 
 #pragma mark getter methods
@@ -39,5 +40,17 @@
 - (void)  setString: (NSString *) value forKey: (id) key;
 
 - (void) setUserPointer: (SQUserPointer) pointer forKey: (id) key;
+
+
+#pragma mark enumeration
+
+- (void) enumerateObjectsAndKeysUsingBlock: (void (^)(id key, id value, BOOL *stop)) block;
+
+
+#pragma mark calls
+
+- (id) callClosureWithKey: (id) key;
+- (id) callClosureWithKey: (id) key
+               parameters: (NSArray *) parameters;
 
 @end

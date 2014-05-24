@@ -44,6 +44,9 @@
 }
 
 
+#pragma mark -
+#pragma mark basic tests
+
 - (void) testPrintCallsDelegateMethod
 {
     id delegate = [OCMockObject partialMockForObject: [OCSquirrelPrintDelegate new]];
@@ -56,12 +59,11 @@
     
     NSString *printHelloWorld = [NSString stringWithFormat: @"print(\"%@\");", kHelloWorld];
     
-    [_squirrelVM executeSync: printHelloWorld];
+    [_squirrelVM executeSync: printHelloWorld error: nil];
     
     XCTAssertNoThrow([delegate verify],
                     @"Delegate method -squirrelVM:didPrintString: should be invoked with the OCSquirrelVM "
                     @"instance which compiled the script and the string which was passed to print function.");
-    [NSThread sleepForTimeInterval:1.0];
 }
 
 
@@ -71,7 +73,7 @@
     
     NSString *printEnglishString = [NSString stringWithFormat: @"print(\"%@\");", kEnglishString];
     
-    [_squirrelVM executeSync: printEnglishString];
+    [_squirrelVM executeSync: printEnglishString error: nil];
     
     XCTAssertEqualObjects(_lastPrintedString, kEnglishString,
                          @"String containing only letters from English alphabet should be "
@@ -86,7 +88,7 @@
     
     NSString *printUnicodeString = [NSString stringWithFormat: @"print(\"%@\");", kUnicodeString];
     
-    [_squirrelVM executeSync: printUnicodeString];
+    [_squirrelVM executeSync: printUnicodeString error: nil];
     
     XCTAssertEqualObjects(_lastPrintedString, kUnicodeString,
                          @"String containing unicode characters should be "
