@@ -8,6 +8,7 @@
 
 #import "OCSquirrelTable.h"
 
+// TODO: chained invocations
 
 #pragma mark -
 #pragma mark OCSquirrelClass interface

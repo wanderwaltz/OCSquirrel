@@ -8,6 +8,13 @@
 
 #import <OCSquirrel/OCSquirrel.h>
 
+// TODO: -objectAtIndex:
+// TODO: -objectAtIndexedSubscript:
+// TODO: -enumerateObjectsUsingBlock:
+// TODO: -setObject:atIndex:
+// TODO: NSMutableArray cluster integration
+// TODO: fast enumeration
+
 
 #pragma mark -
 #pragma mark OCSquirrelArray interface

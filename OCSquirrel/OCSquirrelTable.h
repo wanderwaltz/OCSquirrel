@@ -8,6 +8,9 @@
 
 #import "OCSquirrelObject.h"
 
+// TODO: fast enumeration of keys similar to NSDictionary's
+// TODO: NSMutableDictionary cluster integration
+// TODO: -hasObjectForKey:
 
 #pragma mark -
 #pragma mark OCSquirrelTable interface
