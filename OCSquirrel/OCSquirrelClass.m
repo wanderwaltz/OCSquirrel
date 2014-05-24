@@ -69,9 +69,10 @@
 #pragma mark -
 #pragma mark bindings
 
-- (void) bindInstanceMethodWithSelector: (SEL) selector
+- (BOOL) bindInstanceMethodWithSelector: (SEL) selector
                                   error: (__autoreleasing NSError **) error
 {
+    BOOL success = YES;
     Class nativeClass = self.nativeClass;
     
     if (nativeClass != nil)
@@ -122,6 +123,7 @@
             *error = [[NSError alloc] initWithDomain: OCSquirrelVMBindingsDomain
                                                 code: OCSquirrelVMBindingsError_DoesNotRespondToSelector
                                             userInfo: nil];
+            success = NO;
         }
     }
     else if (error != nil)
@@ -129,13 +131,17 @@
         *error = [[NSError alloc] initWithDomain: OCSquirrelVMBindingsDomain
                                             code: OCSquirrelVMBindingsError_NativeClassNotFound
                                         userInfo: nil];
+        success = NO;
     }
+    
+    return success;
 }
 
 
-- (void) bindAllInstanceMethodsIncludingSuperclasses: (BOOL) includeSuperclasses
+- (BOOL) bindAllInstanceMethodsIncludingSuperclasses: (BOOL) includeSuperclasses
                                                error: (__autoreleasing NSError **) error
 {
+    BOOL success = YES;
     Class nativeClass = self.nativeClass;
     
     if (nativeClass != nil)
@@ -156,7 +162,10 @@
         *error = [[NSError alloc] initWithDomain: OCSquirrelVMBindingsDomain
                                             code: OCSquirrelVMBindingsError_NativeClassNotFound
                                         userInfo: nil];
+        success = NO;
     }
+    
+    return success;
 }
 
 

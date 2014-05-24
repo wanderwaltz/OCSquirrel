@@ -21,7 +21,7 @@
 
 - (void) pushNewInstance;
 
-- (void) bindInstanceMethodWithSelector: (SEL) selector
+- (BOOL) bindInstanceMethodWithSelector: (SEL) selector
                                   error: (__autoreleasing NSError **) error;
 
 /*! Uses Objective-C runtime functions to iterate through all methods of the corresponding
@@ -33,7 +33,7 @@
     Use with caution. It is generally safer to bind only several needed methods using 
     -bindInstanceMethodWithSelector:error:
  */
-- (void) bindAllInstanceMethodsIncludingSuperclasses: (BOOL) includeSuperclasses
+- (BOOL) bindAllInstanceMethodsIncludingSuperclasses: (BOOL) includeSuperclasses
                                                error: (__autoreleasing NSError **) error;
 
 @end
