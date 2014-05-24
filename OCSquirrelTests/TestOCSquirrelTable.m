@@ -394,7 +394,7 @@
     OCSquirrelTable *table = [[OCSquirrelTable alloc] initWithHSQOBJECT: sqTable
                                                                    inVM: _squirrelVM];
     
-    XCTAssertEqual([table floatForKey: @"someKey"], 123.456f,
+    XCTAssertEqual([table floatForKey: @"someKey"], 123.456,
                    @"The value set through Squirrel API should be accessible "
                    @"using OCSquirrelTable methods");
 }
@@ -492,7 +492,7 @@
     
     [table setObject: @123.456 forKey: @"key"];
     
-    XCTAssertEqual([table floatForKey: @"key"], 123.456f,
+    XCTAssertEqual([table floatForKey: @"key"], 123.456,
                    @"Float value should be properly set by setObject:forKey:");
 }
 
@@ -559,7 +559,7 @@
     OCSquirrelTable *table = [[OCSquirrelTable alloc] initWithVM: _squirrelVM];
     [table setFloat: 123.456 forKey: @"key"];
     
-    XCTAssertEqual([table floatForKey: @"key"], 123.456f,
+    XCTAssertEqual([table floatForKey: @"key"], 123.456,
                    @"Float value should be properly set by a type-specific method");
 }
 

@@ -25,8 +25,8 @@
     @try { \
         __typeof__(a1) a1value = (a1); \
         __typeof__(a2) a2value = (a2); \
-        NSValue *a1encoded = [NSValue value:&a1value withObjCType:@encode(__typeof__(a1))]; \
-        NSValue *a2encoded = [NSValue value:&a2value withObjCType:@encode(__typeof__(a2))]; \
+        NSValue *a1encoded = [NSValue value:&a1value withObjCType:@encode(__typeof__(a1value))]; \
+        NSValue *a2encoded = [NSValue value:&a2value withObjCType:@encode(__typeof__(a2value))]; \
         if (![a1encoded isEqualToValue:a2encoded]) { \
             _XCTRegisterFailure(_XCTFailureDescription(_XCTAssertion_Equal, 0, @#a1, @#a2, _XCTDescriptionForValue(a1encoded), _XCTDescriptionForValue(a2encoded)),format); \
         } \

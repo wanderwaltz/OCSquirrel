@@ -209,8 +209,8 @@ void OCSquirrelVMCompilerErrorHandler(HSQUIRRELVM vm,
     [squirrelVM doWait:
     ^{
         NSString *errorMessage =
-        [NSString stringWithFormat: @"[%s] line = (%d), column = (%d) : error %s",
-         sSource, line, column, sError];
+        [NSString stringWithFormat: @"[%s] line = (%ld), column = (%ld) : error %s",
+         sSource, (long)line, (long)column, sError];
         
         NSError *error = [NSError errorWithDomain: OCSquirrelVMErrorDomain
                                              code: OCSquirrelVMError_CompilerError

@@ -86,7 +86,7 @@ void _setArgumentAtIndex(NSUInteger i,
         {                                                         \
             SQInteger stackInt = 0;                               \
             sq_getinteger(vm, i, &stackInt);                      \
-            Type argument = stackInt;                             \
+            Type argument = (Type)stackInt;                       \
             [invocation setArgument: &argument atIndex: i];       \
         }
     
@@ -103,12 +103,26 @@ void _setArgumentAtIndex(NSUInteger i,
             [invocation setArgument: &argument atIndex: i];       \
         }
 
-         OCSQ_TRY_TYPE_INT(   int8_t)
+
+    // Houston, we have a problem over here...
+    // While Squirrel strictly distinguishes integers and bools,
+    // Objective-C still is a mess regarding that. We have BOOL,
+    // bool and __objc_yes/__objc_no and we cannot actually
+    // distinguish signed char from BOOL when compiling under
+    // 32-bit architectures such as armv7/armv7s. So the only
+    // option for now seems to be dropping 8-bit signed ints
+    // support entirely in favor of using this type to represent
+    // BOOLs only.
+    
+    //     OCSQ_TRY_TYPE_INT(   int8_t)
+    //else
          OCSQ_TRY_TYPE_INT(  int16_t)
     else OCSQ_TRY_TYPE_INT(  int32_t)
+    else OCSQ_TRY_TYPE_INT(  int64_t)
     else OCSQ_TRY_TYPE_INT( u_int8_t)
     else OCSQ_TRY_TYPE_INT(u_int16_t)
     else OCSQ_TRY_TYPE_INT(u_int32_t)
+    else OCSQ_TRY_TYPE_INT(u_int64_t)
         
     else OCSQ_TRY_TYPE_FLOAT(float)
     else OCSQ_TRY_TYPE_FLOAT(double)
@@ -180,12 +194,17 @@ BOOL _pushReturnValueAtIndex(HSQUIRRELVM vm,           // Have to pass both HSQU
             sq_pushfloat(vm, (SQFloat)result);      \
         }
     
-         OCSQ_TRY_TYPE_INT(   int8_t)
-    else OCSQ_TRY_TYPE_INT(  int16_t)
+    
+    // See comment above for _setArgumentAtIndex
+    //     OCSQ_TRY_TYPE_INT(   int8_t)
+    //else
+         OCSQ_TRY_TYPE_INT(  int16_t)
     else OCSQ_TRY_TYPE_INT(  int32_t)
+    else OCSQ_TRY_TYPE_INT(  int64_t)
     else OCSQ_TRY_TYPE_INT( u_int8_t)
     else OCSQ_TRY_TYPE_INT(u_int16_t)
     else OCSQ_TRY_TYPE_INT(u_int32_t)
+    else OCSQ_TRY_TYPE_INT(u_int64_t)
         
     else OCSQ_TRY_TYPE_FLOAT(float)
     else OCSQ_TRY_TYPE_FLOAT(double)

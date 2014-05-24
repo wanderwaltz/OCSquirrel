@@ -132,7 +132,9 @@
         {
             [self pushFloat: (SQFloat)[value doubleValue]];
         }
-        else if (strcmp(objCType, @encode(BOOL)) == 0)
+        else if ((strcmp(objCType, @encode(BOOL)) == 0) ||
+                 (strcmp(objCType, @encode(bool)) == 0) ||
+                 (strcmp(objCType, [@YES objCType]) == 0))
         {
             [self pushBool: [value boolValue]];
         }

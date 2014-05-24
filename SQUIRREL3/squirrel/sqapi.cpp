@@ -994,6 +994,7 @@ SQRESULT sq_rawget(HSQUIRRELVM v,SQInteger idx)
 SQRESULT sq_getstackobj(HSQUIRRELVM v,SQInteger idx,HSQOBJECT *po)
 {
 	*po=stack_get(v,idx);
+    
 	return SQ_OK;
 }
 

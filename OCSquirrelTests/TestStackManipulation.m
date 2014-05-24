@@ -106,7 +106,7 @@
     SQFloat value = 0.0;
     sq_getfloat(_squirrelVM.vm, -1, &value);
     
-    XCTAssertEqual(value, 123.456f,
+    XCTAssertEqual(value, 123.456,
                    @"-pushFloat: should push the expected value to the Squirrel VM stack");
 }
 
@@ -147,7 +147,7 @@
 {
     HSQOBJECT object;
     sq_resetobject(&object);
-    
+
     [_squirrelVM.stack pushSQObject: object];
     
     HSQOBJECT other;
@@ -200,7 +200,7 @@
     
     sq_getfloat(_squirrelVM.vm, -1, &value);
     
-    XCTAssertEqual(value, 123.456f,
+    XCTAssertEqual(value, 123.456,
                    @"-pushValue: should be capable of pushing float NSNumbers");
 }
 
@@ -351,7 +351,7 @@
 - (void) testFloatAtPosition
 {
     [_squirrelVM.stack pushFloat: 123.456];
-    XCTAssertEqual(123.456f, [_squirrelVM.stack floatAtPosition: -1],
+    XCTAssertEqual(123.456, [_squirrelVM.stack floatAtPosition: -1],
                    @"-floatAtPosition: should return the pushed value.");
 }
 
