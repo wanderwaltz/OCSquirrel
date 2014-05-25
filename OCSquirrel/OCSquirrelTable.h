@@ -31,11 +31,13 @@
 - (SQUserPointer) userPointerForKey: (id) key;
 
 - (id) objectForKey: (id) key;
+- (id) objectForKeyedSubscript:(id<NSCopying>)key;
 
 
 #pragma mark setter methods
 
 - (void) setObject: (id) object forKey: (id) key;
+- (void) setObject:(id)object forKeyedSubscript:(id<NSCopying>)key;
 
 - (void) setInteger: (SQInteger)  value forKey: (id) key;
 - (void)   setFloat: (SQFloat)    value forKey: (id) key;

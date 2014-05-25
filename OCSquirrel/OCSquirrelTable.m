@@ -167,6 +167,12 @@
 }
 
 
+- (id) objectForKeyedSubscript:(id<NSCopying>)key
+{
+    return [self objectForKey: key];
+}
+
+
 #pragma mark -
 #pragma mark setter objects
 
@@ -181,6 +187,12 @@
         
         sq_newslot(squirrelVM.vm, -3, SQFalse);
     }];
+}
+
+
+- (void) setObject:(id)object forKeyedSubscript:(id<NSCopying>)key
+{
+    [self setObject: object forKey: key];
 }
 
 
