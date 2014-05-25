@@ -9,8 +9,6 @@
 #import "squirrel.h"
 #import "OCSquirrelVMStack.h"
 
-// TODO: get rid of dispatch queue (consumers of the API will be responsible for thread safety)
-
 
 #pragma mark -
 #pragma mark External declarations

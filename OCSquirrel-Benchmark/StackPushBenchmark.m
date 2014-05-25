@@ -60,7 +60,7 @@
     
     // Pushing integers using C API
     [self log:
-     [NSString stringWithFormat: @"Pushing %d integers to the stack using C API...", iterations]];
+     [NSString stringWithFormat: @"Pushing %lu integers to the stack using C API...", (unsigned long)iterations]];
     
     self.squirrelVM.stack.top = 0;
     [self recordDate];
@@ -75,7 +75,7 @@
 
     // Pushing integers using OCSquirrelVM
     [self log:
-     [NSString stringWithFormat: @"Pushing %d integers to the stack using OCSquirrelVM...", iterations]];
+     [NSString stringWithFormat: @"Pushing %lu integers to the stack using OCSquirrelVM...", (unsigned long)iterations]];
     
     self.squirrelVM.stack.top = 0;
     [self recordDate];
@@ -92,7 +92,7 @@
     
     // Pushing integers using OCSquirrelVM (NSNumber)
     [self log:
-     [NSString stringWithFormat: @"Pushing %d NSNumber integers to the stack using OCSquirrelVM...", iterations]];
+     [NSString stringWithFormat: @"Pushing %lu NSNumber integers to the stack using OCSquirrelVM...", (unsigned long)iterations]];
     
     self.squirrelVM.stack.top = 0;
     [self recordDate];

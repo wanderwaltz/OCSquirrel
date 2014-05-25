@@ -58,7 +58,7 @@
     
     // Pushing integers using C API
     [self log:
-     [NSString stringWithFormat: @"Pushing %d integers to the stack using C API...", iterations]];
+     [NSString stringWithFormat: @"Pushing %lu integers to the stack using C API...", (unsigned long)iterations]];
     
     self.squirrelVM.stack.top = 0;
     [self recordDate];
@@ -77,7 +77,7 @@
     
     // Summing integers using C API
     [self log:
-     [NSString stringWithFormat: @"Summing %d integers from the stack using C API...", iterations]];
+     [NSString stringWithFormat: @"Summing %lu integers from the stack using C API...", (unsigned long)iterations]];
     
     [self recordDate];
     
@@ -88,15 +88,15 @@
     }
     
     [self log:
-     [NSString stringWithFormat: @"Finished in %.3lf seconds with sum: %u.",
-      [self intervalSinceLastRecord], sum]];
+     [NSString stringWithFormat: @"Finished in %.3lf seconds with sum: %lu.",
+      [self intervalSinceLastRecord], (unsigned long)sum]];
 
     
     sum = 0;
     
     // Summing integers using OCSquirrelVM
     [self log:
-     [NSString stringWithFormat: @"Summing %d integers from the stack using OCSquirrelVM.", iterations]];
+     [NSString stringWithFormat: @"Summing %lu integers from the stack using OCSquirrelVM.", (unsigned long)iterations]];
     
     [self recordDate];
     
@@ -106,15 +106,15 @@
     }
     
     [self log:
-     [NSString stringWithFormat: @"Finished in %.3lf seconds with sum: %u.",
-      [self intervalSinceLastRecord], sum]];
+     [NSString stringWithFormat: @"Finished in %.3lf seconds with sum: %lu.",
+      [self intervalSinceLastRecord], (unsigned long)sum]];
 
     
     sum = 0;
     
     // Summing integers using OCSquirrelVM (NSNumber)
     [self log:
-     [NSString stringWithFormat: @"Summing %d NSNumber integers from the stack using OCSquirrelVM.", iterations]];
+     [NSString stringWithFormat: @"Summing %lu NSNumber integers from the stack using OCSquirrelVM.", (unsigned long)iterations]];
     
     [self recordDate];
     
@@ -124,8 +124,8 @@
     }
     
     [self log:
-     [NSString stringWithFormat: @"Finished in %.3lf seconds with sum: %u.",
-      [self intervalSinceLastRecord], sum]];
+     [NSString stringWithFormat: @"Finished in %.3lf seconds with sum: %lu.",
+      [self intervalSinceLastRecord], (unsigned long)sum]];
     
     
     self.squirrelVM.stack.top = 0;
