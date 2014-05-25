@@ -2,26 +2,15 @@
 //  OCSquirrelTable.h
 //  OCSquirrel
 //
-//  Created by Egor Chiglintsev on 14.04.13.
-//  Copyright (c) 2013 Egor Chiglintsev. All rights reserved.
+//  Created by Egor Chiglintsev on 25.05.14.
+//  Copyright (c) 2014 Egor Chiglintsev. All rights reserved.
 //
 
-#import "OCSquirrelObject.h"
+#import <Foundation/Foundation.h>
+#import "squirrel.h"
 
-// TODO: fast enumeration of keys similar to NSDictionary's
-// TODO: NSMutableDictionary cluster integration
-// TODO: -hasObjectForKey:
-
-#pragma mark -
-#pragma mark OCSquirrelTable interface
-
-@interface OCSquirrelTable : OCSquirrelObject
-
-+ (id) rootTableForVM:     (OCSquirrelVM *) squirrelVM;
-+ (id) registryTableForVM: (OCSquirrelVM *) squirrelVM;
-
-
-#pragma mark getter methods
+@protocol OCSquirrelTable <NSObject>
+@required
 
 - (SQInteger) integerForKey: (id) key;
 - (SQFloat)     floatForKey: (id) key;

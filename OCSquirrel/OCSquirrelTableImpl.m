@@ -1,5 +1,5 @@
 //
-//  OCSquirrelTable.m
+//  OCSquirrelTableImpl.m
 //  OCSquirrel
 //
 //  Created by Egor Chiglintsev on 14.04.13.
@@ -10,14 +10,14 @@
 #error "This file should be compiled with ARC support"
 #endif
 
-#import "OCSquirrelTable.h"
+#import "OCSquirrelTableImpl.h"
 #import "OCSquirrelClosure.h"
 
 
 #pragma mark -
-#pragma mark OCSquirrelTable implementation
+#pragma mark OCSquirrelTableImpl implementation
 
-@implementation OCSquirrelTable
+@implementation OCSquirrelTableImpl
 
 #pragma mark -
 #pragma mark class methods

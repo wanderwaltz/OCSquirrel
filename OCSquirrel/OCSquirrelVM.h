@@ -14,8 +14,8 @@
 #pragma mark External declarations
 
 @class OCSquirrelObject;
-@class OCSquirrelTable;
 @class OCSquirrelClass;
+@protocol OCSquirrelTable;
 
 
 #pragma mark -

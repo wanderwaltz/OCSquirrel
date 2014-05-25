@@ -25,7 +25,7 @@
 @interface TestBindClass : XCTestCase
 {
     OCSquirrelVM *_squirrelVM;
-    OCSquirrelTable *_rootTable;
+    OCSquirrelTableImpl *_rootTable;
 }
 
 @end
@@ -40,7 +40,7 @@
 {
     [super setUp];
     _squirrelVM = [[OCSquirrelVM alloc] init];
-    _rootTable  = [OCSquirrelTable rootTableForVM: _squirrelVM];
+    _rootTable  = [OCSquirrelTableImpl rootTableForVM: _squirrelVM];
 }
 
 
@@ -147,7 +147,7 @@
 - (void) testCouldCreateInstance
 {    
     OCSquirrelClass *class = [_squirrelVM bindClass: [NSDate class]];
-    OCSquirrelTable *root  = [OCSquirrelTable rootTableForVM: _squirrelVM];
+    OCSquirrelTableImpl *root  = [OCSquirrelTableImpl rootTableForVM: _squirrelVM];
     
     [root setObject: class forKey: @"NSDate"];
     
@@ -163,7 +163,7 @@
 - (void) testCreateInstanceResultClass
 {
     OCSquirrelClass *class = [_squirrelVM bindClass: [NSDate class]];
-    OCSquirrelTable *root  = [OCSquirrelTable rootTableForVM: _squirrelVM];
+    OCSquirrelTableImpl *root  = [OCSquirrelTableImpl rootTableForVM: _squirrelVM];
     
     [root setObject: class forKey: @"NSDate"];
     
@@ -178,7 +178,7 @@
 - (void) testCreateInstanceResultUP
 {
     OCSquirrelClass *class = [_squirrelVM bindClass: [NSDate class]];
-    OCSquirrelTable *root  = [OCSquirrelTable rootTableForVM: _squirrelVM];
+    OCSquirrelTableImpl *root  = [OCSquirrelTableImpl rootTableForVM: _squirrelVM];
     
     [root setObject: class forKey: @"NSDate"];
     NSError *error = nil;
@@ -234,7 +234,7 @@
     OCSquirrelClass *class = [_squirrelVM bindClass: [SimpleInvocationChecker class]];
     [class bindInstanceMethodWithSelector: @selector(init) error: nil];
     
-    OCSquirrelTable *root  = [OCSquirrelTable rootTableForVM: _squirrelVM];
+    OCSquirrelTableImpl *root  = [OCSquirrelTableImpl rootTableForVM: _squirrelVM];
     [root setObject: class forKey: @"SimpleInvocationChecker"];
     
     NSError *error = nil;
@@ -252,7 +252,7 @@
     OCSquirrelClass *class = [_squirrelVM bindClass: [InitializerChecker class]];
     [class bindInstanceMethodWithSelector: @selector(init) error: nil];
     
-    OCSquirrelTable *root  = [OCSquirrelTable rootTableForVM: _squirrelVM];
+    OCSquirrelTableImpl *root  = [OCSquirrelTableImpl rootTableForVM: _squirrelVM];
     [root setObject: class forKey: @"InitializerChecker"];
     
     NSError *error = nil;

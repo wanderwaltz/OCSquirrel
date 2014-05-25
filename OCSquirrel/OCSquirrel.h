@@ -23,14 +23,18 @@
 #import "sqstdsystem.h"
 
 
-// Import classes provided by the OCSquirrel
+// Import classes provided by OCSquirrel
 #import "OCSQuirrelVMStack.h"
 #import "OCSquirrelVM.h"
+#import "OCSquirrelVM+SQObjects.h"
+
 #import "OCSquirrelObject.h"
 #import "OCSquirrelArray.h"
-#import "OCSquirrelTable.h"
 #import "OCSquirrelClass.h"
 #import "OCSquirrelInstance.h"
 #import "OCSquirrelClosure.h"
+
+// Import protocols provided by OCSquirrel
+#import "OCSquirrelTable.h"
 
 #endif

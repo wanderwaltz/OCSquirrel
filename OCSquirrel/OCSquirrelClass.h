@@ -6,14 +6,14 @@
 //  Copyright (c) 2013 Egor Chiglintsev. All rights reserved.
 //
 
-#import "OCSquirrelTable.h"
+#import "OCSquirrelTableImpl.h"
 
 // TODO: chained invocations
 
 #pragma mark -
 #pragma mark OCSquirrelClass interface
 
-@interface OCSquirrelClass : OCSquirrelTable
+@interface OCSquirrelClass : OCSquirrelTableImpl
 @property (readonly, nonatomic) Class nativeClass;
 
 - (void) setClassAttributes: (id) attributes;

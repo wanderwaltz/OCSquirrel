@@ -1,5 +1,5 @@
 //
-//  TestOCSquirrelTable.m
+//  TestOCSquirrelTableImpl.m
 //  OCSquirrel
 //
 //  Created by Egor Chiglintsev on 14.04.13.
@@ -21,9 +21,9 @@
 
 
 #pragma mark -
-#pragma mark TestOCSquirrelTable interface
+#pragma mark TestOCSquirrelTableImpl interface
 
-@interface TestOCSquirrelTable : XCTestCase
+@interface TestOCSquirrelTableImpl : XCTestCase
 {
     OCSquirrelVM *_squirrelVM;
 }
@@ -32,9 +32,9 @@
 
 
 #pragma mark -
-#pragma mark TestOCSquirrelTable implementation
+#pragma mark TestOCSquirrelTableImpl implementation
 
-@implementation TestOCSquirrelTable
+@implementation TestOCSquirrelTableImpl
 
 - (void) setUp
 {
@@ -53,10 +53,10 @@
 #pragma mark -
 #pragma mark basic tests
 
-- (void) testOCSquirrelTableClassExists
+- (void) testOCSquirrelTableImplClassExists
 {
-    XCTAssertTrue([OCSquirrelTable isSubclassOfClass: [OCSquirrelObject class]],
-                @"OCSquirrelTable class should exist and be a subclass of OCSquirrelObject");
+    XCTAssertTrue([OCSquirrelTableImpl isSubclassOfClass: [OCSquirrelObject class]],
+                  @"OCSquirrelTableImpl class should exist and be a subclass of OCSquirrelObject");
 }
 
 
@@ -66,10 +66,10 @@
     
     HSQOBJECT root = [_squirrelVM.stack sqObjectAtPosition: -1];
     
-    OCSquirrelTable *table = [OCSquirrelTable rootTableForVM: _squirrelVM];
+    OCSquirrelTableImpl *table = [OCSquirrelTableImpl rootTableForVM: _squirrelVM];
     
     XCTAssertEqualStructs(*table.obj, root,
-                          @"+rootTableForVM: method should return an OCSquirrelTable set to the root "
+                          @"+rootTableForVM: method should return an OCSquirrelTableImpl set to the root "
                           @"talbe of the given VM");
 }
 
@@ -80,20 +80,20 @@
     
     HSQOBJECT registry = [_squirrelVM.stack sqObjectAtPosition: -1];
     
-    OCSquirrelTable *table = [OCSquirrelTable registryTableForVM: _squirrelVM];
+    OCSquirrelTableImpl *table = [OCSquirrelTableImpl registryTableForVM: _squirrelVM];
     
     XCTAssertEqualStructs(*table.obj, registry,
-                          @"+registryTableForVM: method should return an OCSquirrelTable set to the "
+                          @"+registryTableForVM: method should return an OCSquirrelTableImpl set to the "
                           @"registry talbe of the given VM");
 }
 
 
 - (void) testNewTableWhenInitializingWithVM
 {
-    OCSquirrelTable *table = [[OCSquirrelTable alloc] initWithVM: _squirrelVM];
+    OCSquirrelTableImpl *table = [[OCSquirrelTableImpl alloc] initWithVM: _squirrelVM];
     
     XCTAssertEqual(sq_type(*table.obj), OT_TABLE,
-                   @"OCSquirrelTable obj property should be of OT_TABLE type.");
+                   @"OCSquirrelTableImpl obj property should be of OT_TABLE type.");
 }
 
 
@@ -103,11 +103,11 @@
     
     HSQOBJECT root = [_squirrelVM.stack sqObjectAtPosition: -1];
     
-    OCSquirrelTable *table = [[OCSquirrelTable alloc] initWithHSQOBJECT: root
-                                                                   inVM: _squirrelVM];
+    OCSquirrelTableImpl *table = [[OCSquirrelTableImpl alloc] initWithHSQOBJECT: root
+                                                                           inVM: _squirrelVM];
     
     XCTAssertNotNil(table,
-                   @"OCSquirrelTable should support initializing with an existing table HSQOBJECT");
+                    @"OCSquirrelTableImpl should support initializing with an existing table HSQOBJECT");
 }
 
 
@@ -116,10 +116,10 @@
     HSQOBJECT obj;
     sq_resetobject(&obj);
     
-    OCSquirrelTable *table = [[OCSquirrelTable alloc] initWithHSQOBJECT: obj
-                                                                   inVM: _squirrelVM];
+    OCSquirrelTableImpl *table = [[OCSquirrelTableImpl alloc] initWithHSQOBJECT: obj
+                                                                           inVM: _squirrelVM];
     XCTAssertNil(table,
-                @"OCSquirrelTable should return nil when initializing with a `null` HSQOBJECT");
+                 @"OCSquirrelTableImpl should return nil when initializing with a `null` HSQOBJECT");
 }
 
 
@@ -137,11 +137,11 @@
     
     sq_newslot(_squirrelVM.vm, -3, SQFalse);
     
-    OCSquirrelTable *table = [[OCSquirrelTable alloc] initWithHSQOBJECT: sqTable
-                                                                   inVM: _squirrelVM];
+    OCSquirrelTableImpl *table = [[OCSquirrelTableImpl alloc] initWithHSQOBJECT: sqTable
+                                                                           inVM: _squirrelVM];
     
     XCTAssertTrue([[table objectForKey: @"someKey"] isKindOfClass: [NSNumber class]],
-                   @"-objectForKey: should return an NSNumber for integer value");
+                  @"-objectForKey: should return an NSNumber for integer value");
 }
 
 
@@ -156,11 +156,11 @@
     
     sq_newslot(_squirrelVM.vm, -3, SQFalse);
     
-    OCSquirrelTable *table = [[OCSquirrelTable alloc] initWithHSQOBJECT: sqTable
-                                                                   inVM: _squirrelVM];
+    OCSquirrelTableImpl *table = [[OCSquirrelTableImpl alloc] initWithHSQOBJECT: sqTable
+                                                                           inVM: _squirrelVM];
     
     XCTAssertEqual((NSInteger)[[table objectForKey: @"someKey"] integerValue], (NSInteger)1234,
-                 @"-objectForKey: should return the appropriate NSNumber for integer value");
+                   @"-objectForKey: should return the appropriate NSNumber for integer value");
 }
 
 
@@ -175,11 +175,11 @@
     
     sq_newslot(_squirrelVM.vm, -3, SQFalse);
     
-    OCSquirrelTable *table = [[OCSquirrelTable alloc] initWithHSQOBJECT: sqTable
-                                                                   inVM: _squirrelVM];
+    OCSquirrelTableImpl *table = [[OCSquirrelTableImpl alloc] initWithHSQOBJECT: sqTable
+                                                                           inVM: _squirrelVM];
     
     XCTAssertTrue([[table objectForKey: @"someKey"] isKindOfClass: [NSNumber class]],
-                 @"-objectForKey: should return an NSNumber for float value");
+                  @"-objectForKey: should return an NSNumber for float value");
 }
 
 
@@ -194,8 +194,8 @@
     
     sq_newslot(_squirrelVM.vm, -3, SQFalse);
     
-    OCSquirrelTable *table = [[OCSquirrelTable alloc] initWithHSQOBJECT: sqTable
-                                                                   inVM: _squirrelVM];
+    OCSquirrelTableImpl *table = [[OCSquirrelTableImpl alloc] initWithHSQOBJECT: sqTable
+                                                                           inVM: _squirrelVM];
     
     XCTAssertEqual([[table objectForKey: @"someKey"] floatValue], 123.456f,
                    @"-objectForKey: should return the appropriate NSNumber for float value");
@@ -213,11 +213,11 @@
     
     sq_newslot(_squirrelVM.vm, -3, SQFalse);
     
-    OCSquirrelTable *table = [[OCSquirrelTable alloc] initWithHSQOBJECT: sqTable
-                                                                   inVM: _squirrelVM];
+    OCSquirrelTableImpl *table = [[OCSquirrelTableImpl alloc] initWithHSQOBJECT: sqTable
+                                                                           inVM: _squirrelVM];
     
     XCTAssertTrue([[table objectForKey: @"someKey"] isKindOfClass: [NSNumber class]],
-                 @"-objectForKey: should return an NSNumber for BOOL value");
+                  @"-objectForKey: should return an NSNumber for BOOL value");
 }
 
 
@@ -232,8 +232,8 @@
     
     sq_newslot(_squirrelVM.vm, -3, SQFalse);
     
-    OCSquirrelTable *table = [[OCSquirrelTable alloc] initWithHSQOBJECT: sqTable
-                                                                   inVM: _squirrelVM];
+    OCSquirrelTableImpl *table = [[OCSquirrelTableImpl alloc] initWithHSQOBJECT: sqTable
+                                                                           inVM: _squirrelVM];
     
     XCTAssertEqual([[table objectForKey: @"someKey"] boolValue], YES,
                    @"-objectForKey: should return the appropriate NSNumber for BOOL value");
@@ -251,11 +251,11 @@
     
     sq_newslot(_squirrelVM.vm, -3, SQFalse);
     
-    OCSquirrelTable *table = [[OCSquirrelTable alloc] initWithHSQOBJECT: sqTable
-                                                                   inVM: _squirrelVM];
+    OCSquirrelTableImpl *table = [[OCSquirrelTableImpl alloc] initWithHSQOBJECT: sqTable
+                                                                           inVM: _squirrelVM];
     
     XCTAssertTrue([[table objectForKey: @"someKey"] isKindOfClass: [NSString class]],
-                 @"-objectForKey: should return an NSString for string value");
+                  @"-objectForKey: should return an NSString for string value");
 }
 
 
@@ -270,11 +270,11 @@
     
     sq_newslot(_squirrelVM.vm, -3, SQFalse);
     
-    OCSquirrelTable *table = [[OCSquirrelTable alloc] initWithHSQOBJECT: sqTable
-                                                                   inVM: _squirrelVM];
+    OCSquirrelTableImpl *table = [[OCSquirrelTableImpl alloc] initWithHSQOBJECT: sqTable
+                                                                           inVM: _squirrelVM];
     
     XCTAssertEqualObjects([table objectForKey: @"someKey"], @"someValue",
-                         @"-objectForKey: should return the appropriate NSString for string value");
+                          @"-objectForKey: should return the appropriate NSString for string value");
 }
 
 
@@ -289,11 +289,11 @@
     
     sq_newslot(_squirrelVM.vm, -3, SQFalse);
     
-    OCSquirrelTable *table = [[OCSquirrelTable alloc] initWithHSQOBJECT: sqTable
-                                                                   inVM: _squirrelVM];
+    OCSquirrelTableImpl *table = [[OCSquirrelTableImpl alloc] initWithHSQOBJECT: sqTable
+                                                                           inVM: _squirrelVM];
     
     XCTAssertTrue([[table objectForKey: @"someKey"] isKindOfClass: [NSValue class]],
-                 @"-objectForKey: should return an NSValue for userPointer value");
+                  @"-objectForKey: should return an NSValue for userPointer value");
 }
 
 
@@ -308,8 +308,8 @@
     
     sq_newslot(_squirrelVM.vm, -3, SQFalse);
     
-    OCSquirrelTable *table = [[OCSquirrelTable alloc] initWithHSQOBJECT: sqTable
-                                                                   inVM: _squirrelVM];
+    OCSquirrelTableImpl *table = [[OCSquirrelTableImpl alloc] initWithHSQOBJECT: sqTable
+                                                                           inVM: _squirrelVM];
     
     XCTAssertEqual([[table objectForKey: @"someKey"] pointerValue], (__bridge void *)self,
                    @"-objectForKey: should return the appropriate NSValue for userPointer value");
@@ -327,8 +327,8 @@
     
     sq_newslot(_squirrelVM.vm, -3, SQFalse);
     
-    OCSquirrelTable *table = [[OCSquirrelTable alloc] initWithHSQOBJECT: sqTable
-                                                                   inVM: _squirrelVM];
+    OCSquirrelTableImpl *table = [[OCSquirrelTableImpl alloc] initWithHSQOBJECT: sqTable
+                                                                           inVM: _squirrelVM];
     
     XCTAssertNil([table objectForKey: @"someKey"],
                  @"-objectForKey: should return nil for `null` value");
@@ -346,11 +346,11 @@
     
     sq_newslot(_squirrelVM.vm, -3, SQFalse);
     
-    OCSquirrelTable *table = [[OCSquirrelTable alloc] initWithHSQOBJECT: sqTable
-                                                                   inVM: _squirrelVM];
+    OCSquirrelTableImpl *table = [[OCSquirrelTableImpl alloc] initWithHSQOBJECT: sqTable
+                                                                           inVM: _squirrelVM];
     
     XCTAssertNil([table objectForKey: @"undefinedKey"],
-                @"-objectForKey: should return nil for undefined key");
+                 @"-objectForKey: should return nil for undefined key");
 }
 
 
@@ -368,8 +368,8 @@
     
     sq_newslot(_squirrelVM.vm, -3, SQFalse);
     
-    OCSquirrelTable *table = [[OCSquirrelTable alloc] initWithHSQOBJECT: sqTable
-                                                                   inVM: _squirrelVM];
+    OCSquirrelTableImpl *table = [[OCSquirrelTableImpl alloc] initWithHSQOBJECT: sqTable
+                                                                           inVM: _squirrelVM];
     
     id tableMock = [OCMockObject partialMockForObject: table];
     
@@ -377,7 +377,7 @@
     
     __unused id result = tableMock[@"someKey"];
     
-    XCTAssertNoThrow([tableMock verify], @"Keyed subscripting of OCSquirrelTable should call -objectForKey:");
+    XCTAssertNoThrow([tableMock verify], @"Keyed subscripting of OCSquirrelTableImpl should call -objectForKey:");
 }
 
 
@@ -395,12 +395,12 @@
     
     sq_newslot(_squirrelVM.vm, -3, SQFalse);
     
-    OCSquirrelTable *table = [[OCSquirrelTable alloc] initWithHSQOBJECT: sqTable
-                                                                   inVM: _squirrelVM];
+    OCSquirrelTableImpl *table = [[OCSquirrelTableImpl alloc] initWithHSQOBJECT: sqTable
+                                                                           inVM: _squirrelVM];
     
     XCTAssertEqual((SQInteger)[table integerForKey: @"someKey"], (SQInteger)1234,
                    @"The value set through Squirrel API should be accessible "
-                   @"using OCSquirrelTable methods");
+                   @"using OCSquirrelTableImpl methods");
 }
 
 
@@ -415,12 +415,12 @@
     
     sq_newslot(_squirrelVM.vm, -3, SQFalse);
     
-    OCSquirrelTable *table = [[OCSquirrelTable alloc] initWithHSQOBJECT: sqTable
-                                                                   inVM: _squirrelVM];
+    OCSquirrelTableImpl *table = [[OCSquirrelTableImpl alloc] initWithHSQOBJECT: sqTable
+                                                                           inVM: _squirrelVM];
     
     XCTAssertEqual((SQInteger)[table integerForKey: @5678], (SQInteger)1234,
                    @"The value set through Squirrel API should be accessible "
-                   @"using OCSquirrelTable methods");
+                   @"using OCSquirrelTableImpl methods");
 }
 
 
@@ -435,12 +435,12 @@
     
     sq_newslot(_squirrelVM.vm, -3, SQFalse);
     
-    OCSquirrelTable *table = [[OCSquirrelTable alloc] initWithHSQOBJECT: sqTable
-                                                                   inVM: _squirrelVM];
+    OCSquirrelTableImpl *table = [[OCSquirrelTableImpl alloc] initWithHSQOBJECT: sqTable
+                                                                           inVM: _squirrelVM];
     
     XCTAssertEqual([table floatForKey: @"someKey"], 123.456,
                    @"The value set through Squirrel API should be accessible "
-                   @"using OCSquirrelTable methods");
+                   @"using OCSquirrelTableImpl methods");
 }
 
 
@@ -455,12 +455,12 @@
     
     sq_newslot(_squirrelVM.vm, -3, SQFalse);
     
-    OCSquirrelTable *table = [[OCSquirrelTable alloc] initWithHSQOBJECT: sqTable
-                                                                   inVM: _squirrelVM];
+    OCSquirrelTableImpl *table = [[OCSquirrelTableImpl alloc] initWithHSQOBJECT: sqTable
+                                                                           inVM: _squirrelVM];
     
     XCTAssertEqual([table boolForKey: @"someKey"], YES,
                    @"The value set through Squirrel API should be accessible "
-                   @"using OCSquirrelTable methods");
+                   @"using OCSquirrelTableImpl methods");
 }
 
 
@@ -475,12 +475,12 @@
     
     sq_newslot(_squirrelVM.vm, -3, SQFalse);
     
-    OCSquirrelTable *table = [[OCSquirrelTable alloc] initWithHSQOBJECT: sqTable
-                                                                   inVM: _squirrelVM];
+    OCSquirrelTableImpl *table = [[OCSquirrelTableImpl alloc] initWithHSQOBJECT: sqTable
+                                                                           inVM: _squirrelVM];
     
     XCTAssertEqualObjects([table stringForKey: @"someKey"], @"someValue",
-                         @"The value set through Squirrel API should be accessible "
-                         @"using OCSquirrelTable methods");
+                          @"The value set through Squirrel API should be accessible "
+                          @"using OCSquirrelTableImpl methods");
 }
 
 
@@ -495,12 +495,12 @@
     
     sq_newslot(_squirrelVM.vm, -3, SQFalse);
     
-    OCSquirrelTable *table = [[OCSquirrelTable alloc] initWithHSQOBJECT: sqTable
-                                                                   inVM: _squirrelVM];
+    OCSquirrelTableImpl *table = [[OCSquirrelTableImpl alloc] initWithHSQOBJECT: sqTable
+                                                                           inVM: _squirrelVM];
     
     XCTAssertEqual([table userPointerForKey: @"someKey"], (__bridge SQUserPointer)self,
                    @"The value set through Squirrel API should be accessible "
-                   @"using OCSquirrelTable methods");
+                   @"using OCSquirrelTableImpl methods");
 }
 
 
@@ -509,7 +509,7 @@
 
 - (void) testSetObjectIntForKeyOnce
 {
-    OCSquirrelTable *table = [[OCSquirrelTable alloc] initWithVM: _squirrelVM];
+    OCSquirrelTableImpl *table = [[OCSquirrelTableImpl alloc] initWithVM: _squirrelVM];
     
     [table setObject: @1234 forKey: @"key"];
     
@@ -520,7 +520,7 @@
 
 - (void) testSetObjectIntForKeyTwice
 {
-    OCSquirrelTable *table = [[OCSquirrelTable alloc] initWithVM: _squirrelVM];
+    OCSquirrelTableImpl *table = [[OCSquirrelTableImpl alloc] initWithVM: _squirrelVM];
     
     [table setObject: @1234 forKey: @"key"];
     [table setObject: @5678 forKey: @"key"];
@@ -532,7 +532,7 @@
 
 - (void) testSetObjectFloatForKey
 {
-    OCSquirrelTable *table = [[OCSquirrelTable alloc] initWithVM: _squirrelVM];
+    OCSquirrelTableImpl *table = [[OCSquirrelTableImpl alloc] initWithVM: _squirrelVM];
     
     [table setObject: @123.456 forKey: @"key"];
     
@@ -543,7 +543,7 @@
 
 - (void) testSetObjectBoolForKey
 {
-    OCSquirrelTable *table = [[OCSquirrelTable alloc] initWithVM: _squirrelVM];
+    OCSquirrelTableImpl *table = [[OCSquirrelTableImpl alloc] initWithVM: _squirrelVM];
     
     [table setObject: @YES forKey: @"key"];
     
@@ -554,7 +554,7 @@
 
 - (void) testSetObjectUserPointerForKey
 {
-    OCSquirrelTable *table = [[OCSquirrelTable alloc] initWithVM: _squirrelVM];
+    OCSquirrelTableImpl *table = [[OCSquirrelTableImpl alloc] initWithVM: _squirrelVM];
     
     [table setObject: [NSValue valueWithPointer: (__bridge void *)self] forKey: @"key"];
     
@@ -565,23 +565,23 @@
 
 - (void) testSetObjectStringForKey
 {
-    OCSquirrelTable *table = [[OCSquirrelTable alloc] initWithVM: _squirrelVM];
+    OCSquirrelTableImpl *table = [[OCSquirrelTableImpl alloc] initWithVM: _squirrelVM];
     
     [table setObject: @"value" forKey: @"key"];
     
     XCTAssertEqualObjects([table stringForKey: @"key"], @"value",
-                         @"String value should be properly set by setObject:forKey:");
+                          @"String value should be properly set by setObject:forKey:");
 }
 
 
 - (void) testSetObjectNilForKey
 {
-    OCSquirrelTable *table = [[OCSquirrelTable alloc] initWithVM: _squirrelVM];
+    OCSquirrelTableImpl *table = [[OCSquirrelTableImpl alloc] initWithVM: _squirrelVM];
     
     [table setObject: nil forKey: @"key"];
     
     XCTAssertNil([table objectForKey: @"key"],
-                @"nil value should be properly set by setObject:forKey:");
+                 @"nil value should be properly set by setObject:forKey:");
 }
 
 
@@ -590,8 +590,8 @@
 
 - (void) testSubscriptSetObjectIntForKeyOnce
 {
-    OCSquirrelTable *table = [[OCSquirrelTable alloc] initWithVM: _squirrelVM];
-  
+    OCSquirrelTableImpl *table = [[OCSquirrelTableImpl alloc] initWithVM: _squirrelVM];
+    
     table[@"key"] = @1234;
     
     XCTAssertEqual((SQInteger)[table integerForKey: @"key"], (SQInteger)1234,
@@ -601,7 +601,7 @@
 
 - (void) testSubscriptSetObjectIntForKeyTwice
 {
-    OCSquirrelTable *table = [[OCSquirrelTable alloc] initWithVM: _squirrelVM];
+    OCSquirrelTableImpl *table = [[OCSquirrelTableImpl alloc] initWithVM: _squirrelVM];
     
     table[@"key"] = @1234;
     table[@"key"] = @5678;
@@ -613,7 +613,7 @@
 
 - (void) testSubscriptSetObjectFloatForKey
 {
-    OCSquirrelTable *table = [[OCSquirrelTable alloc] initWithVM: _squirrelVM];
+    OCSquirrelTableImpl *table = [[OCSquirrelTableImpl alloc] initWithVM: _squirrelVM];
     
     table[@"key"] = @123.456;
     
@@ -624,7 +624,7 @@
 
 - (void) testSubscriptSetObjectBoolForKey
 {
-    OCSquirrelTable *table = [[OCSquirrelTable alloc] initWithVM: _squirrelVM];
+    OCSquirrelTableImpl *table = [[OCSquirrelTableImpl alloc] initWithVM: _squirrelVM];
     
     table[@"key"] = @YES;
     
@@ -635,7 +635,7 @@
 
 - (void) testSubscriptSetObjectUserPointerForKey
 {
-    OCSquirrelTable *table = [[OCSquirrelTable alloc] initWithVM: _squirrelVM];
+    OCSquirrelTableImpl *table = [[OCSquirrelTableImpl alloc] initWithVM: _squirrelVM];
     
     table[@"key"] = [NSValue valueWithPointer: (__bridge void *)self];
     
@@ -646,7 +646,7 @@
 
 - (void) testSubscriptSetObjectStringForKey
 {
-    OCSquirrelTable *table = [[OCSquirrelTable alloc] initWithVM: _squirrelVM];
+    OCSquirrelTableImpl *table = [[OCSquirrelTableImpl alloc] initWithVM: _squirrelVM];
     
     table[@"key"] = @"value";
     
@@ -657,7 +657,7 @@
 
 - (void) testSubscriptSetObjectNilForKey
 {
-    OCSquirrelTable *table = [[OCSquirrelTable alloc] initWithVM: _squirrelVM];
+    OCSquirrelTableImpl *table = [[OCSquirrelTableImpl alloc] initWithVM: _squirrelVM];
     
     table[@"key"] = nil;
     
@@ -671,7 +671,7 @@
 
 - (void) testSetIntegerForKey
 {
-    OCSquirrelTable *table = [[OCSquirrelTable alloc] initWithVM: _squirrelVM];
+    OCSquirrelTableImpl *table = [[OCSquirrelTableImpl alloc] initWithVM: _squirrelVM];
     [table setInteger: 1234 forKey: @"key"];
     
     XCTAssertEqual((SQInteger)[table integerForKey: @"key"], (SQInteger)1234,
@@ -681,7 +681,7 @@
 
 - (void) testSetFloatForKey
 {
-    OCSquirrelTable *table = [[OCSquirrelTable alloc] initWithVM: _squirrelVM];
+    OCSquirrelTableImpl *table = [[OCSquirrelTableImpl alloc] initWithVM: _squirrelVM];
     [table setFloat: 123.456 forKey: @"key"];
     
     XCTAssertEqual([table floatForKey: @"key"], 123.456,
@@ -691,7 +691,7 @@
 
 - (void) testSetBoolForKey
 {
-    OCSquirrelTable *table = [[OCSquirrelTable alloc] initWithVM: _squirrelVM];
+    OCSquirrelTableImpl *table = [[OCSquirrelTableImpl alloc] initWithVM: _squirrelVM];
     [table setBool: YES forKey: @"key"];
     
     XCTAssertEqual([table boolForKey: @"key"], YES,
@@ -701,7 +701,7 @@
 
 - (void) testSetUserPointerForKey
 {
-    OCSquirrelTable *table = [[OCSquirrelTable alloc] initWithVM: _squirrelVM];
+    OCSquirrelTableImpl *table = [[OCSquirrelTableImpl alloc] initWithVM: _squirrelVM];
     [table setUserPointer: (__bridge SQUserPointer)self forKey: @"key"];
     
     XCTAssertEqual([table userPointerForKey: @"key"], (__bridge SQUserPointer)self,
@@ -711,11 +711,11 @@
 
 - (void) testSetStringForKey
 {
-    OCSquirrelTable *table = [[OCSquirrelTable alloc] initWithVM: _squirrelVM];
+    OCSquirrelTableImpl *table = [[OCSquirrelTableImpl alloc] initWithVM: _squirrelVM];
     [table setString: @"value" forKey: @"key"];
     
     XCTAssertEqualObjects([table stringForKey: @"key"], @"value",
-                         @"String value should be properly set by a type-specific method");
+                          @"String value should be properly set by a type-specific method");
 }
 
 
@@ -724,7 +724,7 @@
 
 - (void) testIntegerValueForKey
 {
-    OCSquirrelTable *table = [[OCSquirrelTable alloc] initWithVM: _squirrelVM];
+    OCSquirrelTableImpl *table = [[OCSquirrelTableImpl alloc] initWithVM: _squirrelVM];
     [table setInteger: 12345 forKey: @"key"];
     
     XCTAssertEqual((NSInteger)[[table valueForKey: @"key"] integerValue], (NSInteger)12345,
@@ -734,7 +734,7 @@
 
 - (void) testFloatValueForKey
 {
-    OCSquirrelTable *table = [[OCSquirrelTable alloc] initWithVM: _squirrelVM];
+    OCSquirrelTableImpl *table = [[OCSquirrelTableImpl alloc] initWithVM: _squirrelVM];
     [table setFloat: 123.456 forKey: @"key"];
     
     XCTAssertEqualWithAccuracy([[table valueForKey: @"key"] floatValue], 123.456f, 1e-3,
@@ -744,7 +744,7 @@
 
 - (void) testBoolValueForKey
 {
-    OCSquirrelTable *table = [[OCSquirrelTable alloc] initWithVM: _squirrelVM];
+    OCSquirrelTableImpl *table = [[OCSquirrelTableImpl alloc] initWithVM: _squirrelVM];
     [table setBool: YES forKey: @"key"];
     
     XCTAssertEqual([[table valueForKey: @"key"] boolValue], YES,
@@ -754,7 +754,7 @@
 
 - (void) testUserPointerValueForKey
 {
-    OCSquirrelTable *table = [[OCSquirrelTable alloc] initWithVM: _squirrelVM];
+    OCSquirrelTableImpl *table = [[OCSquirrelTableImpl alloc] initWithVM: _squirrelVM];
     [table setUserPointer: (__bridge SQUserPointer)self forKey: @"key"];
     
     XCTAssertEqual([[table valueForKey: @"key"] pointerValue], (__bridge SQUserPointer)self,
@@ -764,11 +764,11 @@
 
 - (void) testStringValueForKey
 {
-    OCSquirrelTable *table = [[OCSquirrelTable alloc] initWithVM: _squirrelVM];
+    OCSquirrelTableImpl *table = [[OCSquirrelTableImpl alloc] initWithVM: _squirrelVM];
     [table setString: @"value" forKey: @"key"];
     
     XCTAssertEqualObjects([table valueForKey: @"key"], @"value",
-                         @"String value should be properly read with valueForKey:");
+                          @"String value should be properly read with valueForKey:");
 }
 
 
@@ -777,7 +777,7 @@
 
 - (void) testSetIntegerValueForKey
 {
-    OCSquirrelTable *table = [[OCSquirrelTable alloc] initWithVM: _squirrelVM];
+    OCSquirrelTableImpl *table = [[OCSquirrelTableImpl alloc] initWithVM: _squirrelVM];
     [table setValue: @12345 forKey: @"key"];
     
     XCTAssertEqual((SQInteger)[[table valueForKey: @"key"] integerValue], (SQInteger)12345,
@@ -787,7 +787,7 @@
 
 - (void) testSetFloatValueForKey
 {
-    OCSquirrelTable *table = [[OCSquirrelTable alloc] initWithVM: _squirrelVM];
+    OCSquirrelTableImpl *table = [[OCSquirrelTableImpl alloc] initWithVM: _squirrelVM];
     [table setValue: @123.456 forKey: @"key"];
     
     XCTAssertEqualWithAccuracy([[table valueForKey: @"key"] floatValue], 123.456f, 1e-3,
@@ -797,7 +797,7 @@
 
 - (void) testSetBoolValueForKey
 {
-    OCSquirrelTable *table = [[OCSquirrelTable alloc] initWithVM: _squirrelVM];
+    OCSquirrelTableImpl *table = [[OCSquirrelTableImpl alloc] initWithVM: _squirrelVM];
     [table setValue: @YES forKey: @"key"];
     
     XCTAssertEqual([[table valueForKey: @"key"] boolValue], YES,
@@ -807,7 +807,7 @@
 
 - (void) testSetUserPointerValueForKey
 {
-    OCSquirrelTable *table = [[OCSquirrelTable alloc] initWithVM: _squirrelVM];
+    OCSquirrelTableImpl *table = [[OCSquirrelTableImpl alloc] initWithVM: _squirrelVM];
     [table setValue: [NSValue valueWithPointer: (__bridge SQUserPointer)self] forKey: @"key"];
     
     XCTAssertEqual([[table valueForKey: @"key"] pointerValue], (__bridge SQUserPointer)self,
@@ -817,11 +817,11 @@
 
 - (void) testSetStringValueForKey
 {
-    OCSquirrelTable *table = [[OCSquirrelTable alloc] initWithVM: _squirrelVM];
+    OCSquirrelTableImpl *table = [[OCSquirrelTableImpl alloc] initWithVM: _squirrelVM];
     [table setValue: @"value" forKey: @"key"];
     
     XCTAssertEqualObjects([table valueForKey: @"key"], @"value",
-                         @"String value should be properly set with setValue:forKey:");
+                          @"String value should be properly set with setValue:forKey:");
 }
 
 
@@ -830,14 +830,14 @@
 
 - (void) testEnumerateObjectsAndKeys
 {
-    OCSquirrelTable *table = [[OCSquirrelTable alloc] initWithVM: _squirrelVM];
+    OCSquirrelTableImpl *table = [[OCSquirrelTableImpl alloc] initWithVM: _squirrelVM];
     
     NSDictionary *valuesAndKeys =
     @{
       @"key"   : @"value",
       @12345   : @6789,
       @"other" : [NSNull null]
-    };
+      };
     
     [table setObject: nil      forKey: @"other"];
     [table setObject: @"value" forKey: @"key"];
@@ -855,13 +855,13 @@
      }];
     
     XCTAssertEqualObjects(valuesAndKeys, enumerated,
-                         @"enumerateObjectsAndKeysUsingBlock should enumerate all table elements");
+                          @"enumerateObjectsAndKeysUsingBlock should enumerate all table elements");
 }
 
 
 - (void) testEnumerateObjectsAndKeysStop
 {
-    OCSquirrelTable *table = [[OCSquirrelTable alloc] initWithVM: _squirrelVM];
+    OCSquirrelTableImpl *table = [[OCSquirrelTableImpl alloc] initWithVM: _squirrelVM];
     
     [table setObject: nil      forKey: @"other"];
     [table setObject: @"value" forKey: @"key"];
@@ -873,7 +873,7 @@
      ^(id key, id value, BOOL *stop)
      {
          iterations++;
-         *stop = YES;         
+         *stop = YES;
      }];
     
     XCTAssertEqual((NSUInteger)iterations, (NSUInteger)1,
@@ -887,45 +887,45 @@
 
 - (void) testCallClosureWithKey
 {
-    OCSquirrelTable *table = [_squirrelVM execute:
-                               @"return { value = false, closure = function() { value = true; } }"
-                                   error: nil];
+    OCSquirrelTableImpl *table = [_squirrelVM execute:
+                                  @"return { value = false, closure = function() { value = true; } }"
+                                                error: nil];
     
     [table callClosureWithKey: @"closure"];
     
     XCTAssertTrue([table boolForKey: @"value"],
-                 @"Closure with the given key should be called with the table passed as 'this'");
+                  @"Closure with the given key should be called with the table passed as 'this'");
 }
 
 
 - (void) testCallClosureWithKeyResult
 {
-    OCSquirrelTable *table = [_squirrelVM execute:
-                              @"return { value = 1234, closure = function() { return value; } }"
+    OCSquirrelTableImpl *table = [_squirrelVM execute:
+                                  @"return { value = 1234, closure = function() { return value; } }"
                                                 error: nil];
     
     id result = [table callClosureWithKey: @"closure"];
     
     XCTAssertEqualObjects(result, @1234,
-                         @"Closure with the given key should be called with the "
-                         @"table passed as 'this'");
-
+                          @"Closure with the given key should be called with the "
+                          @"table passed as 'this'");
+    
 }
 
 
 - (void) testCallClosureWithKeyParametersResult
 {
-    OCSquirrelTable *table = [_squirrelVM execute:
-                              @"return { value = 1, closure = function(x, y) { return x+y+value; } }"
+    OCSquirrelTableImpl *table = [_squirrelVM execute:
+                                  @"return { value = 1, closure = function(x, y) { return x+y+value; } }"
                                                 error: nil];
     
     id result = [table callClosureWithKey: @"closure"
                                parameters: @[@4, @5]];
     
     XCTAssertEqualObjects(result, @10,
-                         @"Closure with the given key should be called with the "
-                         @"table passed as 'this' and the parameters array should "
-                         @"be properly passed");
+                          @"Closure with the given key should be called with the "
+                          @"table passed as 'this' and the parameters array should "
+                          @"be properly passed");
     
 }
 

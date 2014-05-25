@@ -12,6 +12,6 @@
 #pragma mark -
 #pragma mark OCSquirrelInstance interface
 
-@interface OCSquirrelInstance : OCSquirrelTable
+@interface OCSquirrelInstance : OCSquirrelTableImpl
 @property (readonly, nonatomic) id instanceUP;
 @end

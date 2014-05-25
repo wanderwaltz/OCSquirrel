@@ -11,7 +11,7 @@
 #endif
 
 #import "OCSquirrelClosure.h"
-
+#import "OCSquirrelVM+SQObjects.h"
 
 #pragma mark -
 #pragma mark OCSquirrelClosure implementation
@@ -70,14 +70,14 @@
 
 - (id) call
 {
-    return [self callWithThis: [OCSquirrelTable rootTableForVM: self.squirrelVM]
+    return [self callWithThis: [self.squirrelVM rootTable]
                    parameters: nil];
 }
 
 
 - (id) call: (NSArray *) parameters
 {
-    return [self callWithThis: [OCSquirrelTable rootTableForVM: self.squirrelVM]
+    return [self callWithThis: [self.squirrelVM rootTable]
                    parameters: parameters];
 }
 

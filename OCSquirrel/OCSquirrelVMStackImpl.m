@@ -256,8 +256,8 @@
         {
             HSQOBJECT table = [self sqObjectAtPosition: position];
             
-            value = [[OCSquirrelTable alloc] initWithHSQOBJECT: table
-                                                          inVM: _squirrelVM];
+            value = [[OCSquirrelTableImpl alloc] initWithHSQOBJECT: table
+                                                              inVM: _squirrelVM];
         } break;
             
         case OT_CLASS:

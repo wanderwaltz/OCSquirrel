@@ -316,7 +316,7 @@
 
 - (void) testPushValueOCSquirrelObject
 {
-    OCSquirrelObject *object = [OCSquirrelTable rootTableForVM: _squirrelVM];
+    OCSquirrelObject *object = [OCSquirrelTableImpl rootTableForVM: _squirrelVM];
     [_squirrelVM.stack pushValue: object];
     
     OCSquirrelObject *value = [_squirrelVM.stack valueAtPosition: -1];
@@ -509,8 +509,8 @@
 - (void) testReadValueTableClass
 {
     sq_pushroottable(_squirrelVM.vm);
-    XCTAssertTrue([[_squirrelVM.stack valueAtPosition: -1] isKindOfClass: [OCSquirrelTable class]],
-                 @"-valueAtPosition: should return an OCSquirrelTable for table stack values");
+    XCTAssertTrue([[_squirrelVM.stack valueAtPosition: -1] isKindOfClass: [OCSquirrelTableImpl class]],
+                 @"-valueAtPosition: should return an OCSquirrelTableImpl for table stack values");
 }
 
 
@@ -521,7 +521,7 @@
     HSQOBJECT root = [_squirrelVM.stack sqObjectAtPosition: -1];
     
     XCTAssertEqualStructs(*[[_squirrelVM.stack valueAtPosition: -1] obj], root,
-                          @"-valueAtPosition: should return the corresponding OCSquirrelTable for "
+                          @"-valueAtPosition: should return the corresponding OCSquirrelTableImpl for "
                           @"table stack values");
 }
 

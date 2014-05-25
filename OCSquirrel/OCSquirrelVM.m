@@ -18,7 +18,7 @@
 #import "OCSquirrelVMBindings_NoARC.h"
 
 #import "OCSquirrelClass.h"
-#import "OCSquirrelTable.h"
+#import "OCSquirrelTableImpl.h"
 #import "OCSquirrelClosure.h"
 
 
