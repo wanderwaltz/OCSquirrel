@@ -24,4 +24,6 @@
 
 - (void) addObject: (id) object;
 
+- (id) objectAtIndex: (NSInteger) index;
+
 @end

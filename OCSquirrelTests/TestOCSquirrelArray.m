@@ -96,4 +96,223 @@
 }
 
 
+#pragma mark -
+#pragma mark objectAtIndex tests
+
+- (void) testObjectForIntValueClass
+{
+    sq_newarray(_squirrelVM.vm, 0);
+    
+    HSQOBJECT sqArray = [_squirrelVM.stack sqObjectAtPosition: -1];
+    
+    [_squirrelVM.stack pushInteger: 1234];
+    
+    sq_arrayappend(_squirrelVM.vm, -2);
+    
+    OCSquirrelArray *array = [[OCSquirrelArray alloc] initWithHSQOBJECT: sqArray
+                                                                   inVM: _squirrelVM];
+    
+    XCTAssertTrue([[array objectAtIndex: 0] isKindOfClass: [NSNumber class]],
+                  @"-objectAtIndex: should return an NSNumber for integer value");
+}
+
+
+- (void) testObjectForIntValueValue
+{
+    sq_newarray(_squirrelVM.vm, 0);
+    
+    HSQOBJECT sqArray = [_squirrelVM.stack sqObjectAtPosition: -1];
+    
+    [_squirrelVM.stack pushInteger: 1234];
+    
+    sq_arrayappend(_squirrelVM.vm, -2);
+    
+    OCSquirrelArray *array = [[OCSquirrelArray alloc] initWithHSQOBJECT: sqArray
+                                                                   inVM: _squirrelVM];
+    
+    XCTAssertEqual((NSInteger)[[array objectAtIndex: 0] integerValue], (NSInteger)1234,
+                   @"-objectAtIndex: should return the appropriate NSNumber for integer value");
+}
+
+
+- (void) testObjectForFloatValueClass
+{
+    sq_newarray(_squirrelVM.vm, 0);
+    
+    HSQOBJECT sqArray = [_squirrelVM.stack sqObjectAtPosition: -1];
+    
+    [_squirrelVM.stack pushFloat: 123.456];
+    
+    sq_arrayappend(_squirrelVM.vm, -2);
+    
+    OCSquirrelArray *array = [[OCSquirrelArray alloc] initWithHSQOBJECT: sqArray
+                                                                   inVM: _squirrelVM];
+    
+    XCTAssertTrue([[array objectAtIndex: 0] isKindOfClass: [NSNumber class]],
+                  @"-objectAtIndex: should return an NSNumber for float value");
+}
+
+
+- (void) testObjectForFloatValueValue
+{
+    sq_newarray(_squirrelVM.vm, 0);
+    
+    HSQOBJECT sqArray = [_squirrelVM.stack sqObjectAtPosition: -1];
+    
+    [_squirrelVM.stack pushFloat: 123.456];
+    
+    sq_arrayappend(_squirrelVM.vm, -2);
+    
+    OCSquirrelArray *array = [[OCSquirrelArray alloc] initWithHSQOBJECT: sqArray
+                                                                   inVM: _squirrelVM];
+    
+    XCTAssertEqual([[array objectAtIndex: 0] floatValue], 123.456f,
+                   @"-objectAtIndex: should return the appropriate NSNumber for float value");
+}
+
+
+- (void) testObjectForBoolValueClass
+{
+    sq_newarray(_squirrelVM.vm, 0);
+    
+    HSQOBJECT sqArray = [_squirrelVM.stack sqObjectAtPosition: -1];
+    
+    [_squirrelVM.stack pushBool: YES];
+    
+    sq_arrayappend(_squirrelVM.vm, -2);
+    
+    OCSquirrelArray *array = [[OCSquirrelArray alloc] initWithHSQOBJECT: sqArray
+                                                                   inVM: _squirrelVM];
+    
+    XCTAssertTrue([[array objectAtIndex: 0] isKindOfClass: [NSNumber class]],
+                  @"-objectAtIndex: should return an NSNumber for BOOL value");
+}
+
+
+- (void) testObjectForBoolValueValue
+{
+    sq_newarray(_squirrelVM.vm, 0);
+    
+    HSQOBJECT sqArray = [_squirrelVM.stack sqObjectAtPosition: -1];
+    
+    [_squirrelVM.stack pushBool: YES];
+    
+    sq_arrayappend(_squirrelVM.vm, -2);
+    
+    OCSquirrelArray *array = [[OCSquirrelArray alloc] initWithHSQOBJECT: sqArray
+                                                                   inVM: _squirrelVM];
+    
+    XCTAssertEqual([[array objectAtIndex: 0] boolValue], YES,
+                   @"-objectAtIndex: should return the appropriate NSNumber for BOOL value");
+}
+
+
+- (void) testObjectForStringValueClass
+{
+    sq_newarray(_squirrelVM.vm, 0);
+    
+    HSQOBJECT sqArray = [_squirrelVM.stack sqObjectAtPosition: -1];
+    
+    [_squirrelVM.stack pushString: @"someValue"];
+    
+    sq_arrayappend(_squirrelVM.vm, -2);
+    
+    OCSquirrelArray *array = [[OCSquirrelArray alloc] initWithHSQOBJECT: sqArray
+                                                                   inVM: _squirrelVM];
+    
+    XCTAssertTrue([[array objectAtIndex: 0] isKindOfClass: [NSString class]],
+                  @"-objectAtIndex: should return an NSString for string value");
+}
+
+
+- (void) testObjectForStringValueValue
+{
+    sq_newarray(_squirrelVM.vm, 0);
+    
+    HSQOBJECT sqArray = [_squirrelVM.stack sqObjectAtPosition: -1];
+    
+    [_squirrelVM.stack pushString: @"someValue"];
+    
+    sq_arrayappend(_squirrelVM.vm, -2);
+    
+    OCSquirrelArray *array = [[OCSquirrelArray alloc] initWithHSQOBJECT: sqArray
+                                                                   inVM: _squirrelVM];
+    
+    XCTAssertEqualObjects([array objectAtIndex: 0], @"someValue",
+                          @"-objectAtIndex: should return the appropriate NSString for string value");
+}
+
+
+- (void) testObjectForUserPointerValueClass
+{
+    sq_newarray(_squirrelVM.vm, 0);
+    
+    HSQOBJECT sqArray = [_squirrelVM.stack sqObjectAtPosition: -1];
+    
+    [_squirrelVM.stack pushUserPointer: (__bridge SQUserPointer)self];
+    
+    sq_arrayappend(_squirrelVM.vm, -2);
+    
+    OCSquirrelArray *array = [[OCSquirrelArray alloc] initWithHSQOBJECT: sqArray
+                                                                   inVM: _squirrelVM];
+    
+    XCTAssertTrue([[array objectAtIndex: 0] isKindOfClass: [NSValue class]],
+                  @"-objectAtIndex: should return an NSValue for userPointer value");
+}
+
+
+- (void) testObjectForUserPointerValueValue
+{
+    sq_newarray(_squirrelVM.vm, 0);
+    
+    HSQOBJECT sqArray = [_squirrelVM.stack sqObjectAtPosition: -1];
+    
+    [_squirrelVM.stack pushUserPointer: (__bridge SQUserPointer)self];
+    
+    sq_arrayappend(_squirrelVM.vm, -2);
+    
+    OCSquirrelArray *array = [[OCSquirrelArray alloc] initWithHSQOBJECT: sqArray
+                                                                   inVM: _squirrelVM];
+    
+    XCTAssertEqual([[array objectAtIndex: 0] pointerValue], (__bridge void *)self,
+                   @"-objectAtIndex: should return the appropriate NSValue for userPointer value");
+}
+
+
+- (void) testObjectForNullValue
+{
+    sq_newarray(_squirrelVM.vm, 0);
+    
+    HSQOBJECT sqArray = [_squirrelVM.stack sqObjectAtPosition: -1];
+    
+    [_squirrelVM.stack pushNull];
+    
+    sq_arrayappend(_squirrelVM.vm, -2);
+    
+    OCSquirrelArray *array = [[OCSquirrelArray alloc] initWithHSQOBJECT: sqArray
+                                                                   inVM: _squirrelVM];
+    
+    XCTAssertNil([array objectAtIndex: 0],
+                 @"-objectAtIndex: should return nil for `null` value");
+}
+
+
+- (void) testObjectForUndefinedIndex
+{
+    sq_newarray(_squirrelVM.vm, 0);
+    
+    HSQOBJECT sqArray = [_squirrelVM.stack sqObjectAtPosition: -1];
+    
+    [_squirrelVM.stack pushInteger: 1234];
+    
+    sq_arrayappend(_squirrelVM.vm, -2);
+    
+    OCSquirrelArray *array = [[OCSquirrelArray alloc] initWithHSQOBJECT: sqArray
+                                                                   inVM: _squirrelVM];
+    
+    XCTAssertNil([array objectAtIndex: 2],
+                 @"-objectAtIndex: should return nil for index out of bounds");
+}
+
+
 @end

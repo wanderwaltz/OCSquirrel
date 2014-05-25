@@ -68,6 +68,26 @@
 #pragma mark -
 #pragma mark methods
 
+- (id) objectAtIndex: (NSInteger) index
+{
+    __block id object = nil;
+    
+    OCSquirrelVM *squirrelVM = self.squirrelVM;
+    
+    [squirrelVM performPreservingStackTop: ^{
+        [self push];
+        
+        [squirrelVM.stack pushInteger: index];
+        
+        if (SQ_SUCCEEDED(sq_get(squirrelVM.vm, -2)))
+        {
+            object = [squirrelVM.stack valueAtPosition: -1];
+        }
+    }];
+    
+    return object;
+}
+
 - (void) addObject: (id) object
 {
     OCSquirrelVM *squirrelVM = self.squirrelVM;
