@@ -341,6 +341,31 @@
 }
 
 
+- (void) testSetObjectForIndexedSubscriptCallsSetObjectAtIndex
+{
+    sq_newarray(_squirrelVM.vm, 0);
+    
+    HSQOBJECT sqArray = [_squirrelVM.stack sqObjectAtPosition: -1];
+    
+    [_squirrelVM.stack pushInteger: 1234];
+    
+    sq_arrayappend(_squirrelVM.vm, -2);
+    
+    OCSquirrelArray *array = [[OCSquirrelArray alloc] initWithHSQOBJECT: sqArray
+                                                                   inVM: _squirrelVM];
+    
+    id arrayMock = [OCMockObject partialMockForObject: array];
+    
+    [[arrayMock expect] setObject: [NSNull null] atIndex: 2];
+    
+    array[2] = [NSNull null];
+    
+    XCTAssertNoThrow([arrayMock verify],
+                     @"Setting object using indexed subscripting of OCSquirrelArray "
+                     @"should call -setObject:atIndex:");
+}
+
+
 #pragma mark -
 #pragma mark enumeration
 
@@ -392,6 +417,88 @@
                    @"-enumerateObjectsUsingBlock should stop if stop parameter of the block is "
                    @"set to YES");
 }
+
+
+#pragma mark -
+#pragma mark generic setter tests
+
+- (void) testSetObjectIntAtIndexOnce
+{
+    OCSquirrelArray *array = [[OCSquirrelArray alloc] initWithVM: _squirrelVM];
+    
+    [array addObject: @1234];
+    
+    [array setObject: @5678 atIndex: 0];
+    
+    XCTAssertEqualObjects([array objectAtIndex: 0], @5678,
+                          @"Integer value should be properly set by setObject:atIndex:");
+}
+
+
+- (void) testSetObjectFloatAtIndex
+{
+    OCSquirrelArray *array = [[OCSquirrelArray alloc] initWithVM: _squirrelVM];
+    
+    [array addObject: @1234];
+    
+    [array setObject: @123.456 atIndex: 0];
+    
+    XCTAssertEqualObjects([array objectAtIndex: 0], @123.456,
+                          @"Float value should be properly set by setObject:atIndex:");
+}
+
+
+- (void) testSetObjectBoolAtIndex
+{
+    OCSquirrelArray *array = [[OCSquirrelArray alloc] initWithVM: _squirrelVM];
+    
+    [array addObject: @1234];
+    
+    [array setObject: @YES atIndex: 0];
+    
+    XCTAssertEqualObjects([array objectAtIndex: 0], @YES,
+                          @"Bool value should be properly set by setObject:atIndex:");
+}
+
+
+- (void) testSetObjectUserPointerAtIndex
+{
+    OCSquirrelArray *array = [[OCSquirrelArray alloc] initWithVM: _squirrelVM];
+    
+    [array addObject: @1234];
+    
+    [array setObject: [NSValue valueWithPointer: (__bridge void *)self] atIndex: 0];
+    
+    XCTAssertEqualObjects([array objectAtIndex: 0], [NSValue valueWithPointer: (__bridge void *)self],
+                          @"UserPoniter value should be properly set by setObject:atIndex:");
+}
+
+
+- (void) testSetObjectStringAtIndex
+{
+    OCSquirrelArray *array = [[OCSquirrelArray alloc] initWithVM: _squirrelVM];
+    
+    [array addObject: @1234];
+    
+    [array setObject: @"someValue" atIndex: 0];
+    
+    XCTAssertEqualObjects([array objectAtIndex: 0], @"someValue",
+                          @"String value should be properly set by setObject:atIndex:");
+}
+
+
+- (void) testSetObjectNilAtIndex
+{
+    OCSquirrelArray *array = [[OCSquirrelArray alloc] initWithVM: _squirrelVM];
+    
+    [array addObject: @1234];
+    
+    [array setObject: nil atIndex: 0];
+    
+    XCTAssertNil([array objectAtIndex: 0],
+                 @"nil value should be properly set by setObject:atIndex:");
+}
+
 
 
 @end

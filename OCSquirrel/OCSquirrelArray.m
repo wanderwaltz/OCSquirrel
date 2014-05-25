@@ -108,6 +108,26 @@
 }
 
 
+- (void) setObject: (id) object atIndex: (NSInteger) index
+{
+    OCSquirrelVM *squirrelVM = self.squirrelVM;
+    
+    [squirrelVM performPreservingStackTop: ^{
+        [self push];
+        [squirrelVM.stack pushInteger: index];
+        [squirrelVM.stack pushValue: object];
+        
+        sq_set(squirrelVM.vm, -3);
+    }];
+}
+
+
+- (void) setObject: (id) object atIndexedSubscript: (NSInteger) index
+{
+    [self setObject: object atIndex: index];
+}
+
+
 - (void) enumerateObjectsUsingBlock: (void (^)(id object, NSInteger index, BOOL *stop)) block
 {
     if (block != nil)
