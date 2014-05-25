@@ -10,7 +10,23 @@
 #error "This file should be compiled with ARC support"
 #endif
 
-#import "TestOCSquirrelArray.h"
+#ifndef GHUnit_Target
+    #import <XCTest/XCTest.h>
+#endif
+
+#import <OCSquirrel/OCSquirrel.h>
+
+
+#pragma mark -
+#pragma mark TestOCSquirrelArray interface
+
+@interface TestOCSquirrelArray : XCTestCase
+{
+    OCSquirrelVM *_squirrelVM;
+}
+
+@end
+
 
 
 #pragma mark -

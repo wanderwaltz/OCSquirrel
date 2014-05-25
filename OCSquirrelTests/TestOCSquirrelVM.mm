@@ -10,7 +10,11 @@
 #error "This file should be compiled with ARC support"
 #endif
 
-#import "TestOCSquirrelVM.h"
+#ifndef GHUnit_Target
+#import <XCTest/XCTest.h>
+#endif
+
+#import <OCSquirrel/OCSquirrel.h>
 #import "OCMock.h"
 
 #import <math.h>
@@ -28,6 +32,17 @@
 #import "squserdata.h"
 #import "sqarray.h"
 #import "sqclass.h"
+
+#pragma mark -
+#pragma mark TestOCSquirrelVM interface
+
+@interface TestOCSquirrelVM : XCTestCase
+{
+    OCSquirrelVM *_squirrelVM;
+}
+
+@end
+
 
 #pragma mark -
 #pragma mark OCSquirrelVMInitWithStackSizeOverride class

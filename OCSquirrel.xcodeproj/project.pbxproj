@@ -157,13 +157,10 @@
 /* Begin PBXFileReference section */
 		5D0D16F41930E0990053EBCC /* SenTestingKitCompatibility.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SenTestingKitCompatibility.h; sourceTree = "<group>"; };
 		5D0D16F51930E2010053EBCC /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
-		5D63982E171AA39F00CFECC1 /* TestOCSquirrelTable.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TestOCSquirrelTable.h; sourceTree = "<group>"; };
 		5D63982F171AA39F00CFECC1 /* TestOCSquirrelTable.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TestOCSquirrelTable.m; sourceTree = "<group>"; };
 		5D639831171AA46900CFECC1 /* OCSquirrelTable.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OCSquirrelTable.h; sourceTree = "<group>"; };
 		5D639832171AA46900CFECC1 /* OCSquirrelTable.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OCSquirrelTable.m; sourceTree = "<group>"; };
-		5D8EC810171A57600084F92C /* TestPrinting.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TestPrinting.h; sourceTree = "<group>"; };
 		5D8EC811171A57600084F92C /* TestPrinting.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TestPrinting.m; sourceTree = "<group>"; };
-		5D8EC813171A64690084F92C /* TestStackManipulation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TestStackManipulation.h; sourceTree = "<group>"; };
 		5D8EC814171A64690084F92C /* TestStackManipulation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TestStackManipulation.m; sourceTree = "<group>"; };
 		5D8EC816171A65210084F92C /* OCSquirrelVMStack.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OCSquirrelVMStack.h; sourceTree = "<group>"; };
 		5D8EC81A171A65770084F92C /* OCSquirrelVMStackImpl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OCSquirrelVMStackImpl.h; sourceTree = "<group>"; };
@@ -226,9 +223,7 @@
 		5DB09DE517196BF300F50257 /* sqstdstream.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = sqstdstream.h; sourceTree = "<group>"; };
 		5DB09DE617196BF300F50257 /* sqstdstring.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = sqstdstring.cpp; sourceTree = "<group>"; };
 		5DB09DE717196BF300F50257 /* sqstdsystem.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = sqstdsystem.cpp; sourceTree = "<group>"; };
-		5DB09DF417196D1F00F50257 /* TestRawSquirrelAPI.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TestRawSquirrelAPI.h; sourceTree = "<group>"; };
 		5DB09DF517196D1F00F50257 /* TestRawSquirrelAPI.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TestRawSquirrelAPI.m; sourceTree = "<group>"; };
-		5DB09DF717196FA500F50257 /* TestOCSquirrelVM.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TestOCSquirrelVM.h; sourceTree = "<group>"; };
 		5DB09DF817196FA500F50257 /* TestOCSquirrelVM.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = TestOCSquirrelVM.mm; sourceTree = "<group>"; };
 		5DB09DFB1719705500F50257 /* OCSquirrelVM.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OCSquirrelVM.h; sourceTree = "<group>"; };
 		5DB09DFC1719705500F50257 /* OCSquirrelVM.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OCSquirrelVM.m; sourceTree = "<group>"; };
@@ -272,7 +267,6 @@
 		5DBE08FE1733907900908658 /* StackPushBenchmark.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StackPushBenchmark.m; sourceTree = "<group>"; };
 		5DBE09031733957000908658 /* StackSumBenchmark.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StackSumBenchmark.h; sourceTree = "<group>"; };
 		5DBE09041733957000908658 /* StackSumBenchmark.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StackSumBenchmark.m; sourceTree = "<group>"; };
-		5DC29C33171AFE09000A2096 /* TestOCSquirrelObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TestOCSquirrelObject.h; sourceTree = "<group>"; };
 		5DC29C34171AFE09000A2096 /* TestOCSquirrelObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TestOCSquirrelObject.m; sourceTree = "<group>"; };
 		5DC29C37171AFE09000A2096 /* OCSquirrelObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OCSquirrelObject.h; sourceTree = "<group>"; };
 		5DC29C38171AFE09000A2096 /* OCSquirrelObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OCSquirrelObject.m; sourceTree = "<group>"; };
@@ -280,23 +274,18 @@
 		5DC90417172B88E7009C7082 /* OCSquirrelClass.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OCSquirrelClass.m; sourceTree = "<group>"; };
 		5DC9041A172BA3A8009C7082 /* OCSquirrelInstance.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OCSquirrelInstance.h; sourceTree = "<group>"; };
 		5DC9041B172BA3A9009C7082 /* OCSquirrelInstance.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OCSquirrelInstance.m; sourceTree = "<group>"; };
-		5DC9041E172BA6B7009C7082 /* TestOCSquirrelClass.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TestOCSquirrelClass.h; sourceTree = "<group>"; };
 		5DC9041F172BA6B7009C7082 /* TestOCSquirrelClass.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TestOCSquirrelClass.m; sourceTree = "<group>"; };
-		5DC90421172BB95C009C7082 /* TestOCSquirrelClosure.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TestOCSquirrelClosure.h; sourceTree = "<group>"; };
 		5DC90422172BB95C009C7082 /* TestOCSquirrelClosure.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TestOCSquirrelClosure.m; sourceTree = "<group>"; };
 		5DC90424172BBA94009C7082 /* OCSquirrelClosure.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OCSquirrelClosure.h; sourceTree = "<group>"; };
 		5DC90425172BBA95009C7082 /* OCSquirrelClosure.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OCSquirrelClosure.m; sourceTree = "<group>"; };
-		5DD79ADD17356D6B0008AC33 /* TestOCSquirrelInstance.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TestOCSquirrelInstance.h; sourceTree = "<group>"; };
 		5DD79ADE17356D6B0008AC33 /* TestOCSquirrelInstance.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TestOCSquirrelInstance.m; sourceTree = "<group>"; };
 		5DD79AE217363A650008AC33 /* BindingHelperClasses.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BindingHelperClasses.h; sourceTree = "<group>"; };
 		5DD79AE317363A650008AC33 /* BindingHelperClasses.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BindingHelperClasses.m; sourceTree = "<group>"; };
-		7C41C06C1766222F004120B6 /* TestOCSquirrelArray.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TestOCSquirrelArray.h; sourceTree = "<group>"; };
 		7C41C06D1766222F004120B6 /* TestOCSquirrelArray.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TestOCSquirrelArray.m; sourceTree = "<group>"; };
 		7C41C070176622D0004120B6 /* OCSquirrelArray.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OCSquirrelArray.h; sourceTree = "<group>"; };
 		7C41C071176622D0004120B6 /* OCSquirrelArray.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OCSquirrelArray.m; sourceTree = "<group>"; };
 		7C94F8C3172A431E00C7BA78 /* OCSquirrelVMFunctions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OCSquirrelVMFunctions.h; sourceTree = "<group>"; };
 		7C94F8C4172A431E00C7BA78 /* OCSquirrelVMFunctions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OCSquirrelVMFunctions.m; sourceTree = "<group>"; };
-		7C94F8C7172A4D0D00C7BA78 /* TestBindClass.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TestBindClass.h; sourceTree = "<group>"; };
 		7C94F8C8172A4D0D00C7BA78 /* TestBindClass.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TestBindClass.m; sourceTree = "<group>"; };
 		7CA9753A172E4FBE001E58B1 /* OCSquirrelVMFunctions_NoARC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OCSquirrelVMFunctions_NoARC.h; sourceTree = "<group>"; };
 		7CA9753B172E4FBE001E58B1 /* OCSquirrelVMFunctions_NoARC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OCSquirrelVMFunctions_NoARC.m; sourceTree = "<group>"; };
@@ -406,25 +395,15 @@
 			isa = PBXGroup;
 			children = (
 				5DD79AE117363A4F0008AC33 /* Class Bindings Tests */,
-				5DD79ADD17356D6B0008AC33 /* TestOCSquirrelInstance.h */,
 				5DD79ADE17356D6B0008AC33 /* TestOCSquirrelInstance.m */,
-				5DC90421172BB95C009C7082 /* TestOCSquirrelClosure.h */,
 				5DC90422172BB95C009C7082 /* TestOCSquirrelClosure.m */,
-				5DC9041E172BA6B7009C7082 /* TestOCSquirrelClass.h */,
 				5DC9041F172BA6B7009C7082 /* TestOCSquirrelClass.m */,
-				7C41C06C1766222F004120B6 /* TestOCSquirrelArray.h */,
 				7C41C06D1766222F004120B6 /* TestOCSquirrelArray.m */,
-				5D63982E171AA39F00CFECC1 /* TestOCSquirrelTable.h */,
 				5D63982F171AA39F00CFECC1 /* TestOCSquirrelTable.m */,
-				5DC29C33171AFE09000A2096 /* TestOCSquirrelObject.h */,
 				5DC29C34171AFE09000A2096 /* TestOCSquirrelObject.m */,
-				5D8EC813171A64690084F92C /* TestStackManipulation.h */,
 				5D8EC814171A64690084F92C /* TestStackManipulation.m */,
-				5D8EC810171A57600084F92C /* TestPrinting.h */,
 				5D8EC811171A57600084F92C /* TestPrinting.m */,
-				5DB09DF717196FA500F50257 /* TestOCSquirrelVM.h */,
 				5DB09DF817196FA500F50257 /* TestOCSquirrelVM.mm */,
-				5DB09DF417196D1F00F50257 /* TestRawSquirrelAPI.h */,
 				5DB09DF517196D1F00F50257 /* TestRawSquirrelAPI.m */,
 				5DB09CB61719686D00F50257 /* Supporting Files */,
 			);
@@ -688,7 +667,6 @@
 			children = (
 				5DD79AE217363A650008AC33 /* BindingHelperClasses.h */,
 				5DD79AE317363A650008AC33 /* BindingHelperClasses.m */,
-				7C94F8C7172A4D0D00C7BA78 /* TestBindClass.h */,
 				7C94F8C8172A4D0D00C7BA78 /* TestBindClass.m */,
 			);
 			name = "Class Bindings Tests";

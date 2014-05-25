@@ -10,8 +10,24 @@
 #error "This file should be compiled with ARC support"
 #endif
 
-#import "TestOCSquirrelObject.h"
+#ifndef GHUnit_Target
+    #import <XCTest/XCTest.h>
+#endif
+
+#import <OCSquirrel/OCSquirrel.h>
 #import "SenTestingKitCompatibility.h"
+
+
+#pragma mark -
+#pragma mark TestOCSquirrelObject interface
+
+@interface TestOCSquirrelObject : XCTestCase
+{
+    OCSquirrelVM *_squirrelVM;
+}
+
+@end
+
 
 
 #pragma mark -

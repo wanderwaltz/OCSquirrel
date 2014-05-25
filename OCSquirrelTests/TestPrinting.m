@@ -10,8 +10,38 @@
 #error "This file should be compiled with ARC support"
 #endif
 
-#import "TestPrinting.h"
+#ifndef GHUnit_Target
+#import <XCTest/XCTest.h>
+#endif
+
+#import <OCSquirrel/OCSquirrel.h>
 #import "OCMock.h"
+
+
+#pragma mark -
+#pragma mark OCSquirrelPrintDelegate interface
+
+/*! A class which is used for testing that delegate method is invoked by OCSquirrelVM when
+ a script tries to print some string. Actual implementation of the delegate method is not
+ important since the method invocation will be tested by an OCMockObject. The OCMockObject
+ cannot mock -respondsToSelector:, so this class is needed only for that.
+ 
+ See -testPrintCallsDelegateMethod below for more info.
+ */
+@interface OCSquirrelPrintDelegate : NSObject<OCSquirrelVMDelegate>
+@end
+
+
+#pragma mark -
+#pragma mark TestPrinting interface
+
+@interface TestPrinting : XCTestCase<OCSquirrelVMDelegate>
+{
+    OCSquirrelVM *_squirrelVM;
+    NSString *_lastPrintedString;
+}
+
+@end
 
 
 #pragma mark -

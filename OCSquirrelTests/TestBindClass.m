@@ -10,8 +10,26 @@
 #error "This file should be compiled with ARC support"
 #endif
 
-#import "TestBindClass.h"
+#ifndef GHUnit_Target
+#import <XCTest/XCTest.h>
+#endif
+
+#import <OCSquirrel/OCSquirrel.h>
 #import "OCMock.h"
+#import "BindingHelperClasses.h"
+
+
+#pragma mark -
+#pragma mark TestBindClass interface
+
+@interface TestBindClass : XCTestCase
+{
+    OCSquirrelVM *_squirrelVM;
+    OCSquirrelTable *_rootTable;
+}
+
+@end
+
 
 #pragma mark -
 #pragma mark TestBindClass implementation
