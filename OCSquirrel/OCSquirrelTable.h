@@ -9,6 +9,12 @@
 #import <Foundation/Foundation.h>
 #import "squirrel.h"
 
+// TODO: implement NSMutableDictionary cluster integration
+// Idea is the following: implement NSMutableDictionary subclass named OCSquirrelTable
+// which will conform to OCSquirrelTable protocol and will contain an OCSquirrelTableImpl
+// object inside itself. This class will forward OCSquirrelTable protocol methods to its
+// OCSquirrelTableImpl.
+
 @protocol OCSquirrelTable <NSObject>
 @required
 

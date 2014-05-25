@@ -10,7 +10,6 @@
 #import "OCSquirrelTable.h"
 
 // TODO: fast enumeration of keys similar to NSDictionary's
-// TODO: NSMutableDictionary cluster integration
 // TODO: -hasObjectForKey:
 
 #pragma mark -

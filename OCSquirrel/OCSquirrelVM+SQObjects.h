@@ -8,6 +8,13 @@
 
 #import "OCSquirrelVM.h"
 
+// TODO: encapsulate implementations of other OCSquirrelObjects similar to OCSquirrelTable
+// Basically each of the Squirrel objects (array, class, instance, closure etc.) should have
+// a corresponding @protocol with private impl class backing it and a method of creating those
+// objects using OCSquirrelVM+SQObjects category.
+
+// TODO: tests for public OCSquirrelTable-related APIs
+
 @protocol OCSquirrelTable;
 
 @interface OCSquirrelVM (SQObjects)

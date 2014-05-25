@@ -103,7 +103,7 @@
 		5DBE08FF1733907900908658 /* StackPushBenchmark.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DBE08FE1733907900908658 /* StackPushBenchmark.m */; };
 		5DBE09051733957000908658 /* StackSumBenchmark.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DBE09041733957000908658 /* StackSumBenchmark.m */; };
 		5DC29C35171AFE09000A2096 /* TestOCSquirrelObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DC29C34171AFE09000A2096 /* TestOCSquirrelObject.m */; };
-		5DC29C39171AFE09000A2096 /* OCSquirrelObject.h in Headers */ = {isa = PBXBuildFile; fileRef = 5DC29C37171AFE09000A2096 /* OCSquirrelObject.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		5DC29C39171AFE09000A2096 /* OCSquirrelObject.h in Headers */ = {isa = PBXBuildFile; fileRef = 5DC29C37171AFE09000A2096 /* OCSquirrelObject.h */; };
 		5DC29C3A171AFE09000A2096 /* OCSquirrelObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DC29C38171AFE09000A2096 /* OCSquirrelObject.m */; };
 		5DC90418172B88E7009C7082 /* OCSquirrelClass.h in Headers */ = {isa = PBXBuildFile; fileRef = 5DC90416172B88E7009C7082 /* OCSquirrelClass.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		5DC90419172B88E7009C7082 /* OCSquirrelClass.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DC90417172B88E7009C7082 /* OCSquirrelClass.m */; };
@@ -407,7 +407,6 @@
 				5DC90422172BB95C009C7082 /* TestOCSquirrelClosure.m */,
 				5DC9041F172BA6B7009C7082 /* TestOCSquirrelClass.m */,
 				7C41C06D1766222F004120B6 /* TestOCSquirrelArray.m */,
-				5DC29C34171AFE09000A2096 /* TestOCSquirrelObject.m */,
 				5DB09CB61719686D00F50257 /* Supporting Files */,
 			);
 			path = OCSquirrelTests;
@@ -679,6 +678,7 @@
 		5DD12D2C1932508F0087979E /* Protected API tests */ = {
 			isa = PBXGroup;
 			children = (
+				5DC29C34171AFE09000A2096 /* TestOCSquirrelObject.m */,
 				5DB09DF517196D1F00F50257 /* TestRawSquirrelAPI.m */,
 				5D63982F171AA39F00CFECC1 /* TestOCSquirrelTableImpl.m */,
 			);
@@ -717,7 +717,6 @@
 				5DD12D2A19324FC00087979E /* OCSquirrelVM+SQObjects.h in Headers */,
 				5DD12D2D193250E00087979E /* OCSquirrelTable.h in Headers */,
 				5D8EC818171A65210084F92C /* OCSquirrelVMStack.h in Headers */,
-				5DC29C39171AFE09000A2096 /* OCSquirrelObject.h in Headers */,
 				5DC90418172B88E7009C7082 /* OCSquirrelClass.h in Headers */,
 				5DC9041C172BA3A9009C7082 /* OCSquirrelInstance.h in Headers */,
 				5DC90426172BBA95009C7082 /* OCSquirrelClosure.h in Headers */,
@@ -729,6 +728,7 @@
 				5DB09DBD171969D700F50257 /* sqstdstring.h in Headers */,
 				5DB09DBE171969D700F50257 /* sqstdsystem.h in Headers */,
 				5DB09DBF171969D700F50257 /* squirrel.h in Headers */,
+				5DC29C39171AFE09000A2096 /* OCSquirrelObject.h in Headers */,
 				5DB09D95171969D100F50257 /* sqarray.h in Headers */,
 				5DB09D98171969D100F50257 /* sqclass.h in Headers */,
 				5DB09D99171969D100F50257 /* sqclosure.h in Headers */,
