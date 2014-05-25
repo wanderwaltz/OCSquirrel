@@ -65,15 +65,17 @@
     
     for (NSUInteger i = 0; i < iterations; ++i)
     {
-        sq_pushinteger(self.squirrelVM.vm, i);
+        [self.squirrelVM perform:^(HSQUIRRELVM vm, id<OCSquirrelVMStack> stack) {
+            sq_pushinteger(vm, i);
+        }];
     }
     
     [self log:
      [NSString stringWithFormat: @"Finished in %.3lf seconds.", [self intervalSinceLastRecord]]];
     
     
-    NSUInteger sum   = 0;
-    SQInteger  value = 0;
+    NSUInteger sum = 0;
+    __block SQInteger value = 0;
     
     // Summing integers using C API
     [self log:
@@ -83,7 +85,10 @@
     
     for (NSUInteger i = 0; i < iterations; ++i)
     {
-        sq_getinteger(self.squirrelVM.vm, i+1, &value);
+        [self.squirrelVM perform:^(HSQUIRRELVM vm, id<OCSquirrelVMStack> stack) {
+            sq_getinteger(vm, i+1, &value);
+        }];
+        
         sum += value;
     }
     

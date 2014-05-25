@@ -35,10 +35,10 @@
 {
     __block id table = nil;
     
-    [squirrelVM performPreservingStackTop: ^{
-        sq_pushroottable(squirrelVM.vm);
+    [squirrelVM performPreservingStackTop: ^(HSQUIRRELVM vm, id<OCSquirrelVMStack> stack){
+        sq_pushroottable(vm);
         
-        HSQOBJECT root = [squirrelVM.stack sqObjectAtPosition: -1];
+        HSQOBJECT root = [stack sqObjectAtPosition: -1];
         
         table = [[self alloc] initWithHSQOBJECT: root
                                            inVM: squirrelVM];
@@ -53,10 +53,10 @@
 {
     __block id table = nil;
     
-    [squirrelVM performPreservingStackTop: ^{
-        sq_pushregistrytable(squirrelVM.vm);
+    [squirrelVM performPreservingStackTop: ^(HSQUIRRELVM vm, id<OCSquirrelVMStack> stack){
+        sq_pushregistrytable(vm);
         
-        HSQOBJECT registry = [squirrelVM.stack sqObjectAtPosition: -1];
+        HSQOBJECT registry = [stack sqObjectAtPosition: -1];
         
         table = [[self alloc] initWithHSQOBJECT: registry
                                            inVM: squirrelVM];
@@ -73,10 +73,10 @@
     
     if (self != nil)
     {
-        [squirrelVM performPreservingStackTop: ^{
-            sq_newtable(squirrelVM.vm);
-            _obj = [squirrelVM.stack sqObjectAtPosition: -1];
-            sq_addref(squirrelVM.vm, &_obj);
+        [squirrelVM performPreservingStackTop: ^(HSQUIRRELVM vm, id<OCSquirrelVMStack> stack){
+            sq_newtable(vm);
+            _obj = [stack sqObjectAtPosition: -1];
+            sq_addref(vm, &_obj);
         }];
     }
     return self;
@@ -152,14 +152,14 @@
     
     OCSquirrelVM *squirrelVM = self.squirrelVM;
     
-    [squirrelVM performPreservingStackTop: ^{
+    [squirrelVM performPreservingStackTop: ^(HSQUIRRELVM vm, id<OCSquirrelVMStack> stack){
         [self push];
         
-        [squirrelVM.stack pushValue: key];
+        [stack pushValue: key];
         
-        if (SQ_SUCCEEDED(sq_get(squirrelVM.vm, -2)))
+        if (SQ_SUCCEEDED(sq_get(vm, -2)))
         {
-            object = [squirrelVM.stack valueAtPosition: -1];
+            object = [stack valueAtPosition: -1];
         }
     }];
     
@@ -180,12 +180,12 @@
 {
     OCSquirrelVM *squirrelVM = self.squirrelVM;
     
-    [squirrelVM performPreservingStackTop: ^{
+    [squirrelVM performPreservingStackTop: ^(HSQUIRRELVM vm, id<OCSquirrelVMStack> stack){
         [self push];
-        [squirrelVM.stack pushValue: key];
-        [squirrelVM.stack pushValue: object];
+        [stack pushValue: key];
+        [stack pushValue: object];
         
-        sq_newslot(squirrelVM.vm, -3, SQFalse);
+        sq_newslot(vm, -3, SQFalse);
     }];
 }
 
@@ -253,17 +253,17 @@
     {
         OCSquirrelVM *squirrelVM = self.squirrelVM;
         
-        [squirrelVM performPreservingStackTop:^{
+        [squirrelVM performPreservingStackTop:^(HSQUIRRELVM vm, id<OCSquirrelVMStack> stack){
             
             [self push];
-            sq_pushnull(squirrelVM.vm);
+            sq_pushnull(vm);
             
-            while(SQ_SUCCEEDED(sq_next(squirrelVM.vm, -2)))
+            while(SQ_SUCCEEDED(sq_next(vm, -2)))
             {
-                id key   = [squirrelVM.stack valueAtPosition: -2];
-                id value = [squirrelVM.stack valueAtPosition: -1];
+                id key   = [stack valueAtPosition: -2];
+                id value = [stack valueAtPosition: -1];
                 
-                sq_pop(squirrelVM.vm,2);
+                sq_pop(vm,2);
                 
                 BOOL stop = NO;
                 

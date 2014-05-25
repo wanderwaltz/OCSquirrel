@@ -67,7 +67,9 @@
     
     for (NSUInteger i = 0; i < iterations; ++i)
     {
-        sq_pushinteger(self.squirrelVM.vm, i);
+        [self.squirrelVM perform:^(HSQUIRRELVM vm, id<OCSquirrelVMStack> stack) {
+            sq_pushinteger(vm, i); 
+        }];
     }
     
     [self log:

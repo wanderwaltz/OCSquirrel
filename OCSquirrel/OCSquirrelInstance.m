@@ -27,9 +27,9 @@
     
     OCSquirrelVM *squirrelVM = self.squirrelVM;
     
-    [squirrelVM performPreservingStackTop: ^{
+    [squirrelVM performPreservingStackTop: ^(HSQUIRRELVM vm, id<OCSquirrelVMStack> stack){
         [self push];
-        sq_getinstanceup(squirrelVM.vm, -1, &userPointer, 0);
+        sq_getinstanceup(vm, -1, &userPointer, 0);
     }];
     
     return (__bridge id)userPointer;

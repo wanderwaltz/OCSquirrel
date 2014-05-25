@@ -105,14 +105,23 @@
 
 - (void) testHasVMProperty
 {
-    XCTAssertTrue(_squirrelVM.vm != NULL,
-                 @"OCSquirrelVM should have a non-nil vm property.");
+    __block BOOL hasVM = NO;
+    
+    [_squirrelVM perform:^(HSQUIRRELVM vm, id<OCSquirrelVMStack> stack) {
+        hasVM = (vm != NULL);
+    }];
+    
+    XCTAssertTrue(hasVM, @"OCSquirrelVM should have a non-nil vm property.");
 }
 
 
 - (void) testForeignPtr
 {
-    SQUserPointer vmPointer = sq_getforeignptr(_squirrelVM.vm);
+    __block SQUserPointer vmPointer = NULL;
+    
+    [_squirrelVM perform:^(HSQUIRRELVM vm, id<OCSquirrelVMStack> stack) {
+        vmPointer = sq_getforeignptr(vm);
+    }];
 
     XCTAssertEqual(vmPointer, (__bridge SQUserPointer)_squirrelVM,
                    @"OCSquirrelVM should set self as the foreign ptr for the Squirrel VM");
@@ -121,7 +130,13 @@
 
 - (void) testDefaultInitialStackSize
 {
-    XCTAssertEqual(_squirrelVM.vm->_stack.capacity(), kOCSquirrelVMDefaultInitialStackSize,
+    __block NSUInteger capacity = 0;
+    
+    [_squirrelVM perform:^(HSQUIRRELVM vm, id<OCSquirrelVMStack> stack) {
+        capacity = vm->_stack.capacity();
+    }];
+    
+    XCTAssertEqual(capacity, kOCSquirrelVMDefaultInitialStackSize,
                    @"Initial stack size of a OCSquirrelVM initialized with -init should be equal to "
                    @"kOCSquirrelVMDefaultInitialStackSize");
 }
@@ -131,9 +146,15 @@
 {
     static const NSUInteger kCustomStackSize = 10;
     
+    __block NSUInteger capacity = 0;
+    
     _squirrelVM = [[OCSquirrelVM alloc] initWithStackSize: kCustomStackSize];
     
-    XCTAssertEqual(_squirrelVM.vm->_stack.capacity(), kCustomStackSize,
+    [_squirrelVM perform:^(HSQUIRRELVM vm, id<OCSquirrelVMStack> stack) {
+        capacity = vm->_stack.capacity();
+    }];
+    
+    XCTAssertEqual(capacity, kCustomStackSize,
                    @"Initial stack size of a OCSquirrelVM initialized with -initWithStackSize: "
                    @"should be equal to kCustomStackSize");
 }

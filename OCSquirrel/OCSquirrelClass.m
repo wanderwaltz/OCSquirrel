@@ -56,10 +56,10 @@
     
     if (self != nil)
     {
-        [squirrelVM performPreservingStackTop: ^{
-            sq_newclass(squirrelVM.vm, SQFalse);
-            sq_getstackobj(squirrelVM.vm, -1, &_obj);
-            sq_addref(squirrelVM.vm, &_obj);
+        [squirrelVM performPreservingStackTop: ^(HSQUIRRELVM vm, id<OCSquirrelVMStack> stack){
+            sq_newclass(vm, SQFalse);
+            sq_getstackobj(vm, -1, &_obj);
+            sq_addref(vm, &_obj);
         }];
     }
     return self;
@@ -79,7 +79,7 @@
     {
         if ([nativeClass instancesRespondToSelector: selector])
         {
-            [self.squirrelVM performPreservingStackTop: ^{
+            [self.squirrelVM performPreservingStackTop: ^(HSQUIRRELVM vm, id<OCSquirrelVMStack> stack){
                 NSString *selectorString = NSStringFromSelector(selector);
                 
                 // Exclude initializer methods from the search for now
@@ -146,7 +146,7 @@
     
     if (nativeClass != nil)
     {
-        [self.squirrelVM performPreservingStackTop: ^{
+        [self.squirrelVM performPreservingStackTop: ^(HSQUIRRELVM vm, id<OCSquirrelVMStack> stack){
             if (includeSuperclasses)
             {
                 [self bindInstanceMethodsOfNativeClassHierarchy: nativeClass];
@@ -211,12 +211,12 @@
 {
     OCSquirrelVM *squirrelVM = self.squirrelVM;
     
-    [squirrelVM performPreservingStackTop: ^{
+    [squirrelVM performPreservingStackTop: ^(HSQUIRRELVM vm, id<OCSquirrelVMStack> stack){
         [self push];
-        sq_pushnull(squirrelVM.vm);
-        [squirrelVM.stack pushValue: attributes];
+        sq_pushnull(vm);
+        [stack pushValue: attributes];
         
-        sq_setattributes(squirrelVM.vm, -3);
+        sq_setattributes(vm, -3);
     }];
 }
 
@@ -227,12 +227,12 @@
     
     OCSquirrelVM *squirrelVM = self.squirrelVM;
     
-    [squirrelVM performPreservingStackTop: ^{
+    [squirrelVM performPreservingStackTop: ^(HSQUIRRELVM vm, id<OCSquirrelVMStack> stack){
         [self push];
-        sq_pushnull(squirrelVM.vm);
-        sq_getattributes(squirrelVM.vm, -2);
+        sq_pushnull(vm);
+        sq_getattributes(vm, -2);
         
-        value = [squirrelVM.stack valueAtPosition: -1];
+        value = [stack valueAtPosition: -1];
     }];
     
     return value;
@@ -248,17 +248,19 @@
     
     __block HSQOBJECT instance;
     
-    [squirrelVM performPreservingStackTop: ^{
+    [squirrelVM performPreservingStackTop: ^(HSQUIRRELVM vm, id<OCSquirrelVMStack> stack){
         [self push];
-        sq_createinstance(squirrelVM.vm, -1);
-        sq_call(squirrelVM.vm, 1, SQTrue, SQTrue);
+        sq_createinstance(vm, -1);
+        sq_call(vm, 1, SQTrue, SQTrue);
         
-        sq_getstackobj(squirrelVM.vm, -1, &instance);
-        sq_addref(squirrelVM.vm, &instance);
+        sq_getstackobj(vm, -1, &instance);
+        sq_addref(vm, &instance);
     }];
     
-    sq_pushobject(squirrelVM.vm, instance);
-    sq_release(squirrelVM.vm, &instance);
+    [squirrelVM perform:^(HSQUIRRELVM vm, id<OCSquirrelVMStack> stack) {
+        sq_pushobject(vm, instance);
+        sq_release(vm, &instance);
+    }];
 }
 
 @end

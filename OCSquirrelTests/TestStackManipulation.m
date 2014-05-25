@@ -16,6 +16,7 @@
 
 #import <OCSquirrel/OCSquirrel.h>
 #import "SenTestingKitCompatibility.h"
+#import "OCSquirrelVM+Protected.h"
 
 
 #pragma mark -
@@ -758,7 +759,7 @@ static SQInteger NativeClosure(HSQUIRRELVM vm)
 {
     NSInteger topBefore = _squirrelVM.stack.top;
     
-    [_squirrelVM performPreservingStackTop: ^{
+    [_squirrelVM performPreservingStackTop: ^(HSQUIRRELVM vm, id<OCSquirrelVMStack> stack){
         [_squirrelVM.stack pushNull];
         [_squirrelVM.stack pushFloat:  123.456];
         [_squirrelVM.stack pushInteger: 123456];

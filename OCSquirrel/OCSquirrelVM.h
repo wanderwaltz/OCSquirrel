@@ -105,9 +105,6 @@ enum : NSInteger
 /// Delegate for the VM which will receive printing callbacks
 @property (weak, nonatomic) id<OCSquirrelVMDelegate> delegate;
 
-/// Squirrel virtual machine managed by the OCSquirrelVM
-@property (readonly, nonatomic) HSQUIRRELVM vm;
-
 /// Represents stack state of the current VM.
 @property (readonly, nonatomic) id<OCSquirrelVMStack> stack;
 
@@ -132,10 +129,15 @@ enum : NSInteger
 /// Compiles and executes the Squirrel script synchronously, returning the result of the script execution.
 - (id) execute: (NSString *) script error: (__autoreleasing NSError **) error;
 
+/// Block is executed synchronously
+- (void) perform: (void (^)(HSQUIRRELVM vm, id<OCSquirrelVMStack> stack)) block;
+
 /*! Stores the current stack top value and pops everything which will be pushed above this value before returning.
  *  Should be used when you expect pushing something to the stack and don't want to bother popping it manually.
+ * 
+ *  Block is executed synchronously
  */
-- (void) performPreservingStackTop: (dispatch_block_t) block;
+- (void) performPreservingStackTop: (void (^)(HSQUIRRELVM vm, id<OCSquirrelVMStack> stack)) block;
 
 
 

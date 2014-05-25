@@ -16,14 +16,14 @@
 @interface OCSquirrelVM ()
 {
 @protected
-    HSQUIRRELVM _vm;
-
     /// A concrete implementation of the stack property
     OCSquirrelVMStackImpl *_stack;
     
     /// Contains Objective-C class names as keys an OCSquirrelClass instances as values
     NSMutableDictionary *_classBindings;
 }
+
+@property (nonatomic, readonly) HSQUIRRELVM vm;
 
 @property (strong, readwrite, nonatomic) NSError *lastError;
 @property (readonly, nonatomic) NSDictionary *classBindings;

@@ -197,11 +197,21 @@ static const SQChar * const kOCSquirrelVMCompileBufferSourceName = _SC("buffer")
 }
 
 
-- (void) performPreservingStackTop: (dispatch_block_t) block
+- (void) perform: (void (^)(HSQUIRRELVM vm, id<OCSquirrelVMStack> stack)) block
 {
-    NSInteger top = self.stack.top;
-    block();
-    self.stack.top = top;    
+    if (self.vm != NULL) {
+        block(self.vm, self.stack);
+    }
+}
+
+
+- (void) performPreservingStackTop: (void (^)(HSQUIRRELVM vm, id<OCSquirrelVMStack> stack)) block
+{
+    if (self.vm != NULL) {
+        NSInteger top = self.stack.top;
+        [self perform: block];
+        self.stack.top = top;
+    }
 }
 
 
@@ -213,7 +223,7 @@ static const SQChar * const kOCSquirrelVMCompileBufferSourceName = _SC("buffer")
 {
     __block OCSquirrelClass *class = nil;
     
-    [self performPreservingStackTop:^{
+    [self performPreservingStackTop:^(HSQUIRRELVM vm, id<OCSquirrelVMStack> stack){
         NSString *className = NSStringFromClass(nativeClass);
         
         class = _classBindings[className];

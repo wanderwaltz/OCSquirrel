@@ -47,17 +47,17 @@
     
     if (self != nil)
     {
-        [squirrelVM performPreservingStackTop: ^{
-            sq_newclosure(squirrelVM.vm, function, 0);
-            sq_getstackobj(squirrelVM.vm, -1, &_obj);
-            sq_addref(squirrelVM.vm, &_obj);
+        [squirrelVM performPreservingStackTop: ^(HSQUIRRELVM vm, id<OCSquirrelVMStack> stack){
+            sq_newclosure(vm, function, 0);
+            sq_getstackobj(vm, -1, &_obj);
+            sq_addref(vm, &_obj);
             
             if (name != nil)
             {
                 const SQChar *cName = [name cStringUsingEncoding: NSUTF8StringEncoding];
                 
                 if (cName != NULL)
-                    sq_setnativeclosurename(squirrelVM.vm, -1, cName);
+                    sq_setnativeclosurename(vm, -1, cName);
             }
         }];
     }
@@ -96,19 +96,19 @@
     
     __block id result = nil;
     
-    [squirrelVM performPreservingStackTop: ^{
+    [squirrelVM performPreservingStackTop: ^(HSQUIRRELVM vm, id<OCSquirrelVMStack> stack){
         [self push]; // Pushes the closure to the stack
         [this push]; // Pushes the 'this' object to the stack
         
         for (id parameter in parameters)
         {
-            [squirrelVM.stack pushValue: parameter];
+            [stack pushValue: parameter];
         }
         
         // Parameters count is at least 1 since the first parameter is
         // always the 'this' object.
-        sq_call(squirrelVM.vm, parameters.count+1, SQTrue, SQTrue);
-        result = [squirrelVM.stack valueAtPosition: -1];
+        sq_call(vm, parameters.count+1, SQTrue, SQTrue);
+        result = [stack valueAtPosition: -1];
     }];
     
     return result;

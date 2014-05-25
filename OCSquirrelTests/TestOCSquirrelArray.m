@@ -15,6 +15,7 @@
 #endif
 
 #import <OCSquirrel/OCSquirrel.h>
+#import "OCSquirrelVM+Protected.h"
 #import "OCMock.h"
 
 #pragma mark -

@@ -89,7 +89,11 @@
         {
             _squirrelVM = squirrelVM;
             _obj        = object;
-            sq_addref(_squirrelVM.vm, &_obj);
+            
+            [_squirrelVM perform:^(HSQUIRRELVM vm, id<OCSquirrelVMStack> stack) {
+                sq_addref(vm, &_obj);
+            }];
+            
         }
         return self;
     }
@@ -99,9 +103,9 @@
 
 - (void) dealloc
 {
-    if (_squirrelVM.vm) {
-        sq_release(_squirrelVM.vm, &_obj);
-    }
+    [_squirrelVM perform:^(HSQUIRRELVM vm, id<OCSquirrelVMStack> stack) {
+        sq_release(vm, &_obj);
+    }];
 }
 
 
