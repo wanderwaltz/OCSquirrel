@@ -340,4 +340,58 @@
     XCTAssertNoThrow([arrayMock verify], @"Indexed subscripting of OCSquirrelArray should call -objectAtIndex:");
 }
 
+
+#pragma mark -
+#pragma mark enumeration
+
+- (void) testEnumerateObjectsUsingBlock
+{
+    OCSquirrelArray *array = [[OCSquirrelArray alloc] initWithVM: _squirrelVM];
+    
+    NSArray *values = @[@1, @2, @3];
+    
+    [array addObject: @1];
+    [array addObject: @2];
+    [array addObject: @3];
+    
+    NSMutableArray *enumerated = [NSMutableArray new];
+    
+    __block NSInteger iteration = 0;
+    
+    [array enumerateObjectsUsingBlock:
+     ^(id object, NSInteger index, BOOL *stop) {
+         [enumerated addObject: object];
+         
+         XCTAssertEqual(iteration, index, @"-enumerateObjectsUsingBlock: should properly enumerate indexes");
+         
+         iteration++;
+    }];
+    
+    XCTAssertEqualObjects(values, enumerated,
+                          @"-enumerateObjectsUsingBlock should enumerate all array elements");
+}
+
+
+- (void) testEnumerateObjectsUsingBlockStop
+{
+    OCSquirrelArray *array = [[OCSquirrelArray alloc] initWithVM: _squirrelVM];
+    
+    [array addObject: @1];
+    [array addObject: @2];
+    [array addObject: @3];
+    
+    __block NSInteger iterations = 0;
+    
+    [array enumerateObjectsUsingBlock:
+     ^(id object, NSInteger index, BOOL *stop) {
+         iterations++;
+         *stop = YES;
+     }];
+    
+    XCTAssertEqual((NSUInteger)iterations, (NSUInteger)1,
+                   @"-enumerateObjectsUsingBlock should stop if stop parameter of the block is "
+                   @"set to YES");
+}
+
+
 @end

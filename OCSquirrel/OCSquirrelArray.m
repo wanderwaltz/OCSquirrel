@@ -108,4 +108,32 @@
 }
 
 
+- (void) enumerateObjectsUsingBlock: (void (^)(id object, NSInteger index, BOOL *stop)) block
+{
+    if (block != nil)
+    {
+        OCSquirrelVM *squirrelVM = self.squirrelVM;
+        
+        [squirrelVM performPreservingStackTop:^{
+            
+            [self push];
+            sq_pushnull(squirrelVM.vm);
+            
+            while(SQ_SUCCEEDED(sq_next(squirrelVM.vm, -2)))
+            {
+                NSInteger index = [squirrelVM.stack integerAtPosition: -2];
+                id value = [squirrelVM.stack valueAtPosition: -1];
+                
+                sq_pop(squirrelVM.vm,2);
+                
+                BOOL stop = NO;
+                
+                block(value, index, &stop);
+                
+                if (stop) break;
+            }
+        }];
+    }
+}
+
 @end
