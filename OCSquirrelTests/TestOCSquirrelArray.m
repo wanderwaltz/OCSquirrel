@@ -15,7 +15,7 @@
 #endif
 
 #import <OCSquirrel/OCSquirrel.h>
-
+#import "OCMock.h"
 
 #pragma mark -
 #pragma mark TestOCSquirrelArray interface
@@ -314,5 +314,30 @@
                  @"-objectAtIndex: should return nil for index out of bounds");
 }
 
+
+#pragma mark -
+#pragma mark indexed subscripting tests
+
+- (void) testIndexedSubscriptCallsObjectAtIndex
+{
+    sq_newarray(_squirrelVM.vm, 0);
+    
+    HSQOBJECT sqArray = [_squirrelVM.stack sqObjectAtPosition: -1];
+    
+    [_squirrelVM.stack pushInteger: 1234];
+    
+    sq_arrayappend(_squirrelVM.vm, -2);
+    
+    OCSquirrelArray *array = [[OCSquirrelArray alloc] initWithHSQOBJECT: sqArray
+                                                                   inVM: _squirrelVM];
+    
+    id arrayMock = [OCMockObject partialMockForObject: array];
+    
+    [[[arrayMock expect] andReturn: nil] objectAtIndex: 0];
+    
+    __unused id result = arrayMock[0];
+    
+    XCTAssertNoThrow([arrayMock verify], @"Indexed subscripting of OCSquirrelArray should call -objectAtIndex:");
+}
 
 @end

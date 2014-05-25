@@ -88,6 +88,13 @@
     return object;
 }
 
+
+- (id) objectAtIndexedSubscript: (NSInteger) index
+{
+    return [self objectAtIndex: index];
+}
+
+
 - (void) addObject: (id) object
 {
     OCSquirrelVM *squirrelVM = self.squirrelVM;

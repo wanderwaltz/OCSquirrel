@@ -8,8 +8,6 @@
 
 #import <OCSquirrel/OCSquirrel.h>
 
-// TODO: -objectAtIndex:
-// TODO: -objectAtIndexedSubscript:
 // TODO: -enumerateObjectsUsingBlock:
 // TODO: -setObject:atIndex:
 // TODO: NSMutableArray cluster integration
@@ -25,5 +23,6 @@
 - (void) addObject: (id) object;
 
 - (id) objectAtIndex: (NSInteger) index;
+- (id) objectAtIndexedSubscript: (NSInteger) index;
 
 @end
