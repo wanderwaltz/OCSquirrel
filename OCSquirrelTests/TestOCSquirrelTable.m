@@ -15,6 +15,7 @@
 #endif
 
 #import <OCSquirrel/OCSquirrel.h>
+#import "OCMock.h"
 #import "SenTestingKitCompatibility.h"
 
 
@@ -355,7 +356,7 @@
 #pragma mark -
 #pragma mark keyed subscript getter tests
 
-- (void) testSubscriptObjectForIntValueStringKeyClass
+- (void) testKeyedSubscriptCallsObjectForKey
 {
     sq_newtable(_squirrelVM.vm);
     
@@ -369,217 +370,13 @@
     OCSquirrelTable *table = [[OCSquirrelTable alloc] initWithHSQOBJECT: sqTable
                                                                    inVM: _squirrelVM];
     
-    XCTAssertTrue([table[@"someKey"] isKindOfClass: [NSNumber class]],
-                  @"-objectForKey: should return an NSNumber for integer value");
-}
-
-
-- (void) testSubscriptObjectForIntValueStringKeyValue
-{
-    sq_newtable(_squirrelVM.vm);
+    id tableMock = [OCMockObject partialMockForObject: table];
     
-    HSQOBJECT sqTable = [_squirrelVM.stack sqObjectAtPosition: -1];
+    [[tableMock expect] objectForKey: @"someKey"];
     
-    [_squirrelVM.stack pushString: @"someKey"];
-    [_squirrelVM.stack pushInteger: 1234];
+    __unused id result = tableMock[@"someKey"];
     
-    sq_newslot(_squirrelVM.vm, -3, SQFalse);
-    
-    OCSquirrelTable *table = [[OCSquirrelTable alloc] initWithHSQOBJECT: sqTable
-                                                                   inVM: _squirrelVM];
-    
-    XCTAssertEqual((NSInteger)[table[@"someKey"] integerValue], (NSInteger)1234,
-                   @"-objectForKey: should return the appropriate NSNumber for integer value");
-}
-
-
-- (void) testSubscriptObjectForFloatValueStringKeyClass
-{
-    sq_newtable(_squirrelVM.vm);
-    
-    HSQOBJECT sqTable = [_squirrelVM.stack sqObjectAtPosition: -1];
-    
-    [_squirrelVM.stack pushString: @"someKey"];
-    [_squirrelVM.stack pushFloat: 123.456];
-    
-    sq_newslot(_squirrelVM.vm, -3, SQFalse);
-    
-    OCSquirrelTable *table = [[OCSquirrelTable alloc] initWithHSQOBJECT: sqTable
-                                                                   inVM: _squirrelVM];
-    
-    XCTAssertTrue([table[@"someKey"] isKindOfClass: [NSNumber class]],
-                  @"-objectForKey: should return an NSNumber for float value");
-}
-
-
-- (void) testSubscriptObjectForFloatValueStringKeyValue
-{
-    sq_newtable(_squirrelVM.vm);
-    
-    HSQOBJECT sqTable = [_squirrelVM.stack sqObjectAtPosition: -1];
-    
-    [_squirrelVM.stack pushString: @"someKey"];
-    [_squirrelVM.stack pushFloat: 123.456];
-    
-    sq_newslot(_squirrelVM.vm, -3, SQFalse);
-    
-    OCSquirrelTable *table = [[OCSquirrelTable alloc] initWithHSQOBJECT: sqTable
-                                                                   inVM: _squirrelVM];
-    
-    XCTAssertEqual([table[@"someKey"] floatValue], 123.456f,
-                   @"-objectForKey: should return the appropriate NSNumber for float value");
-}
-
-
-- (void) testSubscriptObjectForBoolValueStringKeyClass
-{
-    sq_newtable(_squirrelVM.vm);
-    
-    HSQOBJECT sqTable = [_squirrelVM.stack sqObjectAtPosition: -1];
-    
-    [_squirrelVM.stack pushString: @"someKey"];
-    [_squirrelVM.stack pushBool: YES];
-    
-    sq_newslot(_squirrelVM.vm, -3, SQFalse);
-    
-    OCSquirrelTable *table = [[OCSquirrelTable alloc] initWithHSQOBJECT: sqTable
-                                                                   inVM: _squirrelVM];
-    
-    XCTAssertTrue([table[@"someKey"] isKindOfClass: [NSNumber class]],
-                  @"-objectForKey: should return an NSNumber for BOOL value");
-}
-
-
-- (void) testSubscriptObjectForBoolValueStringKeyValue
-{
-    sq_newtable(_squirrelVM.vm);
-    
-    HSQOBJECT sqTable = [_squirrelVM.stack sqObjectAtPosition: -1];
-    
-    [_squirrelVM.stack pushString: @"someKey"];
-    [_squirrelVM.stack pushBool: YES];
-    
-    sq_newslot(_squirrelVM.vm, -3, SQFalse);
-    
-    OCSquirrelTable *table = [[OCSquirrelTable alloc] initWithHSQOBJECT: sqTable
-                                                                   inVM: _squirrelVM];
-    
-    XCTAssertEqual([table[@"someKey"] boolValue], YES,
-                   @"-objectForKey: should return the appropriate NSNumber for BOOL value");
-}
-
-
-- (void) testSubscriptObjectForStringValueStringKeyClass
-{
-    sq_newtable(_squirrelVM.vm);
-    
-    HSQOBJECT sqTable = [_squirrelVM.stack sqObjectAtPosition: -1];
-    
-    [_squirrelVM.stack pushString: @"someKey"];
-    [_squirrelVM.stack pushString: @"someValue"];
-    
-    sq_newslot(_squirrelVM.vm, -3, SQFalse);
-    
-    OCSquirrelTable *table = [[OCSquirrelTable alloc] initWithHSQOBJECT: sqTable
-                                                                   inVM: _squirrelVM];
-    
-    XCTAssertTrue([table[@"someKey"] isKindOfClass: [NSString class]],
-                  @"-objectForKey: should return an NSString for string value");
-}
-
-
-- (void) testSubscriptObjectForStringValueStringKeyValue
-{
-    sq_newtable(_squirrelVM.vm);
-    
-    HSQOBJECT sqTable = [_squirrelVM.stack sqObjectAtPosition: -1];
-    
-    [_squirrelVM.stack pushString: @"someKey"];
-    [_squirrelVM.stack pushString: @"someValue"];
-    
-    sq_newslot(_squirrelVM.vm, -3, SQFalse);
-    
-    OCSquirrelTable *table = [[OCSquirrelTable alloc] initWithHSQOBJECT: sqTable
-                                                                   inVM: _squirrelVM];
-    
-    XCTAssertEqualObjects(table[@"someKey"], @"someValue",
-                          @"-objectForKey: should return the appropriate NSString for string value");
-}
-
-
-- (void) testSubscriptObjectForUserPointerValueStringKeyClass
-{
-    sq_newtable(_squirrelVM.vm);
-    
-    HSQOBJECT sqTable = [_squirrelVM.stack sqObjectAtPosition: -1];
-    
-    [_squirrelVM.stack pushString: @"someKey"];
-    [_squirrelVM.stack pushUserPointer: (__bridge SQUserPointer)self];
-    
-    sq_newslot(_squirrelVM.vm, -3, SQFalse);
-    
-    OCSquirrelTable *table = [[OCSquirrelTable alloc] initWithHSQOBJECT: sqTable
-                                                                   inVM: _squirrelVM];
-    
-    XCTAssertTrue([table[@"someKey"] isKindOfClass: [NSValue class]],
-                  @"-objectForKey: should return an NSValue for userPointer value");
-}
-
-
-- (void) testSubscriptObjectForUserPointerValueStringKeyValue
-{
-    sq_newtable(_squirrelVM.vm);
-    
-    HSQOBJECT sqTable = [_squirrelVM.stack sqObjectAtPosition: -1];
-    
-    [_squirrelVM.stack pushString: @"someKey"];
-    [_squirrelVM.stack pushUserPointer: (__bridge SQUserPointer)self];
-    
-    sq_newslot(_squirrelVM.vm, -3, SQFalse);
-    
-    OCSquirrelTable *table = [[OCSquirrelTable alloc] initWithHSQOBJECT: sqTable
-                                                                   inVM: _squirrelVM];
-    
-    XCTAssertEqual([table[@"someKey"] pointerValue], (__bridge void *)self,
-                   @"-objectForKey: should return the appropriate NSValue for userPointer value");
-}
-
-
-- (void) testSubscriptObjectForNullValueStringKey
-{
-    sq_newtable(_squirrelVM.vm);
-    
-    HSQOBJECT sqTable = [_squirrelVM.stack sqObjectAtPosition: -1];
-    
-    [_squirrelVM.stack pushString: @"someKey"];
-    [_squirrelVM.stack pushNull];
-    
-    sq_newslot(_squirrelVM.vm, -3, SQFalse);
-    
-    OCSquirrelTable *table = [[OCSquirrelTable alloc] initWithHSQOBJECT: sqTable
-                                                                   inVM: _squirrelVM];
-    
-    XCTAssertNil(table[@"someKey"],
-                 @"-objectForKey: should return nil for `null` value");
-}
-
-
-- (void) testSubscriptObjectForUndefinedKey
-{
-    sq_newtable(_squirrelVM.vm);
-    
-    HSQOBJECT sqTable = [_squirrelVM.stack sqObjectAtPosition: -1];
-    
-    [_squirrelVM.stack pushString: @"someKey"];
-    [_squirrelVM.stack pushInteger: 1234];
-    
-    sq_newslot(_squirrelVM.vm, -3, SQFalse);
-    
-    OCSquirrelTable *table = [[OCSquirrelTable alloc] initWithHSQOBJECT: sqTable
-                                                                   inVM: _squirrelVM];
-    
-    XCTAssertNil(table[@"undefinedKey"],
-                 @"-objectForKey: should return nil for undefined key");
+    XCTAssertNoThrow([tableMock verify], @"Keyed subscripting of OCSquirrelTable should call -objectForKey:");
 }
 
 
