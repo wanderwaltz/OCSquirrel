@@ -47,7 +47,7 @@
     
     if (self != nil)
     {
-        [squirrelVM doWaitPreservingStackTop: ^{
+        [squirrelVM performPreservingStackTop: ^{
             sq_newclosure(squirrelVM.vm, function, 0);
             sq_getstackobj(squirrelVM.vm, -1, &_obj);
             sq_addref(squirrelVM.vm, &_obj);
@@ -96,7 +96,7 @@
     
     __block id result = nil;
     
-    [squirrelVM doWaitPreservingStackTop: ^{
+    [squirrelVM performPreservingStackTop: ^{
         [self push]; // Pushes the closure to the stack
         [this push]; // Pushes the 'this' object to the stack
         

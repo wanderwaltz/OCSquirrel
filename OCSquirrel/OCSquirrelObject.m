@@ -89,9 +89,7 @@
         {
             _squirrelVM = squirrelVM;
             _obj        = object;
-            [squirrelVM doWait: ^{
-                sq_addref(_squirrelVM.vm, &_obj);
-            }];
+            sq_addref(_squirrelVM.vm, &_obj);
         }
         return self;
     }
@@ -101,9 +99,9 @@
 
 - (void) dealloc
 {
-    [_squirrelVM doWait: ^{
-        sq_release(_squirrelVM.vm, &_obj); 
-    }];
+    if (_squirrelVM.vm) {
+        sq_release(_squirrelVM.vm, &_obj);
+    }
 }
 
 
@@ -113,10 +111,7 @@
 - (void) push
 {
     OCSquirrelVM *squirrelVM = self.squirrelVM;
-    
-    [squirrelVM doWait: ^{
-        [squirrelVM.stack pushSQObject: _obj];
-    }];
+    [squirrelVM.stack pushSQObject: _obj];
 }
 
 

@@ -152,13 +152,6 @@
 }
 
 
-- (void) testHasDispatchQueue
-{
-    XCTAssertNotNil(_squirrelVM.vmQueue,
-                   @"OCSquirrelVM should have a dispatch queue to serialize calls to the vm");
-}
-
-
 - (void) testHasDelegateProperty
 {
     XCTAssertTrue([OCSquirrelVM instancesRespondToSelector: @selector(setDelegate:)] &&
@@ -191,7 +184,7 @@
 
 - (void) testExecuteSyncValidNoThrow
 {
-    XCTAssertNoThrow([_squirrelVM executeSync: @"local x = 0;" error: nil],
+    XCTAssertNoThrow([_squirrelVM execute: @"local x = 0;" error: nil],
                     @"OCSquirrelVM -executeSync: should not throw exception for a valid Squirrel script.");
 }
 
@@ -199,7 +192,7 @@
 - (void) testExecuteSyncInvalidError
 {
     NSError *error = nil;
-    [_squirrelVM executeSync: @"local x + 0" error: &error];
+    [_squirrelVM execute: @"local x + 0" error: &error];
     
     XCTAssertNotNil(error,
                    @"OCSquirrelVM -executeSync: should return a not nil NSError "
@@ -210,7 +203,7 @@
 - (void) testExecuteSyncInvalidLastError
 {
     NSError *error = nil;
-    [_squirrelVM executeSync: @"local x + 0" error: &error];
+    [_squirrelVM execute: @"local x + 0" error: &error];
     
     XCTAssertEqualObjects(error, _squirrelVM.lastError,
                          @"OCSquirrelVM -executeSync: should return a not nil NSError "
@@ -221,7 +214,7 @@
 - (void) testExecuteSyncInvalidErrorDomain
 {
     NSError *error = nil;
-    [_squirrelVM executeSync: @"local x + 0" error: &error];
+    [_squirrelVM execute: @"local x + 0" error: &error];
     
     XCTAssertEqualObjects(error.domain, OCSquirrelVMErrorDomain,
                          @"Error returned by OCSquirrelVM should have OCSquirrelVMErrorDomain domain.");
@@ -231,7 +224,7 @@
 - (void) testExecuteSyncInvalidErrorCodeFailedGetCString
 {
     NSError *error = nil;
-    [_squirrelVM executeSync: nil error: &error];
+    [_squirrelVM execute: nil error: &error];
     
     XCTAssertEqual(error.code, OCSquirrelVMError_FailedToGetCString,
                    @"When a C string could not be retrieved for a script, returned error code "
@@ -242,7 +235,7 @@
 - (void) testExecuteSyncInvalidErrorCodeCompilerError
 {
     NSError *error = nil;
-    [_squirrelVM executeSync: @"local x + 0" error: &error];
+    [_squirrelVM execute: @"local x + 0" error: &error];
     
     XCTAssertEqual(error.code, OCSquirrelVMError_CompilerError,
                    @"When compiling script fails, returned error code "
@@ -253,7 +246,7 @@
 - (void) testExecuteSyncInvalidErrorCodeRuntimeError
 {
     NSError *error = nil;
-    [_squirrelVM executeSync: @"local x = y;" error: &error];
+    [_squirrelVM execute: @"local x = y;" error: &error];
     
     XCTAssertEqual(error.code, OCSquirrelVMError_RuntimeError,
                    @"When a runtime error occurs, returned error code "
@@ -264,7 +257,7 @@
 - (void) testExecuteSyncRuntimeErrorCallStack
 {
     NSError *error = nil;
-    [_squirrelVM executeSync: @"local x = y;" error: &error];
+    [_squirrelVM execute: @"local x = y;" error: &error];
     
     XCTAssertNotNil(error.userInfo[OCSquirrelVMErrorCallStackUserInfoKey],
                    @"When a runtime error occurs, userInfo dictionary should "
@@ -275,7 +268,7 @@
 - (void) testExecuteSyncRuntimeErrorCallStackContentClass
 {
     NSError *error = nil;
-    [_squirrelVM executeSync: @"function func() { local x = y; } func();" error: &error];
+    [_squirrelVM execute: @"function func() { local x = y; } func();" error: &error];
     
     for (id contents in error.userInfo[OCSquirrelVMErrorCallStackUserInfoKey])
     {
@@ -288,7 +281,7 @@
 - (void) testExecuteSyncRuntimeErrorCallStackContents
 {
     NSError *error = nil;
-    [_squirrelVM executeSync: @"function func() { local x = y; } func();" error: &error];
+    [_squirrelVM execute: @"function func() { local x = y; } func();" error: &error];
     
     NSArray *callStack = error.userInfo[OCSquirrelVMErrorCallStackUserInfoKey];
     
@@ -300,7 +293,7 @@
 - (void) testExecuteSyncRuntimeErrorLocals
 {
     NSError *error = nil;
-    [_squirrelVM executeSync: @"local x = y;" error: &error];
+    [_squirrelVM execute: @"local x = y;" error: &error];
     
     XCTAssertNotNil(error.userInfo[OCSquirrelVMErrorLocalsUserInfoKey],
                    @"When a runtime error occurs, userInfo dictionary should "
@@ -311,7 +304,7 @@
 - (void) testExecuteSyncRuntimeErrorLocalsContentClass
 {
     NSError *error = nil;
-    [_squirrelVM executeSync: @"local x = y;" error: &error];
+    [_squirrelVM execute: @"local x = y;" error: &error];
     
     for (id contents in error.userInfo[OCSquirrelVMErrorLocalsUserInfoKey])
     {
@@ -324,7 +317,7 @@
 - (void) testExecuteSyncRuntimeErrorLocalsContents
 {
     NSError *error = nil;
-    [_squirrelVM executeSync: @"local z = \"qwerty\"; local x = y;" error: &error];
+    [_squirrelVM execute: @"local z = \"qwerty\"; local x = y;" error: &error];
     
     NSArray *locals = error.userInfo[OCSquirrelVMErrorLocalsUserInfoKey];
     
@@ -337,7 +330,7 @@
 
 - (void) testExecuteSyncInvalidResult
 {
-    id result = [_squirrelVM executeSync: @"local x + 0" error: nil];
+    id result = [_squirrelVM execute: @"local x + 0" error: nil];
     
     XCTAssertNil(result,
                 @"OCSquirrelVM -executeSync: should return a nil result "
@@ -350,7 +343,7 @@
 
 - (void) testExecuteSyncResultString
 {
-    id result = [_squirrelVM executeSync: @"return \"some string\";" error: nil];
+    id result = [_squirrelVM execute: @"return \"some string\";" error: nil];
     
     XCTAssertEqualObjects(result, @"some string",
                          @"-executeSync should return the value which the Squirrel script "
@@ -360,7 +353,7 @@
 
 - (void) testExecuteSyncResultInteger
 {
-    id result = [_squirrelVM executeSync: @"return 12345;" error: nil];
+    id result = [_squirrelVM execute: @"return 12345;" error: nil];
     
     XCTAssertEqualObjects(result, @12345,
                          @"-executeSync should return the value which the Squirrel script "
@@ -370,7 +363,7 @@
 
 - (void) testExecuteSyncResultFloat
 {
-    id result = [_squirrelVM executeSync: @"return 123.456;" error: nil];
+    id result = [_squirrelVM execute: @"return 123.456;" error: nil];
     
     XCTAssertEqualWithAccuracy([result floatValue], 123.456f, 1e-3,
                                @"-executeSync should return the value which the Squirrel script "
@@ -380,7 +373,7 @@
 
 - (void) testExecuteSyncResultBool
 {
-    id result = [_squirrelVM executeSync: @"return true;" error: nil];
+    id result = [_squirrelVM execute: @"return true;" error: nil];
     
     XCTAssertEqualObjects(result, @YES,
                          @"-executeSync should return the value which the Squirrel script "
@@ -390,7 +383,7 @@
 
 - (void) testExecuteSyncResultNull
 {
-    id result = [_squirrelVM executeSync: @"return null;" error: nil];
+    id result = [_squirrelVM execute: @"return null;" error: nil];
     
     XCTAssertNil(result,
                 @"-executeSync should return the value which the Squirrel script "
@@ -400,7 +393,7 @@
 
 - (void) testExecuteSyncResultNone
 {
-    id result = [_squirrelVM executeSync: @"local x = 0;" error: nil];
+    id result = [_squirrelVM execute: @"local x = 0;" error: nil];
     
     XCTAssertNil(result,
                 @"-executeSync should nil if the script does not return anything.");

@@ -110,16 +110,6 @@ enum : NSInteger
 /// Squirrel virtual machine managed by the OCSquirrelVM
 @property (readonly, nonatomic) HSQUIRRELVM vm;
 
-
-/*! Serial dispatch queue which should be used to serialize calls to Squirrel VM.
- 
- Squirrel is not thread safe, so we should make sure all calls to the Squirrel VM are serialized. 
- This can be achieved by only working with the VM on a certain serial dispatch queue. OCSquirrelVM 
- uses vmQueue property within all its methods for vm calls, and anyone else should do the same 
- thing if vm property needs to be accessed directly.
- */
-@property (readonly, nonatomic) dispatch_queue_t vmQueue;
-
 /// Represents stack state of the current VM.
 @property (readonly, nonatomic) id<OCSquirrelVMStack> stack;
 
@@ -139,29 +129,21 @@ enum : NSInteger
 
 
 
-
 #pragma mark script execution
 
 /// Compiles and executes the Squirrel script synchronously, returning the result of the script execution.
-- (id) executeSync: (NSString *) script error: (__autoreleasing NSError **) error;
+- (id) execute: (NSString *) script error: (__autoreleasing NSError **) error;
+
+/*! Stores the current stack top value and pops everything which will be pushed above this value before returning.
+ *  Should be used when you expect pushing something to the stack and don't want to bother popping it manually.
+ */
+- (void) performPreservingStackTop: (dispatch_block_t) block;
+
 
 
 #pragma mark bindings
 
 - (OCSquirrelClass *) bindClass: (Class) aClass;
-
-
-#pragma mark general dispatch
-
-/// Performs block on the vmQueue; does not lead to deadlock if called within a block already on vmQueue
-- (void) doWait: (dispatch_block_t) block;
-
-/*! Does the same as -doWait:, but stores the current stack top value and pops everything from the stack
-    which will be pushed above this value. Should be used when you expect pushing something to the stack
-    and don't want to bother popping it manually. If you pop something from the stack without pushing,
-    results may be unpredictable.
- */
-- (void) doWaitPreservingStackTop: (dispatch_block_t) block;
 
 @end
 

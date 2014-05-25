@@ -56,7 +56,7 @@
     
     if (self != nil)
     {
-        [squirrelVM doWaitPreservingStackTop: ^{
+        [squirrelVM performPreservingStackTop: ^{
             sq_newclass(squirrelVM.vm, SQFalse);
             sq_getstackobj(squirrelVM.vm, -1, &_obj);
             sq_addref(squirrelVM.vm, &_obj);
@@ -79,7 +79,7 @@
     {
         if ([nativeClass instancesRespondToSelector: selector])
         {
-            [self.squirrelVM doWaitPreservingStackTop: ^{
+            [self.squirrelVM performPreservingStackTop: ^{
                 NSString *selectorString = NSStringFromSelector(selector);
                 
                 // Exclude initializer methods from the search for now
@@ -146,7 +146,7 @@
     
     if (nativeClass != nil)
     {
-        [self.squirrelVM doWaitPreservingStackTop: ^{
+        [self.squirrelVM performPreservingStackTop: ^{
             if (includeSuperclasses)
             {
                 [self bindInstanceMethodsOfNativeClassHierarchy: nativeClass];
@@ -211,7 +211,7 @@
 {
     OCSquirrelVM *squirrelVM = self.squirrelVM;
     
-    [squirrelVM doWaitPreservingStackTop: ^{
+    [squirrelVM performPreservingStackTop: ^{
         [self push];
         sq_pushnull(squirrelVM.vm);
         [squirrelVM.stack pushValue: attributes];
@@ -227,7 +227,7 @@
     
     OCSquirrelVM *squirrelVM = self.squirrelVM;
     
-    [squirrelVM doWaitPreservingStackTop: ^{
+    [squirrelVM performPreservingStackTop: ^{
         [self push];
         sq_pushnull(squirrelVM.vm);
         sq_getattributes(squirrelVM.vm, -2);
@@ -248,7 +248,7 @@
     
     __block HSQOBJECT instance;
     
-    [squirrelVM doWaitPreservingStackTop: ^{
+    [squirrelVM performPreservingStackTop: ^{
         [self push];
         sq_createinstance(squirrelVM.vm, -1);
         sq_call(squirrelVM.vm, 1, SQTrue, SQTrue);
@@ -257,10 +257,8 @@
         sq_addref(squirrelVM.vm, &instance);
     }];
     
-    [squirrelVM doWait: ^{
-        sq_pushobject(squirrelVM.vm, instance);
-        sq_release(squirrelVM.vm, &instance);
-    }];
+    sq_pushobject(squirrelVM.vm, instance);
+    sq_release(squirrelVM.vm, &instance);
 }
 
 @end

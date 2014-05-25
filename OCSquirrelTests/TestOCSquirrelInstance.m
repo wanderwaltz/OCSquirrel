@@ -39,7 +39,7 @@
 {
     [super setUp];
     _squirrelVM = [[OCSquirrelVM alloc] init];
-    _instance   = [_squirrelVM executeSync:
+    _instance   = [_squirrelVM execute:
      @"class Test {                                     \
          memberInt    = 12345;                          \
          memberFloat  = 123.456;                        \
@@ -67,7 +67,7 @@
 
 - (void) testCouldCreateInstance
 {
-    id instance = [_squirrelVM executeSync: @"return Test()" error: nil];
+    id instance = [_squirrelVM execute: @"return Test()" error: nil];
     
     XCTAssertTrue([instance isKindOfClass: [OCSquirrelInstance class]],
                  @"Should be able to create instances of the class declared in setUp method.");

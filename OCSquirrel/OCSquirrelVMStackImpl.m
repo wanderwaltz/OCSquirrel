@@ -24,21 +24,13 @@
 
 - (NSInteger) top
 {
-    __block NSInteger top = 0;
-    
-    [_squirrelVM doWait: ^{
-        top = sq_gettop(_squirrelVM.vm);
-    }];
-    
-    return top;
+    return sq_gettop(_squirrelVM.vm);
 }
 
 
 - (void) setTop: (NSInteger) top
 {
-    [_squirrelVM doWait: ^{
-        sq_settop(_squirrelVM.vm, top);
-    }];
+    sq_settop(_squirrelVM.vm, top);
 }
 
 
@@ -62,58 +54,44 @@
 
 - (void) pushInteger: (SQInteger) value
 {
-    [_squirrelVM doWait: ^{
-        sq_pushinteger(_squirrelVM.vm, value);
-    }];
+    sq_pushinteger(_squirrelVM.vm, value);
 }
 
 
 - (void) pushFloat: (SQFloat) value
 {
-    [_squirrelVM doWait: ^{
-        sq_pushfloat(_squirrelVM.vm, value);
-    }];
+    sq_pushfloat(_squirrelVM.vm, value);
 }
 
 
 - (void) pushBool: (BOOL) value
 {
-    [_squirrelVM doWait: ^{
-        sq_pushbool(_squirrelVM.vm, (value) ? SQTrue : SQFalse);
-    }];
+    sq_pushbool(_squirrelVM.vm, (value) ? SQTrue : SQFalse);
 }
 
 
 - (void) pushNull
 {
-    [_squirrelVM doWait: ^{
-        sq_pushnull(_squirrelVM.vm);
-    }];
+    sq_pushnull(_squirrelVM.vm);
 }
 
 
 - (void) pushUserPointer: (SQUserPointer) pointer
 {
-    [_squirrelVM doWait: ^{
-        sq_pushuserpointer(_squirrelVM.vm, pointer);
-    }];
+    sq_pushuserpointer(_squirrelVM.vm, pointer);
 }
 
 
 - (void) pushSQObject: (HSQOBJECT) object
 {
-    [_squirrelVM doWait: ^{
-        sq_pushobject(_squirrelVM.vm, object);
-    }];
+    sq_pushobject(_squirrelVM.vm, object);
 }
 
 
 - (void) pushString: (NSString *) string
 {
-    [_squirrelVM doWait: ^{
-        const SQChar *cString = [string cStringUsingEncoding: NSUTF8StringEncoding];
-        sq_pushstring(_squirrelVM.vm, cString, scstrlen(cString));
-    }];
+    const SQChar *cString = [string cStringUsingEncoding: NSUTF8StringEncoding];
+    sq_pushstring(_squirrelVM.vm, cString, scstrlen(cString));
 }
 
 
@@ -180,11 +158,8 @@
 
 - (SQInteger) integerAtPosition: (SQInteger) position
 {
-    __block SQInteger value = 0;
-    
-    [_squirrelVM doWait: ^{
-        sq_getinteger(_squirrelVM.vm, position, &value);
-    }];
+    SQInteger value = 0;
+    sq_getinteger(_squirrelVM.vm, position, &value);
     
     return value;
 }
@@ -192,23 +167,17 @@
 
 - (SQFloat) floatAtPosition: (SQInteger) position
 {
-    __block SQFloat value = 0.0;
-    
-    [_squirrelVM doWait: ^{
-        sq_getfloat(_squirrelVM.vm, position, &value);
-    }];
-    
+    SQFloat value = 0.0;
+    sq_getfloat(_squirrelVM.vm, position, &value);
+
     return value;
 }
 
 
 - (BOOL) boolAtPosition: (SQInteger) position
 {
-    __block SQBool value = SQFalse;
-    
-    [_squirrelVM doWait: ^{
-        sq_getbool(_squirrelVM.vm, position, &value);
-    }];
+    SQBool value = SQFalse;
+    sq_getbool(_squirrelVM.vm, position, &value);
     
     return (value == SQTrue) ? YES : NO;
 }
@@ -216,11 +185,8 @@
 
 - (SQUserPointer) userPointerAtPosition: (SQInteger) position
 {
-    __block SQUserPointer pointer = NULL;
-    
-    [_squirrelVM doWait: ^{
-        sq_getuserpointer(_squirrelVM.vm, position, &pointer);
-    }];
+    SQUserPointer pointer = NULL;
+    sq_getuserpointer(_squirrelVM.vm, position, &pointer);
     
     return pointer;
 }
@@ -228,11 +194,8 @@
 
 - (NSString *) stringAtPosition: (SQInteger) position
 {
-    __block const SQChar *cString = NULL;
-    
-    [_squirrelVM doWait: ^{
-        sq_getstring(_squirrelVM.vm, position, &cString);
-    }];
+    const SQChar *cString = NULL;
+    sq_getstring(_squirrelVM.vm, position, &cString);
     
     if (cString != NULL)
     {
@@ -245,12 +208,9 @@
 
 - (HSQOBJECT) sqObjectAtPosition: (SQInteger) position
 {
-    __block HSQOBJECT object;
+    HSQOBJECT object;
     sq_resetobject(&object);
-    
-    [_squirrelVM doWait: ^{
-        sq_getstackobj(_squirrelVM.vm, position, &object);
-    }];
+    sq_getstackobj(_squirrelVM.vm, position, &object);
     
     return object;
 }
@@ -258,112 +218,109 @@
 
 - (id) valueAtPosition: (SQInteger) position
 {
-    __block id value = nil;
+    id value = nil;
     
-    [_squirrelVM doWait: ^{
-        switch (sq_gettype(_squirrelVM.vm, position))
+    switch (sq_gettype(_squirrelVM.vm, position))
+    {
+        case OT_INTEGER:
         {
-            case OT_INTEGER:
+            value = @([self integerAtPosition: position]);
+        } break;
+            
+        case OT_FLOAT:
+        {
+            value = @([self floatAtPosition: position]);
+        } break;
+            
+        case OT_BOOL:
+        {
+            value = @([self boolAtPosition: position]);
+        } break;
+            
+        case OT_USERPOINTER:
+        {
+            value = [NSValue valueWithPointer: [self userPointerAtPosition: position]];
+        } break;
+            
+        case OT_STRING:
+        {
+            value = [self stringAtPosition: position];
+        } break;
+            
+        case OT_NULL:
+        {
+            value = nil;
+        } break;
+            
+        case OT_TABLE:
+        {
+            HSQOBJECT table = [self sqObjectAtPosition: position];
+            
+            value = [[OCSquirrelTable alloc] initWithHSQOBJECT: table
+                                                          inVM: _squirrelVM];
+        } break;
+            
+        case OT_CLASS:
+        {
+            HSQOBJECT class = [self sqObjectAtPosition: position];
+            
+            
+            // First check if the class is one of the bound classes,
+            // then we already have an OCSquirrelClass instance corresponding
+            // to it and there is no need to create more.
+            SQUserPointer nativeClass = NULL;
+            
+            SQInteger top = sq_gettop(_squirrelVM.vm);
+            SQInteger positivePosition = (position > 0) ? position : top+position+1;
+            sq_pushnull(_squirrelVM.vm);
+            sq_getattributes(_squirrelVM.vm, positivePosition);
+            sq_getuserpointer(_squirrelVM.vm, -1, &nativeClass);
+            sq_settop(_squirrelVM.vm, top);
+            
+            if (nativeClass != NULL)
             {
-                value = @([self integerAtPosition: position]);
-            } break;
+                Class class = (__bridge Class)nativeClass;
+                NSString *className = NSStringFromClass(class);
                 
-            case OT_FLOAT:
-            {
-                value = @([self floatAtPosition: position]);
-            } break;
-                
-            case OT_BOOL:
-            {
-                value = @([self boolAtPosition: position]);
-            } break;
-                
-            case OT_USERPOINTER:
-            {
-                value = [NSValue valueWithPointer: [self userPointerAtPosition: position]];
-            } break;
-                
-            case OT_STRING:
-            {
-                value = [self stringAtPosition: position];
-            } break;
-                
-            case OT_NULL:
-            {
-                value = nil;
-            } break;
-                
-            case OT_TABLE:
-            {
-                HSQOBJECT table = [self sqObjectAtPosition: position];
-                
-                value = [[OCSquirrelTable alloc] initWithHSQOBJECT: table
-                                                              inVM: _squirrelVM];
-            } break;
-                
-            case OT_CLASS:
-            {
-                HSQOBJECT class = [self sqObjectAtPosition: position];
-                
-                
-                // First check if the class is one of the bound classes,
-                // then we already have an OCSquirrelClass instance corresponding
-                // to it and there is no need to create more.
-                SQUserPointer nativeClass = NULL;
-                
-                SQInteger top = sq_gettop(_squirrelVM.vm);
-                SQInteger positivePosition = (position > 0) ? position : top+position+1;
-                sq_pushnull(_squirrelVM.vm);
-                sq_getattributes(_squirrelVM.vm, positivePosition);
-                sq_getuserpointer(_squirrelVM.vm, -1, &nativeClass);
-                sq_settop(_squirrelVM.vm, top);
-                
-                if (nativeClass != NULL)
+                if (className != nil)
                 {
-                    Class class = (__bridge Class)nativeClass;
-                    NSString *className = NSStringFromClass(class);
-                    
-                    if (className != nil)
-                    {
-                        value = _squirrelVM.classBindings[className];
-                    }
+                    value = _squirrelVM.classBindings[className];
                 }
-                
-                // If existing instance was not found, return a new one.
-                if (value == nil)
-                    value = [[OCSquirrelClass alloc] initWithHSQOBJECT: class
-                                                                  inVM: _squirrelVM];
-            } break;
-                
-            case OT_INSTANCE:
-            {
-                HSQOBJECT instance = [self sqObjectAtPosition: position];
-                
-                value = [[OCSquirrelInstance alloc] initWithHSQOBJECT: instance
-                                                                 inVM: _squirrelVM];
-            } break;
-                
-                
-            case OT_CLOSURE:
-            case OT_NATIVECLOSURE:
-            {
-                HSQOBJECT instance = [self sqObjectAtPosition: position];
-                
-                value = [[OCSquirrelClosure alloc] initWithHSQOBJECT: instance
-                                                                inVM: _squirrelVM];
-            } break;
-                
-     
-            default:
-            {
-                HSQOBJECT object = [self sqObjectAtPosition: position];
-                
-                value = [[OCSquirrelObject alloc] initWithHSQOBJECT: object
-                                                               inVM: _squirrelVM];
-            } break;
-        }
-    }];
-    
+            }
+            
+            // If existing instance was not found, return a new one.
+            if (value == nil)
+                value = [[OCSquirrelClass alloc] initWithHSQOBJECT: class
+                                                              inVM: _squirrelVM];
+        } break;
+            
+        case OT_INSTANCE:
+        {
+            HSQOBJECT instance = [self sqObjectAtPosition: position];
+            
+            value = [[OCSquirrelInstance alloc] initWithHSQOBJECT: instance
+                                                             inVM: _squirrelVM];
+        } break;
+            
+            
+        case OT_CLOSURE:
+        case OT_NATIVECLOSURE:
+        {
+            HSQOBJECT instance = [self sqObjectAtPosition: position];
+            
+            value = [[OCSquirrelClosure alloc] initWithHSQOBJECT: instance
+                                                            inVM: _squirrelVM];
+        } break;
+            
+            
+        default:
+        {
+            HSQOBJECT object = [self sqObjectAtPosition: position];
+            
+            value = [[OCSquirrelObject alloc] initWithHSQOBJECT: object
+                                                           inVM: _squirrelVM];
+        } break;
+    }
     
     return value;
 }
@@ -374,13 +331,7 @@
 
 - (BOOL) isNullAtPosition: (SQInteger) position
 {
-    __block BOOL isNull = NO;
-    
-    [_squirrelVM doWait: ^{
-        isNull = (sq_gettype(_squirrelVM.vm, position) == OT_NULL);
-    }];
-    
-    return isNull;
+    return (sq_gettype(_squirrelVM.vm, position) == OT_NULL);
 }
 
 @end

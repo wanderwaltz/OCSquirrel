@@ -27,7 +27,7 @@
     
     OCSquirrelVM *squirrelVM = self.squirrelVM;
     
-    [squirrelVM doWaitPreservingStackTop: ^{
+    [squirrelVM performPreservingStackTop: ^{
         [self push];
         sq_getinstanceup(squirrelVM.vm, -1, &userPointer, 0);
     }];

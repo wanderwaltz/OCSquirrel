@@ -245,7 +245,7 @@ static SQInteger IntClosureNoParamsCheckEnvironment(HSQUIRRELVM vm)
 
 - (void) testSquirrelVoidCallNoParams
 {
-    [_squirrelVM executeSync: @"function VoidNoParams() { called <- 12345; }" error: nil];
+    [_squirrelVM execute: @"function VoidNoParams() { called <- 12345; }" error: nil];
     
     OCSquirrelClosure *closure = [_root objectForKey: @"VoidNoParams"];
     [closure call];
@@ -260,7 +260,7 @@ static SQInteger IntClosureNoParamsCheckEnvironment(HSQUIRRELVM vm)
     // Push some value to the stack to be sure that it is not empty.
     [_squirrelVM.stack pushFloat: 13.37];
     
-    [_squirrelVM executeSync: @"function VoidNoParams() {}" error: nil];
+    [_squirrelVM execute: @"function VoidNoParams() {}" error: nil];
     
     OCSquirrelClosure *closure = [_root objectForKey: @"VoidNoParams"];
     id result = [closure call];
@@ -275,7 +275,7 @@ static SQInteger IntClosureNoParamsCheckEnvironment(HSQUIRRELVM vm)
     // Push some value to the stack to be sure that it is not empty.
     [_squirrelVM.stack pushFloat: 13.37];
     
-    [_squirrelVM executeSync: @"function IntNoParams() { return 12345; }" error: nil];
+    [_squirrelVM execute: @"function IntNoParams() { return 12345; }" error: nil];
     
     OCSquirrelClosure *closure = [_root objectForKey: @"IntNoParams"];
     
@@ -291,7 +291,7 @@ static SQInteger IntClosureNoParamsCheckEnvironment(HSQUIRRELVM vm)
     // Push some value to the stack to be sure that it is not empty.
     [_squirrelVM.stack pushFloat: 13.37];
     
-    [_squirrelVM executeSync: @"function IntNoParams() { return 12345; }" error: nil];
+    [_squirrelVM execute: @"function IntNoParams() { return 12345; }" error: nil];
     
     OCSquirrelClosure *closure = [_root objectForKey: @"IntNoParams"];
     
@@ -303,7 +303,7 @@ static SQInteger IntClosureNoParamsCheckEnvironment(HSQUIRRELVM vm)
 
 - (void) testSquirrelIntCallIntParamReturnValue
 {
-    [_squirrelVM executeSync: @"function IntReturn1IntParam(x) { return x; }" error: nil];
+    [_squirrelVM execute: @"function IntReturn1IntParam(x) { return x; }" error: nil];
     
     OCSquirrelClosure *closure = [_root objectForKey: @"IntReturn1IntParam"];
     
@@ -318,7 +318,7 @@ static SQInteger IntClosureNoParamsCheckEnvironment(HSQUIRRELVM vm)
 {
     [_root setInteger: 12345 forKey: @"x"];
     
-    [_squirrelVM executeSync: @"function ReturnEnvironmentX() { return x; }" error: nil];
+    [_squirrelVM execute: @"function ReturnEnvironmentX() { return x; }" error: nil];
     
     OCSquirrelClosure *closure = [_root objectForKey: @"ReturnEnvironmentX"];
     
@@ -338,7 +338,7 @@ static SQInteger IntClosureNoParamsCheckEnvironment(HSQUIRRELVM vm)
     [otherEnvironment setInteger: 6789 forKey: @"x"];
     [_root setObject: otherEnvironment forKey: @"other environment"];
     
-    [_squirrelVM executeSync: @"function ReturnEnvironmentX() { return x; }" error: nil];
+    [_squirrelVM execute: @"function ReturnEnvironmentX() { return x; }" error: nil];
     
     OCSquirrelClosure *closure = [_root objectForKey: @"ReturnEnvironmentX"];
     

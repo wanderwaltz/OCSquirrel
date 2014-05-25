@@ -777,7 +777,7 @@
 
 - (void) testCallClosureWithKey
 {
-    OCSquirrelTable *table = [_squirrelVM executeSync:
+    OCSquirrelTable *table = [_squirrelVM execute:
                                @"return { value = false, closure = function() { value = true; } }"
                                    error: nil];
     
@@ -790,7 +790,7 @@
 
 - (void) testCallClosureWithKeyResult
 {
-    OCSquirrelTable *table = [_squirrelVM executeSync:
+    OCSquirrelTable *table = [_squirrelVM execute:
                               @"return { value = 1234, closure = function() { return value; } }"
                                                 error: nil];
     
@@ -805,7 +805,7 @@
 
 - (void) testCallClosureWithKeyParametersResult
 {
-    OCSquirrelTable *table = [_squirrelVM executeSync:
+    OCSquirrelTable *table = [_squirrelVM execute:
                               @"return { value = 1, closure = function(x, y) { return x+y+value; } }"
                                                 error: nil];
     

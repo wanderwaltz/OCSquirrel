@@ -52,16 +52,6 @@ static const SQChar * const kOCSquirrelVMCompileBufferSourceName = _SC("buffer")
 
 
 #pragma mark -
-#pragma mark Static constants
-
-/*! An unique constant void* key which will be used by dispatch_queue_set_specific and dispatch_get_specific
- for checking whether the current execution context is within the OCSquirrelVM's serial dispatch queue. This
- is needed to allow synchronous calls which do not result in a deadlock when called on the same queue. 
- */
-static const void * const kDispatchSpecificKeyOCSquirrelVMQueue = &kDispatchSpecificKeyOCSquirrelVMQueue;
-
-
-#pragma mark -
 #pragma mark OCSquirrelVM implementation
 
 @implementation OCSquirrelVM
@@ -103,28 +93,21 @@ static const void * const kDispatchSpecificKeyOCSquirrelVMQueue = &kDispatchSpec
     
     if (self != nil)
     {
-        _vm      = sq_open(stackSize);
-        _vmQueue = dispatch_queue_create("OCSquirrelVM dispatch queue", DISPATCH_QUEUE_SERIAL);
-        dispatch_queue_set_specific(_vmQueue,
-                                    kDispatchSpecificKeyOCSquirrelVMQueue,
-                                    _vm, NULL);
+        _vm = sq_open(stackSize);
         
         _stack = [[OCSquirrelVMStackImpl alloc] initWithSquirrelVM: self];
         _classBindings = [NSMutableDictionary dictionary];
         
-        [self doWait: ^{
-            
-            // Adding custom implementations of compiler and runtime error
-            // handlers since we need something a bit different than the
-            // sqstdaux implementations can provide.
-            sq_setcompilererrorhandler(_vm, OCSquirrelVMCompilerErrorHandler);
-            sq_newclosure(_vm, OCSquirrelVMRuntimeErrorHandler, 0);
-            sq_seterrorhandler(_vm);
-            
-            // Print and error functions
-            sq_setforeignptr(_vm, (__bridge SQUserPointer)self);
-            sq_setprintfunc (_vm, OCSquirrelVMPrintFunc, OCSquirrelVMErrorFunc);
-        }];
+        // Adding custom implementations of compiler and runtime error
+        // handlers since we need something a bit different than the
+        // sqstdaux implementations can provide.
+        sq_setcompilererrorhandler(_vm, OCSquirrelVMCompilerErrorHandler);
+        sq_newclosure(_vm, OCSquirrelVMRuntimeErrorHandler, 0);
+        sq_seterrorhandler(_vm);
+        
+        // Print and error functions
+        sq_setforeignptr(_vm, (__bridge SQUserPointer)self);
+        sq_setprintfunc (_vm, OCSquirrelVMPrintFunc, OCSquirrelVMErrorFunc);
     }
     return self;
 }
@@ -135,50 +118,36 @@ static const void * const kDispatchSpecificKeyOCSquirrelVMQueue = &kDispatchSpec
     _classBindings = nil;
     _vmQueue       = nil;
     
-    if (_vm != nil)
+    if (_vm != nil) {
         sq_close(_vm);
+        _vm = nil;
+    }
 }
 
 
 #pragma mark -
 #pragma mark script execution
 
-- (id) executeSync: (NSString *) script error: (__autoreleasing NSError **) outError
+- (id) execute: (NSString *) script error: (__autoreleasing NSError **) outError
 {
-    __block BOOL    success = NO;
-    __block NSError *error  = nil;
-    __block id      result  = nil;
+    BOOL    success = NO;
+    NSError *error  = nil;
+    id      result  = nil;
     
-    [self doWait: ^{
+    const SQChar *cScript = [script cStringUsingEncoding: NSUTF8StringEncoding];
+    
+    if (cScript != NULL)
+    {
+        NSInteger top = self.stack.top;
         
-        const SQChar *cScript = [script cStringUsingEncoding: NSUTF8StringEncoding];
-        
-        if (cScript != NULL)
+        if (SQ_SUCCEEDED(sq_compilebuffer(_vm, cScript, scstrlen(cScript),
+                                          kOCSquirrelVMCompileBufferSourceName, SQTrue)))
         {
-            NSInteger top = self.stack.top;
-            
-            if (SQ_SUCCEEDED(sq_compilebuffer(_vm, cScript, scstrlen(cScript),
-                                              kOCSquirrelVMCompileBufferSourceName, SQTrue)))
+            sq_pushroottable(_vm);
+            if (SQ_SUCCEEDED(sq_call(_vm, 1, SQTrue, SQTrue)))
             {
-                sq_pushroottable(_vm);
-                if (SQ_SUCCEEDED(sq_call(_vm, 1, SQTrue, SQTrue)))
-                {
-                    success = YES;
-                    result  = [self.stack valueAtPosition: -1];
-                }
-                else
-                {
-                    if (self.lastError != nil)
-                    {
-                        error = self.lastError;
-                    }
-                    else
-                    {
-                        error = [NSError errorWithDomain: OCSquirrelVMErrorDomain
-                                                    code: OCSquirrelVMError_RuntimeError
-                                                userInfo: nil];
-                    }
-                }
+                success = YES;
+                result  = [self.stack valueAtPosition: -1];
             }
             else
             {
@@ -189,20 +158,33 @@ static const void * const kDispatchSpecificKeyOCSquirrelVMQueue = &kDispatchSpec
                 else
                 {
                     error = [NSError errorWithDomain: OCSquirrelVMErrorDomain
-                                                code: OCSquirrelVMError_CompilerError
+                                                code: OCSquirrelVMError_RuntimeError
                                             userInfo: nil];
                 }
             }
-            
-            self.stack.top = top;
         }
         else
         {
-            error = [NSError errorWithDomain: OCSquirrelVMErrorDomain
-                                        code: OCSquirrelVMError_FailedToGetCString
-                                    userInfo: nil];
+            if (self.lastError != nil)
+            {
+                error = self.lastError;
+            }
+            else
+            {
+                error = [NSError errorWithDomain: OCSquirrelVMErrorDomain
+                                            code: OCSquirrelVMError_CompilerError
+                                        userInfo: nil];
+            }
         }
-    }];
+        
+        self.stack.top = top;
+    }
+    else
+    {
+        error = [NSError errorWithDomain: OCSquirrelVMErrorDomain
+                                    code: OCSquirrelVMError_FailedToGetCString
+                                userInfo: nil];
+    }
     
     if (!success)
     {
@@ -216,6 +198,15 @@ static const void * const kDispatchSpecificKeyOCSquirrelVMQueue = &kDispatchSpec
 }
 
 
+- (void) performPreservingStackTop: (dispatch_block_t) block
+{
+    NSInteger top = self.stack.top;
+    block();
+    self.stack.top = top;    
+}
+
+
+
 #pragma mark -
 #pragma mark bindings
 
@@ -223,7 +214,7 @@ static const void * const kDispatchSpecificKeyOCSquirrelVMQueue = &kDispatchSpec
 {
     __block OCSquirrelClass *class = nil;
     
-    [self doWaitPreservingStackTop:^{
+    [self performPreservingStackTop:^{
         NSString *className = NSStringFromClass(nativeClass);
         
         class = _classBindings[className];
@@ -253,39 +244,6 @@ static const void * const kDispatchSpecificKeyOCSquirrelVMQueue = &kDispatchSpec
     }];
     
     return class;
-}
-
-
-#pragma mark -
-#pragma mark GCD-related
-
-- (BOOL) currentlyInVMQueue
-{
-    return (dispatch_get_specific(kDispatchSpecificKeyOCSquirrelVMQueue) == _vm);
-}
-
-
-- (void) doWait: (dispatch_block_t) block
-{
-    if (block != nil)
-    {
-        if (![self currentlyInVMQueue])
-            dispatch_sync(_vmQueue, block);
-        else
-            block();
-    }
-}
-
-
-- (void) doWaitPreservingStackTop: (dispatch_block_t) block
-{
-    [self doWait: ^{
-        NSInteger top = self.stack.top;
-        
-        [self doWait: block];
-        
-        self.stack.top = top;
-    }];
 }
 
 @end

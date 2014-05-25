@@ -646,7 +646,7 @@ static SQInteger NativeClosure(HSQUIRRELVM vm)
 
 - (void) testReadValueSquirrelClosureClass
 {
-    [_squirrelVM executeSync: @"function SquirrelClosure() {}" error: nil];
+    [_squirrelVM execute: @"function SquirrelClosure() {}" error: nil];
     
     sq_pushroottable(_squirrelVM.vm);
     [_squirrelVM.stack pushString: @"SquirrelClosure"];
@@ -661,7 +661,7 @@ static SQInteger NativeClosure(HSQUIRRELVM vm)
 
 - (void) testReadValueSquirrelClosureType
 {
-    [_squirrelVM executeSync: @"function SquirrelClosure() {}" error: nil];
+    [_squirrelVM execute: @"function SquirrelClosure() {}" error: nil];
     
     sq_pushroottable(_squirrelVM.vm);
     [_squirrelVM.stack pushString: @"SquirrelClosure"];
@@ -678,7 +678,7 @@ static SQInteger NativeClosure(HSQUIRRELVM vm)
 
 - (void) testReadValueSquirrelClosureValue
 {
-    [_squirrelVM executeSync: @"function SquirrelClosure() {}" error: nil];
+    [_squirrelVM execute: @"function SquirrelClosure() {}" error: nil];
     
     sq_pushroottable(_squirrelVM.vm);
     [_squirrelVM.stack pushString: @"SquirrelClosure"];
@@ -758,7 +758,7 @@ static SQInteger NativeClosure(HSQUIRRELVM vm)
 {
     NSInteger topBefore = _squirrelVM.stack.top;
     
-    [_squirrelVM doWaitPreservingStackTop: ^{
+    [_squirrelVM performPreservingStackTop: ^{
         [_squirrelVM.stack pushNull];
         [_squirrelVM.stack pushFloat:  123.456];
         [_squirrelVM.stack pushInteger: 123456];

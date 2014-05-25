@@ -27,7 +27,7 @@
     
     OCSquirrelVM *squirrelVM = self.squirrelVM;
     
-    [squirrelVM doWaitPreservingStackTop: ^{
+    [squirrelVM performPreservingStackTop: ^{
         [self push];
         result = sq_getsize(squirrelVM.vm, -1);
     }];
@@ -54,7 +54,7 @@
     
     if (self != nil)
     {
-        [squirrelVM doWaitPreservingStackTop: ^{
+        [squirrelVM performPreservingStackTop: ^{
             sq_newarray(squirrelVM.vm, 0);
             _obj = [squirrelVM.stack sqObjectAtPosition: -1];
             sq_addref(squirrelVM.vm, &_obj);
@@ -72,7 +72,7 @@
 {
     OCSquirrelVM *squirrelVM = self.squirrelVM;
     
-    [squirrelVM doWaitPreservingStackTop: ^{
+    [squirrelVM performPreservingStackTop: ^{
         [self push];
         [squirrelVM.stack pushValue: object];
         

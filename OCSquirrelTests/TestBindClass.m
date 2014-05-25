@@ -152,7 +152,7 @@
     [root setObject: class forKey: @"NSDate"];
     
     NSError *error = nil;
-    [_squirrelVM executeSync: @"return NSDate();" error: &error];
+    [_squirrelVM execute: @"return NSDate();" error: &error];
     
     XCTAssertNil(error,
                 @"Squirrel script should be able to create instances of the bound class.");
@@ -168,7 +168,7 @@
     [root setObject: class forKey: @"NSDate"];
     
     NSError *error = nil;
-    id result = [_squirrelVM executeSync: @"return NSDate();" error: &error];
+    id result = [_squirrelVM execute: @"return NSDate();" error: &error];
     
     XCTAssertTrue([result isKindOfClass: [OCSquirrelInstance class]],
                 @"Creating an instance of a class should return OCSquirrelInstance");
@@ -182,7 +182,7 @@
     
     [root setObject: class forKey: @"NSDate"];
     NSError *error = nil;
-    OCSquirrelInstance *instance = [_squirrelVM executeSync: @"return NSDate();" error: &error];
+    OCSquirrelInstance *instance = [_squirrelVM execute: @"return NSDate();" error: &error];
     
     XCTAssertNotNil(instance.instanceUP,
                    @"Creating an instance of a native bound class should return OCSquirrelInstance "
@@ -239,7 +239,7 @@
     
     NSError *error = nil;
     OCSquirrelInstance *instance =
-    [_squirrelVM executeSync: @"return SimpleInvocationChecker().init()" error: &error];
+    [_squirrelVM execute: @"return SimpleInvocationChecker().init()" error: &error];
     
     XCTAssertTrue([instance.instanceUP calledInit],
                 @"Calling init() method from Squirrel should actually invoke -init on the "
@@ -257,7 +257,7 @@
     
     NSError *error = nil;
     OCSquirrelInstance *instance =
-    [_squirrelVM executeSync: @"return InitializerChecker().init()" error: &error];
+    [_squirrelVM execute: @"return InitializerChecker().init()" error: &error];
     
     XCTAssertNil(instance.instanceUP,
                 @"-init method returning a different value for 'self' should actually"
@@ -488,7 +488,7 @@
     [_rootTable setObject: class forKey: @"InitializerChecker"];
     
 
-    OCSquirrelInstance *instance = [_squirrelVM executeSync:
+    OCSquirrelInstance *instance = [_squirrelVM execute:
                                     @"return InitializerChecker().initWithInt(12345);"
                                                       error: nil];
     
@@ -508,7 +508,7 @@
     [_rootTable setObject: class forKey: @"InitializerChecker"];
     
     
-    OCSquirrelInstance *instance = [_squirrelVM executeSync:
+    OCSquirrelInstance *instance = [_squirrelVM execute:
                                     @"return InitializerChecker().initWithFloat(123.456);"
                                                       error: nil];
     
@@ -528,7 +528,7 @@
     [_rootTable setObject: class forKey: @"InitializerChecker"];
     
     
-    OCSquirrelInstance *instance = [_squirrelVM executeSync:
+    OCSquirrelInstance *instance = [_squirrelVM execute:
                                     @"return InitializerChecker().initWithBOOL(true);"
                                                       error: nil];
     
@@ -548,7 +548,7 @@
     [_rootTable setObject: class forKey: @"InitializerChecker"];
     
     
-    OCSquirrelInstance *instance = [_squirrelVM executeSync:
+    OCSquirrelInstance *instance = [_squirrelVM execute:
                                     @"return InitializerChecker().initWithString(\"string\");"
                                                       error: nil];
     

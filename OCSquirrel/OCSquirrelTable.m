@@ -35,7 +35,7 @@
 {
     __block id table = nil;
     
-    [squirrelVM doWaitPreservingStackTop: ^{
+    [squirrelVM performPreservingStackTop: ^{
         sq_pushroottable(squirrelVM.vm);
         
         HSQOBJECT root = [squirrelVM.stack sqObjectAtPosition: -1];
@@ -53,7 +53,7 @@
 {
     __block id table = nil;
     
-    [squirrelVM doWaitPreservingStackTop: ^{
+    [squirrelVM performPreservingStackTop: ^{
         sq_pushregistrytable(squirrelVM.vm);
         
         HSQOBJECT registry = [squirrelVM.stack sqObjectAtPosition: -1];
@@ -73,7 +73,7 @@
     
     if (self != nil)
     {
-        [squirrelVM doWaitPreservingStackTop: ^{
+        [squirrelVM performPreservingStackTop: ^{
             sq_newtable(squirrelVM.vm);
             _obj = [squirrelVM.stack sqObjectAtPosition: -1];
             sq_addref(squirrelVM.vm, &_obj);
@@ -152,7 +152,7 @@
     
     OCSquirrelVM *squirrelVM = self.squirrelVM;
     
-    [squirrelVM doWaitPreservingStackTop: ^{
+    [squirrelVM performPreservingStackTop: ^{
         [self push];
         
         [squirrelVM.stack pushValue: key];
@@ -174,7 +174,7 @@
 {
     OCSquirrelVM *squirrelVM = self.squirrelVM;
     
-    [squirrelVM doWaitPreservingStackTop: ^{
+    [squirrelVM performPreservingStackTop: ^{
         [self push];
         [squirrelVM.stack pushValue: key];
         [squirrelVM.stack pushValue: object];
@@ -241,7 +241,7 @@
     {
         OCSquirrelVM *squirrelVM = self.squirrelVM;
         
-        [squirrelVM doWaitPreservingStackTop:^{
+        [squirrelVM performPreservingStackTop:^{
             
             [self push];
             sq_pushnull(squirrelVM.vm);
