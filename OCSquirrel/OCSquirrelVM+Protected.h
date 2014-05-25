@@ -17,12 +17,9 @@
 {
 @protected
     HSQUIRRELVM _vm;
-    
-    dispatch_queue_t _vmQueue;
-    
+
     /// A concrete implementation of the stack property
     OCSquirrelVMStackImpl *_stack;
-    
     
     /// Contains Objective-C class names as keys an OCSquirrelClass instances as values
     NSMutableDictionary *_classBindings;

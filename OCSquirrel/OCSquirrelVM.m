@@ -116,7 +116,6 @@ static const SQChar * const kOCSquirrelVMCompileBufferSourceName = _SC("buffer")
 - (void) dealloc
 {
     _classBindings = nil;
-    _vmQueue       = nil;
     
     if (_vm != nil) {
         sq_close(_vm);
