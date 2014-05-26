@@ -247,6 +247,19 @@
 }
 
 
+- (void) removeObjectForKey: (id) key
+{
+    OCSquirrelVM *squirrelVM = self.squirrelVM;
+    
+    [squirrelVM performPreservingStackTop: ^(HSQUIRRELVM vm, id<OCSquirrelVMStack> stack){
+        [self push];
+        [stack pushValue: key];
+        
+        sq_deleteslot(vm, -2, SQFalse);
+    }];
+}
+
+
 #pragma mark -
 #pragma mark key-value coding
 

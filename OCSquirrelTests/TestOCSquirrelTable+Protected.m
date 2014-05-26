@@ -382,6 +382,21 @@
 }
 
 
+- (void)testRemoveObjectForKeyIsForwardedToImpl
+{
+    id implMock = [OCMockObject mockForClass: [OCSquirrelTableImpl class]];
+    OCSquirrelTable *table = [[OCSquirrelTable alloc] initWithImpl: implMock];
+    
+    [(OCSquirrelTableImpl *)[implMock expect] removeObjectForKey: @1];
+    
+    [table removeObjectForKey: @1];
+    
+    XCTAssertNoThrow([implMock verify],
+                     @"OCSquirrelTable should forward -removeObjectForKey: calls to its impl");
+}
+
+
+
 - (void)testSetUserPointerForKeyIsForwardedToImpl
 {
     id implMock = [OCMockObject mockForClass: [OCSquirrelTableImpl class]];

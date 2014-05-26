@@ -44,6 +44,8 @@
 
 - (void) setUserPointer: (SQUserPointer) pointer forKey: (id) key;
 
+- (void) removeObjectForKey: (id) key;
+
 
 #pragma mark enumeration
 
@@ -67,5 +69,20 @@
                            objects:(const id [])objects
                            forKeys:(const id<NSCopying> [])keys
                              count:(NSUInteger)count;
+
+#pragma mark - unavailable NSDictionary methods
+
++ (instancetype)dictionary __unavailable;
++ (instancetype)dictionaryWithObject:(id)object forKey:(id <NSCopying>)key __unavailable;
++ (instancetype)dictionaryWithObjects:(const id [])objects forKeys:(const id <NSCopying> [])keys count:(NSUInteger)cnt __unavailable;
++ (instancetype)dictionaryWithObjectsAndKeys:(id)firstObject, ... __unavailable;
++ (instancetype)dictionaryWithDictionary:(NSDictionary *)dict __unavailable;
++ (instancetype)dictionaryWithObjects:(NSArray *)objects forKeys:(NSArray *)keys __unavailable;
+
++ (id)dictionaryWithContentsOfFile:(NSString *)path __unavailable;
++ (id)dictionaryWithContentsOfURL:(NSURL *)url __unavailable;
+- (id)initWithContentsOfFile:(NSString *)path __unavailable;
+- (id)initWithContentsOfURL:(NSURL *)url __unavailable;
+
 
 @end

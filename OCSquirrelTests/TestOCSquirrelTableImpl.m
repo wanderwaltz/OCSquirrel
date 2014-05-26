@@ -825,8 +825,9 @@
 }
 
 
-#pragma mark -
-#pragma mark enumeration
+
+#pragma mark - 
+#pragma mark count tests
 
 - (void)testCount
 {
@@ -839,6 +840,41 @@
     XCTAssertEqual(table.count, (NSUInteger)3, @"-count should return number of keys in table");
 }
 
+
+- (void)testCountAfterRemovingObject
+{
+    OCSquirrelTableImpl *table = [[OCSquirrelTableImpl alloc] initWithVM: _squirrelVM];
+    
+    [table setObject: nil      forKey: @"other"];
+    [table setObject: @"value" forKey: @"key"];
+    [table setObject: @6789    forKey: @12345];
+    
+    [table removeObjectForKey: @12345];
+    
+    XCTAssertEqual(table.count, (NSUInteger)2, @"-count should decrease after removing object");
+}
+
+
+- (void)testRemovingNonexistantObjectDoesNotThrow
+{
+    OCSquirrelTableImpl *table = [[OCSquirrelTableImpl alloc] initWithVM: _squirrelVM];
+    
+    XCTAssertNoThrow([table removeObjectForKey: @12345], @"Removing object for nonexistant key does not throw");
+}
+
+
+- (void)testRemovingNonexistantObjectDoesNotGenerateError
+{
+    OCSquirrelTableImpl *table = [[OCSquirrelTableImpl alloc] initWithVM: _squirrelVM];
+    
+    [table removeObjectForKey: @12345];
+    
+    XCTAssertNil(_squirrelVM.lastError, @"Removing object for nonexistant key does not generate an error");
+}
+
+
+#pragma mark -
+#pragma mark enumeration
 
 - (void)testKeyEnumeratorClass
 {

@@ -95,8 +95,8 @@
 
 - (void)removeObjectForKey:(id)aKey
 {
-    [self.impl setObject: nil
-                  forKey: aKey];
+    [self.impl removeObjectForKey: aKey];
+     
 }
 
 
