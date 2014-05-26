@@ -10,6 +10,7 @@
 		44227BE419330B520011CE2C /* OCSquirrelTable.m in Sources */ = {isa = PBXBuildFile; fileRef = 44227BE319330B520011CE2C /* OCSquirrelTable.m */; };
 		44227BE7193323B60011CE2C /* TestOCSquirrelTable+Protected.m in Sources */ = {isa = PBXBuildFile; fileRef = 44227BE6193323B60011CE2C /* TestOCSquirrelTable+Protected.m */; };
 		44227BE9193324BE0011CE2C /* TestOCSquirrelTable+Protected.m in Sources */ = {isa = PBXBuildFile; fileRef = 44227BE6193323B60011CE2C /* TestOCSquirrelTable+Protected.m */; };
+		44227BEB193330130011CE2C /* TestOCSquirrelTable.m in Sources */ = {isa = PBXBuildFile; fileRef = 44227BEA193330130011CE2C /* TestOCSquirrelTable.m */; };
 		5D639830171AA39F00CFECC1 /* TestOCSquirrelTableImpl.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D63982F171AA39F00CFECC1 /* TestOCSquirrelTableImpl.m */; };
 		5D639833171AA46900CFECC1 /* OCSquirrelTableImpl.h in Headers */ = {isa = PBXBuildFile; fileRef = 5D639831171AA46900CFECC1 /* OCSquirrelTableImpl.h */; };
 		5D639834171AA46900CFECC1 /* OCSquirrelTableImpl.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D639832171AA46900CFECC1 /* OCSquirrelTableImpl.m */; };
@@ -164,6 +165,7 @@
 		44227BE319330B520011CE2C /* OCSquirrelTable.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OCSquirrelTable.m; sourceTree = "<group>"; };
 		44227BE519330B9C0011CE2C /* OCSquirrelTable+Protected.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "OCSquirrelTable+Protected.h"; sourceTree = "<group>"; };
 		44227BE6193323B60011CE2C /* TestOCSquirrelTable+Protected.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "TestOCSquirrelTable+Protected.m"; sourceTree = "<group>"; };
+		44227BEA193330130011CE2C /* TestOCSquirrelTable.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TestOCSquirrelTable.m; sourceTree = "<group>"; };
 		5D0D16F41930E0990053EBCC /* SenTestingKitCompatibility.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SenTestingKitCompatibility.h; sourceTree = "<group>"; };
 		5D0D16F51930E2010053EBCC /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
 		5D63982F171AA39F00CFECC1 /* TestOCSquirrelTableImpl.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TestOCSquirrelTableImpl.m; sourceTree = "<group>"; };
@@ -700,6 +702,7 @@
 				5D8EC811171A57600084F92C /* TestPrinting.m */,
 				5DB09DF817196FA500F50257 /* TestOCSquirrelVM.mm */,
 				5D8EC814171A64690084F92C /* TestStackManipulation.m */,
+				44227BEA193330130011CE2C /* TestOCSquirrelTable.m */,
 			);
 			name = "Public API tests";
 			sourceTree = "<group>";
@@ -1027,6 +1030,7 @@
 				5DD79ADF17356D6B0008AC33 /* TestOCSquirrelInstance.m in Sources */,
 				5DD79AE417363A650008AC33 /* BindingHelperClasses.m in Sources */,
 				7C41C06E1766222F004120B6 /* TestOCSquirrelArray.m in Sources */,
+				44227BEB193330130011CE2C /* TestOCSquirrelTable.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
