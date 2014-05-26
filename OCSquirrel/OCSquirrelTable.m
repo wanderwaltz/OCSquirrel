@@ -25,6 +25,17 @@
 }
 
 
+#pragma mark - initialization methods
+
+- (instancetype)init
+{
+    const id objects[0] = {};
+    const id keys[0] = {};
+    
+    return [self initWithObjects: objects forKeys: keys count: 0];
+}
+
+
 - (instancetype)initWithSquirrelVM:(OCSquirrelVM *)vm
                            objects:(const id [])objects
                            forKeys:(const id<NSCopying> [])keys
@@ -133,7 +144,7 @@
 forKeyedSubscript:(id<NSCopying>)key
 {
     [self.impl setObject: object
-                  forKey: key];
+       forKeyedSubscript: key];
 }
 
 
