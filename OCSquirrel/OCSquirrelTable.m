@@ -7,7 +7,7 @@
 //
 
 #import "OCSquirrelTable.h"
-#import "OCSquirrelTable_Protected.h"
+#import "OCSquirrelTable+Protected.h"
 
 @implementation OCSquirrelTable
 

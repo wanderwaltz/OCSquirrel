@@ -160,7 +160,7 @@
 
 /* Begin PBXFileReference section */
 		44227BE319330B520011CE2C /* OCSquirrelTable.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OCSquirrelTable.m; sourceTree = "<group>"; };
-		44227BE519330B9C0011CE2C /* OCSquirrelTable_Protected.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = OCSquirrelTable_Protected.h; sourceTree = "<group>"; };
+		44227BE519330B9C0011CE2C /* OCSquirrelTable+Protected.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "OCSquirrelTable+Protected.h"; sourceTree = "<group>"; };
 		5D0D16F41930E0990053EBCC /* SenTestingKitCompatibility.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SenTestingKitCompatibility.h; sourceTree = "<group>"; };
 		5D0D16F51930E2010053EBCC /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
 		5D63982F171AA39F00CFECC1 /* TestOCSquirrelTableImpl.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TestOCSquirrelTableImpl.m; sourceTree = "<group>"; };
@@ -663,7 +663,7 @@
 			children = (
 				5DC29C37171AFE09000A2096 /* OCSquirrelObject.h */,
 				5DC29C38171AFE09000A2096 /* OCSquirrelObject.m */,
-				44227BE519330B9C0011CE2C /* OCSquirrelTable_Protected.h */,
+				44227BE519330B9C0011CE2C /* OCSquirrelTable+Protected.h */,
 				5D639831171AA46900CFECC1 /* OCSquirrelTableImpl.h */,
 				5D639832171AA46900CFECC1 /* OCSquirrelTableImpl.m */,
 				5D8EC81A171A65770084F92C /* OCSquirrelVMStackImpl.h */,

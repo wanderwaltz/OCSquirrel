@@ -12,7 +12,7 @@
 
 #import "OCSquirrelClosure.h"
 #import "OCSquirrelVM+SQObjects.h"
-#import "OCSquirrelTable_Protected.h"
+#import "OCSquirrelTable+Protected.h"
 
 
 #pragma mark -

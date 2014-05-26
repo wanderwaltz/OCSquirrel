@@ -9,7 +9,7 @@
 #import "OCSquirrelVM+SQObjects.h"
 #import "OCSquirrelTableImpl.h"
 #import "OCSquirrelTable.h"
-#import "OCSquirrelTable_Protected.h"
+#import "OCSquirrelTable+Protected.h"
 
 @implementation OCSquirrelVM (SQObjects)
 

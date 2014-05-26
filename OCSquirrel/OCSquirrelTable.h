@@ -11,6 +11,9 @@
 
 @class OCSquirrelVM;
 
+
+#pragma mark - <OCSquirrelTable> protocol
+
 @protocol OCSquirrelTable <NSObject>
 @required
 
@@ -56,6 +59,7 @@
 @end
 
 
+#pragma mark - OCSquirrelTable interface
 
 @interface OCSquirrelTable : NSMutableDictionary<OCSquirrelTable>
 
