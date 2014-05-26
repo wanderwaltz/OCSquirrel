@@ -82,12 +82,25 @@ static const SQChar * const kOCSquirrelVMCompileBufferSourceName = _SC("buffer")
 #pragma mark -
 #pragma mark initialization methods
 
-- (id) init
++ (instancetype)defaultVM
+{
+    static __strong OCSquirrelVM *vm = nil;
+    static dispatch_once_t onceToken;
+    
+    dispatch_once(&onceToken, ^{
+        vm = [self.class new];
+    });
+    
+    return vm;
+}
+
+
+- (instancetype)init
 {
     return [self initWithStackSize: kOCSquirrelVMDefaultInitialStackSize];
 }
 
-- (id) initWithStackSize: (NSUInteger) stackSize
+- (instancetype)initWithStackSize:(NSUInteger)stackSize
 {
     self = [super init];
     

@@ -115,12 +115,20 @@ enum : NSInteger
 
 #pragma mark initialization methods
 
+/** A shared singleton instance of the OCSquirrelVM class.
+ *
+ *  This instance will be used when creating Squirrel objects (OCSquirrelTable, OCSquirrelArray etc.)
+ *  using their initializer methods without providing explicit OCSquirrelVM to bind them to.
+ */
++ (instancetype)defaultVM;
+
+
 /// Defaults stack size to kOCSquirrelVMDefaultInitialStackSize
-- (id) init;
+- (instancetype)init;
 
 
 /// Designated initializer
-- (id) initWithStackSize: (NSUInteger) stackSize;
+- (instancetype)initWithStackSize:(NSUInteger)stackSize;
 
 
 
