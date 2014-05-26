@@ -2,30 +2,45 @@
 //  OCSquirrelArray.h
 //  OCSquirrel
 //
-//  Created by Egor Chiglintsev on 6/10/13.
-//  Copyright (c) 2013 Egor Chiglintsev. All rights reserved.
+//  Created by Egor Chiglintsev on 26.05.14.
+//  Copyright (c) 2014 Egor Chiglintsev. All rights reserved.
 //
 
-#import <OCSquirrel/OCSquirrel.h>
+#import <Foundation/Foundation.h>
+#import "squirrel.h"
 
-// TODO: NSMutableArray cluster integration
-// TODO: fast enumeration
+@class OCSquirrelVM;
+
+#pragma mark - <OCSquirrelArray> protocol
+
+@protocol OCSquirrelArray <NSObject>
+@required
+
+- (NSUInteger)count;
+
+- (void)addObject:(id)object;
+
+- (id)objectAtIndex:(NSInteger)index;
+- (id)objectAtIndexedSubscript:(NSInteger)index;
+
+- (void)enumerateObjectsUsingBlock:(void (^)(id object, NSInteger index, BOOL *stop))block;
+
+- (void)setObject:(id)object atIndex:(NSInteger)index;
+- (void)setObject:(id)object atIndexedSubscript:(NSInteger)idx;
+
+- (void)insertObject:(id)anObject atIndex:(NSInteger)index;
+- (void)removeObjectAtIndex:(NSInteger)index;
+
+- (id)pop;
 
 
-#pragma mark -
-#pragma mark OCSquirrelArray interface
+@end
 
-@interface OCSquirrelArray : OCSquirrelObject
-@property (readonly, nonatomic) NSUInteger count;
 
-- (void) addObject: (id) object;
+#pragma mark - OCSquirrelArray class interface
 
-- (id) objectAtIndex: (NSInteger) index;
-- (id) objectAtIndexedSubscript: (NSInteger) index;
+@interface OCSquirrelArray : NSMutableArray<OCSquirrelArray>
 
-- (void) enumerateObjectsUsingBlock: (void (^)(id object, NSInteger index, BOOL *stop)) block;
-
-- (void) setObject: (id) object atIndex: (NSInteger) index;
-- (void) setObject: (id) object atIndexedSubscript: (NSInteger) idx;
+- (instancetype)initWithVM:(OCSquirrelVM *)vm;
 
 @end

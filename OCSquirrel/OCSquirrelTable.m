@@ -8,6 +8,7 @@
 
 #import "OCSquirrelTable.h"
 #import "OCSquirrelTable+Protected.h"
+#import "OCSquirrelTableImpl.h"
 
 @implementation OCSquirrelTable
 

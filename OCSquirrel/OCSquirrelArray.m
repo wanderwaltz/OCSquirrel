@@ -2,158 +2,127 @@
 //  OCSquirrelArray.m
 //  OCSquirrel
 //
-//  Created by Egor Chiglintsev on 6/10/13.
-//  Copyright (c) 2013 Egor Chiglintsev. All rights reserved.
+//  Created by Egor Chiglintsev on 26.05.14.
+//  Copyright (c) 2014 Egor Chiglintsev. All rights reserved.
 //
 
-#if (!__has_feature(objc_arc))
-#error "This file should be compiled with ARC support"
-#endif
-
 #import "OCSquirrelArray.h"
-
-
-#pragma mark -
-#pragma mark OCSquirrelArray implementation
+#import "OCSquirrelArray+Protected.h"
+#import "OCSquirrelArrayImpl.h"
 
 @implementation OCSquirrelArray
 
-#pragma mark -
-#pragma mark properties
+#pragma mark - protected
 
-- (NSUInteger) count
+- (instancetype)initWithImpl:(OCSquirrelArrayImpl *)impl
 {
-    __block NSUInteger result = 0;
+    self = [super init];
     
-    OCSquirrelVM *squirrelVM = self.squirrelVM;
-    
-    [squirrelVM performPreservingStackTop: ^(HSQUIRRELVM vm, id<OCSquirrelVMStack> stack){
-        [self push];
-        result = sq_getsize(vm, -1);
-    }];
-    
-    return result;
-}
-
-
-#pragma mark -
-#pragma mark class methods
-
-+ (BOOL) isAllowedToInitWithSQObjectOfType: (SQObjectType) type
-{
-    return (type == OT_ARRAY);
-}
-
-
-#pragma mark -
-#pragma mark initialization methods
-
-- (id) initWithVM: (OCSquirrelVM *) squirrelVM
-{
-    self = [super initWithVM: squirrelVM];
-    
-    if (self != nil)
-    {
-        [squirrelVM performPreservingStackTop: ^(HSQUIRRELVM vm, id<OCSquirrelVMStack> stack){
-            sq_newarray(vm, 0);
-            _obj = [stack sqObjectAtPosition: -1];
-            sq_addref(vm, &_obj);
-        }];
+    if (self != nil) {
+        _impl = impl;
     }
+    
     return self;
 }
 
+#pragma mark - initialization methods
 
-
-#pragma mark -
-#pragma mark methods
-
-- (id) objectAtIndex: (NSInteger) index
+- (instancetype)init
 {
-    __block id object = nil;
+    OCSquirrelArrayImpl *impl = [[OCSquirrelArrayImpl alloc] initWithVM: [OCSquirrelVM defaultVM]];
     
-    OCSquirrelVM *squirrelVM = self.squirrelVM;
+    return [self initWithImpl: impl];
+}
+
+
+- (instancetype)initWithCapacity:(NSUInteger)numItems
+{
+    return [self init];
+}
+
+
+- (instancetype)initWithVM:(OCSquirrelVM *)vm
+{
+    OCSquirrelArrayImpl *impl = [[OCSquirrelArrayImpl alloc] initWithVM: vm];
     
-    [squirrelVM performPreservingStackTop: ^(HSQUIRRELVM vm, id<OCSquirrelVMStack> stack){
-        [self push];
-        
-        [stack pushInteger: index];
-        
-        if (SQ_SUCCEEDED(sq_get(vm, -2)))
-        {
-            object = [stack valueAtPosition: -1];
-        }
-    }];
-    
-    return object;
+    return [self initWithImpl: impl];
 }
 
 
-- (id) objectAtIndexedSubscript: (NSInteger) index
+#pragma mark - NSArray primitive methods
+
+- (NSUInteger)count
 {
-    return [self objectAtIndex: index];
+    return self.impl.count;
 }
 
 
-- (void) addObject: (id) object
+- (id)objectAtIndex:(NSInteger)index
 {
-    OCSquirrelVM *squirrelVM = self.squirrelVM;
-    
-    [squirrelVM performPreservingStackTop: ^(HSQUIRRELVM vm, id<OCSquirrelVMStack> stack){
-        [self push];
-        [stack pushValue: object];
-        
-        sq_arrayappend(vm, -2);
-    }];
+    return [self.impl objectAtIndex: index];
 }
 
+#pragma mark - NSMutableArray primitive methods
 
-- (void) setObject: (id) object atIndex: (NSInteger) index
+- (void)insertObject:(id)anObject atIndex:(NSInteger)index
 {
-    OCSquirrelVM *squirrelVM = self.squirrelVM;
-    
-    [squirrelVM performPreservingStackTop: ^(HSQUIRRELVM vm, id<OCSquirrelVMStack> stack){
-        [self push];
-        [stack pushInteger: index];
-        [stack pushValue: object];
-        
-        sq_set(vm, -3);
-    }];
+    [self.impl insertObject: anObject atIndex: index];
 }
 
 
-- (void) setObject: (id) object atIndexedSubscript: (NSInteger) index
+- (void)removeObjectAtIndex:(NSInteger)index
 {
-    [self setObject: object atIndex: index];
+    [self.impl removeObjectAtIndex: index];
 }
 
 
-- (void) enumerateObjectsUsingBlock: (void (^)(id object, NSInteger index, BOOL *stop)) block
+- (void)addObject:(id)anObject
 {
-    if (block != nil)
-    {
-        OCSquirrelVM *squirrelVM = self.squirrelVM;
-        
-        [squirrelVM performPreservingStackTop:^(HSQUIRRELVM vm, id<OCSquirrelVMStack> stack){
-            
-            [self push];
-            sq_pushnull(vm);
-            
-            while(SQ_SUCCEEDED(sq_next(vm, -2)))
-            {
-                NSInteger index = [stack integerAtPosition: -2];
-                id value = [stack valueAtPosition: -1];
-                
-                sq_pop(vm,2);
-                
-                BOOL stop = NO;
-                
-                block(value, index, &stop);
-                
-                if (stop) break;
-            }
-        }];
-    }
+    [self.impl addObject: anObject];
 }
+
+
+- (void)removeLastObject
+{
+    [self.impl pop];
+}
+
+
+- (void)replaceObjectAtIndex:(NSUInteger)index withObject:(id)anObject
+{
+    [self.impl setObject: anObject atIndex: index];
+}
+
+#pragma mark - <OCSquirrelArray> methods
+
+- (id)objectAtIndexedSubscript:(NSInteger)index
+{
+    return [self.impl objectAtIndexedSubscript: index];
+}
+
+
+- (void)enumerateObjectsUsingBlock:(void (^)(id object, NSInteger index, BOOL *stop))block
+{
+    [self.impl enumerateObjectsUsingBlock: block];
+}
+
+
+- (void)setObject:(id)object atIndex:(NSInteger)index
+{
+    [self.impl setObject: object atIndex: index];
+}
+
+
+- (void)setObject:(id)object atIndexedSubscript:(NSInteger)idx
+{
+    [self.impl setObject: object atIndexedSubscript: idx];
+}
+
+
+- (id)pop
+{
+    return [self.impl pop];
+}
+
 
 @end

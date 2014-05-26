@@ -6,11 +6,12 @@
 //  Copyright (c) 2014 Egor Chiglintsev. All rights reserved.
 //
 
-#import <OCSquirrel/OCSquirrel.h>
-#import "OCSquirrelTableImpl.h"
+#import "OCSquirrelTable.h"
 
-@interface OCSquirrelTable ()
-@property (nonatomic, strong) OCSquirrelTableImpl *impl;
+@class OCSquirrelTableImpl;
+
+@interface OCSquirrelTable()
+@property (nonatomic, strong, readonly) OCSquirrelTableImpl *impl;
 
 - (instancetype)initWithImpl:(OCSquirrelTableImpl *)impl;
 

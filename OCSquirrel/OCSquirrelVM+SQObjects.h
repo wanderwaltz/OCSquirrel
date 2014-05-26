@@ -13,9 +13,8 @@
 // a corresponding @protocol with private impl class backing it and a method of creating those
 // objects using OCSquirrelVM+SQObjects category.
 
-// TODO: tests for public OCSquirrelTable-related APIs
-
 @class OCSquirrelTable;
+@class OCSquirrelArray;
 
 @interface OCSquirrelVM (SQObjects)
 
@@ -23,5 +22,8 @@
 - (OCSquirrelTable *)registryTable;
 - (OCSquirrelTable *)newTable;
 - (OCSquirrelTable *)newTableWithHSQObject:(HSQOBJECT)sqObject;
+
+- (OCSquirrelArray *)newArray;
+- (OCSquirrelArray *)newArrayWithHSQObject:(HSQOBJECT)sqObject;
 
 @end

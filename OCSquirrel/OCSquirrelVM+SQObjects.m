@@ -7,9 +7,14 @@
 //
 
 #import "OCSquirrelVM+SQObjects.h"
-#import "OCSquirrelTableImpl.h"
+
 #import "OCSquirrelTable.h"
 #import "OCSquirrelTable+Protected.h"
+#import "OCSquirrelTableImpl.h"
+
+#import "OCSquirrelArray.h"
+#import "OCSquirrelArray+Protected.h"
+#import "OCSquirrelArrayImpl.h"
 
 @implementation OCSquirrelVM (SQObjects)
 
@@ -40,6 +45,22 @@
             [[OCSquirrelTableImpl alloc] initWithHSQOBJECT: sqObject
                                                       inVM: self]];
 }
+
+
+- (OCSquirrelArray *)newArray
+{
+    return [[OCSquirrelArray alloc] initWithImpl:
+            [[OCSquirrelArrayImpl alloc] initWithVM: self]];
+}
+
+
+- (OCSquirrelArray *)newArrayWithHSQObject:(HSQOBJECT)sqObject
+{
+    return [[OCSquirrelArray alloc] initWithImpl:
+            [[OCSquirrelArrayImpl alloc] initWithHSQOBJECT: sqObject
+                                                      inVM: self]];
+}
+
 
 
 @end

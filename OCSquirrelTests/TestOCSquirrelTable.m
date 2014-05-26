@@ -122,6 +122,17 @@
 }
 
 
+- (void)testInitWithDictionaryClass
+{
+    NSDictionary *dictionary = @{ @1 : @2, @3 : @4, @5 : @6 };
+    
+    OCSquirrelTable *table = [[OCSquirrelTable alloc] initWithDictionary: dictionary];
+    
+    XCTAssertTrue([table isKindOfClass: [OCSquirrelTable class]],
+                  @"-initWithDictionary: should create instance of OCSquirrelTable class");
+}
+
+
 - (void)testRemoveAllObjects
 {
     OCSquirrelTable *table = [OCSquirrelTable new];
