@@ -828,7 +828,94 @@
 #pragma mark -
 #pragma mark enumeration
 
-- (void) testEnumerateObjectsAndKeys
+- (void)testCount
+{
+    OCSquirrelTableImpl *table = [[OCSquirrelTableImpl alloc] initWithVM: _squirrelVM];
+    
+    [table setObject: nil      forKey: @"other"];
+    [table setObject: @"value" forKey: @"key"];
+    [table setObject: @6789    forKey: @12345];
+    
+    XCTAssertEqual(table.count, (NSUInteger)3, @"-count should return number of keys in table");
+}
+
+
+- (void)testKeyEnumeratorClass
+{
+    OCSquirrelTableImpl *table = [[OCSquirrelTableImpl alloc] initWithVM: _squirrelVM];
+    
+    XCTAssertTrue([table.keyEnumerator isKindOfClass: [NSEnumerator class]],
+                  @"OCSquirrelTableImpl should have a keyEnumerator property of NSEnumerator class");
+}
+
+
+- (void)testKeyEnumeratorNextObject
+{
+    OCSquirrelTableImpl *table = [[OCSquirrelTableImpl alloc] initWithVM: _squirrelVM];
+    
+    NSSet *keys = [NSSet setWithArray: @[@"other", @"key", @12345]];
+    
+    [table setObject: nil      forKey: @"other"];
+    [table setObject: @"value" forKey: @"key"];
+    [table setObject: @6789    forKey: @12345];
+    
+    NSMutableSet *enumerated = [NSMutableSet new];
+    
+    NSEnumerator *keyEnumerator = table.keyEnumerator;
+    
+    id key = nil;
+    
+    while ((key = [keyEnumerator nextObject]))
+    {
+        [enumerated addObject: key];
+    }
+    
+    XCTAssertEqualObjects(keys, enumerated,
+                          @"-keyEnumerator should return an NSEnumerator which enumerates all keys of the table");
+}
+
+
+- (void)testKeyEnumeratorAllObjectsAll
+{
+    OCSquirrelTableImpl *table = [[OCSquirrelTableImpl alloc] initWithVM: _squirrelVM];
+    
+    NSSet *keys = [NSSet setWithArray: @[@"other", @"key", @12345]];
+    
+    [table setObject: nil      forKey: @"other"];
+    [table setObject: @"value" forKey: @"key"];
+    [table setObject: @6789    forKey: @12345];
+    
+    NSSet *allObjects = [NSSet setWithArray: table.keyEnumerator.allObjects];
+    
+    XCTAssertEqualObjects(keys, allObjects,
+                          @"-allObjects of the table's key enumerator should return all remaining keys of the table.");
+}
+
+
+- (void)testKeyEnumeratorAllObjectsTail
+{
+    OCSquirrelTableImpl *table = [[OCSquirrelTableImpl alloc] initWithVM: _squirrelVM];
+    
+    NSMutableSet *keys = [[NSSet setWithArray: @[@"other", @"key", @12345]] mutableCopy];
+    
+    [table setObject: nil      forKey: @"other"];
+    [table setObject: @"value" forKey: @"key"];
+    [table setObject: @6789    forKey: @12345];
+    
+    NSEnumerator *keyEnumerator = table.keyEnumerator;
+    
+    id key = [keyEnumerator nextObject];
+    
+    [keys removeObject: key];
+    
+    NSSet *allObjects = [NSSet setWithArray: keyEnumerator.allObjects];
+    
+    XCTAssertEqualObjects(keys, allObjects,
+                          @"-allObjects of the table's key enumerator should return all remaining keys of the table.");
+}
+
+
+- (void)testEnumerateObjectsAndKeys
 {
     OCSquirrelTableImpl *table = [[OCSquirrelTableImpl alloc] initWithVM: _squirrelVM];
     

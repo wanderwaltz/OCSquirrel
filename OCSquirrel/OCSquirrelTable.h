@@ -9,14 +9,12 @@
 #import <Foundation/Foundation.h>
 #import "squirrel.h"
 
-// TODO: implement NSMutableDictionary cluster integration
-// Idea is the following: implement NSMutableDictionary subclass named OCSquirrelTable
-// which will conform to OCSquirrelTable protocol and will contain an OCSquirrelTableImpl
-// object inside itself. This class will forward OCSquirrelTable protocol methods to its
-// OCSquirrelTableImpl.
+@class OCSquirrelVM;
 
 @protocol OCSquirrelTable <NSObject>
 @required
+
+- (NSUInteger)count;
 
 - (SQInteger) integerForKey: (id) key;
 - (SQFloat)     floatForKey: (id) key;
@@ -27,6 +25,8 @@
 
 - (id) objectForKey: (id) key;
 - (id) objectForKeyedSubscript:(id<NSCopying>)key;
+
+- (NSEnumerator *)keyEnumerator;
 
 
 #pragma mark setter methods
@@ -52,5 +52,16 @@
 - (id) callClosureWithKey: (id) key;
 - (id) callClosureWithKey: (id) key
                parameters: (NSArray *) parameters;
+
+@end
+
+
+
+@interface OCSquirrelTable : NSMutableDictionary<OCSquirrelTable>
+
+- (instancetype)initWithSquirrelVM:(OCSquirrelVM *)vm
+                           objects:(const id [])objects
+                           forKeys:(const id<NSCopying> [])keys
+                             count:(NSUInteger)count;
 
 @end

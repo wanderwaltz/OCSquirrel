@@ -8,30 +8,37 @@
 
 #import "OCSquirrelVM+SQObjects.h"
 #import "OCSquirrelTableImpl.h"
+#import "OCSquirrelTable.h"
+#import "OCSquirrelTable_Protected.h"
 
 @implementation OCSquirrelVM (SQObjects)
 
 - (id<OCSquirrelTable>) rootTable
 {
-    return [OCSquirrelTableImpl rootTableForVM: self];
+    return [[OCSquirrelTable alloc] initWithImpl:
+            [OCSquirrelTableImpl rootTableForVM: self]];
 }
 
 
 - (id<OCSquirrelTable>) registryTable
 {
-    return [OCSquirrelTableImpl registryTableForVM: self];
+    return [[OCSquirrelTable alloc] initWithImpl:
+            [OCSquirrelTableImpl registryTableForVM: self]];
 }
 
 
 - (id<OCSquirrelTable>) newTable
 {
-    return [[OCSquirrelTableImpl alloc] initWithVM: self];
+    return [[OCSquirrelTable alloc] initWithImpl:
+            [[OCSquirrelTableImpl alloc] initWithVM: self]];
 }
 
 
 - (id<OCSquirrelTable>) newTableWithHSQObject:(HSQOBJECT)sqObject
 {
-    return [[OCSquirrelTableImpl alloc] initWithHSQOBJECT: sqObject inVM: self];
+    return [[OCSquirrelTable alloc] initWithImpl:
+            [[OCSquirrelTableImpl alloc] initWithHSQOBJECT: sqObject
+                                                      inVM: self]];
 }
 
 

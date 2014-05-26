@@ -21,3 +21,8 @@
 + (id) registryTableForVM: (OCSquirrelVM *) squirrelVM;
 
 @end
+
+
+@interface OCSquirrelTableKeyEnumerator : NSEnumerator
+- (instancetype)initWithTableImpl:(OCSquirrelTableImpl *)impl;
+@end

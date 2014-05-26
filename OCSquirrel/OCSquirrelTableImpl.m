@@ -86,6 +86,27 @@
 #pragma mark -
 #pragma mark getter methods
 
+- (NSEnumerator *)keyEnumerator
+{
+    return [[OCSquirrelTableKeyEnumerator alloc] initWithTableImpl: self];
+}
+
+
+- (NSUInteger)count
+{
+    __block NSUInteger result = 0;
+    
+    OCSquirrelVM *squirrelVM = self.squirrelVM;
+    
+    [squirrelVM performPreservingStackTop: ^(HSQUIRRELVM vm, id<OCSquirrelVMStack> stack){
+        [self push];
+        result = sq_getsize(vm, -1);
+    }];
+    
+    return result;
+}
+
+
 - (SQInteger) integerForKey: (id) key
 {
     id object = [self objectForKey: key];
@@ -304,5 +325,79 @@
     else return nil;
 }
 
+
+@end
+
+
+#pragma mark - OCSquirrelTableKeyEnumerator private
+
+@interface OCSquirrelTableKeyEnumerator()
+@property (nonatomic, strong) OCSquirrelVM *squirrelVM;
+@property (nonatomic, strong) OCSquirrelTableImpl *table;
+@property (nonatomic, assign) NSUInteger stackTop;
+@end
+
+
+#pragma mark - OCSquirrelTableKeyEnumerator implementation
+
+@implementation OCSquirrelTableKeyEnumerator
+
+- (instancetype)initWithTableImpl:(OCSquirrelTableImpl *)impl
+{
+    self = [super init];
+    
+    if (self != nil) {
+        _squirrelVM = impl.squirrelVM;
+        _stackTop = _squirrelVM.stack.top;
+        _table = impl;
+        
+        [_squirrelVM perform:^(HSQUIRRELVM vm, id<OCSquirrelVMStack> stack) {
+            [_table push];
+            [stack pushNull];
+        }];
+    }
+    
+    return self;
+}
+
+
+- (void)dealloc
+{
+    _squirrelVM.stack.top = _stackTop;
+}
+
+
+- (NSArray *)allObjects
+{
+    NSMutableArray *result = [NSMutableArray new];
+    
+    [self.squirrelVM perform:^(HSQUIRRELVM vm, id<OCSquirrelVMStack> stack) {
+        while(SQ_SUCCEEDED(sq_next(vm, -2)))
+        {
+            id key = [stack valueAtPosition: -2];
+            
+            sq_pop(vm,2);
+            
+            [result addObject: key ?: [NSNull null]];
+        }
+    }];
+    
+    return [result copy];
+}
+
+
+- (id)nextObject
+{
+    __block id key = nil;
+    
+    [self.squirrelVM perform:^(HSQUIRRELVM vm, id<OCSquirrelVMStack> stack) {
+        if (SQ_SUCCEEDED(sq_next(vm, -2))) {
+            key = [stack valueAtPosition: -2] ?: [NSNull null];
+            sq_pop(vm,2);
+        }
+    }];
+    
+    return key;
+}
 
 @end

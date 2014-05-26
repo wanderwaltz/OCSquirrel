@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		44227BE419330B520011CE2C /* OCSquirrelTable.m in Sources */ = {isa = PBXBuildFile; fileRef = 44227BE319330B520011CE2C /* OCSquirrelTable.m */; };
 		5D639830171AA39F00CFECC1 /* TestOCSquirrelTableImpl.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D63982F171AA39F00CFECC1 /* TestOCSquirrelTableImpl.m */; };
 		5D639833171AA46900CFECC1 /* OCSquirrelTableImpl.h in Headers */ = {isa = PBXBuildFile; fileRef = 5D639831171AA46900CFECC1 /* OCSquirrelTableImpl.h */; };
 		5D639834171AA46900CFECC1 /* OCSquirrelTableImpl.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D639832171AA46900CFECC1 /* OCSquirrelTableImpl.m */; };
@@ -158,6 +159,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		44227BE319330B520011CE2C /* OCSquirrelTable.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OCSquirrelTable.m; sourceTree = "<group>"; };
+		44227BE519330B9C0011CE2C /* OCSquirrelTable_Protected.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = OCSquirrelTable_Protected.h; sourceTree = "<group>"; };
 		5D0D16F41930E0990053EBCC /* SenTestingKitCompatibility.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SenTestingKitCompatibility.h; sourceTree = "<group>"; };
 		5D0D16F51930E2010053EBCC /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
 		5D63982F171AA39F00CFECC1 /* TestOCSquirrelTableImpl.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TestOCSquirrelTableImpl.m; sourceTree = "<group>"; };
@@ -524,6 +527,7 @@
 				5DD12D2919324FC00087979E /* OCSquirrelVM+SQObjects.m */,
 				5D8EC816171A65210084F92C /* OCSquirrelVMStack.h */,
 				5DD12D2719324F530087979E /* OCSquirrelTable.h */,
+				44227BE319330B520011CE2C /* OCSquirrelTable.m */,
 			);
 			name = Classes;
 			sourceTree = "<group>";
@@ -659,6 +663,7 @@
 			children = (
 				5DC29C37171AFE09000A2096 /* OCSquirrelObject.h */,
 				5DC29C38171AFE09000A2096 /* OCSquirrelObject.m */,
+				44227BE519330B9C0011CE2C /* OCSquirrelTable_Protected.h */,
 				5D639831171AA46900CFECC1 /* OCSquirrelTableImpl.h */,
 				5D639832171AA46900CFECC1 /* OCSquirrelTableImpl.m */,
 				5D8EC81A171A65770084F92C /* OCSquirrelVMStackImpl.h */,
@@ -991,6 +996,7 @@
 				5DC29C3A171AFE09000A2096 /* OCSquirrelObject.m in Sources */,
 				5D639834171AA46900CFECC1 /* OCSquirrelTableImpl.m in Sources */,
 				7C94F8C6172A431E00C7BA78 /* OCSquirrelVMFunctions.m in Sources */,
+				44227BE419330B520011CE2C /* OCSquirrelTable.m in Sources */,
 				5DC90419172B88E7009C7082 /* OCSquirrelClass.m in Sources */,
 				5DC9041D172BA3A9009C7082 /* OCSquirrelInstance.m in Sources */,
 				5DC90427172BBA95009C7082 /* OCSquirrelClosure.m in Sources */,

@@ -15,13 +15,13 @@
 
 // TODO: tests for public OCSquirrelTable-related APIs
 
-@protocol OCSquirrelTable;
+@class OCSquirrelTable;
 
 @interface OCSquirrelVM (SQObjects)
 
-- (id<OCSquirrelTable>) rootTable;
-- (id<OCSquirrelTable>) registryTable;
-- (id<OCSquirrelTable>) newTable;
-- (id<OCSquirrelTable>) newTableWithHSQObject:(HSQOBJECT)sqObject;
+- (OCSquirrelTable *)rootTable;
+- (OCSquirrelTable *)registryTable;
+- (OCSquirrelTable *)newTable;
+- (OCSquirrelTable *)newTableWithHSQObject:(HSQOBJECT)sqObject;
 
 @end
