@@ -118,4 +118,47 @@
                           @"OCSquirrelArray should support fast enumeration");
 }
 
+
+- (void)testNestedFastEnumeration
+{
+    OCSquirrelArray *first = [[OCSquirrelArray alloc] initWithArray: @[@1, @2, @3]];
+    OCSquirrelArray *second = [[OCSquirrelArray alloc] initWithArray: @[@4, @5, @6]];
+    
+    NSMutableArray *firstEnumerated = [NSMutableArray new];
+    NSMutableArray *secondEnumerated = [NSMutableArray new];
+    
+    for (id fi in first)
+    {
+        for (id si in second)
+        {
+            [firstEnumerated addObject: fi];
+            [secondEnumerated addObject: si];
+        }
+    }
+    
+    XCTAssertEqualObjects((@[@1, @1, @1, @2, @2, @2, @3, @3, @3]), firstEnumerated, @"Nested enumeration should be possible");
+    XCTAssertEqualObjects((@[@4, @5, @6, @4, @5, @6, @4, @5, @6]), secondEnumerated, @"Nested enumeration should be possible");
+}
+
+
+- (void)testNestedBlockEnumeration
+{
+    OCSquirrelArray *first = [[OCSquirrelArray alloc] initWithArray: @[@1, @2, @3]];
+    OCSquirrelArray *second = [[OCSquirrelArray alloc] initWithArray: @[@4, @5, @6]];
+    
+    NSMutableArray *firstEnumerated = [NSMutableArray new];
+    NSMutableArray *secondEnumerated = [NSMutableArray new];
+    
+    [first enumerateObjectsUsingBlock:^(id fo, NSInteger fi, BOOL *fs) {
+        [second enumerateObjectsUsingBlock:^(id so, NSInteger si, BOOL *ss) {
+            [firstEnumerated addObject: fo];
+            [secondEnumerated addObject: so];
+        }];
+    }];
+    
+    XCTAssertEqualObjects((@[@1, @1, @1, @2, @2, @2, @3, @3, @3]), firstEnumerated, @"Nested enumeration should be possible");
+    XCTAssertEqualObjects((@[@4, @5, @6, @4, @5, @6, @4, @5, @6]), secondEnumerated, @"Nested enumeration should be possible");
+}
+
+
 @end

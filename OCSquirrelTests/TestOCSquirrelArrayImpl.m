@@ -403,6 +403,35 @@
 }
 
 
+- (void)testNestedBlockEnumeration
+{
+    OCSquirrelArrayImpl *first = [[OCSquirrelArrayImpl alloc] initWithVM: _squirrelVM];
+    OCSquirrelArrayImpl *second = [[OCSquirrelArrayImpl alloc] initWithVM: _squirrelVM];
+    
+    [first addObject: @1];
+    [first addObject: @2];
+    [first addObject: @3];
+    
+    [second addObject: @4];
+    [second addObject: @5];
+    [second addObject: @6];
+    
+    NSMutableArray *firstEnumerated = [NSMutableArray new];
+    NSMutableArray *secondEnumerated = [NSMutableArray new];
+    
+    [first enumerateObjectsUsingBlock:^(id fo, NSInteger fi, BOOL *fs) {
+        [second enumerateObjectsUsingBlock:^(id so, NSInteger si, BOOL *ss) {
+            [firstEnumerated addObject: fo];
+            [secondEnumerated addObject: so];
+        }];
+    }];
+    
+    XCTAssertEqualObjects((@[@1, @1, @1, @2, @2, @2, @3, @3, @3]), firstEnumerated, @"Nested enumeration should be possible");
+    XCTAssertEqualObjects((@[@4, @5, @6, @4, @5, @6, @4, @5, @6]), secondEnumerated, @"Nested enumeration should be possible");
+}
+
+
+
 #pragma mark -
 #pragma mark generic setter tests
 
