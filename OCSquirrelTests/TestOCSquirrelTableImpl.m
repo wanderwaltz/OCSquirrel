@@ -953,6 +953,83 @@
 }
 
 
+- (void)testKeyEnumeratorNextObjectStackState
+{
+    OCSquirrelTableImpl *table = [[OCSquirrelTableImpl alloc] initWithVM: _squirrelVM];
+    
+    [table setObject: nil      forKey: @"other"];
+    [table setObject: @"value" forKey: @"key"];
+    [table setObject: @6789    forKey: @12345];
+    
+    NSInteger oldStackTop = _squirrelVM.stack.top;
+    
+    NSEnumerator *keyEnumerator = table.keyEnumerator;
+    
+    while ([keyEnumerator nextObject]) {}
+    
+    NSInteger newStackTop = _squirrelVM.stack.top;
+    
+    XCTAssertNotEqual(oldStackTop, newStackTop,
+                      @"-keyEnumerator will change stack state while it's alive");
+    
+    keyEnumerator = nil;
+    
+    newStackTop = _squirrelVM.stack.top;
+    
+    XCTAssertEqual(oldStackTop, newStackTop,
+                   @"-keyEnumerator should preserve the stack top of the Squirrel VM");
+}
+
+
+- (void)testKeyEnumeratorAllObjectsAllStackState
+{
+    OCSquirrelTableImpl *table = [[OCSquirrelTableImpl alloc] initWithVM: _squirrelVM];
+    
+    [table setObject: nil      forKey: @"other"];
+    [table setObject: @"value" forKey: @"key"];
+    [table setObject: @6789    forKey: @12345];
+    
+    NSInteger oldStackTop = _squirrelVM.stack.top;
+    
+    [table.keyEnumerator allObjects];
+    
+    NSInteger newStackTop = _squirrelVM.stack.top;
+    
+    XCTAssertEqual(oldStackTop, newStackTop,
+                   @"-keyEnumerator should preserve the stack top of the Squirrel VM");
+}
+
+
+- (void)testKeyEnumeratorAllObjectsTailStackTop
+{
+    OCSquirrelTableImpl *table = [[OCSquirrelTableImpl alloc] initWithVM: _squirrelVM];
+    
+    [table setObject: nil      forKey: @"other"];
+    [table setObject: @"value" forKey: @"key"];
+    [table setObject: @6789    forKey: @12345];
+    
+    NSInteger oldStackTop = _squirrelVM.stack.top;
+    
+    NSEnumerator *keyEnumerator = table.keyEnumerator;
+    
+    [keyEnumerator nextObject];
+    [keyEnumerator allObjects];
+    
+    NSInteger newStackTop = _squirrelVM.stack.top;
+    
+    XCTAssertNotEqual(oldStackTop, newStackTop,
+                      @"-keyEnumerator will change stack state while it's alive");
+    
+    keyEnumerator = nil;
+    
+    newStackTop = _squirrelVM.stack.top;
+    
+    XCTAssertEqual(oldStackTop, newStackTop,
+                   @"-keyEnumerator should preserve the stack top of the Squirrel VM");
+}
+
+
+
 - (void)testEnumerateObjectsAndKeys
 {
     OCSquirrelTableImpl *table = [[OCSquirrelTableImpl alloc] initWithVM: _squirrelVM];
