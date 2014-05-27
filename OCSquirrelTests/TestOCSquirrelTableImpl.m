@@ -111,15 +111,17 @@
 }
 
 
-- (void) testNilWhenInitializingWithNull
+- (void) testThrowsWhenInitializingWithNull
 {
     HSQOBJECT obj;
     sq_resetobject(&obj);
     
-    OCSquirrelTableImpl *table = [[OCSquirrelTableImpl alloc] initWithHSQOBJECT: obj
-                                                                           inVM: _squirrelVM];
-    XCTAssertNil(table,
-                 @"OCSquirrelTableImpl should return nil when initializing with a `null` HSQOBJECT");
+    XCTAssertThrowsSpecificNamed(({
+        __unused OCSquirrelTableImpl *table = [[OCSquirrelTableImpl alloc] initWithHSQOBJECT: obj
+                                                                               inVM: _squirrelVM];
+    }), NSException, NSInvalidArgumentException,
+                                 @"-initWithHSQOBJECT:inVM: should throw an NSInvalidArgumentException "
+                                 @"if the provided HSQOBJECT is not of OT_TABLE type.");
 }
 
 

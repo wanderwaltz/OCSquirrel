@@ -77,6 +77,20 @@
 }
 
 
+- (void) testThrowsWhenInitializingWithNull
+{
+    HSQOBJECT obj;
+    sq_resetobject(&obj);
+    
+    XCTAssertThrowsSpecificNamed(({
+        __unused OCSquirrelArrayImpl *array = [[OCSquirrelArrayImpl alloc] initWithHSQOBJECT: obj
+                                                                                        inVM: _squirrelVM];
+    }), NSException, NSInvalidArgumentException,
+                                 @"-initWithHSQOBJECT:inVM: should throw an NSInvalidArgumentException "
+                                 @"if the provided HSQOBJECT is not of OT_ARRAY type.");
+}
+
+
 - (void) testNewEmptyArrayCount
 {
     OCSquirrelArrayImpl *array = [[OCSquirrelArrayImpl alloc] initWithVM: _squirrelVM];

@@ -21,19 +21,19 @@
 #pragma mark -
 #pragma mark properties
 
-- (HSQOBJECT *) obj
+- (HSQOBJECT *)obj
 {
     return &_obj;
 }
 
 
-- (BOOL) isNull
+- (BOOL)isNull
 {
     return sq_isnull(_obj);
 }
 
 
-- (SQObjectType) type
+- (SQObjectType)type
 {
     return _obj._type;
 }
@@ -42,20 +42,20 @@
 #pragma mark -
 #pragma mark class methods
 
-+ (BOOL) isAllowedToInitWithSQObjectOfType: (SQObjectType) type
++ (BOOL)isAllowedToInitWithSQObjectOfType:(SQObjectType)type
 {
     return YES;
 }
 
 
-+ (id) newWithVM: (OCSquirrelVM *) squirrelVM
++ (id)newWithVM:(OCSquirrelVM *)squirrelVM
 {
-    return [[self alloc] initWithVM: squirrelVM];
+    return [[self alloc] initWithVM:squirrelVM];
 }
 
 
-+ (id) newWithHSQOBJECT: (HSQOBJECT) object
-                   inVM: (OCSquirrelVM *) squirrelVM
++ (id)newWithHSQOBJECT:(HSQOBJECT)object
+                  inVM:(OCSquirrelVM *)squirrelVM
 {
     return [[self alloc] initWithHSQOBJECT: object
                                       inVM: squirrelVM];
@@ -65,7 +65,7 @@
 #pragma mark -
 #pragma mark initialization methods
 
-- (id) initWithVM: (OCSquirrelVM *) squirrelVM
+- (id)initWithVM:(OCSquirrelVM *)squirrelVM
 {
     self = [super init];
     
@@ -78,15 +78,13 @@
 }
 
 
-- (id) initWithHSQOBJECT: (HSQOBJECT) object
-                    inVM: (OCSquirrelVM *) squirrelVM
+- (id)initWithHSQOBJECT:(HSQOBJECT)object
+                   inVM:(OCSquirrelVM *)squirrelVM
 {
-    if ([[self class] isAllowedToInitWithSQObjectOfType: object._type])
-    {
+    if ([[self class] isAllowedToInitWithSQObjectOfType: object._type]) {
         self = [super init];
         
-        if (self != nil)
-        {
+        if (self != nil) {
             _squirrelVM = squirrelVM;
             _obj        = object;
             
@@ -97,11 +95,20 @@
         }
         return self;
     }
-    else return nil;
+    else {
+        @throw [NSException exceptionWithName: NSInvalidArgumentException
+                                       reason: [NSString stringWithFormat:
+                                                @"*** initWithHSQOBJECT:inVM: %@ class does not support initialization "
+                                                @"with HSQOBJECT of type %@",
+                                                NSStringFromClass(self.class),
+                                                [self.class stringForSQObjectType: object._type]]
+                                     userInfo: nil];
+        return nil;
+    }
 }
 
 
-- (void) dealloc
+- (void)dealloc
 {
     [_squirrelVM perform:^(HSQUIRRELVM vm, id<OCSquirrelVMStack> stack) {
         sq_release(vm, &_obj);
@@ -112,7 +119,7 @@
 #pragma mark -
 #pragma mark methods
 
-- (void) push
+- (void)push
 {
     OCSquirrelVM *squirrelVM = self.squirrelVM;
     [squirrelVM.stack pushSQObject: _obj];
@@ -122,11 +129,11 @@
 #pragma mark -
 #pragma mark NSObject
 
-- (NSString *) description
++ (NSString *)stringForSQObjectType:(SQObjectType)sqType
 {
     NSString *type = @"Unknown type";
     
-    switch (_obj._type)
+    switch (sqType)
     {
         case OT_NULL:          type = @"OT_NULL";          break;
         case OT_INTEGER:       type = @"OT_INTEGER";       break;
@@ -147,6 +154,13 @@
         case OT_WEAKREF:       type = @"OT_WEAKREF";       break;
         case OT_OUTER:         type = @"OT_OUTER";         break;
     }
+    
+    return type;
+}
+
+- (NSString *)description
+{
+    NSString *type = [self.class stringForSQObjectType: _obj._type];
     
     return [NSString stringWithFormat: @"%@ (%@)", [super description], type];
 }
