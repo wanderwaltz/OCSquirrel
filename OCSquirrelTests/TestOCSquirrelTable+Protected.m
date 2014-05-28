@@ -483,4 +483,32 @@
 }
 
 
+- (void)testObjIsForwardedToImpl
+{
+    id implMock = [OCMockObject mockForClass: [OCSquirrelTableImpl class]];
+    OCSquirrelTable *table = [[OCSquirrelTable alloc] initWithImpl: implMock];
+    
+    [(OCSquirrelTableImpl *)[implMock expect] obj];
+    
+    [table obj];
+    
+    XCTAssertNoThrow([implMock verify],
+                     @"OCSquirrelTable should forward -obj calls to its impl");
+}
+
+
+- (void)testTypeIsForwardedToImpl
+{
+    id implMock = [OCMockObject mockForClass: [OCSquirrelTableImpl class]];
+    OCSquirrelTable *table = [[OCSquirrelTable alloc] initWithImpl: implMock];
+    
+    [(OCSquirrelTableImpl *)[implMock expect] type];
+    
+    [table type];
+    
+    XCTAssertNoThrow([implMock verify],
+                     @"OCSquirrelTable should forward -type calls to its impl");
+}
+
+
 @end
