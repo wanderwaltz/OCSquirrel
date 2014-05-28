@@ -454,4 +454,33 @@
                      @"OCSquirrelTable should forward -callClosureWithKey:parameters: calls to its impl");
 }
 
+
+- (void)testSquirrelVMIsForwardedToImpl
+{
+    id implMock = [OCMockObject mockForClass: [OCSquirrelTableImpl class]];
+    OCSquirrelTable *table = [[OCSquirrelTable alloc] initWithImpl: implMock];
+    
+    [(OCSquirrelTableImpl *)[implMock expect] squirrelVM];
+    
+    [table squirrelVM];
+    
+    XCTAssertNoThrow([implMock verify],
+                     @"OCSquirrelTable should forward -squirrelVM calls to its impl");
+}
+
+
+- (void)testPushIsForwardedToImpl
+{
+    id implMock = [OCMockObject mockForClass: [OCSquirrelTableImpl class]];
+    OCSquirrelTable *table = [[OCSquirrelTable alloc] initWithImpl: implMock];
+    
+    [(OCSquirrelTableImpl *)[implMock expect] push];
+    
+    [table push];
+    
+    XCTAssertNoThrow([implMock verify],
+                     @"OCSquirrelTable should forward -push calls to its impl");
+}
+
+
 @end

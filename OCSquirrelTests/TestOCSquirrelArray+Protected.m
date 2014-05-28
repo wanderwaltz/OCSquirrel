@@ -278,4 +278,32 @@
 }
 
 
+- (void)testSquirrelVMIsForwardedToImpl
+{
+    id implMock = [OCMockObject mockForClass: [OCSquirrelArrayImpl class]];
+    OCSquirrelArray *array = [[OCSquirrelArray alloc] initWithImpl: implMock];
+    
+    [[implMock expect] squirrelVM];
+    
+    [array squirrelVM];
+    
+    XCTAssertNoThrow([implMock verify],
+                     @"OCSquirrelArray should forward -squirrelVM calls to its impl");
+}
+
+
+- (void)testPushIsForwardedToImpl
+{
+    id implMock = [OCMockObject mockForClass: [OCSquirrelArrayImpl class]];
+    OCSquirrelArray *array = [[OCSquirrelArray alloc] initWithImpl: implMock];
+    
+    [[implMock expect] push];
+    
+    [array push];
+    
+    XCTAssertNoThrow([implMock verify],
+                     @"OCSquirrelArray should forward -push calls to its impl");
+}
+
+
 @end
