@@ -129,13 +129,6 @@
 
 #pragma mark - impl forwarding tests
 
-/*
- - (void)insertObject:(id)anObject atIndex:(NSInteger)index;
- - (void)removeObjectAtIndex:(NSInteger)index;
- 
- - (id)pop;
- */
-
 - (void)testCountIsForwardedToImpl
 {
     id implMock = [OCMockObject mockForClass: [OCSquirrelArrayImpl class]];

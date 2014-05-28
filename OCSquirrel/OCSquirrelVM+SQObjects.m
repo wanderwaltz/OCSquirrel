@@ -16,7 +16,14 @@
 #import "OCSquirrelArray+Protected.h"
 #import "OCSquirrelArrayImpl.h"
 
+#import "OCSquirrelClosure.h"
+#import "OCSquirrelClosure+Protected.h"
+#import "OCSquirrelClosureImpl.h"
+
+
 @implementation OCSquirrelVM (SQObjects)
+
+#pragma mark - OCSquirrelTable
 
 - (id<OCSquirrelTable>) rootTable
 {
@@ -47,6 +54,8 @@
 }
 
 
+#pragma mark - OCSquirrelArray
+
 - (OCSquirrelArray *)newArray
 {
     return [[OCSquirrelArray alloc] initWithImpl:
@@ -62,5 +71,23 @@
 }
 
 
+#pragma mark - OCSquirrelClosure
+
+- (OCSquirrelClosure *)newClosureWithSQFUNCTION:(SQFUNCTION)func
+{
+    return [[OCSquirrelClosure alloc] initWithImpl:
+            [[OCSquirrelClosureImpl alloc] initWithSQFUNCTION: func
+                                                   squirrelVM: self]];
+}
+
+
+- (OCSquirrelClosure *)newClosureWithSQFUNCTION:(SQFUNCTION)func
+                                           name:(NSString *)name
+{
+    return [[OCSquirrelClosure alloc] initWithImpl:
+            [[OCSquirrelClosureImpl alloc] initWithSQFUNCTION: func
+                                                         name: name
+                                                   squirrelVM: self]];
+}
 
 @end

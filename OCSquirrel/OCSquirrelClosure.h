@@ -38,4 +38,7 @@
                               name:(NSString *)name
                         squirrelVM:(OCSquirrelVM *)squirrelVM;
 
++ (instancetype)new __unavailable;
+- (instancetype)init __unavailable;
+
 @end

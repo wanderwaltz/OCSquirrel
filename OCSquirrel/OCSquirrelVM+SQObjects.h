@@ -15,6 +15,7 @@
 
 @class OCSquirrelTable;
 @class OCSquirrelArray;
+@class OCSquirrelClosure;
 
 @interface OCSquirrelVM (SQObjects)
 
@@ -25,5 +26,9 @@
 
 - (OCSquirrelArray *)newArray;
 - (OCSquirrelArray *)newArrayWithHSQObject:(HSQOBJECT)sqObject;
+
+- (OCSquirrelClosure *)newClosureWithSQFUNCTION:(SQFUNCTION)func;
+- (OCSquirrelClosure *)newClosureWithSQFUNCTION:(SQFUNCTION)func
+                                           name:(NSString *)name;
 
 @end
