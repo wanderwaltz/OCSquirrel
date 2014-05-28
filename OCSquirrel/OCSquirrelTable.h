@@ -8,13 +8,14 @@
 
 #import <Foundation/Foundation.h>
 #import "squirrel.h"
+#import "OCSquirrelObject.h"
 
 @class OCSquirrelVM;
 
 
 #pragma mark - <OCSquirrelTable> protocol
 
-@protocol OCSquirrelTable <NSObject>
+@protocol OCSquirrelTable <NSObject, OCSquirrelObject>
 @required
 
 - (NSUInteger)count;

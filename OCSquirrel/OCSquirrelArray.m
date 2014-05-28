@@ -93,6 +93,21 @@
     [self.impl setObject: anObject atIndex: index];
 }
 
+
+#pragma mark - <OCSquirrelObject> methods
+
+- (OCSquirrelVM *)squirrelVM
+{
+    return self.impl.squirrelVM;
+}
+
+
+- (void)push
+{
+    [self.impl push];
+}
+
+
 #pragma mark - <OCSquirrelArray> methods
 
 - (id)objectAtIndexedSubscript:(NSInteger)index

@@ -55,8 +55,8 @@
 
 - (void) testOCSquirrelArrayImplClassExists
 {
-    XCTAssertTrue([OCSquirrelArrayImpl isSubclassOfClass: [OCSquirrelObject class]],
-                 @"OCSquirrelArrayImpl class should exist and be a subclass of OCSquirrelObject");
+    XCTAssertTrue([OCSquirrelArrayImpl isSubclassOfClass: [OCSquirrelObjectImpl class]],
+                 @"OCSquirrelArrayImpl class should exist and be a subclass of OCSquirrelObjectImpl");
 }
 
 

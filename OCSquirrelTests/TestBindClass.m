@@ -94,7 +94,7 @@
     OCSquirrelClass *class = [_squirrelVM bindClass: [NSDate class]];
     
     XCTAssertEqual(class.type, OT_CLASS,
-                   @"bindClass should return an OCSquirrelObject of type OT_CLASS");
+                   @"bindClass should return an OCSquirrelObjectImpl of type OT_CLASS");
 }
 
 

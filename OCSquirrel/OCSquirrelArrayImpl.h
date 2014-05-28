@@ -11,5 +11,5 @@
 #pragma mark -
 #pragma mark OCSquirrelArrayImpl interface
 
-@interface OCSquirrelArrayImpl : OCSquirrelObject<OCSquirrelArray>
+@interface OCSquirrelArrayImpl : OCSquirrelObjectImpl<OCSquirrelArray>
 @end

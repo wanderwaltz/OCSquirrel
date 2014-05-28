@@ -12,7 +12,7 @@
 
 #import "OCSquirrelClosure.h"
 #import "OCSquirrelVM+SQObjects.h"
-#import "OCSquirrelTable+Protected.h"
+#import "OCSquirrelTable.h"
 
 
 #pragma mark -
@@ -23,7 +23,7 @@
 #pragma mark -
 #pragma mark class methods
 
-+ (BOOL) isAllowedToInitWithSQObjectOfType: (SQObjectType) type
++ (BOOL)isAllowedToInitWithSQObjectOfType:(SQObjectType)type
 {
     return (type == OT_CLOSURE) || (type == OT_NATIVECLOSURE);
 }
@@ -32,8 +32,8 @@
 #pragma mark -
 #pragma mark initialization methods
 
-- (id) initWithSQFUNCTION: (SQFUNCTION) function
-               squirrelVM: (OCSquirrelVM *) squirrelVM
+- (id)initWithSQFUNCTION:(SQFUNCTION)function
+              squirrelVM:(OCSquirrelVM *)squirrelVM
 {
     return [self initWithSQFUNCTION: function
                                name: nil
@@ -41,9 +41,9 @@
 }
 
 
-- (id) initWithSQFUNCTION: (SQFUNCTION) function
-                     name: (NSString *) name
-               squirrelVM: (OCSquirrelVM *) squirrelVM
+- (id)initWithSQFUNCTION:(SQFUNCTION)function
+                    name:(NSString *)name
+              squirrelVM:(OCSquirrelVM *)squirrelVM
 {
     self = [super initWithVM: squirrelVM];
     
@@ -70,29 +70,29 @@
 #pragma mark -
 #pragma mark methods
 
-- (id) call
+- (id)call
 {
-    return [self callWithThis: [self.squirrelVM rootTable].impl
+    return [self callWithThis: [self.squirrelVM rootTable]
                    parameters: nil];
 }
 
 
-- (id) call: (NSArray *) parameters
+- (id)call:(NSArray *)parameters
 {
-    return [self callWithThis: [self.squirrelVM rootTable].impl
+    return [self callWithThis: [self.squirrelVM rootTable]
                    parameters: parameters];
 }
 
 
-- (id) callWithThis: (OCSquirrelObject *) this
+- (id)callWithThis:(id<OCSquirrelObject>)this
 {
     return [self callWithThis: this
                    parameters: nil];
 }
 
 
-- (id) callWithThis: (OCSquirrelObject *) this
-         parameters: (NSArray *) parameters
+- (id)callWithThis:(id<OCSquirrelObject>)this
+        parameters:(NSArray *)parameters
 {
     OCSquirrelVM *squirrelVM = self.squirrelVM;
     

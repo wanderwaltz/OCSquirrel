@@ -55,8 +55,8 @@
 
 - (void) testOCSquirrelTableImplClassExists
 {
-    XCTAssertTrue([OCSquirrelTableImpl isSubclassOfClass: [OCSquirrelObject class]],
-                  @"OCSquirrelTableImpl class should exist and be a subclass of OCSquirrelObject");
+    XCTAssertTrue([OCSquirrelTableImpl isSubclassOfClass: [OCSquirrelObjectImpl class]],
+                  @"OCSquirrelTableImpl class should exist and be a subclass of OCSquirrelObjectImpl");
 }
 
 

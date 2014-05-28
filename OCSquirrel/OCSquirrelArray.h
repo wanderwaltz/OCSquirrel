@@ -8,12 +8,14 @@
 
 #import <Foundation/Foundation.h>
 #import "squirrel.h"
+#import "OCSquirrelObject.h"
 
 @class OCSquirrelVM;
 
+
 #pragma mark - <OCSquirrelArray> protocol
 
-@protocol OCSquirrelArray <NSObject>
+@protocol OCSquirrelArray <NSObject, OCSquirrelObject>
 @required
 
 - (NSUInteger)count;
@@ -32,7 +34,6 @@
 - (void)removeObjectAtIndex:(NSInteger)index;
 
 - (id)pop;
-
 
 @end
 

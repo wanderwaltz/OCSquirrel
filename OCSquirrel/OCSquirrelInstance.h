@@ -6,7 +6,7 @@
 //  Copyright (c) 2013 Egor Chiglintsev. All rights reserved.
 //
 
-#import <OCSquirrel/OCSquirrel.h>
+#import "OCSquirrelTableImpl.h"
 
 
 #pragma mark -

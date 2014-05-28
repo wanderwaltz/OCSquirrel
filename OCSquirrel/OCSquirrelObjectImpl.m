@@ -1,5 +1,5 @@
 //
-//  OCSquirrelObject.m
+//  OCSquirrelObjectImpl.m
 //  OCSquirrel
 //
 //  Created by Egor Chiglintsev on 14.04.13.
@@ -10,13 +10,13 @@
 #error "This file should be compiled with ARC support"
 #endif
 
-#import "OCSquirrelObject.h"
+#import "OCSquirrelObjectImpl.h"
 
 
 #pragma mark -
-#pragma mark OCSquirrelObject implementation
+#pragma mark OCSquirrelObjectImpl implementation
 
-@implementation OCSquirrelObject
+@implementation OCSquirrelObjectImpl
 
 #pragma mark -
 #pragma mark properties

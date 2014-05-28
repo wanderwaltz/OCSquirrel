@@ -97,7 +97,7 @@
 
 - (void) pushValue: (id) value
 {
-    if ([value isKindOfClass: [OCSquirrelObject class]])
+    if ([value isKindOfClass: [OCSquirrelObjectImpl class]])
     {
         [value push];
     }
@@ -317,7 +317,7 @@
         {
             HSQOBJECT object = [self sqObjectAtPosition: position];
             
-            value = [[OCSquirrelObject alloc] initWithHSQOBJECT: object
+            value = [[OCSquirrelObjectImpl alloc] initWithHSQOBJECT: object
                                                            inVM: _squirrelVM];
         } break;
     }

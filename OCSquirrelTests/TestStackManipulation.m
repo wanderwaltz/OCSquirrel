@@ -314,15 +314,15 @@
 }
 
 
-- (void) testPushValueOCSquirrelObject
+- (void) testPushValueOCSquirrelObjectImpl
 {
-    OCSquirrelObject *object = [OCSquirrelTableImpl rootTableForVM: _squirrelVM];
+    OCSquirrelObjectImpl *object = [OCSquirrelTableImpl rootTableForVM: _squirrelVM];
     [_squirrelVM.stack pushValue: object];
     
-    OCSquirrelObject *value = [_squirrelVM.stack valueAtPosition: -1];
+    OCSquirrelObjectImpl *value = [_squirrelVM.stack valueAtPosition: -1];
     
     XCTAssertEqualStructs(*value.obj, *object.obj,
-                          @"-pushValue: should be capable of pushing OCSquirrelObjects");
+                          @"-pushValue: should be capable of pushing OCSquirrelObjectImpls");
 }
 
 
@@ -529,8 +529,8 @@
 - (void) testReadValueOtherClass
 {
     sq_newuserdata(_squirrelVM.vm, 1);
-    XCTAssertTrue([[_squirrelVM.stack valueAtPosition: -1] isKindOfClass: [OCSquirrelObject class]],
-                 @"-valueAtPosition: should return an OCSquirrelObject for other stack values");
+    XCTAssertTrue([[_squirrelVM.stack valueAtPosition: -1] isKindOfClass: [OCSquirrelObjectImpl class]],
+                 @"-valueAtPosition: should return an OCSquirrelObjectImpl for other stack values");
 }
 
 
@@ -541,7 +541,7 @@
     HSQOBJECT object = [_squirrelVM.stack sqObjectAtPosition: -1];
     
     XCTAssertEqualStructs(*[[_squirrelVM.stack valueAtPosition: -1] obj], object,
-                          @"-valueAtPosition: should return the corresponding OCSquirrelObject for "
+                          @"-valueAtPosition: should return the corresponding OCSquirrelObjectImpl for "
                           @"other stack values");
 }
 

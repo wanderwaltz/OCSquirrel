@@ -6,14 +6,14 @@
 //  Copyright (c) 2013 Egor Chiglintsev. All rights reserved.
 //
 
-#import "OCSquirrelObject.h"
+#import "OCSquirrelObjectImpl.h"
 #import "OCSquirrelTable.h"
 
 
 #pragma mark -
 #pragma mark OCSquirrelTableImpl interface
 
-@interface OCSquirrelTableImpl : OCSquirrelObject<OCSquirrelTable>
+@interface OCSquirrelTableImpl : OCSquirrelObjectImpl<OCSquirrelTable>
 
 + (id) rootTableForVM:     (OCSquirrelVM *) squirrelVM;
 + (id) registryTableForVM: (OCSquirrelVM *) squirrelVM;
