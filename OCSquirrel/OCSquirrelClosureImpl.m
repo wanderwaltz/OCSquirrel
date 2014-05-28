@@ -67,6 +67,23 @@
 }
 
 
+- (instancetype)initWithBlock:(id)block
+                   squirrelVM:(OCSquirrelVM *)squirrelVM
+{
+    return [self initWithBlock: block
+                          name: nil
+                    squirrelVM: squirrelVM];
+}
+
+- (instancetype)initWithBlock:(id)block
+                         name:(NSString *)name
+                   squirrelVM:(OCSquirrelVM *)squirrelVM
+{
+    return nil;
+}
+
+
+
 #pragma mark -
 #pragma mark methods
 

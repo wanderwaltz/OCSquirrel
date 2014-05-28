@@ -90,4 +90,23 @@
                                                    squirrelVM: self]];
 }
 
+
+- (OCSquirrelClosure *)newClosureWithBlock:(id)block
+{
+    return [[OCSquirrelClosure alloc] initWithImpl:
+            [[OCSquirrelClosureImpl alloc] initWithBlock: block
+                                              squirrelVM: self]];
+}
+
+
+- (OCSquirrelClosure *)newClosureWithBlock:(id)block
+                                      name:(NSString *)name
+{
+    return [[OCSquirrelClosure alloc] initWithImpl:
+            [[OCSquirrelClosureImpl alloc] initWithBlock: block
+                                                    name: name
+                                              squirrelVM: self]];
+}
+
+
 @end

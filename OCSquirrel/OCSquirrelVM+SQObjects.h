@@ -30,5 +30,8 @@
 - (OCSquirrelClosure *)newClosureWithSQFUNCTION:(SQFUNCTION)func;
 - (OCSquirrelClosure *)newClosureWithSQFUNCTION:(SQFUNCTION)func
                                            name:(NSString *)name;
+- (OCSquirrelClosure *)newClosureWithBlock:(id)block;
+- (OCSquirrelClosure *)newClosureWithBlock:(id)block
+                                      name:(NSString *)name;
 
 @end

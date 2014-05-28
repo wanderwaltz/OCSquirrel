@@ -48,6 +48,26 @@
 }
 
 
+- (instancetype)initWithBlock:(id)block
+                   squirrelVM:(OCSquirrelVM *)squirrelVM
+{
+    OCSquirrelClosureImpl *impl = [[OCSquirrelClosureImpl alloc] initWithBlock: block
+                                                                    squirrelVM: squirrelVM];
+    return [self initWithImpl: impl];
+}
+
+
+- (instancetype)initWithBlock:(id)block
+                         name:(NSString *)name
+                   squirrelVM:(OCSquirrelVM *)squirrelVM
+{
+    OCSquirrelClosureImpl *impl = [[OCSquirrelClosureImpl alloc] initWithBlock: block
+                                                                          name: name
+                                                                    squirrelVM: squirrelVM];
+    return [self initWithImpl: impl];
+}
+
+
 #pragma mark - <OCSquirrelObject> methods
 
 - (OCSquirrelVM *)squirrelVM

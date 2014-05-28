@@ -38,6 +38,14 @@
                               name:(NSString *)name
                         squirrelVM:(OCSquirrelVM *)squirrelVM;
 
+- (instancetype)initWithBlock:(id)block
+                   squirrelVM:(OCSquirrelVM *)squirrelVM;
+
+- (instancetype)initWithBlock:(id)block
+                         name:(NSString *)name
+                   squirrelVM:(OCSquirrelVM *)squirrelVM;
+
+
 + (instancetype)new __unavailable;
 - (instancetype)init __unavailable;
 

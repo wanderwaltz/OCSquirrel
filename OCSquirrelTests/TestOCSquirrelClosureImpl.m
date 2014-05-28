@@ -351,6 +351,124 @@ static SQInteger IntClosureNoParamsCheckEnvironment(HSQUIRRELVM vm)
 }
 
 
+#pragma mark - block-based closures test
+
+- (void)testBlockClosureCall
+{
+    __block BOOL called = NO;
+    
+    OCSquirrelClosureImpl *closure = [[OCSquirrelClosureImpl alloc] initWithBlock: ^{
+        called = YES;
+    }
+                                                                       squirrelVM: _squirrelVM];
+    
+    [closure call];
+    
+    XCTAssertTrue(called, @"Block-based OCSquirrelClosure should call the block with which it was initialized");
+}
+
+
+- (void)testBlockClosureCallThis
+{
+    __block id this = nil;
+    
+    OCSquirrelClosureImpl *closure = [[OCSquirrelClosureImpl alloc] initWithBlock: ^(id thisObject){
+        this = thisObject;
+    }
+                                                                       squirrelVM: _squirrelVM];
+    
+    [closure call];
+    
+    XCTAssertTrue([this isKindOfClass: [OCSquirrelTable class]],
+                  @"This object associated with a Squirrel closure call should be passed to the block");
+}
+
+
+- (void)testBlockClosureCallIntParam
+{
+    __block SQInteger param = 0;
+    
+    OCSquirrelClosureImpl *closure = [[OCSquirrelClosureImpl alloc] initWithBlock: ^(id this, SQInteger x){
+        param = x;
+    }
+                                                                       squirrelVM: _squirrelVM];
+
+    [closure call: @[@1]];
+    
+    XCTAssertEqual(param, (SQInteger)1,
+                   @"Block-based closures should be able to accept SQInteger parameters");
+}
+
+
+- (void)testBlockClosureCallFloatParam
+{
+    __block SQFloat param = 0.0f;
+    
+    OCSquirrelClosureImpl *closure = [[OCSquirrelClosureImpl alloc] initWithBlock: ^(id this, SQFloat x){
+        param = x;
+    }
+                                                                       squirrelVM: _squirrelVM];
+    
+    [closure call: @[@123.456]];
+    
+    XCTAssertEqualWithAccuracy(param, 123.456, 1e-8,
+                               @"Block-based closures should be able to accept SQFloat parameters");
+}
+
+
+- (void)testBlockClosureCallBoolParam
+{
+    __block BOOL param = NO;
+    
+    OCSquirrelClosureImpl *closure = [[OCSquirrelClosureImpl alloc] initWithBlock: ^(id this, BOOL x){
+        param = x;
+    }
+                                                                       squirrelVM: _squirrelVM];
+    
+    [closure call: @[@YES]];
+    
+    XCTAssertTrue(param,
+                  @"Block-based closures should be able to accept BOOL parameters");
+}
+
+
+- (void)testBlockClosureCallStringParam
+{
+    // That's the word 'unicode' written with Cyrillic alphabet
+    static NSString * const kString = @"юникод";
+    
+    __block NSString *param = nil;
+    
+    OCSquirrelClosureImpl *closure = [[OCSquirrelClosureImpl alloc] initWithBlock: ^(id this, NSString *x){
+        param = x;
+    }
+                                                                       squirrelVM: _squirrelVM];
+    
+    [closure call: @[kString]];
+    
+    XCTAssertEqualObjects(param, kString,
+                          @"Block-based closures should be able to accept NSString parameters");
+}
+
+
+- (void)testBlockClosureCallNilParam
+{
+    __block id param = [NSObject new];
+    
+    OCSquirrelClosureImpl *closure = [[OCSquirrelClosureImpl alloc] initWithBlock: ^(id this, id x){
+        param = x;
+    }
+                                                                       squirrelVM: _squirrelVM];
+    
+    [closure call: @[[NSNull null]]];
+    
+    XCTAssertNil(param,
+                 @"Block-based closures should be able to accept nil boxed as NSNull parameters");
+}
+
+
+
+
 #pragma mark -
 #pragma mark notifications
 

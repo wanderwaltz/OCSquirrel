@@ -22,6 +22,14 @@
                     name:(NSString *)name
               squirrelVM:(OCSquirrelVM *)squirrelVM;
 
+- (instancetype)initWithBlock:(id)block
+                   squirrelVM:(OCSquirrelVM *)squirrelVM;
+
+- (instancetype)initWithBlock:(id)block
+                         name:(NSString *)name
+                   squirrelVM:(OCSquirrelVM *)squirrelVM;
+
+
 
 - (id)call;
 - (id)call:(NSArray *)parameters;
