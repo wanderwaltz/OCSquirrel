@@ -81,8 +81,7 @@
         {
             [self.squirrelVM performPreservingStackTop: ^(HSQUIRRELVM vm, id<OCSquirrelVMStack> stack){
                 NSString *selectorString = NSStringFromSelector(selector);
-                
-                // Exclude initializer methods from the search for now
+            
                 if (selectorString != nil)
                 {
                     NSArray *components = [selectorString componentsSeparatedByString: @":"];
