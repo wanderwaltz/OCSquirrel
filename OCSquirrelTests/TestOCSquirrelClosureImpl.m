@@ -16,6 +16,7 @@
 
 #import <OCSquirrel/OCSquirrel.h>
 #import "OCSquirrelVM+Protected.h"
+#import "OCSquirrelClosureImpl.h"
 
 
 #pragma mark -
@@ -72,7 +73,7 @@ static SQInteger IntClosureNoParamsCheckEnvironment(HSQUIRRELVM vm)
 {
     OCSquirrelVM *squirrelVM = OCSquirrelVMforVM(vm);
     
-    OCSquirrelTableImpl *table = [squirrelVM.stack valueAtPosition: 1];
+    OCSquirrelTable *table = [squirrelVM.stack valueAtPosition: 1];
     
     [squirrelVM.stack pushInteger: [table integerForKey: kEnvironmentKey]];
     

@@ -16,7 +16,9 @@
 @protocol OCSquirrelObject <NSObject>
 @required
 
-@property (weak, readonly, nonatomic) OCSquirrelVM *squirrelVM;
+@property (nonatomic, weak, readonly) OCSquirrelVM *squirrelVM;
+@property (nonatomic, assign, readonly) HSQOBJECT *obj;
+@property (nonatomic, assign, readonly) SQObjectType type;
 
 /// Pushes the object to the current VM's stack
 - (void) push;

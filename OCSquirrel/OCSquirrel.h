@@ -32,7 +32,7 @@
 #import "OCSquirrelTable.h"
 #import "OCSquirrelArray.h"
 
-#import "OCSquirrelClosureImpl.h"
+#import "OCSquirrelClosure.h"
 #import "OCSquirrelClass.h"
 #import "OCSquirrelInstance.h"
 

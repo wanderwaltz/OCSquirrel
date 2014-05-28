@@ -317,7 +317,7 @@
 {
     id closure = [self objectForKey: key];
     
-    if ([closure isKindOfClass: [OCSquirrelClosureImpl class]])
+    if ([closure conformsToProtocol: @protocol(OCSquirrelClosure)])
     {
         return [closure callWithThis: self];
     }
@@ -330,7 +330,7 @@
 {
     id closure = [self objectForKey: key];
     
-    if ([closure isKindOfClass: [OCSquirrelClosureImpl class]])
+    if ([closure conformsToProtocol: @protocol(OCSquirrelClosure)])
     {
         return [closure callWithThis: self
                           parameters: parameters];

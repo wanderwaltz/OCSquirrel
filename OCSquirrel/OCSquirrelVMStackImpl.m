@@ -10,9 +10,15 @@
 #error "This file should be compiled with ARC support"
 #endif
 
+#import "OCSquirrel.h"
 #import "OCSquirrelVMStackImpl.h"
 #import "OCSquirrelVM+Protected.h"
-#import "OCSquirrel.h"
+#import "OCSquirrelTable+Protected.h"
+#import "OCSquirrelArray+Protected.h"
+#import "OCSquirrelClosure+Protected.h"
+#import "OCSquirrelClosureImpl.h"
+#import "OCSquirrelArrayImpl.h"
+
 
 #pragma mark -
 #pragma mark OCSquirrelVMStackImpl implementation
@@ -256,8 +262,21 @@
         {
             HSQOBJECT table = [self sqObjectAtPosition: position];
             
-            value = [[OCSquirrelTableImpl alloc] initWithHSQOBJECT: table
-                                                              inVM: _squirrelVM];
+            OCSquirrelTableImpl *impl = [[OCSquirrelTableImpl alloc] initWithHSQOBJECT: table
+                                                                                  inVM: _squirrelVM];
+            
+            value = [[OCSquirrelTable alloc] initWithImpl: impl];
+        } break;
+            
+        case OT_ARRAY:
+        {
+            HSQOBJECT array = [self sqObjectAtPosition: position];
+            
+            OCSquirrelArrayImpl *impl = [[OCSquirrelArrayImpl alloc] initWithHSQOBJECT: array
+                                                                                  inVM: _squirrelVM];
+            
+            value = [[OCSquirrelArray alloc] initWithImpl: impl];
+            
         } break;
             
         case OT_CLASS:
@@ -308,8 +327,10 @@
         {
             HSQOBJECT instance = [self sqObjectAtPosition: position];
             
-            value = [[OCSquirrelClosureImpl alloc] initWithHSQOBJECT: instance
-                                                            inVM: _squirrelVM];
+            OCSquirrelClosureImpl *impl = [[OCSquirrelClosureImpl alloc] initWithHSQOBJECT: instance
+                                                                                      inVM: _squirrelVM];
+            
+            value = [[OCSquirrelClosure alloc] initWithImpl: impl];
         } break;
             
             

@@ -102,6 +102,18 @@
 }
 
 
+- (HSQOBJECT *)obj
+{
+    return self.impl.obj;
+}
+
+
+- (SQObjectType)type
+{
+    return self.impl.type;
+}
+
+
 - (void)push
 {
     [self.impl push];

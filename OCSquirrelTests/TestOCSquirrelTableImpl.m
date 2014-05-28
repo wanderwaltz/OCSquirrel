@@ -1089,9 +1089,9 @@
 
 - (void) testCallClosureWithKey
 {
-    OCSquirrelTableImpl *table = [_squirrelVM execute:
-                                  @"return { value = false, closure = function() { value = true; } }"
-                                                error: nil];
+    OCSquirrelTable *table = [_squirrelVM execute:
+                              @"return { value = false, closure = function() { value = true; } }"
+                                            error: nil];
     
     [table callClosureWithKey: @"closure"];
     

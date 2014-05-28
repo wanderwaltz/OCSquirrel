@@ -7,12 +7,13 @@
 //
 
 #import "OCSquirrelObjectImpl.h"
+#import "OCSquirrelClosure.h"
 
 
 #pragma mark -
 #pragma mark OCSquirrelClosureImpl interface
 
-@interface OCSquirrelClosureImpl : OCSquirrelObjectImpl
+@interface OCSquirrelClosureImpl : OCSquirrelObjectImpl<OCSquirrelClosure>
 
 - (id)initWithSQFUNCTION:(SQFUNCTION)function
               squirrelVM:(OCSquirrelVM *)squirrelVM;
