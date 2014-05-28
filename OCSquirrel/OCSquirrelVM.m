@@ -19,7 +19,7 @@
 
 #import "OCSquirrelClass.h"
 #import "OCSquirrelTableImpl.h"
-#import "OCSquirrelClosure.h"
+#import "OCSquirrelClosureImpl.h"
 
 
 #pragma mark -
@@ -259,7 +259,7 @@ static const SQChar * const kOCSquirrelVMCompileBufferSourceName = _SC("buffer")
             // then immediately performed using one of the bound initializer
             // methods.
             id constructor =
-            [[OCSquirrelClosure alloc] initWithSQFUNCTION: OCSquirrelVMBindings_Constructor
+            [[OCSquirrelClosureImpl alloc] initWithSQFUNCTION: OCSquirrelVMBindings_Constructor
                                                squirrelVM: self];
             [class setObject: constructor forKey: @"constructor"];
         }

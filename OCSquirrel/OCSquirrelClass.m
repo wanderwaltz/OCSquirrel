@@ -11,7 +11,7 @@
 #endif
 
 #import "OCSquirrelClass.h"
-#import "OCSquirrelClosure.h"
+#import "OCSquirrelClosureImpl.h"
 #import "OCSquirrelVMBindings_NoARC.h"
 
 #import <objc/runtime.h>
@@ -107,7 +107,7 @@
                         
                         // Set the method name as the selector string including colon if any
                         id closure =
-                        [[OCSquirrelClosure alloc] initWithSQFUNCTION: nativeFunction
+                        [[OCSquirrelClosureImpl alloc] initWithSQFUNCTION: nativeFunction
                                                                  name: selectorString
                                                            squirrelVM: self.squirrelVM];
                         

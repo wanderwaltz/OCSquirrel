@@ -1,5 +1,5 @@
 //
-//  TestOCSquirrelClosure.m
+//  TestOCSquirrelClosureImpl.m
 //  OCSquirrel
 //
 //  Created by Egor Chiglintsev on 27.04.13.
@@ -19,9 +19,9 @@
 
 
 #pragma mark -
-#pragma mark TestOCSquirrelClosure interface
+#pragma mark TestOCSquirrelClosureImpl interface
 
-@interface TestOCSquirrelClosure : XCTestCase
+@interface TestOCSquirrelClosureImpl : XCTestCase
 {
     OCSquirrelVM *_squirrelVM;
     OCSquirrelTableImpl *_root;
@@ -81,9 +81,9 @@ static SQInteger IntClosureNoParamsCheckEnvironment(HSQUIRRELVM vm)
 
 
 #pragma mark -
-#pragma mark TestOCSquirrelClosure implementation
+#pragma mark TestOCSquirrelClosureImpl implementation
 
-@implementation TestOCSquirrelClosure
+@implementation TestOCSquirrelClosureImpl
 
 #pragma mark -
 #pragma mark initialization
@@ -118,40 +118,40 @@ static SQInteger IntClosureNoParamsCheckEnvironment(HSQUIRRELVM vm)
 
 - (void) testNewClosure
 {
-    OCSquirrelClosure *closure = [[OCSquirrelClosure alloc] initWithSQFUNCTION: VoidClosureNoParams
+    OCSquirrelClosureImpl *closure = [[OCSquirrelClosureImpl alloc] initWithSQFUNCTION: VoidClosureNoParams
                                                                     squirrelVM: _squirrelVM];
     
     XCTAssertNotNil(closure,
-                   @"OCSquirrelClosure class should exist.");
+                   @"OCSquirrelClosureImpl class should exist.");
 }
 
 
 - (void) testNewClosureType
 {
-    OCSquirrelClosure *closure = [[OCSquirrelClosure alloc] initWithSQFUNCTION: VoidClosureNoParams
+    OCSquirrelClosureImpl *closure = [[OCSquirrelClosureImpl alloc] initWithSQFUNCTION: VoidClosureNoParams
                                                                     squirrelVM: _squirrelVM];
     
     XCTAssertEqual(closure.type, OT_NATIVECLOSURE,
-                   @"OCSquirrelClosure created with a native function should have OT_NATIVECLOSURE type.");
+                   @"OCSquirrelClosureImpl created with a native function should have OT_NATIVECLOSURE type.");
 }
 
 
 - (void) testNewClosureName
 {
-    OCSquirrelClosure *closure = [[OCSquirrelClosure alloc] initWithSQFUNCTION: VoidClosureNoParams
+    OCSquirrelClosureImpl *closure = [[OCSquirrelClosureImpl alloc] initWithSQFUNCTION: VoidClosureNoParams
                                                                           name: @"some name"
                                                                     squirrelVM: _squirrelVM];
     [closure push];
     sq_getclosurename(_squirrelVM.vm, -1);
     
     XCTAssertEqualObjects([_squirrelVM.stack valueAtPosition: -1], @"some name",
-                         @"OCSquirrelClosure native closure name should be properly set.");
+                         @"OCSquirrelClosureImpl native closure name should be properly set.");
 }
 
 
 - (void) testNativeVoidCallNoParams
 {
-    OCSquirrelClosure *closure = [[OCSquirrelClosure alloc] initWithSQFUNCTION: VoidClosureNoParams
+    OCSquirrelClosureImpl *closure = [[OCSquirrelClosureImpl alloc] initWithSQFUNCTION: VoidClosureNoParams
                                                                     squirrelVM: _squirrelVM];
     [closure call];
     XCTAssertTrue(_closureCalled,
@@ -164,7 +164,7 @@ static SQInteger IntClosureNoParamsCheckEnvironment(HSQUIRRELVM vm)
     // Push some value to the stack to be sure that it is not empty.
     [_squirrelVM.stack pushFloat: 13.37];
     
-    OCSquirrelClosure *closure = [[OCSquirrelClosure alloc] initWithSQFUNCTION: VoidClosureNoParams
+    OCSquirrelClosureImpl *closure = [[OCSquirrelClosureImpl alloc] initWithSQFUNCTION: VoidClosureNoParams
                                                                     squirrelVM: _squirrelVM];
     id result = [closure call];
     XCTAssertNil(result,
@@ -178,7 +178,7 @@ static SQInteger IntClosureNoParamsCheckEnvironment(HSQUIRRELVM vm)
     // Push some value to the stack to be sure that it is not empty.
     [_squirrelVM.stack pushFloat: 13.37];
     
-    OCSquirrelClosure *closure = [[OCSquirrelClosure alloc] initWithSQFUNCTION: IntClosureNoParams
+    OCSquirrelClosureImpl *closure = [[OCSquirrelClosureImpl alloc] initWithSQFUNCTION: IntClosureNoParams
                                                                     squirrelVM: _squirrelVM];
     id result = [closure call];
     XCTAssertEqualObjects(result, @(kNativeIntegerReturnValue),
@@ -192,7 +192,7 @@ static SQInteger IntClosureNoParamsCheckEnvironment(HSQUIRRELVM vm)
     // Push some value to the stack to be sure that it is not empty.
     [_squirrelVM.stack pushFloat: 13.37];
     
-    OCSquirrelClosure *closure = [[OCSquirrelClosure alloc] initWithSQFUNCTION: IntClosureNoParams
+    OCSquirrelClosureImpl *closure = [[OCSquirrelClosureImpl alloc] initWithSQFUNCTION: IntClosureNoParams
                                                                     squirrelVM: _squirrelVM];
     [closure call];
     XCTAssertEqualWithAccuracy(13.37f, [[_squirrelVM.stack valueAtPosition: -1] floatValue], 1e-3,
@@ -202,7 +202,7 @@ static SQInteger IntClosureNoParamsCheckEnvironment(HSQUIRRELVM vm)
 
 - (void) testNativeIntCallIntParamReturnValue
 {
-    OCSquirrelClosure *closure = [[OCSquirrelClosure alloc] initWithSQFUNCTION: IntClosureReturn1IntParam
+    OCSquirrelClosureImpl *closure = [[OCSquirrelClosureImpl alloc] initWithSQFUNCTION: IntClosureReturn1IntParam
                                                                     squirrelVM: _squirrelVM];
     id result = [closure call: @[@12345]];
     XCTAssertEqualObjects(result, @12345,
@@ -215,7 +215,7 @@ static SQInteger IntClosureNoParamsCheckEnvironment(HSQUIRRELVM vm)
 {
     [_root setInteger: 12345 forKey: kEnvironmentKey];
     
-    OCSquirrelClosure *closure = [[OCSquirrelClosure alloc] initWithSQFUNCTION:
+    OCSquirrelClosureImpl *closure = [[OCSquirrelClosureImpl alloc] initWithSQFUNCTION:
                                   IntClosureNoParamsCheckEnvironment
                                                                     squirrelVM: _squirrelVM];
     id result = [closure callWithThis: _root];
@@ -234,7 +234,7 @@ static SQInteger IntClosureNoParamsCheckEnvironment(HSQUIRRELVM vm)
     [otherEnvironment setInteger: 6789 forKey: kEnvironmentKey];
     [_root setObject: otherEnvironment forKey: @"other environment"];
     
-    OCSquirrelClosure *closure = [[OCSquirrelClosure alloc] initWithSQFUNCTION:
+    OCSquirrelClosureImpl *closure = [[OCSquirrelClosureImpl alloc] initWithSQFUNCTION:
                                   IntClosureNoParamsCheckEnvironment
                                                                     squirrelVM: _squirrelVM];
     id result = [closure callWithThis: otherEnvironment];
@@ -248,7 +248,7 @@ static SQInteger IntClosureNoParamsCheckEnvironment(HSQUIRRELVM vm)
 {
     [_squirrelVM execute: @"function VoidNoParams() { called <- 12345; }" error: nil];
     
-    OCSquirrelClosure *closure = [_root objectForKey: @"VoidNoParams"];
+    OCSquirrelClosureImpl *closure = [_root objectForKey: @"VoidNoParams"];
     [closure call];
     
     XCTAssertEqual((SQInteger)[_root integerForKey: @"called"], (SQInteger)12345,
@@ -263,7 +263,7 @@ static SQInteger IntClosureNoParamsCheckEnvironment(HSQUIRRELVM vm)
     
     [_squirrelVM execute: @"function VoidNoParams() {}" error: nil];
     
-    OCSquirrelClosure *closure = [_root objectForKey: @"VoidNoParams"];
+    OCSquirrelClosureImpl *closure = [_root objectForKey: @"VoidNoParams"];
     id result = [closure call];
     XCTAssertNil(result,
                 @"For a closure which does not push a result to the Squirrel stack, "
@@ -278,7 +278,7 @@ static SQInteger IntClosureNoParamsCheckEnvironment(HSQUIRRELVM vm)
     
     [_squirrelVM execute: @"function IntNoParams() { return 12345; }" error: nil];
     
-    OCSquirrelClosure *closure = [_root objectForKey: @"IntNoParams"];
+    OCSquirrelClosureImpl *closure = [_root objectForKey: @"IntNoParams"];
     
     id result = [closure call];
     XCTAssertEqualObjects(result, @(12345),
@@ -294,7 +294,7 @@ static SQInteger IntClosureNoParamsCheckEnvironment(HSQUIRRELVM vm)
     
     [_squirrelVM execute: @"function IntNoParams() { return 12345; }" error: nil];
     
-    OCSquirrelClosure *closure = [_root objectForKey: @"IntNoParams"];
+    OCSquirrelClosureImpl *closure = [_root objectForKey: @"IntNoParams"];
     
     [closure call];
     XCTAssertEqualWithAccuracy(13.37f, [[_squirrelVM.stack valueAtPosition: -1] floatValue], 1e-3,
@@ -306,7 +306,7 @@ static SQInteger IntClosureNoParamsCheckEnvironment(HSQUIRRELVM vm)
 {
     [_squirrelVM execute: @"function IntReturn1IntParam(x) { return x; }" error: nil];
     
-    OCSquirrelClosure *closure = [_root objectForKey: @"IntReturn1IntParam"];
+    OCSquirrelClosureImpl *closure = [_root objectForKey: @"IntReturn1IntParam"];
     
     id result = [closure call: @[@12345]];
     XCTAssertEqualObjects(result, @12345,
@@ -321,7 +321,7 @@ static SQInteger IntClosureNoParamsCheckEnvironment(HSQUIRRELVM vm)
     
     [_squirrelVM execute: @"function ReturnEnvironmentX() { return x; }" error: nil];
     
-    OCSquirrelClosure *closure = [_root objectForKey: @"ReturnEnvironmentX"];
+    OCSquirrelClosureImpl *closure = [_root objectForKey: @"ReturnEnvironmentX"];
     
     id result = [closure callWithThis: _root];
     XCTAssertEqualObjects(result, @12345,
@@ -341,7 +341,7 @@ static SQInteger IntClosureNoParamsCheckEnvironment(HSQUIRRELVM vm)
     
     [_squirrelVM execute: @"function ReturnEnvironmentX() { return x; }" error: nil];
     
-    OCSquirrelClosure *closure = [_root objectForKey: @"ReturnEnvironmentX"];
+    OCSquirrelClosureImpl *closure = [_root objectForKey: @"ReturnEnvironmentX"];
     
     id result = [closure callWithThis: otherEnvironment];
     XCTAssertEqualObjects(result, @6789,

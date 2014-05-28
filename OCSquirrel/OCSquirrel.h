@@ -28,13 +28,13 @@
 #import "OCSquirrelVM.h"
 #import "OCSquirrelVM+SQObjects.h"
 
-#import "OCSquirrelClass.h"
-#import "OCSquirrelInstance.h"
-#import "OCSquirrelClosure.h"
-
-// Import protocols provided by OCSquirrel
+#import "OCSquirrelObject.h"
 #import "OCSquirrelTable.h"
 #import "OCSquirrelArray.h"
-#import "OCSquirrelObject.h"
+
+#import "OCSquirrelClosureImpl.h"
+#import "OCSquirrelClass.h"
+#import "OCSquirrelInstance.h"
+
 
 #endif

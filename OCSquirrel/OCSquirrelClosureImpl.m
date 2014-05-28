@@ -1,5 +1,5 @@
 //
-//  OCSquirrelClosure.m
+//  OCSquirrelClosureImpl.m
 //  OCSquirrel
 //
 //  Created by Egor Chiglintsev on 27.04.13.
@@ -10,15 +10,15 @@
 #error "This file should be compiled with ARC support"
 #endif
 
-#import "OCSquirrelClosure.h"
+#import "OCSquirrelClosureImpl.h"
 #import "OCSquirrelVM+SQObjects.h"
 #import "OCSquirrelTable.h"
 
 
 #pragma mark -
-#pragma mark OCSquirrelClosure implementation
+#pragma mark OCSquirrelClosureImpl implementation
 
-@implementation OCSquirrelClosure
+@implementation OCSquirrelClosureImpl
 
 #pragma mark -
 #pragma mark class methods

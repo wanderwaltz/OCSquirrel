@@ -613,8 +613,8 @@ static SQInteger NativeClosure(HSQUIRRELVM vm)
     
     id value = [_squirrelVM.stack valueAtPosition: -1];
     
-    XCTAssertTrue([value isKindOfClass: [OCSquirrelClosure class]],
-                 @"-valueAtPosition: should return an OCSquirrelClosure for closure stack values");
+    XCTAssertTrue([value isKindOfClass: [OCSquirrelClosureImpl class]],
+                 @"-valueAtPosition: should return an OCSquirrelClosureImpl for closure stack values");
 }
 
 
@@ -622,10 +622,10 @@ static SQInteger NativeClosure(HSQUIRRELVM vm)
 {
     sq_newclosure(_squirrelVM.vm, NativeClosure, 0);
     
-    OCSquirrelClosure *value = [_squirrelVM.stack valueAtPosition: -1];
+    OCSquirrelClosureImpl *value = [_squirrelVM.stack valueAtPosition: -1];
     
     XCTAssertEqual(value.type, OT_NATIVECLOSURE,
-                   @"-valueAtPosition: should return an OCSquirrelClosure of OT_NATIVECLOSURE "
+                   @"-valueAtPosition: should return an OCSquirrelClosureImpl of OT_NATIVECLOSURE "
                    @"type for native closures");
 }
 
@@ -640,7 +640,7 @@ static SQInteger NativeClosure(HSQUIRRELVM vm)
     id value = [_squirrelVM.stack valueAtPosition: -1];
     
     XCTAssertEqualStructs(*[value obj], closure,
-                          @"-valueAtPosition: should return the corresponding OCSquirrelClosure for "
+                          @"-valueAtPosition: should return the corresponding OCSquirrelClosureImpl for "
                           @"native closure stack values");
 }
 
@@ -655,8 +655,8 @@ static SQInteger NativeClosure(HSQUIRRELVM vm)
     
     id value = [_squirrelVM.stack valueAtPosition: -1];
     
-    XCTAssertTrue([value isKindOfClass: [OCSquirrelClosure class]],
-                 @"-valueAtPosition: should return an OCSquirrelClosure for closure stack values");
+    XCTAssertTrue([value isKindOfClass: [OCSquirrelClosureImpl class]],
+                 @"-valueAtPosition: should return an OCSquirrelClosureImpl for closure stack values");
 }
 
 
@@ -669,10 +669,10 @@ static SQInteger NativeClosure(HSQUIRRELVM vm)
     sq_get(_squirrelVM.vm, -2);
 
     
-    OCSquirrelClosure *value = [_squirrelVM.stack valueAtPosition: -1];
+    OCSquirrelClosureImpl *value = [_squirrelVM.stack valueAtPosition: -1];
     
     XCTAssertEqual(value.type, OT_CLOSURE,
-                   @"-valueAtPosition: should return an OCSquirrelClosure of OT_CLOSURE "
+                   @"-valueAtPosition: should return an OCSquirrelClosureImpl of OT_CLOSURE "
                    @"type for Squirrel closures");
 }
 
@@ -692,7 +692,7 @@ static SQInteger NativeClosure(HSQUIRRELVM vm)
     id value = [_squirrelVM.stack valueAtPosition: -1];
     
     XCTAssertEqualStructs(*[value obj], closure,
-                          @"-valueAtPosition: should return the corresponding OCSquirrelClosure for "
+                          @"-valueAtPosition: should return the corresponding OCSquirrelClosureImpl for "
                           @"Squirrel closure stack values");
 }
 

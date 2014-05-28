@@ -1,5 +1,5 @@
 //
-//  OCSquirrelClosure.h
+//  OCSquirrelClosureImpl.h
 //  OCSquirrel
 //
 //  Created by Egor Chiglintsev on 27.04.13.
@@ -10,9 +10,9 @@
 
 
 #pragma mark -
-#pragma mark OCSquirrelClosure interface
+#pragma mark OCSquirrelClosureImpl interface
 
-@interface OCSquirrelClosure : OCSquirrelObjectImpl
+@interface OCSquirrelClosureImpl : OCSquirrelObjectImpl
 
 - (id)initWithSQFUNCTION:(SQFUNCTION)function
               squirrelVM:(OCSquirrelVM *)squirrelVM;

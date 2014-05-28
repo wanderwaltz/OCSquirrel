@@ -11,7 +11,7 @@
 #endif
 
 #import "OCSquirrelTableImpl.h"
-#import "OCSquirrelClosure.h"
+#import "OCSquirrelClosureImpl.h"
 
 
 #pragma mark -
@@ -317,7 +317,7 @@
 {
     id closure = [self objectForKey: key];
     
-    if ([closure isKindOfClass: [OCSquirrelClosure class]])
+    if ([closure isKindOfClass: [OCSquirrelClosureImpl class]])
     {
         return [closure callWithThis: self];
     }
@@ -330,7 +330,7 @@
 {
     id closure = [self objectForKey: key];
     
-    if ([closure isKindOfClass: [OCSquirrelClosure class]])
+    if ([closure isKindOfClass: [OCSquirrelClosureImpl class]])
     {
         return [closure callWithThis: self
                           parameters: parameters];
