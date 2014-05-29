@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>IDESourceControlProjectFavoriteDictionaryKey</key>
+	<false/>
+	<key>IDESourceControlProjectIdentifier</key>
+	<string>8E17525A-17A6-47FA-ABD0-AAC27DA747DE</string>
+	<key>IDESourceControlProjectName</key>
+	<string>OCSquirrel</string>
+	<key>IDESourceControlProjectOriginsDictionary</key>
+	<dict>
+		<key>4543725C-0285-4A6B-BE88-DDCADC045555</key>
+		<string>https://github.com/wanderwaltz/OCSquirrel.git</string>
+	</dict>
+	<key>IDESourceControlProjectPath</key>
+	<string>OCSquirrel.xcworkspace</string>
+	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
+	<dict>
+		<key>4543725C-0285-4A6B-BE88-DDCADC045555</key>
+		<string>..</string>
+	</dict>
+	<key>IDESourceControlProjectURL</key>
+	<string>https://github.com/wanderwaltz/OCSquirrel.git</string>
+	<key>IDESourceControlProjectVersion</key>
+	<integer>110</integer>
+	<key>IDESourceControlProjectWCCIdentifier</key>
+	<string>4543725C-0285-4A6B-BE88-DDCADC045555</string>
+	<key>IDESourceControlProjectWCConfigurations</key>
+	<array>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.git</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>4543725C-0285-4A6B-BE88-DDCADC045555</string>
+			<key>IDESourceControlWCCName</key>
+			<string>OCSquirrel</string>
+		</dict>
+	</array>
+</dict>
+</plist>

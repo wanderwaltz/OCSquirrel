@@ -57,3 +57,18 @@ SQInteger OCSquirrelVM_InstanceUPReleaseHook(SQUserPointer pointer, SQInteger si
     
     return 0;
 }
+
+
+void OCSquirrelVM_UserDataSetObject(SQUserPointer udp, id object)
+{
+    *((id *)udp) = [object retain];
+}
+
+
+SQInteger OCSquirrelVM_UserDataReleaseHook(SQUserPointer udp, SQInteger size)
+{
+    id object = *((id *)udp);
+    [object release];
+    
+    return 0;
+}

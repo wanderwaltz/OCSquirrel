@@ -21,3 +21,7 @@ SQRESULT OCSquirrelVM_SetInstanceUP(HSQUIRRELVM vm, SQInteger index, id object);
 
 /// Releases the Objective-C object represented by the pointer.
 SQInteger OCSquirrelVM_InstanceUPReleaseHook(SQUserPointer pointer, SQInteger size);
+
+
+SQInteger OCSquirrelVM_UserDataReleaseHook(SQUserPointer pointer, SQInteger size);
+void OCSquirrelVM_UserDataSetObject(SQUserPointer udp, id object);

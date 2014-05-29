@@ -18,6 +18,7 @@
 #import "OCSquirrelClosure+Protected.h"
 #import "OCSquirrelClosureImpl.h"
 #import "OCSquirrelArrayImpl.h"
+#import "OCSquirrelUserDataImpl.h"
 
 
 #pragma mark -
@@ -334,12 +335,21 @@
         } break;
             
             
+        case OT_USERDATA:
+        {
+            HSQOBJECT object = [self sqObjectAtPosition: position];
+            
+            value = [[OCSquirrelUserDataImpl alloc] initWithHSQOBJECT: object
+                                                                 inVM: _squirrelVM];
+        } break;
+            
+            
         default:
         {
             HSQOBJECT object = [self sqObjectAtPosition: position];
             
             value = [[OCSquirrelObjectImpl alloc] initWithHSQOBJECT: object
-                                                           inVM: _squirrelVM];
+                                                               inVM: _squirrelVM];
         } break;
     }
     

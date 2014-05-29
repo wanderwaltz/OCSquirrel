@@ -13,6 +13,9 @@
 #import "OCSquirrelClosureImpl.h"
 #import "OCSquirrelVM+SQObjects.h"
 #import "OCSquirrelTable.h"
+#import "OCSquirrelUserDataImpl.h"
+#import "OCSquirrelBlockInvocation.h"
+#import "OCSquirrelVMBindings_NoARC.h"
 
 
 #pragma mark -
@@ -79,7 +82,31 @@
                          name:(NSString *)name
                    squirrelVM:(OCSquirrelVM *)squirrelVM
 {
-    return nil;
+    NSInvocation *blockInvocation = [NSInvocation squirrelBlockInvocationWithBlock: block];
+    
+    OCSquirrelUserDataImpl *invocationUD = [[OCSquirrelUserDataImpl alloc] initWithObject: blockInvocation
+                                                                                     inVM: squirrelVM];
+    
+    self = [super initWithVM: squirrelVM];
+    
+    if (self != nil)
+    {
+        [squirrelVM performPreservingStackTop: ^(HSQUIRRELVM vm, id<OCSquirrelVMStack> stack){
+            [invocationUD push];
+            sq_newclosure(vm, OCSquirrelVMBindings_Closure_BlockInvocation, 1);
+            sq_getstackobj(vm, -1, &_obj);
+            sq_addref(vm, &_obj);
+            
+            if (name != nil)
+            {
+                const SQChar *cName = [name cStringUsingEncoding: NSUTF8StringEncoding];
+                
+                if (cName != NULL)
+                    sq_setnativeclosurename(vm, -1, cName);
+            }
+        }];
+    }
+    return self;
 }
 
 

@@ -357,7 +357,7 @@ static SQInteger IntClosureNoParamsCheckEnvironment(HSQUIRRELVM vm)
 {
     __block BOOL called = NO;
     
-    OCSquirrelClosureImpl *closure = [[OCSquirrelClosureImpl alloc] initWithBlock: ^{
+    OCSquirrelClosureImpl *closure = [[OCSquirrelClosureImpl alloc] initWithBlock: ^(id this){
         called = YES;
     }
                                                                        squirrelVM: _squirrelVM];
@@ -370,17 +370,17 @@ static SQInteger IntClosureNoParamsCheckEnvironment(HSQUIRRELVM vm)
 
 - (void)testBlockClosureCallThis
 {
-    __block id this = nil;
+    __block id invokedThis = nil;
     
-    OCSquirrelClosureImpl *closure = [[OCSquirrelClosureImpl alloc] initWithBlock: ^(id thisObject){
-        this = thisObject;
+    OCSquirrelClosureImpl *closure = [[OCSquirrelClosureImpl alloc] initWithBlock: ^(id this){
+        invokedThis = this;
     }
                                                                        squirrelVM: _squirrelVM];
     
     [closure call];
     
-    XCTAssertTrue([this isKindOfClass: [OCSquirrelTable class]],
-                  @"This object associated with a Squirrel closure call should be passed to the block");
+    XCTAssertTrue([invokedThis isKindOfClass: [NSInvocation class]],
+                  @"First parameter of the invoked block should be of NSInvocation class.");
 }
 
 

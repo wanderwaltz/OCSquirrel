@@ -14,6 +14,7 @@
 #import "OCSquirrelVM.h"
 #import "OCSquirrelVMFunctions.h"
 #import "OCSquirrelVMFunctions_NoARC.h"
+#import "OCSquirrelUserDataImpl.h"
 
 
 /*! Implementation for constructor() method of the Squirrel classes bound to Objective-C classes.
@@ -136,7 +137,7 @@ void _setArgumentAtIndex(NSUInteger i,
         BOOL argument = (stackBool == SQTrue);
         [invocation setArgument: &argument atIndex: i];
     }
-    else if (strcmp(argumentType, @encode(id)) == 0)
+    else if (strstr(argumentType, @encode(id)) == argumentType)
     {
         id argument = [squirrelVM.stack valueAtPosition: i];
         
@@ -216,7 +217,7 @@ BOOL _pushReturnValueAtIndex(HSQUIRRELVM vm,           // Have to pass both HSQU
         
         sq_pushbool(vm, (result == YES) ? SQTrue : SQFalse);
     }
-    else if (strcmp(returnType, @encode(id)) == 0)
+    else if (strstr(returnType, @encode(id)) == returnType)
     {
         id result = nil;
         [invocation getReturnValue: &result];
@@ -359,4 +360,43 @@ SQInteger OCSquirrelVMBindings_InitializerSimpleInvocation(HSQUIRRELVM vm)
     }
     
     return 1;
+}
+
+
+
+SQInteger OCSquirrelVMBindings_Closure_BlockInvocation(HSQUIRRELVM vm)
+{
+    OCSquirrelVM *squirrelVM = OCSquirrelVMforVM(vm);
+    
+    sq_getfreevariable(vm, 0, 0);
+    
+    OCSquirrelUserDataImpl *ud = [squirrelVM.stack valueAtPosition: -1];
+    
+    if (![ud isKindOfClass: [OCSquirrelUserDataImpl class]]) {
+        return 0;
+    }
+    
+    NSInvocation *invocation = ud.object;
+    
+    if (![invocation isKindOfClass: [NSInvocation class]]) {
+        return 0;
+    }
+    
+    NSMethodSignature *signature = invocation.methodSignature;
+    
+    for (NSUInteger i = 2; i < signature.numberOfArguments; ++i)
+    {
+        const char *argumentType = [signature getArgumentTypeAtIndex: i];
+        
+        // This function will read an argument from the Squirrel VM stack
+        // and pass it to the invocation.
+        _setArgumentAtIndex(i, vm, squirrelVM, argumentType, invocation);
+    }
+    
+    [invocation invokeWithTarget: invocation];
+    
+    BOOL didPushValue = _pushReturnValueAtIndex(vm, squirrelVM,
+                                                signature.methodReturnType, invocation);
+    
+    return (didPushValue ? 1 : 0);
 }

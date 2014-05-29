@@ -7,6 +7,12 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		4409CE681936F2F800C424EB /* OCSquirrelBlockInvocation.h in Headers */ = {isa = PBXBuildFile; fileRef = 4409CE661936F2F800C424EB /* OCSquirrelBlockInvocation.h */; };
+		4409CE691936F2F800C424EB /* OCSquirrelBlockInvocation.m in Sources */ = {isa = PBXBuildFile; fileRef = 4409CE671936F2F800C424EB /* OCSquirrelBlockInvocation.m */; };
+		4409CE6D1936F3FF00C424EB /* OCSquirrelBlockInvocationMetadata.h in Headers */ = {isa = PBXBuildFile; fileRef = 4409CE6B1936F3FF00C424EB /* OCSquirrelBlockInvocationMetadata.h */; };
+		4409CE6E1936F3FF00C424EB /* OCSquirrelBlockInvocationMetadata.m in Sources */ = {isa = PBXBuildFile; fileRef = 4409CE6C1936F3FF00C424EB /* OCSquirrelBlockInvocationMetadata.m */; };
+		4409CE721936F76500C424EB /* OCSquirrelUserDataImpl.h in Headers */ = {isa = PBXBuildFile; fileRef = 4409CE701936F76500C424EB /* OCSquirrelUserDataImpl.h */; };
+		4409CE731936F76500C424EB /* OCSquirrelUserDataImpl.m in Sources */ = {isa = PBXBuildFile; fileRef = 4409CE711936F76500C424EB /* OCSquirrelUserDataImpl.m */; };
 		44227BE419330B520011CE2C /* OCSquirrelTable.m in Sources */ = {isa = PBXBuildFile; fileRef = 44227BE319330B520011CE2C /* OCSquirrelTable.m */; };
 		44227BE7193323B60011CE2C /* TestOCSquirrelTable+Protected.m in Sources */ = {isa = PBXBuildFile; fileRef = 44227BE6193323B60011CE2C /* TestOCSquirrelTable+Protected.m */; };
 		44227BE9193324BE0011CE2C /* TestOCSquirrelTable+Protected.m in Sources */ = {isa = PBXBuildFile; fileRef = 44227BE6193323B60011CE2C /* TestOCSquirrelTable+Protected.m */; };
@@ -147,6 +153,7 @@
 		7CA9753D172E4FBE001E58B1 /* OCSquirrelVMFunctions_NoARC.m in Sources */ = {isa = PBXBuildFile; fileRef = 7CA9753B172E4FBE001E58B1 /* OCSquirrelVMFunctions_NoARC.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		7CA975D7172F8653001E58B1 /* OCSquirrelVMBindings_NoARC.h in Headers */ = {isa = PBXBuildFile; fileRef = 7CA975D5172F8653001E58B1 /* OCSquirrelVMBindings_NoARC.h */; };
 		7CA975D8172F8653001E58B1 /* OCSquirrelVMBindings_NoARC.m in Sources */ = {isa = PBXBuildFile; fileRef = 7CA975D6172F8653001E58B1 /* OCSquirrelVMBindings_NoARC.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		E0280AB91D744948AD60B461 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2DBB95FC36EB4B309037C555 /* libPods.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -174,6 +181,14 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		2DBB95FC36EB4B309037C555 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		402F2585BADB474D91B854B8 /* Pods.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.xcconfig; path = Pods/Pods.xcconfig; sourceTree = "<group>"; };
+		4409CE661936F2F800C424EB /* OCSquirrelBlockInvocation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OCSquirrelBlockInvocation.h; sourceTree = "<group>"; };
+		4409CE671936F2F800C424EB /* OCSquirrelBlockInvocation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OCSquirrelBlockInvocation.m; sourceTree = "<group>"; };
+		4409CE6B1936F3FF00C424EB /* OCSquirrelBlockInvocationMetadata.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OCSquirrelBlockInvocationMetadata.h; sourceTree = "<group>"; };
+		4409CE6C1936F3FF00C424EB /* OCSquirrelBlockInvocationMetadata.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OCSquirrelBlockInvocationMetadata.m; sourceTree = "<group>"; };
+		4409CE701936F76500C424EB /* OCSquirrelUserDataImpl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OCSquirrelUserDataImpl.h; sourceTree = "<group>"; };
+		4409CE711936F76500C424EB /* OCSquirrelUserDataImpl.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OCSquirrelUserDataImpl.m; sourceTree = "<group>"; };
 		44227BE319330B520011CE2C /* OCSquirrelTable.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OCSquirrelTable.m; sourceTree = "<group>"; };
 		44227BE519330B9C0011CE2C /* OCSquirrelTable+Protected.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "OCSquirrelTable+Protected.h"; sourceTree = "<group>"; };
 		44227BE6193323B60011CE2C /* TestOCSquirrelTable+Protected.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "TestOCSquirrelTable+Protected.m"; sourceTree = "<group>"; };
@@ -334,6 +349,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E0280AB91D744948AD60B461 /* libPods.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -371,6 +387,26 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		4409CE6A1936F3E100C424EB /* OCSquirrelBlockInvocation */ = {
+			isa = PBXGroup;
+			children = (
+				4409CE661936F2F800C424EB /* OCSquirrelBlockInvocation.h */,
+				4409CE671936F2F800C424EB /* OCSquirrelBlockInvocation.m */,
+				4409CE6B1936F3FF00C424EB /* OCSquirrelBlockInvocationMetadata.h */,
+				4409CE6C1936F3FF00C424EB /* OCSquirrelBlockInvocationMetadata.m */,
+			);
+			name = OCSquirrelBlockInvocation;
+			sourceTree = "<group>";
+		};
+		4409CE6F1936F74E00C424EB /* OCSquirrelUserData */ = {
+			isa = PBXGroup;
+			children = (
+				4409CE701936F76500C424EB /* OCSquirrelUserDataImpl.h */,
+				4409CE711936F76500C424EB /* OCSquirrelUserDataImpl.m */,
+			);
+			name = OCSquirrelUserData;
+			sourceTree = "<group>";
+		};
 		44227BF019338E1D0011CE2C /* OCSquirrelTable */ = {
 			isa = PBXGroup;
 			children = (
@@ -403,6 +439,7 @@
 		44A884D419362C7500FA503E /* OCSquirrelClosure */ = {
 			isa = PBXGroup;
 			children = (
+				4409CE6A1936F3E100C424EB /* OCSquirrelBlockInvocation */,
 				44A884D919362D2E00FA503E /* OCSquirrelClosure+Protected.h */,
 				5DC90424172BBA94009C7082 /* OCSquirrelClosureImpl.h */,
 				5DC90425172BBA95009C7082 /* OCSquirrelClosureImpl.m */,
@@ -420,6 +457,7 @@
 				5DB09CC6171968A600F50257 /* Vendor */,
 				5DB09CAB1719686D00F50257 /* Frameworks */,
 				5DB09C9D1719686D00F50257 /* Products */,
+				402F2585BADB474D91B854B8 /* Pods.xcconfig */,
 			);
 			sourceTree = "<group>";
 		};
@@ -462,6 +500,7 @@
 				5DBE08A71733742200908658 /* UIKit.framework */,
 				5DBE08A91733742200908658 /* Foundation.framework */,
 				5DBE08AB1733742200908658 /* CoreGraphics.framework */,
+				2DBB95FC36EB4B309037C555 /* libPods.a */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -733,6 +772,7 @@
 				44A884D319362C6D00FA503E /* OCSquirrelObject */,
 				44227BF019338E1D0011CE2C /* OCSquirrelTable */,
 				44227BF119338E260011CE2C /* OCSquirrelArray */,
+				4409CE6F1936F74E00C424EB /* OCSquirrelUserData */,
 				44A884D419362C7500FA503E /* OCSquirrelClosure */,
 				5D8EC81A171A65770084F92C /* OCSquirrelVMStackImpl.h */,
 				5D8EC81B171A65770084F92C /* OCSquirrelVMStackImpl.m */,
@@ -792,6 +832,7 @@
 				5DB09DFD1719705500F50257 /* OCSquirrelVM.h in Headers */,
 				5DD12D2A19324FC00087979E /* OCSquirrelVM+SQObjects.h in Headers */,
 				5DD12D2D193250E00087979E /* OCSquirrelTable.h in Headers */,
+				4409CE6D1936F3FF00C424EB /* OCSquirrelBlockInvocationMetadata.h in Headers */,
 				5D8EC818171A65210084F92C /* OCSquirrelVMStack.h in Headers */,
 				5DC90418172B88E7009C7082 /* OCSquirrelClass.h in Headers */,
 				5DC9041C172BA3A9009C7082 /* OCSquirrelInstance.h in Headers */,
@@ -801,6 +842,7 @@
 				5DB09DBA171969D700F50257 /* sqstdblob.h in Headers */,
 				5DB09DBB171969D700F50257 /* sqstdio.h in Headers */,
 				5DB09DBC171969D700F50257 /* sqstdmath.h in Headers */,
+				4409CE681936F2F800C424EB /* OCSquirrelBlockInvocation.h in Headers */,
 				5DB09DBD171969D700F50257 /* sqstdstring.h in Headers */,
 				5DB09DBE171969D700F50257 /* sqstdsystem.h in Headers */,
 				5DB09DBF171969D700F50257 /* squirrel.h in Headers */,
@@ -829,6 +871,7 @@
 				5DB09E0D1719C0C500F50257 /* OCSquirrelVM+DelegateCallbacks.h in Headers */,
 				5D8EC81C171A65770084F92C /* OCSquirrelVMStackImpl.h in Headers */,
 				5D639833171AA46900CFECC1 /* OCSquirrelTableImpl.h in Headers */,
+				4409CE721936F76500C424EB /* OCSquirrelUserDataImpl.h in Headers */,
 				7C94F8C5172A431E00C7BA78 /* OCSquirrelVMFunctions.h in Headers */,
 				7CA9753C172E4FBE001E58B1 /* OCSquirrelVMFunctions_NoARC.h in Headers */,
 				7CA975D7172F8653001E58B1 /* OCSquirrelVMBindings_NoARC.h in Headers */,
@@ -842,13 +885,15 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 5DB09CC01719686D00F50257 /* Build configuration list for PBXNativeTarget "OCSquirrel" */;
 			buildPhases = (
-				5DB09C941719686D00F50257 /* ShellScript */,
+				4BA0967F2138435DA493CCC7 /* Check Pods Manifest.lock */,
+				5DB09C941719686D00F50257 /* Run Script 1 */,
 				5DB09C951719686D00F50257 /* Sources */,
 				5DB09C961719686D00F50257 /* Frameworks */,
 				5DB09C971719686D00F50257 /* Headers */,
 				5DB09C981719686D00F50257 /* Resources */,
-				5DB09C991719686D00F50257 /* ShellScript */,
-				5DB09C9A1719686D00F50257 /* ShellScript */,
+				7AED5D8BE6A24E3A99F86BF9 /* Copy Pods Resources */,
+				5DB09C991719686D00F50257 /* Run Script 2 */,
+				5DB09C9A1719686D00F50257 /* Run Script 3 */,
 			);
 			buildRules = (
 			);
@@ -984,44 +1029,62 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		5DB09C941719686D00F50257 /* ShellScript */ = {
+		4BA0967F2138435DA493CCC7 /* Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
+			name = "Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+		5DB09C941719686D00F50257 /* Run Script 1 */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Run Script 1";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "set -e\n\nset +u\nif [[ $UFW_MASTER_SCRIPT_RUNNING ]]\nthen\n    # Nothing for the slave script to do\n    exit 0\nfi\nset -u\n\nif [[ \"$SDK_NAME\" =~ ([A-Za-z]+) ]]\nthen\n    UFW_SDK_PLATFORM=${BASH_REMATCH[1]}\nelse\n    echo \"Could not find platform name from SDK_NAME: $SDK_NAME\"\n    exit 1\nfi\n\nif [[ \"$SDK_NAME\" =~ ([0-9]+.*$) ]]\nthen\n\tUFW_SDK_VERSION=${BASH_REMATCH[1]}\nelse\n    echo \"Could not find sdk version  from SDK_NAME: $SDK_NAME\"\n    exit 1\nfi\n\nif [[ \"$UFW_SDK_PLATFORM\" = \"iphoneos\" ]]\nthen\n    UFW_OTHER_PLATFORM=iphonesimulator\nelse\n    UFW_OTHER_PLATFORM=iphoneos\nfi\n\nif [[ \"$BUILT_PRODUCTS_DIR\" =~ (.*)$UFW_SDK_PLATFORM$ ]]\nthen\n    UFW_OTHER_BUILT_PRODUCTS_DIR=\"${BASH_REMATCH[1]}${UFW_OTHER_PLATFORM}\"\nelse\n    echo \"Could not find $UFW_SDK_PLATFORM in $BUILT_PRODUCTS_DIR\"\n    exit 1\nfi\n\n\n# Short-circuit if all binaries are up to date\n\nif [[ -f \"${BUILT_PRODUCTS_DIR}/${EXECUTABLE_PATH}\" ]] && \\\n   [[ -f \"${BUILT_PRODUCTS_DIR}/${PRODUCT_NAME}.embeddedframework/${EXECUTABLE_PATH}\" ]] && \\\n   [[ ! \"${BUILT_PRODUCTS_DIR}/${EXECUTABLE_PATH}\" -nt \"${BUILT_PRODUCTS_DIR}/${PRODUCT_NAME}.embeddedframework/${EXECUTABLE_PATH}\" ]]\n   [[ -f \"${UFW_OTHER_BUILT_PRODUCTS_DIR}/${EXECUTABLE_PATH}\" ]] && \\\n   [[ -f \"${UFW_OTHER_BUILT_PRODUCTS_DIR}/${PRODUCT_NAME}.embeddedframework/${EXECUTABLE_PATH}\" ]] && \\\n   [[ ! \"${UFW_OTHER_BUILT_PRODUCTS_DIR}/${EXECUTABLE_PATH}\" -nt \"${UFW_OTHER_BUILT_PRODUCTS_DIR}/${PRODUCT_NAME}.embeddedframework/${EXECUTABLE_PATH}\" ]]\nthen\n    exit 0\nfi\n\n\n# Clean other platform if needed\n\nif [[ ! -f \"${BUILT_PRODUCTS_DIR}/${EXECUTABLE_PATH}\" ]]\nthen\n\techo \"Platform \\\"$UFW_SDK_PLATFORM\\\" was cleaned recently. Cleaning \\\"$UFW_OTHER_PLATFORM\\\" as well\"\n\techo xcodebuild -project \"${PROJECT_FILE_PATH}\" -target \"${TARGET_NAME}\" -configuration \"${CONFIGURATION}\" -sdk ${UFW_OTHER_PLATFORM}${UFW_SDK_VERSION} BUILD_DIR=\"${BUILD_DIR}\" CONFIGURATION_TEMP_DIR=\"${PROJECT_TEMP_DIR}/${CONFIGURATION}-${UFW_OTHER_PLATFORM}\" clean\n\txcodebuild -project \"${PROJECT_FILE_PATH}\" -target \"${TARGET_NAME}\" -configuration \"${CONFIGURATION}\" -sdk ${UFW_OTHER_PLATFORM}${UFW_SDK_VERSION} BUILD_DIR=\"${BUILD_DIR}\" CONFIGURATION_TEMP_DIR=\"${PROJECT_TEMP_DIR}/${CONFIGURATION}-${UFW_OTHER_PLATFORM}\" clean\nfi\n\n\n# Make sure we are building from fresh binaries\n\nrm -rf \"${BUILT_PRODUCTS_DIR}/${EXECUTABLE_PATH}\"\nrm -rf \"${BUILT_PRODUCTS_DIR}/${PRODUCT_NAME}.embeddedframework\"\nrm -rf \"${UFW_OTHER_BUILT_PRODUCTS_DIR}/${EXECUTABLE_PATH}\"\nrm -rf \"${UFW_OTHER_BUILT_PRODUCTS_DIR}/${PRODUCT_NAME}.embeddedframework\"\n";
 		};
-		5DB09C991719686D00F50257 /* ShellScript */ = {
+		5DB09C991719686D00F50257 /* Run Script 2 */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
+			name = "Run Script 2";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "HEADERS_ROOT=$SRCROOT/$PRODUCT_NAME\nFRAMEWORK_HEADERS_DIR=\"$BUILT_PRODUCTS_DIR/$WRAPPER_NAME/Versions/$FRAMEWORK_VERSION/Headers\"\n\n## only header files expected at this point\nPUBLIC_HEADERS=$(find $FRAMEWORK_HEADERS_DIR/. -not -type d 2> /dev/null | sed -e \"s@.*/@@g\")\n\nFIND_OPTS=\"\"\nfor PUBLIC_HEADER in $PUBLIC_HEADERS; do\n  if [ -n \"$FIND_OPTS\" ]; then\n    FIND_OPTS=\"$FIND_OPTS -o\"\n  fi\n  FIND_OPTS=\"$FIND_OPTS -name '$PUBLIC_HEADER'\"\ndone\n\nif [ -n \"$FIND_OPTS\" ]; then\n  for ORIG_HEADER in $(eval \"find $HEADERS_ROOT/. $FIND_OPTS\" 2> /dev/null | sed -e \"s@^$HEADERS_ROOT/./@@g\"); do\n    PUBLIC_HEADER=$(basename $ORIG_HEADER)\n    RELATIVE_PATH=$(dirname $ORIG_HEADER)\n    if [ -e $FRAMEWORK_HEADERS_DIR/$PUBLIC_HEADER ]; then\n      mkdir -p \"$FRAMEWORK_HEADERS_DIR/$RELATIVE_PATH\"\n      mv \"$FRAMEWORK_HEADERS_DIR/$PUBLIC_HEADER\" \"$FRAMEWORK_HEADERS_DIR/$RELATIVE_PATH/$PUBLIC_HEADER\"\n    fi\n  done\nfi\n";
 		};
-		5DB09C9A1719686D00F50257 /* ShellScript */ = {
+		5DB09C9A1719686D00F50257 /* Run Script 3 */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
+			name = "Run Script 3";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "set -e\n\nset +u\nif [[ $UFW_MASTER_SCRIPT_RUNNING ]]\nthen\n    # Nothing for the slave script to do\n    exit 0\nfi\nset -u\nexport UFW_MASTER_SCRIPT_RUNNING=1\n\n\n# Functions\n\n## List files in the specified directory, storing to the specified array.\n#\n# @param $1 The path to list\n# @param $2 The name of the array to fill\n#\n##\nlist_files ()\n{\n    filelist=$(ls \"$1\")\n    while read line\n    do\n        eval \"$2[\\${#$2[*]}]=\\\"\\$line\\\"\"\n    done <<< \"$filelist\"\n}\n\n\n# Sanity check\n\nif [[ ! -f \"${BUILT_PRODUCTS_DIR}/${EXECUTABLE_PATH}\" ]]\nthen\n    echo \"Framework target \\\"${TARGET_NAME}\\\" had no source files to build from. Make sure your source files have the correct target membership\"\n    exit 1\nfi\n\n\n# Gather information\n\nif [[ \"$SDK_NAME\" =~ ([A-Za-z]+) ]]\nthen\n    UFW_SDK_PLATFORM=${BASH_REMATCH[1]}\nelse\n    echo \"Could not find platform name from SDK_NAME: $SDK_NAME\"\n    exit 1\nfi\n\nif [[ \"$SDK_NAME\" =~ ([0-9]+.*$) ]]\nthen\n    UFW_SDK_VERSION=${BASH_REMATCH[1]}\nelse\n    echo \"Could not find sdk version from SDK_NAME: $SDK_NAME\"\n    exit 1\nfi\n\nif [[ \"$UFW_SDK_PLATFORM\" = \"iphoneos\" ]]\nthen\n    UFW_OTHER_PLATFORM=iphonesimulator\nelse\n    UFW_OTHER_PLATFORM=iphoneos\nfi\n\nif [[ \"$BUILT_PRODUCTS_DIR\" =~ (.*)$UFW_SDK_PLATFORM$ ]]\nthen\n    UFW_OTHER_BUILT_PRODUCTS_DIR=\"${BASH_REMATCH[1]}${UFW_OTHER_PLATFORM}\"\nelse\n    echo \"Could not find $UFW_SDK_PLATFORM in $BUILT_PRODUCTS_DIR\"\n    exit 1\nfi\n\n\n# Short-circuit if all binaries are up to date.\n# We already checked the other platform in the prerun script.\n\nif [[ -f \"${BUILT_PRODUCTS_DIR}/${EXECUTABLE_PATH}\" ]] && [[ -f \"${BUILT_PRODUCTS_DIR}/${PRODUCT_NAME}.embeddedframework/${EXECUTABLE_PATH}\" ]] && [[ ! \"${BUILT_PRODUCTS_DIR}/${EXECUTABLE_PATH}\" -nt \"${BUILT_PRODUCTS_DIR}/${PRODUCT_NAME}.embeddedframework/${EXECUTABLE_PATH}\" ]]\nthen\n    exit 0\nfi\n\n\n# Make sure the other platform gets built\n\necho \"Build other platform\"\n\necho xcodebuild -project \"${PROJECT_FILE_PATH}\" -target \"${TARGET_NAME}\" -configuration \"${CONFIGURATION}\" -sdk ${UFW_OTHER_PLATFORM}${UFW_SDK_VERSION} BUILD_DIR=\"${BUILD_DIR}\" CONFIGURATION_TEMP_DIR=\"${PROJECT_TEMP_DIR}/${CONFIGURATION}-${UFW_OTHER_PLATFORM}\" $ACTION\nxcodebuild -project \"${PROJECT_FILE_PATH}\" -target \"${TARGET_NAME}\" -configuration \"${CONFIGURATION}\" -sdk ${UFW_OTHER_PLATFORM}${UFW_SDK_VERSION} BUILD_DIR=\"${BUILD_DIR}\" CONFIGURATION_TEMP_DIR=\"${PROJECT_TEMP_DIR}/${CONFIGURATION}-${UFW_OTHER_PLATFORM}\" $ACTION\n\n\n# Build the fat static library binary\n\necho \"Create universal static library\"\n\necho \"$DT_TOOLCHAIN_DIR/usr/bin/libtool\" -static \"${BUILT_PRODUCTS_DIR}/${EXECUTABLE_PATH}\" \"${UFW_OTHER_BUILT_PRODUCTS_DIR}/${EXECUTABLE_PATH}\" -o \"${BUILT_PRODUCTS_DIR}/${EXECUTABLE_PATH}.temp\"\n\"$DT_TOOLCHAIN_DIR/usr/bin/libtool\" -static \"${BUILT_PRODUCTS_DIR}/${EXECUTABLE_PATH}\" \"${UFW_OTHER_BUILT_PRODUCTS_DIR}/${EXECUTABLE_PATH}\" -o \"${BUILT_PRODUCTS_DIR}/${EXECUTABLE_PATH}.temp\"\n\necho mv \"${BUILT_PRODUCTS_DIR}/${EXECUTABLE_PATH}.temp\" \"${BUILT_PRODUCTS_DIR}/${EXECUTABLE_PATH}\"\nmv \"${BUILT_PRODUCTS_DIR}/${EXECUTABLE_PATH}.temp\" \"${BUILT_PRODUCTS_DIR}/${EXECUTABLE_PATH}\"\n\n\n# Build framework structure\n\necho \"Build symlinks\"\n\necho ln -sfh $FRAMEWORK_VERSION \"${BUILT_PRODUCTS_DIR}/${WRAPPER_NAME}/Versions/Current\"\nln -sfh $FRAMEWORK_VERSION \"${BUILT_PRODUCTS_DIR}/${WRAPPER_NAME}/Versions/Current\"\necho ln -sfh Versions/Current/Headers \"${BUILT_PRODUCTS_DIR}/${WRAPPER_NAME}/Headers\"\nln -sfh Versions/Current/Headers \"${BUILT_PRODUCTS_DIR}/${WRAPPER_NAME}/Headers\"\necho ln -sfh Versions/Current/Resources \"${BUILT_PRODUCTS_DIR}/${WRAPPER_NAME}/Resources\"\nln -sfh Versions/Current/Resources \"${BUILT_PRODUCTS_DIR}/${WRAPPER_NAME}/Resources\"\necho ln -sfh \"Versions/Current/${EXECUTABLE_NAME}\" \"${BUILT_PRODUCTS_DIR}/${WRAPPER_NAME}/${EXECUTABLE_NAME}\"\nln -sfh \"Versions/Current/${EXECUTABLE_NAME}\" \"${BUILT_PRODUCTS_DIR}/${WRAPPER_NAME}/${EXECUTABLE_NAME}\"\n\n\n# Link to binary for unit tests\n\nmkdir -p \"${BUILT_PRODUCTS_DIR}/.fake_fw_testing.framework\"\nln -sfh \"../${WRAPPER_NAME}/${EXECUTABLE_NAME}\" \"${BUILT_PRODUCTS_DIR}/.fake_fw_testing.framework/.fake_fw_testing\"\n\n\n# Build embedded framework structure\n\necho \"Build Embedded Framework\"\n\necho rm -rf \"${BUILT_PRODUCTS_DIR}/${PRODUCT_NAME}.embeddedframework\"\nrm -rf \"${BUILT_PRODUCTS_DIR}/${PRODUCT_NAME}.embeddedframework\"\necho mkdir -p \"${BUILT_PRODUCTS_DIR}/${PRODUCT_NAME}.embeddedframework/Resources\"\nmkdir -p \"${BUILT_PRODUCTS_DIR}/${PRODUCT_NAME}.embeddedframework/Resources\"\necho cp -a \"${BUILT_PRODUCTS_DIR}/${WRAPPER_NAME}\" \"${BUILT_PRODUCTS_DIR}/${PRODUCT_NAME}.embeddedframework/\"\ncp -a \"${BUILT_PRODUCTS_DIR}/${WRAPPER_NAME}\" \"${BUILT_PRODUCTS_DIR}/${PRODUCT_NAME}.embeddedframework/\"\n\ndeclare -a UFW_FILE_LIST\nlist_files \"${BUILT_PRODUCTS_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}\" UFW_FILE_LIST\nfor filename in \"${UFW_FILE_LIST[@]}\"\ndo\n    if [[ \"${filename}\" != \"Info.plist\" ]] && [[ ! \"${filename}\" =~ .*\\.lproj$ ]]\n    then\n        echo ln -sfh \"../${WRAPPER_NAME}/Resources/${filename}\" \"${BUILT_PRODUCTS_DIR}/${PRODUCT_NAME}.embeddedframework/Resources/${filename}\"\n        ln -sfh \"../${WRAPPER_NAME}/Resources/${filename}\" \"${BUILT_PRODUCTS_DIR}/${PRODUCT_NAME}.embeddedframework/Resources/${filename}\"\n    fi\ndone\n\n\n# Replace other platform's framework with a copy of this one (so that both have the same universal binary)\n\necho \"Copy from $UFW_SDK_PLATFORM to $UFW_OTHER_PLATFORM\"\n\necho rm -rf \"${BUILD_DIR}/${CONFIGURATION}-${UFW_OTHER_PLATFORM}\"\nrm -rf \"${BUILD_DIR}/${CONFIGURATION}-${UFW_OTHER_PLATFORM}\"\necho cp -a \"${BUILD_DIR}/${CONFIGURATION}-${UFW_SDK_PLATFORM}\" \"${BUILD_DIR}/${CONFIGURATION}-${UFW_OTHER_PLATFORM}\"\ncp -a \"${BUILD_DIR}/${CONFIGURATION}-${UFW_SDK_PLATFORM}\" \"${BUILD_DIR}/${CONFIGURATION}-${UFW_OTHER_PLATFORM}\"\n";
+			shellScript = "set -e\n\nset +u\nif [[ $UFW_MASTER_SCRIPT_RUNNING ]]\nthen\n    # Nothing for the slave script to do\n    exit 0\nfi\nset -u\nexport UFW_MASTER_SCRIPT_RUNNING=1\n\n\n# Functions\n\n## List files in the specified directory, storing to the specified array.\n#\n# @param $1 The path to list\n# @param $2 The name of the array to fill\n#\n##\nlist_files ()\n{\n    filelist=$(ls \"$1\")\n    while read line\n    do\n        eval \"$2[\\${#$2[*]}]=\\\"\\$line\\\"\"\n    done <<< \"$filelist\"\n}\n\n\n# Sanity check\n\nif [[ ! -f \"${BUILT_PRODUCTS_DIR}/${EXECUTABLE_PATH}\" ]]\nthen\n    echo \"Framework target \\\"${TARGET_NAME}\\\" had no source files to build from. Make sure your source files have the correct target membership\"\n    exit 1\nfi\n\n\n# Gather information\n\nif [[ \"$SDK_NAME\" =~ ([A-Za-z]+) ]]\nthen\n    UFW_SDK_PLATFORM=${BASH_REMATCH[1]}\nelse\n    echo \"Could not find platform name from SDK_NAME: $SDK_NAME\"\n    exit 1\nfi\n\nif [[ \"$SDK_NAME\" =~ ([0-9]+.*$) ]]\nthen\n    UFW_SDK_VERSION=${BASH_REMATCH[1]}\nelse\n    echo \"Could not find sdk version from SDK_NAME: $SDK_NAME\"\n    exit 1\nfi\n\nif [[ \"$UFW_SDK_PLATFORM\" = \"iphoneos\" ]]\nthen\n    UFW_OTHER_PLATFORM=iphonesimulator\nelse\n    UFW_OTHER_PLATFORM=iphoneos\nfi\n\nif [[ \"$BUILT_PRODUCTS_DIR\" =~ (.*)$UFW_SDK_PLATFORM$ ]]\nthen\n    UFW_OTHER_BUILT_PRODUCTS_DIR=\"${BASH_REMATCH[1]}${UFW_OTHER_PLATFORM}\"\nelse\n    echo \"Could not find $UFW_SDK_PLATFORM in $BUILT_PRODUCTS_DIR\"\n    exit 1\nfi\n\n\n# Short-circuit if all binaries are up to date.\n# We already checked the other platform in the prerun script.\n\nif [[ -f \"${BUILT_PRODUCTS_DIR}/${EXECUTABLE_PATH}\" ]] && [[ -f \"${BUILT_PRODUCTS_DIR}/${PRODUCT_NAME}.embeddedframework/${EXECUTABLE_PATH}\" ]] && [[ ! \"${BUILT_PRODUCTS_DIR}/${EXECUTABLE_PATH}\" -nt \"${BUILT_PRODUCTS_DIR}/${PRODUCT_NAME}.embeddedframework/${EXECUTABLE_PATH}\" ]]\nthen\n    exit 0\nfi\n\n\n# Make sure the other platform gets built\n\necho \"Build other platform\"\n\n#echo xcodebuild -project \"${PROJECT_FILE_PATH}\" -target \"${TARGET_NAME}\" -configuration \"${CONFIGURATION}\" -sdk ${UFW_OTHER_PLATFORM}${UFW_SDK_VERSION} BUILD_DIR=\"${BUILD_DIR}\" CONFIGURATION_TEMP_DIR=\"${PROJECT_TEMP_DIR}/${CONFIGURATION}-${UFW_OTHER_PLATFORM}\" $ACTION\n#xcodebuild -project \"${PROJECT_FILE_PATH}\" -target \"${TARGET_NAME}\" -configuration \"${CONFIGURATION}\" -sdk ${UFW_OTHER_PLATFORM}${UFW_SDK_VERSION} BUILD_DIR=\"${BUILD_DIR}\" CONFIGURATION_TEMP_DIR=\"${PROJECT_TEMP_DIR}/${CONFIGURATION}-${UFW_OTHER_PLATFORM}\" $ACTION\n\nxcodebuild -workspace \"${PROJECT_DIR}/${PROJECT_NAME}.xcworkspace\" -scheme \"${TARGET_NAME}\" -configuration \"${CONFIGURATION}\" -sdk ${UFW_OTHER_PLATFORM}${UFW_SDK_VERSION} BUILD_DIR=\"${BUILD_DIR}\" CONFIGURATION_TEMP_DIR=\"${PROJECT_TEMP_DIR}/${CONFIGURATION}-${UFW_OTHER_PLATFORM}\" $ACTION\n\n\n\n# Build the fat static library binary\n\necho \"Create universal static library\"\n\necho \"$DT_TOOLCHAIN_DIR/usr/bin/libtool\" -static \"${BUILT_PRODUCTS_DIR}/${EXECUTABLE_PATH}\" \"${UFW_OTHER_BUILT_PRODUCTS_DIR}/${EXECUTABLE_PATH}\" -o \"${BUILT_PRODUCTS_DIR}/${EXECUTABLE_PATH}.temp\"\n\"$DT_TOOLCHAIN_DIR/usr/bin/libtool\" -static \"${BUILT_PRODUCTS_DIR}/${EXECUTABLE_PATH}\" \"${UFW_OTHER_BUILT_PRODUCTS_DIR}/${EXECUTABLE_PATH}\" -o \"${BUILT_PRODUCTS_DIR}/${EXECUTABLE_PATH}.temp\"\n\necho mv \"${BUILT_PRODUCTS_DIR}/${EXECUTABLE_PATH}.temp\" \"${BUILT_PRODUCTS_DIR}/${EXECUTABLE_PATH}\"\nmv \"${BUILT_PRODUCTS_DIR}/${EXECUTABLE_PATH}.temp\" \"${BUILT_PRODUCTS_DIR}/${EXECUTABLE_PATH}\"\n\n\n# Build framework structure\n\necho \"Build symlinks\"\n\necho ln -sfh $FRAMEWORK_VERSION \"${BUILT_PRODUCTS_DIR}/${WRAPPER_NAME}/Versions/Current\"\nln -sfh $FRAMEWORK_VERSION \"${BUILT_PRODUCTS_DIR}/${WRAPPER_NAME}/Versions/Current\"\necho ln -sfh Versions/Current/Headers \"${BUILT_PRODUCTS_DIR}/${WRAPPER_NAME}/Headers\"\nln -sfh Versions/Current/Headers \"${BUILT_PRODUCTS_DIR}/${WRAPPER_NAME}/Headers\"\necho ln -sfh Versions/Current/Resources \"${BUILT_PRODUCTS_DIR}/${WRAPPER_NAME}/Resources\"\nln -sfh Versions/Current/Resources \"${BUILT_PRODUCTS_DIR}/${WRAPPER_NAME}/Resources\"\necho ln -sfh \"Versions/Current/${EXECUTABLE_NAME}\" \"${BUILT_PRODUCTS_DIR}/${WRAPPER_NAME}/${EXECUTABLE_NAME}\"\nln -sfh \"Versions/Current/${EXECUTABLE_NAME}\" \"${BUILT_PRODUCTS_DIR}/${WRAPPER_NAME}/${EXECUTABLE_NAME}\"\n\n\n# Link to binary for unit tests\n\nmkdir -p \"${BUILT_PRODUCTS_DIR}/.fake_fw_testing.framework\"\nln -sfh \"../${WRAPPER_NAME}/${EXECUTABLE_NAME}\" \"${BUILT_PRODUCTS_DIR}/.fake_fw_testing.framework/.fake_fw_testing\"\n\n\n# Build embedded framework structure\n\necho \"Build Embedded Framework\"\n\necho rm -rf \"${BUILT_PRODUCTS_DIR}/${PRODUCT_NAME}.embeddedframework\"\nrm -rf \"${BUILT_PRODUCTS_DIR}/${PRODUCT_NAME}.embeddedframework\"\necho mkdir -p \"${BUILT_PRODUCTS_DIR}/${PRODUCT_NAME}.embeddedframework/Resources\"\nmkdir -p \"${BUILT_PRODUCTS_DIR}/${PRODUCT_NAME}.embeddedframework/Resources\"\necho cp -a \"${BUILT_PRODUCTS_DIR}/${WRAPPER_NAME}\" \"${BUILT_PRODUCTS_DIR}/${PRODUCT_NAME}.embeddedframework/\"\ncp -a \"${BUILT_PRODUCTS_DIR}/${WRAPPER_NAME}\" \"${BUILT_PRODUCTS_DIR}/${PRODUCT_NAME}.embeddedframework/\"\n\ndeclare -a UFW_FILE_LIST\nlist_files \"${BUILT_PRODUCTS_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}\" UFW_FILE_LIST\nfor filename in \"${UFW_FILE_LIST[@]}\"\ndo\n    if [[ \"${filename}\" != \"Info.plist\" ]] && [[ ! \"${filename}\" =~ .*\\.lproj$ ]]\n    then\n        echo ln -sfh \"../${WRAPPER_NAME}/Resources/${filename}\" \"${BUILT_PRODUCTS_DIR}/${PRODUCT_NAME}.embeddedframework/Resources/${filename}\"\n        ln -sfh \"../${WRAPPER_NAME}/Resources/${filename}\" \"${BUILT_PRODUCTS_DIR}/${PRODUCT_NAME}.embeddedframework/Resources/${filename}\"\n    fi\ndone\n\n\n# Replace other platform's framework with a copy of this one (so that both have the same universal binary)\n\necho \"Copy from $UFW_SDK_PLATFORM to $UFW_OTHER_PLATFORM\"\n\necho rm -rf \"${BUILD_DIR}/${CONFIGURATION}-${UFW_OTHER_PLATFORM}\"\nrm -rf \"${BUILD_DIR}/${CONFIGURATION}-${UFW_OTHER_PLATFORM}\"\necho cp -a \"${BUILD_DIR}/${CONFIGURATION}-${UFW_SDK_PLATFORM}\" \"${BUILD_DIR}/${CONFIGURATION}-${UFW_OTHER_PLATFORM}\"\ncp -a \"${BUILD_DIR}/${CONFIGURATION}-${UFW_SDK_PLATFORM}\" \"${BUILD_DIR}/${CONFIGURATION}-${UFW_OTHER_PLATFORM}\"\n";
 		};
 		5DB09CA81719686D00F50257 /* ShellScript */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -1035,6 +1098,21 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "# Run the unit tests in this test bundle.\n\"${SYSTEM_DEVELOPER_DIR}/Tools/RunUnitTests\"\n";
+		};
+		7AED5D8BE6A24E3A99F86BF9 /* Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Pods-resources.sh\"\n";
+			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
 
@@ -1052,6 +1130,7 @@
 				5DB09D9E171969D100F50257 /* sqfuncstate.cpp in Sources */,
 				5DB09DA0171969D100F50257 /* sqlexer.cpp in Sources */,
 				5DB09DA2171969D100F50257 /* sqmem.cpp in Sources */,
+				4409CE6E1936F3FF00C424EB /* OCSquirrelBlockInvocationMetadata.m in Sources */,
 				5DB09DA3171969D100F50257 /* sqobject.cpp in Sources */,
 				5DB09DA7171969D100F50257 /* sqstate.cpp in Sources */,
 				5DB09DAA171969D100F50257 /* sqtable.cpp in Sources */,
@@ -1076,7 +1155,9 @@
 				5DC9041D172BA3A9009C7082 /* OCSquirrelInstance.m in Sources */,
 				5DC90427172BBA95009C7082 /* OCSquirrelClosureImpl.m in Sources */,
 				44A884D819362CB300FA503E /* OCSquirrelClosure.m in Sources */,
+				4409CE691936F2F800C424EB /* OCSquirrelBlockInvocation.m in Sources */,
 				7CA9753D172E4FBE001E58B1 /* OCSquirrelVMFunctions_NoARC.m in Sources */,
+				4409CE731936F76500C424EB /* OCSquirrelUserDataImpl.m in Sources */,
 				7CA975D8172F8653001E58B1 /* OCSquirrelVMBindings_NoARC.m in Sources */,
 				7C41C073176622D0004120B6 /* OCSquirrelArrayImpl.m in Sources */,
 			);
@@ -1255,6 +1336,7 @@
 		};
 		5DB09CC11719686D00F50257 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 402F2585BADB474D91B854B8 /* Pods.xcconfig */;
 			buildSettings = {
 				CONTENTS_FOLDER_PATH = "$(WRAPPER_NAME)/Versions/$(FRAMEWORK_VERSION)";
 				DEAD_CODE_STRIPPING = NO;
@@ -1268,7 +1350,11 @@
 				INSTALL_PATH = "$(BUILT_PRODUCTS_DIR)";
 				LINK_WITH_STANDARD_LIBRARIES = NO;
 				MACH_O_TYPE = mh_object;
-				OTHER_CFLAGS = "-fshort-wchar";
+				OTHER_CFLAGS = (
+					"$(inherited)",
+					"-fshort-wchar",
+				);
+				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
 				UNLOCALIZED_RESOURCES_FOLDER_PATH = "$(CONTENTS_FOLDER_PATH)/Resources";
@@ -1278,6 +1364,7 @@
 		};
 		5DB09CC21719686D00F50257 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 402F2585BADB474D91B854B8 /* Pods.xcconfig */;
 			buildSettings = {
 				CONTENTS_FOLDER_PATH = "$(WRAPPER_NAME)/Versions/$(FRAMEWORK_VERSION)";
 				DEAD_CODE_STRIPPING = NO;
@@ -1291,7 +1378,11 @@
 				INSTALL_PATH = "$(BUILT_PRODUCTS_DIR)";
 				LINK_WITH_STANDARD_LIBRARIES = NO;
 				MACH_O_TYPE = mh_object;
-				OTHER_CFLAGS = "-fshort-wchar";
+				OTHER_CFLAGS = (
+					"$(inherited)",
+					"-fshort-wchar",
+				);
+				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
 				UNLOCALIZED_RESOURCES_FOLDER_PATH = "$(CONTENTS_FOLDER_PATH)/Resources";

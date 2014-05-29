@@ -1,0 +1,10 @@
+PODS:
+  - SLObjectiveCRuntimeAdditions (1.1.3)
+
+DEPENDENCIES:
+  - SLObjectiveCRuntimeAdditions
+
+SPEC CHECKSUMS:
+  SLObjectiveCRuntimeAdditions: 5b702a1dcca4d115b328d5e7ca6d093e45875994
+
+COCOAPODS: 0.33.1
