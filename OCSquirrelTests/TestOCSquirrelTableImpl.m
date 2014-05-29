@@ -962,17 +962,20 @@
     [table setObject: @6789    forKey: @12345];
     
     NSInteger oldStackTop = _squirrelVM.stack.top;
+    NSInteger newStackTop = NSNotFound;
     
-    NSEnumerator *keyEnumerator = table.keyEnumerator;
-    
-    while ([keyEnumerator nextObject]) {}
-    
-    NSInteger newStackTop = _squirrelVM.stack.top;
-    
-    XCTAssertNotEqual(oldStackTop, newStackTop,
-                      @"-keyEnumerator will change stack state while it's alive");
-    
-    keyEnumerator = nil;
+    @autoreleasepool {
+        NSEnumerator *keyEnumerator = table.keyEnumerator;
+        
+        while ([keyEnumerator nextObject]) {}
+        
+        newStackTop = _squirrelVM.stack.top;
+        
+        XCTAssertNotEqual(oldStackTop, newStackTop,
+                          @"-keyEnumerator will change stack state while it's alive");
+        
+        keyEnumerator = nil;
+    }
     
     newStackTop = _squirrelVM.stack.top;
     
@@ -991,7 +994,9 @@
     
     NSInteger oldStackTop = _squirrelVM.stack.top;
     
-    [table.keyEnumerator allObjects];
+    @autoreleasepool {
+        [table.keyEnumerator allObjects];   
+    }
     
     NSInteger newStackTop = _squirrelVM.stack.top;
     
@@ -1009,18 +1014,21 @@
     [table setObject: @6789    forKey: @12345];
     
     NSInteger oldStackTop = _squirrelVM.stack.top;
+    NSInteger newStackTop = NSNotFound;
     
-    NSEnumerator *keyEnumerator = table.keyEnumerator;
-    
-    [keyEnumerator nextObject];
-    [keyEnumerator allObjects];
-    
-    NSInteger newStackTop = _squirrelVM.stack.top;
-    
-    XCTAssertNotEqual(oldStackTop, newStackTop,
-                      @"-keyEnumerator will change stack state while it's alive");
-    
-    keyEnumerator = nil;
+    @autoreleasepool {
+        NSEnumerator *keyEnumerator = table.keyEnumerator;
+        
+        [keyEnumerator nextObject];
+        [keyEnumerator allObjects];
+        
+        newStackTop = _squirrelVM.stack.top;
+        
+        XCTAssertNotEqual(oldStackTop, newStackTop,
+                          @"-keyEnumerator will change stack state while it's alive");
+        
+        keyEnumerator = nil;
+    }
     
     newStackTop = _squirrelVM.stack.top;
     
