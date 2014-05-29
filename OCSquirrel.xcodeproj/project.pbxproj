@@ -9,8 +9,6 @@
 /* Begin PBXBuildFile section */
 		4409CE681936F2F800C424EB /* OCSquirrelBlockInvocation.h in Headers */ = {isa = PBXBuildFile; fileRef = 4409CE661936F2F800C424EB /* OCSquirrelBlockInvocation.h */; };
 		4409CE691936F2F800C424EB /* OCSquirrelBlockInvocation.m in Sources */ = {isa = PBXBuildFile; fileRef = 4409CE671936F2F800C424EB /* OCSquirrelBlockInvocation.m */; };
-		4409CE6D1936F3FF00C424EB /* OCSquirrelBlockInvocationMetadata.h in Headers */ = {isa = PBXBuildFile; fileRef = 4409CE6B1936F3FF00C424EB /* OCSquirrelBlockInvocationMetadata.h */; };
-		4409CE6E1936F3FF00C424EB /* OCSquirrelBlockInvocationMetadata.m in Sources */ = {isa = PBXBuildFile; fileRef = 4409CE6C1936F3FF00C424EB /* OCSquirrelBlockInvocationMetadata.m */; };
 		4409CE721936F76500C424EB /* OCSquirrelUserDataImpl.h in Headers */ = {isa = PBXBuildFile; fileRef = 4409CE701936F76500C424EB /* OCSquirrelUserDataImpl.h */; };
 		4409CE731936F76500C424EB /* OCSquirrelUserDataImpl.m in Sources */ = {isa = PBXBuildFile; fileRef = 4409CE711936F76500C424EB /* OCSquirrelUserDataImpl.m */; };
 		44227BE419330B520011CE2C /* OCSquirrelTable.m in Sources */ = {isa = PBXBuildFile; fileRef = 44227BE319330B520011CE2C /* OCSquirrelTable.m */; };
@@ -185,8 +183,6 @@
 		402F2585BADB474D91B854B8 /* Pods.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.xcconfig; path = Pods/Pods.xcconfig; sourceTree = "<group>"; };
 		4409CE661936F2F800C424EB /* OCSquirrelBlockInvocation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OCSquirrelBlockInvocation.h; sourceTree = "<group>"; };
 		4409CE671936F2F800C424EB /* OCSquirrelBlockInvocation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OCSquirrelBlockInvocation.m; sourceTree = "<group>"; };
-		4409CE6B1936F3FF00C424EB /* OCSquirrelBlockInvocationMetadata.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OCSquirrelBlockInvocationMetadata.h; sourceTree = "<group>"; };
-		4409CE6C1936F3FF00C424EB /* OCSquirrelBlockInvocationMetadata.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OCSquirrelBlockInvocationMetadata.m; sourceTree = "<group>"; };
 		4409CE701936F76500C424EB /* OCSquirrelUserDataImpl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OCSquirrelUserDataImpl.h; sourceTree = "<group>"; };
 		4409CE711936F76500C424EB /* OCSquirrelUserDataImpl.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OCSquirrelUserDataImpl.m; sourceTree = "<group>"; };
 		44227BE319330B520011CE2C /* OCSquirrelTable.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OCSquirrelTable.m; sourceTree = "<group>"; };
@@ -392,8 +388,6 @@
 			children = (
 				4409CE661936F2F800C424EB /* OCSquirrelBlockInvocation.h */,
 				4409CE671936F2F800C424EB /* OCSquirrelBlockInvocation.m */,
-				4409CE6B1936F3FF00C424EB /* OCSquirrelBlockInvocationMetadata.h */,
-				4409CE6C1936F3FF00C424EB /* OCSquirrelBlockInvocationMetadata.m */,
 			);
 			name = OCSquirrelBlockInvocation;
 			sourceTree = "<group>";
@@ -832,7 +826,6 @@
 				5DB09DFD1719705500F50257 /* OCSquirrelVM.h in Headers */,
 				5DD12D2A19324FC00087979E /* OCSquirrelVM+SQObjects.h in Headers */,
 				5DD12D2D193250E00087979E /* OCSquirrelTable.h in Headers */,
-				4409CE6D1936F3FF00C424EB /* OCSquirrelBlockInvocationMetadata.h in Headers */,
 				5D8EC818171A65210084F92C /* OCSquirrelVMStack.h in Headers */,
 				5DC90418172B88E7009C7082 /* OCSquirrelClass.h in Headers */,
 				5DC9041C172BA3A9009C7082 /* OCSquirrelInstance.h in Headers */,
@@ -1130,7 +1123,6 @@
 				5DB09D9E171969D100F50257 /* sqfuncstate.cpp in Sources */,
 				5DB09DA0171969D100F50257 /* sqlexer.cpp in Sources */,
 				5DB09DA2171969D100F50257 /* sqmem.cpp in Sources */,
-				4409CE6E1936F3FF00C424EB /* OCSquirrelBlockInvocationMetadata.m in Sources */,
 				5DB09DA3171969D100F50257 /* sqobject.cpp in Sources */,
 				5DB09DA7171969D100F50257 /* sqstate.cpp in Sources */,
 				5DB09DAA171969D100F50257 /* sqtable.cpp in Sources */,
