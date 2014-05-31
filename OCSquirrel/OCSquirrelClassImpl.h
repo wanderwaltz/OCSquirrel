@@ -7,13 +7,14 @@
 //
 
 #import "OCSquirrelTableImpl.h"
+#import "OCSquirrelClass.h"
 
 // TODO: chained invocations
 
 #pragma mark -
 #pragma mark OCSquirrelClassImpl interface
 
-@interface OCSquirrelClassImpl : OCSquirrelTableImpl
+@interface OCSquirrelClassImpl : OCSquirrelTableImpl<OCSquirrelClass>
 @property (readonly, nonatomic) Class nativeClass;
 
 - (instancetype)initWithNativeClass:(Class)nativeClass

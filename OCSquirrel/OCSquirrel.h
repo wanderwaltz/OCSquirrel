@@ -35,7 +35,7 @@
 #import "OCSquirrelUserData.h"
 #import "OCSquirrelClosure.h"
 
-#import "OCSquirrelClassImpl.h"
+#import "OCSquirrelClass.h"
 #import "OCSquirrelInstance.h"
 
 

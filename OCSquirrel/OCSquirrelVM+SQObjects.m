@@ -7,6 +7,8 @@
 //
 
 #import "OCSquirrelVM+SQObjects.h"
+#import "OCSquirrelVM+Protected.h"
+#import "OCSquirrelVMBindings_NoARC.h"
 
 #import "OCSquirrelTable.h"
 #import "OCSquirrelTable+Protected.h"
@@ -23,6 +25,10 @@
 #import "OCSquirrelUserData.h"
 #import "OCSquirrelUserData+Protected.h"
 #import "OCSquirrelUserDataImpl.h"
+
+#import "OCSquirrelClass.h"
+#import "OCSquirrelClass+Protected.h"
+#import "OCSquirrelClassImpl.h"
 
 
 #pragma mark -
@@ -124,5 +130,44 @@
             [[OCSquirrelUserDataImpl alloc] initWithObject: object
                                                       inVM: self]];
 }
+
+
+#pragma mark - OCSquirrelClass
+
+- (OCSquirrelClass *)bindClass:(Class)nativeClass;
+{
+    NSString *className = NSStringFromClass(nativeClass);
+    
+    __block OCSquirrelClass *squirrelClass = _classBindings[className];
+    
+    if (squirrelClass != nil) {
+        return squirrelClass;
+    }
+    
+    [self performPreservingStackTop:^(HSQUIRRELVM vm, id<OCSquirrelVMStack> stack){
+        OCSquirrelClassImpl *impl = [[OCSquirrelClassImpl alloc] initWithNativeClass: nativeClass inVM: self];
+        
+        if (impl == nil) {
+            return;
+        }
+        
+        // Bind constructor. Note that the constructor only does alloc
+        // an instance of the native class without initializing it,
+        // so further calls to -init or other initializers should be
+        // then immediately performed using one of the bound initializer
+        // methods.
+        id constructor =
+        [[OCSquirrelClosureImpl alloc] initWithSQFUNCTION: OCSquirrelVMBindings_Constructor
+                                               squirrelVM: self];
+        [impl setObject: constructor forKey: @"constructor"];
+        
+        squirrelClass = [[OCSquirrelClass alloc] initWithImpl: impl];
+        
+        _classBindings[className] = squirrelClass;
+    }];
+    
+    return squirrelClass;
+}
+
 
 @end

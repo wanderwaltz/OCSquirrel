@@ -11,14 +11,6 @@
 
 
 #pragma mark -
-#pragma mark External declarations
-
-@class OCSquirrelObjectImpl;
-@class OCSquirrelClassImpl;
-@protocol OCSquirrelTable;
-
-
-#pragma mark -
 #pragma mark Constants
 
 /*! Default initial stack capacity of the Squirrel VM. When initializing an OCSquirrelVM 
@@ -146,12 +138,6 @@ enum : NSInteger
  *  Block is executed synchronously
  */
 - (void) performPreservingStackTop: (void (^)(HSQUIRRELVM vm, id<OCSquirrelVMStack> stack)) block;
-
-
-
-#pragma mark bindings
-
-- (OCSquirrelClassImpl *) bindClass: (Class) aClass;
 
 @end
 

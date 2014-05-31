@@ -17,16 +17,26 @@
 @class OCSquirrelArray;
 @class OCSquirrelClosure;
 @class OCSquirrelUserData;
+@class OCSquirrelClass;
+
+
+#pragma mark - OCSquirrelVM+SQObjects interface
 
 @interface OCSquirrelVM (SQObjects)
+
+#pragma mark - tables
 
 - (OCSquirrelTable *)rootTable;
 - (OCSquirrelTable *)registryTable;
 - (OCSquirrelTable *)newTable;
 - (OCSquirrelTable *)newTableWithHSQObject:(HSQOBJECT)sqObject;
 
+#pragma mark - arrays
+
 - (OCSquirrelArray *)newArray;
 - (OCSquirrelArray *)newArrayWithHSQObject:(HSQOBJECT)sqObject;
+
+#pragma mark - closures
 
 - (OCSquirrelClosure *)newClosureWithSQFUNCTION:(SQFUNCTION)func;
 - (OCSquirrelClosure *)newClosureWithSQFUNCTION:(SQFUNCTION)func
@@ -35,7 +45,12 @@
 - (OCSquirrelClosure *)newClosureWithBlock:(id)block
                                       name:(NSString *)name;
 
+#pragma mark - user data
 
 - (OCSquirrelUserData *)newUserDataWithObject:(id)object;
+
+#pragma mark - classes
+
+- (OCSquirrelClass *)bindClass:(Class)theClass;
 
 @end

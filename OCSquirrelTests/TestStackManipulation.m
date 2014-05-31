@@ -547,11 +547,11 @@
 }
 
 
-- (void) testReadValueOtherClass
+- (void) testReadValueUserDataClass
 {
     sq_newuserdata(_squirrelVM.vm, 1);
-    XCTAssertTrue([[_squirrelVM.stack valueAtPosition: -1] isKindOfClass: [OCSquirrelObjectImpl class]],
-                 @"-valueAtPosition: should return an OCSquirrelObjectImpl for other stack values");
+    XCTAssertTrue([[_squirrelVM.stack valueAtPosition: -1] isKindOfClass: [OCSquirrelUserData class]],
+                 @"-valueAtPosition: should return an OCSquirrelUserData for user data stack values");
 }
 
 
@@ -562,7 +562,7 @@
     HSQOBJECT object = [_squirrelVM.stack sqObjectAtPosition: -1];
     
     XCTAssertEqualStructs(*[[_squirrelVM.stack valueAtPosition: -1] obj], object,
-                          @"-valueAtPosition: should return the corresponding OCSquirrelObjectImpl for "
+                          @"-valueAtPosition: should return the corresponding OCSquirrelObject for "
                           @"other stack values");
 }
 
@@ -573,8 +573,8 @@
     
     id value = [_squirrelVM.stack valueAtPosition: -1];
     
-    XCTAssertTrue([value isKindOfClass: [OCSquirrelClassImpl class]],
-                 @"-valueAtPosition: should return an OCSquirrelClassImpl for class stack values, "
+    XCTAssertTrue([value isKindOfClass: [OCSquirrelClass class]],
+                 @"-valueAtPosition: should return an OCSquirrelClass for class stack values, "
                  @"got %@ instead", value);
 }
 

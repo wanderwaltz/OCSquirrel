@@ -13,13 +13,17 @@
 #import "OCSquirrel.h"
 #import "OCSquirrelVMStackImpl.h"
 #import "OCSquirrelVM+Protected.h"
+
 #import "OCSquirrelTable+Protected.h"
 #import "OCSquirrelArray+Protected.h"
 #import "OCSquirrelClosure+Protected.h"
+#import "OCSquirrelUserData+Protected.h"
+#import "OCSquirrelClass+Protected.h"
+
 #import "OCSquirrelClosureImpl.h"
 #import "OCSquirrelArrayImpl.h"
 #import "OCSquirrelUserDataImpl.h"
-
+#import "OCSquirrelClassImpl.h"
 
 #pragma mark -
 #pragma mark OCSquirrelVMStackImpl implementation
@@ -104,7 +108,7 @@
 
 - (void) pushValue: (id) value
 {
-    if ([value isKindOfClass: [OCSquirrelObjectImpl class]])
+    if ([value conformsToProtocol: @protocol(OCSquirrelObject)])
     {
         [value push];
     }
@@ -303,9 +307,12 @@
             }
             
             // If existing instance was not found, return a new one.
-            if (value == nil)
-                value = [[OCSquirrelClassImpl alloc] initWithHSQOBJECT: class
-                                                              inVM: _squirrelVM];
+            if (value == nil) {
+                OCSquirrelClassImpl *impl = [[OCSquirrelClassImpl alloc] initWithHSQOBJECT: class
+                                                                                      inVM: _squirrelVM];
+                
+                value = [[OCSquirrelClass alloc] initWithImpl: impl];
+            }
         } break;
             
         case OT_INSTANCE:
@@ -333,8 +340,10 @@
         {
             HSQOBJECT object = [self sqObjectAtPosition: position];
             
-            value = [[OCSquirrelUserDataImpl alloc] initWithHSQOBJECT: object
-                                                                 inVM: _squirrelVM];
+            OCSquirrelUserDataImpl *impl = [[OCSquirrelUserDataImpl alloc] initWithHSQOBJECT: object
+                                                                                        inVM: _squirrelVM];
+            
+            value = [[OCSquirrelUserData alloc] initWithImpl: impl];
         } break;
             
             

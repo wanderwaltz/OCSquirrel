@@ -194,7 +194,6 @@
 }
 
 
-/// Assumed to be called within the VM access dispatch queue
 - (void) bindInstanceMethodsOfNativeClass: (Class) nativeClass
 {
     unsigned int methodCount = 0;

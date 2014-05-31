@@ -16,6 +16,7 @@
 
 #import <OCSquirrel/OCSquirrel.h>
 #import "OCSquirrelVM+Protected.h"
+#import "OCSquirrelClassImpl.h"
 
 
 #pragma mark -

@@ -370,7 +370,7 @@ SQInteger OCSquirrelVMBindings_Closure_BlockInvocation(HSQUIRRELVM vm)
     
     OCSquirrelUserDataImpl *ud = [squirrelVM.stack valueAtPosition: -1];
     
-    if (![ud isKindOfClass: [OCSquirrelUserDataImpl class]]) {
+    if (![ud conformsToProtocol: @protocol(OCSquirrelUserData)]) {
         return 0;
     }
     

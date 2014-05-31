@@ -227,38 +227,4 @@ static const SQChar * const kOCSquirrelVMCompileBufferSourceName = _SC("buffer")
     }
 }
 
-
-
-#pragma mark -
-#pragma mark bindings
-
-- (OCSquirrelClassImpl *) bindClass: (Class) nativeClass;
-{
-    __block OCSquirrelClassImpl *class = nil;
-    
-    [self performPreservingStackTop:^(HSQUIRRELVM vm, id<OCSquirrelVMStack> stack){
-        NSString *className = NSStringFromClass(nativeClass);
-        
-        class = _classBindings[className];
-        
-        if (class == nil)
-        {
-            class = [[OCSquirrelClassImpl alloc] initWithNativeClass: nativeClass inVM: self];
-            _classBindings[className] = class;
-            
-            // Bind constructor. Note that the constructor only does alloc
-            // an instance of the native class without initializing it,
-            // so further calls to -init or other initializers should be
-            // then immediately performed using one of the bound initializer
-            // methods.
-            id constructor =
-            [[OCSquirrelClosureImpl alloc] initWithSQFUNCTION: OCSquirrelVMBindings_Constructor
-                                               squirrelVM: self];
-            [class setObject: constructor forKey: @"constructor"];
-        }
-    }];
-    
-    return class;
-}
-
 @end
