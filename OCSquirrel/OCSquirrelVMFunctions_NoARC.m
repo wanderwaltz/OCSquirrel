@@ -72,3 +72,11 @@ SQInteger OCSquirrelVM_UserDataReleaseHook(SQUserPointer udp, SQInteger size)
     
     return 0;
 }
+
+
+id OCSquirrelVM_UserDataGetObject(SQUserPointer udp)
+{
+    id object = *((id *)udp);
+    
+    return [[object retain] autorelease];
+}

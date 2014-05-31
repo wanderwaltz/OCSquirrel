@@ -25,3 +25,4 @@ SQInteger OCSquirrelVM_InstanceUPReleaseHook(SQUserPointer pointer, SQInteger si
 
 SQInteger OCSquirrelVM_UserDataReleaseHook(SQUserPointer pointer, SQInteger size);
 void OCSquirrelVM_UserDataSetObject(SQUserPointer udp, id object);
+id OCSquirrelVM_UserDataGetObject(SQUserPointer udp) NS_RETURNS_NOT_RETAINED;
