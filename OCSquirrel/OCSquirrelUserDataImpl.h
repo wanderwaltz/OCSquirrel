@@ -7,8 +7,9 @@
 //
 
 #import "OCSquirrelObjectImpl.h"
+#import "OCSquirrelUserData.h"
 
-@interface OCSquirrelUserDataImpl : OCSquirrelObjectImpl
+@interface OCSquirrelUserDataImpl : OCSquirrelObjectImpl<OCSquirrelUserData>
 @property (nonatomic, strong, readonly) id object;
 
 - (instancetype)initWithObject:(id)object

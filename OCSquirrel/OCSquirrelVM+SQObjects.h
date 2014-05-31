@@ -16,6 +16,7 @@
 @class OCSquirrelTable;
 @class OCSquirrelArray;
 @class OCSquirrelClosure;
+@class OCSquirrelUserData;
 
 @interface OCSquirrelVM (SQObjects)
 
@@ -33,5 +34,8 @@
 - (OCSquirrelClosure *)newClosureWithBlock:(id)block;
 - (OCSquirrelClosure *)newClosureWithBlock:(id)block
                                       name:(NSString *)name;
+
+
+- (OCSquirrelUserData *)newUserDataWithObject:(id)object;
 
 @end

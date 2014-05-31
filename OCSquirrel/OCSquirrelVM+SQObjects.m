@@ -20,6 +20,13 @@
 #import "OCSquirrelClosure+Protected.h"
 #import "OCSquirrelClosureImpl.h"
 
+#import "OCSquirrelUserData.h"
+#import "OCSquirrelUserData+Protected.h"
+#import "OCSquirrelUserDataImpl.h"
+
+
+#pragma mark -
+#pragma mark OCSquirrelVM+SQObjects implementation
 
 @implementation OCSquirrelVM (SQObjects)
 
@@ -108,5 +115,14 @@
                                               squirrelVM: self]];
 }
 
+
+#pragma mark - OCSquirrelUserData
+
+- (OCSquirrelUserData *)newUserDataWithObject:(id)object
+{
+    return [[OCSquirrelUserData alloc] initWithImpl:
+            [[OCSquirrelUserDataImpl alloc] initWithObject: object
+                                                      inVM: self]];
+}
 
 @end

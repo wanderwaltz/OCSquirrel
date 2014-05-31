@@ -141,5 +141,4 @@ static SQInteger VoidClosureNoParams(HSQUIRRELVM vm)
                      @"OCSquirrelClosure should forward -callWithThis:parameters: calls to its impl");
 }
 
-
 @end

@@ -6,6 +6,10 @@
 //  Copyright (c) 2014 Egor Chiglintsev. All rights reserved.
 //
 
+#if (!__has_feature(objc_arc))
+#error "This file should be compiled with ARC support"
+#endif
+
 #import "OCSquirrelClosure.h"
 #import "OCSquirrelClosure+Protected.h"
 #import "OCSquirrelClosureImpl.h"
