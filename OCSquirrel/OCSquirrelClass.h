@@ -16,6 +16,9 @@
 @interface OCSquirrelClass : OCSquirrelTableImpl
 @property (readonly, nonatomic) Class nativeClass;
 
+- (instancetype)initWithNativeClass:(Class)nativeClass
+                               inVM:(OCSquirrelVM *)squirrelVM;
+
 - (void) setClassAttributes: (id) attributes;
 - (id) classAttributes;
 

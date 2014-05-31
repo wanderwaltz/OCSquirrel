@@ -26,15 +26,14 @@
 
 - (Class) nativeClass
 {
-    Class class   = nil;
-    id attributes = [self classAttributes];
+    __block SQUserPointer classPtr = nil;
     
-    if ([attributes isKindOfClass: [NSValue class]])
-    {
-        class = (__bridge Class)[attributes pointerValue];
-    }
+    [self.squirrelVM performPreservingStackTop:^(HSQUIRRELVM vm, id<OCSquirrelVMStack> stack) {
+        [self push];
+        sq_gettypetag(vm, -1, &classPtr);
+    }];
     
-    return class;
+    return (__bridge Class)classPtr;
 }
 
 
@@ -50,7 +49,8 @@
 #pragma mark -
 #pragma mark initialization methods
 
-- (id) initWithVM: (OCSquirrelVM *) squirrelVM
+- (instancetype)initWithNativeClass:(Class)nativeClass
+                               inVM:(OCSquirrelVM *)squirrelVM
 {
     self = [super initWithVM: squirrelVM];
     
@@ -58,11 +58,22 @@
     {
         [squirrelVM performPreservingStackTop: ^(HSQUIRRELVM vm, id<OCSquirrelVMStack> stack){
             sq_newclass(vm, SQFalse);
+            
+            if (nativeClass != nil) {
+                sq_settypetag(vm, -1, (__bridge SQUserPointer)nativeClass);
+            }
+            
             sq_getstackobj(vm, -1, &_obj);
             sq_addref(vm, &_obj);
         }];
     }
     return self;
+}
+
+
+- (instancetype)initWithVM:(OCSquirrelVM *)squirrelVM
+{
+    return [self initWithNativeClass: nil inVM: squirrelVM];
 }
 
 

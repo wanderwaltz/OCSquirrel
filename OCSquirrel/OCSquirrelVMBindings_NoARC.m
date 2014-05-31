@@ -30,9 +30,7 @@ SQInteger OCSquirrelVMBindings_Constructor(HSQUIRRELVM vm)
     Class         nativeClass    = nil;
 
     sq_getclass(vm, 1);
-    sq_pushnull(vm);
-    sq_getattributes(vm, -2);
-    sq_getuserpointer(vm, -1, &nativeClassPtr);
+    sq_gettypetag(vm, -1, &nativeClassPtr);
     
     nativeClass = (Class)nativeClassPtr;
     

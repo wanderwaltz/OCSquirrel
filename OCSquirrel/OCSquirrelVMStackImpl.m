@@ -289,13 +289,7 @@
             // then we already have an OCSquirrelClass instance corresponding
             // to it and there is no need to create more.
             SQUserPointer nativeClass = NULL;
-            
-            SQInteger top = sq_gettop(_squirrelVM.vm);
-            SQInteger positivePosition = (position > 0) ? position : top+position+1;
-            sq_pushnull(_squirrelVM.vm);
-            sq_getattributes(_squirrelVM.vm, positivePosition);
-            sq_getuserpointer(_squirrelVM.vm, -1, &nativeClass);
-            sq_settop(_squirrelVM.vm, top);
+            sq_gettypetag(_squirrelVM.vm, position, &nativeClass);
             
             if (nativeClass != NULL)
             {

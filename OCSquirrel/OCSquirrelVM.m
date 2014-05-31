@@ -243,15 +243,8 @@ static const SQChar * const kOCSquirrelVMCompileBufferSourceName = _SC("buffer")
         
         if (class == nil)
         {
-            class = [[OCSquirrelClass alloc] initWithVM: self];
+            class = [[OCSquirrelClass alloc] initWithNativeClass: nativeClass inVM: self];
             _classBindings[className] = class;
-            
-            // Set the top level class attributes to the Objective-C class
-            // pointer for easy access if needed. This is used by the
-            // OCSquirrelVMStackImpl for example to determine whether some
-            // particular Squirrel class is actually a bound native class
-            // or not and return the corresponding OCSquirrelClass instance
-            [class setClassAttributes: [NSValue valueWithPointer: (__bridge void *)nativeClass]];
             
             // Bind constructor. Note that the constructor only does alloc
             // an instance of the native class without initializing it,
