@@ -7,7 +7,6 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "squirrel.h"
 #import "OCSquirrelObject.h"
 
 

@@ -34,10 +34,19 @@
 
 - (instancetype)init
 {
+    return [self initWithVM: [OCSquirrelVM defaultVM]];
+}
+
+
+- (instancetype)initWithVM:(OCSquirrelVM *)vm
+{
     const id objects[0] = {};
     const id keys[0] = {};
     
-    return [self initWithObjects: objects forKeys: keys count: 0];
+    return [self initWithSquirrelVM: vm
+                            objects: objects
+                            forKeys: keys
+                              count: 0];
 }
 
 

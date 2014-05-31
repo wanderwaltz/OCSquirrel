@@ -2,8 +2,8 @@
 //  OCSquirrelInstance.m
 //  OCSquirrel
 //
-//  Created by Egor Chiglintsev on 27.04.13.
-//  Copyright (c) 2013 Egor Chiglintsev. All rights reserved.
+//  Created by Egor Chiglintsev on 01.06.14.
+//  Copyright (c) 2014 Egor Chiglintsev. All rights reserved.
 //
 
 #if (!__has_feature(objc_arc))
@@ -11,36 +11,95 @@
 #endif
 
 #import "OCSquirrelInstance.h"
+#import "OCSquirrelInstance+Protected.h"
+#import "OCSquirrelInstanceImpl.h"
 
-
-#pragma mark -
-#pragma mark OCSquirrelInstance implementation
+#pragma mark - OCSquirrelInstance implementation
 
 @implementation OCSquirrelInstance
 
-#pragma mark -
-#pragma mark properties
+#pragma mark - protected
 
-- (id) instanceUP
+- (instancetype)initWithImpl:(OCSquirrelInstanceImpl *)impl
 {
-    __block SQUserPointer userPointer = NULL;
+    self = [super init];
     
-    OCSquirrelVM *squirrelVM = self.squirrelVM;
+    if (self != nil) {
+        _impl = impl;
+    }
     
-    [squirrelVM performPreservingStackTop: ^(HSQUIRRELVM vm, id<OCSquirrelVMStack> stack){
-        [self push];
-        sq_getinstanceup(vm, -1, &userPointer, 0);
-    }];
-    
-    return (__bridge id)userPointer;
+    return self;
 }
 
-#pragma mark -
-#pragma mark class methods
 
-+ (BOOL) isAllowedToInitWithSQObjectOfType: (SQObjectType) type
+#pragma mark - <OCSquirrelObject>
+
+- (OCSquirrelVM *)squirrelVM
 {
-    return (type == OT_INSTANCE);
+    return self.impl.squirrelVM;
 }
+
+
+- (HSQOBJECT *)obj
+{
+    return self.impl.obj;
+}
+
+
+- (SQObjectType)type
+{
+    return self.impl.type;
+}
+
+
+- (void)push
+{
+    [self.impl push];
+}
+
+
+#pragma mark - <OCSquirrelInstance>
+
+- (id)instanceUP
+{
+    return self.impl.instanceUP;
+}
+
+- (id)callClosureWithKey:(id)key
+{
+    return [self.impl callClosureWithKey: key];
+}
+
+- (id)callClosureWithKey:(id)key
+              parameters:(NSArray *)parameters
+{
+    return [self.impl callClosureWithKey: key
+                              parameters: parameters];
+}
+
+
+- (id)objectForKey:(id)key
+{
+    return [self.impl objectForKey: key];
+}
+
+
+- (id)objectForKeyedSubscript:(id<NSCopying>)key
+{
+    return [self.impl objectForKeyedSubscript: key];
+}
+
+
+- (void)setObject:(id)object forKey:(id)key
+{
+    [self.impl setObject: object forKey: key];
+}
+
+
+- (void)setObject:(id)object forKeyedSubscript:(id<NSCopying>)key
+{
+    [self.impl setObject: object forKeyedSubscript: key];
+}
+
 
 @end

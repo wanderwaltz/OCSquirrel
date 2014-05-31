@@ -317,13 +317,13 @@
 
 - (void) testPushValueOCSquirrelObjectImpl
 {
-    OCSquirrelObjectImpl *object = [OCSquirrelTableImpl rootTableForVM: _squirrelVM];
+    id object = [_squirrelVM rootTable];
     [_squirrelVM.stack pushValue: object];
     
-    OCSquirrelObjectImpl *value = [_squirrelVM.stack valueAtPosition: -1];
+    id value = [_squirrelVM.stack valueAtPosition: -1];
     
-    XCTAssertEqualStructs(*value.obj, *object.obj,
-                          @"-pushValue: should be capable of pushing OCSquirrelObjectImpls");
+    XCTAssertEqualStructs(*[value obj], *[object obj],
+                          @"-pushValue: should be capable of pushing OCSquirrelObjects");
 }
 
 
@@ -602,7 +602,7 @@
     id value = [_squirrelVM.stack valueAtPosition: -1];
     
     XCTAssertTrue([value isKindOfClass: [OCSquirrelInstance class]],
-                 @"-valueAtPosition: should return an OCSquirrelInstance for instance stack values");
+                 @"-valueAtPosition: should return an OCSquirrelInstanceImpl for instance stack values");
 }
 
 
@@ -617,7 +617,7 @@
     id value = [_squirrelVM.stack valueAtPosition: -1];
     
     XCTAssertEqualStructs(*[value obj], instance,
-                          @"-valueAtPosition: should return the corresponding OCSquirrelInstance for "
+                          @"-valueAtPosition: should return the corresponding OCSquirrelInstanceImpl for "
                           @"instance stack values");
 }
 

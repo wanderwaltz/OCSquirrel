@@ -16,6 +16,7 @@
 
 #import <OCSquirrel/OCSquirrel.h>
 #import "OCMock.h"
+#import "OCSquirrelTableImpl.h"
 #import "OCSquirrelVM+Protected.h"
 #import "OCSquirrelTable+Protected.h"
 

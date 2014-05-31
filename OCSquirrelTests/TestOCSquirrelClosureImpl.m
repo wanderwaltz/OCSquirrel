@@ -25,7 +25,7 @@
 @interface TestOCSquirrelClosureImpl : XCTestCase
 {
     OCSquirrelVM *_squirrelVM;
-    OCSquirrelTableImpl *_root;
+    OCSquirrelTable *_root;
     BOOL _closureCalled;
 }
 
@@ -93,7 +93,7 @@ static SQInteger IntClosureNoParamsCheckEnvironment(HSQUIRRELVM vm)
 {
     [super setUp];
     _squirrelVM    = [[OCSquirrelVM alloc] init];
-    _root          = [OCSquirrelTableImpl rootTableForVM: _squirrelVM];
+    _root          = [_squirrelVM rootTable];
     _closureCalled = NO;
     
     [[NSNotificationCenter defaultCenter] addObserver: self
@@ -230,7 +230,7 @@ static SQInteger IntClosureNoParamsCheckEnvironment(HSQUIRRELVM vm)
 {
     [_root setInteger: 12345 forKey: kEnvironmentKey];
     
-    OCSquirrelTableImpl *otherEnvironment = [[OCSquirrelTableImpl alloc] initWithVM: _squirrelVM];
+    OCSquirrelTable *otherEnvironment = [[OCSquirrelTable alloc] initWithVM: _squirrelVM];
     
     [otherEnvironment setInteger: 6789 forKey: kEnvironmentKey];
     [_root setObject: otherEnvironment forKey: @"other environment"];
@@ -335,7 +335,7 @@ static SQInteger IntClosureNoParamsCheckEnvironment(HSQUIRRELVM vm)
 {
     [_root setInteger: 12345 forKey: @"x"];
     
-    OCSquirrelTableImpl *otherEnvironment = [[OCSquirrelTableImpl alloc] initWithVM: _squirrelVM];
+    OCSquirrelTable *otherEnvironment = [[OCSquirrelTable alloc] initWithVM: _squirrelVM];
     
     [otherEnvironment setInteger: 6789 forKey: @"x"];
     [_root setObject: otherEnvironment forKey: @"other environment"];

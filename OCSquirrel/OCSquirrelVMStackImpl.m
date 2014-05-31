@@ -19,11 +19,13 @@
 #import "OCSquirrelClosure+Protected.h"
 #import "OCSquirrelUserData+Protected.h"
 #import "OCSquirrelClass+Protected.h"
+#import "OCSquirrelInstance+Protected.h"
 
 #import "OCSquirrelClosureImpl.h"
 #import "OCSquirrelArrayImpl.h"
 #import "OCSquirrelUserDataImpl.h"
 #import "OCSquirrelClassImpl.h"
+#import "OCSquirrelInstanceImpl.h"
 
 #pragma mark -
 #pragma mark OCSquirrelVMStackImpl implementation
@@ -319,8 +321,10 @@
         {
             HSQOBJECT instance = [self sqObjectAtPosition: position];
             
-            value = [[OCSquirrelInstance alloc] initWithHSQOBJECT: instance
-                                                             inVM: _squirrelVM];
+            OCSquirrelInstanceImpl *impl = [[OCSquirrelInstanceImpl alloc] initWithHSQOBJECT: instance
+                                                                                        inVM: _squirrelVM];
+            
+            value = [[OCSquirrelInstance alloc] initWithImpl: impl];
         } break;
             
             

@@ -17,6 +17,7 @@
 #import <OCSquirrel/OCSquirrel.h>
 #import "SenTestingKitCompatibility.h"
 #import "OCSquirrelVM+Protected.h"
+#import "OCSquirrelObjectImpl.h"
 
 
 #pragma mark -

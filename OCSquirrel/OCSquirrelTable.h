@@ -7,7 +7,6 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "squirrel.h"
 #import "OCSquirrelObject.h"
 
 @class OCSquirrelVM;
@@ -65,6 +64,8 @@
 #pragma mark - OCSquirrelTable interface
 
 @interface OCSquirrelTable : NSMutableDictionary<OCSquirrelTable>
+
+- (instancetype)initWithVM:(OCSquirrelVM *)vm;
 
 - (instancetype)initWithSquirrelVM:(OCSquirrelVM *)vm
                            objects:(const id [])objects

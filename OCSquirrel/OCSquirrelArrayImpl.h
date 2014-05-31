@@ -6,7 +6,8 @@
 //  Copyright (c) 2013 Egor Chiglintsev. All rights reserved.
 //
 
-#import <OCSquirrel/OCSquirrel.h>
+#import "OCSquirrelObjectImpl.h"
+#import "OCSquirrelArray.h"
 
 #pragma mark -
 #pragma mark OCSquirrelArrayImpl interface
