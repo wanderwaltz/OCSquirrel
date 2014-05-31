@@ -6,6 +6,10 @@
 //  Copyright (c) 2014 Egor Chiglintsev. All rights reserved.
 //
 
+#if (__has_feature(objc_arc))
+#error "This file should be compiled without ARC support"
+#endif
+
 #import <objc/runtime.h>
 #import <SLBlockDescription.h>
 #import "OCSquirrelBlockInvocation.h"
@@ -81,6 +85,10 @@ static char * const BlockMethodSignatureToImpSignature(NSMethodSignature *blockS
 
 - (void)dealloc
 {
+    Class selfClass = self.class;
+    
+    [super dealloc];
+    
     imp_removeBlock(_blockImp);
     _blockImp = NULL;
     
@@ -89,7 +97,7 @@ static char * const BlockMethodSignatureToImpSignature(NSMethodSignature *blockS
     //
     // This line is the very reason you should not use __OCSquirrelBlockInvocationInternal__
     // if you don't exactly know what you're doing.
-    objc_disposeClassPair(self.class);
+    objc_disposeClassPair(selfClass);
 }
 
 @end
@@ -144,6 +152,7 @@ static char * const BlockMethodSignatureToImpSignature(NSMethodSignature *blockS
     
     if (impSignature == nil) {
         free(impSignatureTypes);
+        [blockDescription release];
         return nil;
     }
     
@@ -180,6 +189,8 @@ static char * const BlockMethodSignatureToImpSignature(NSMethodSignature *blockS
     
     invocation.selector = selector;
     invocation.target = invocation;
+    
+    [blockDescription release];
     
     return invocation;
 }

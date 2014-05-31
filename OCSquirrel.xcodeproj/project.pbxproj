@@ -7,8 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		09CA6C2A948B46ED892C9DED /* libPods-OCSquirrel.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 385C5710846547AFAB05E759 /* libPods-OCSquirrel.a */; };
 		4409CE681936F2F800C424EB /* OCSquirrelBlockInvocation.h in Headers */ = {isa = PBXBuildFile; fileRef = 4409CE661936F2F800C424EB /* OCSquirrelBlockInvocation.h */; };
-		4409CE691936F2F800C424EB /* OCSquirrelBlockInvocation.m in Sources */ = {isa = PBXBuildFile; fileRef = 4409CE671936F2F800C424EB /* OCSquirrelBlockInvocation.m */; };
+		4409CE691936F2F800C424EB /* OCSquirrelBlockInvocation_NoARC.m in Sources */ = {isa = PBXBuildFile; fileRef = 4409CE671936F2F800C424EB /* OCSquirrelBlockInvocation_NoARC.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		4409CE721936F76500C424EB /* OCSquirrelUserDataImpl.h in Headers */ = {isa = PBXBuildFile; fileRef = 4409CE701936F76500C424EB /* OCSquirrelUserDataImpl.h */; };
 		4409CE731936F76500C424EB /* OCSquirrelUserDataImpl.m in Sources */ = {isa = PBXBuildFile; fileRef = 4409CE711936F76500C424EB /* OCSquirrelUserDataImpl.m */; };
 		44227BE419330B520011CE2C /* OCSquirrelTable.m in Sources */ = {isa = PBXBuildFile; fileRef = 44227BE319330B520011CE2C /* OCSquirrelTable.m */; };
@@ -27,6 +28,7 @@
 		44A884D819362CB300FA503E /* OCSquirrelClosure.m in Sources */ = {isa = PBXBuildFile; fileRef = 44A884D619362CB300FA503E /* OCSquirrelClosure.m */; };
 		44A884DB193634DE00FA503E /* TestOCSquirrelClosure+Protected.m in Sources */ = {isa = PBXBuildFile; fileRef = 44A884DA193634DE00FA503E /* TestOCSquirrelClosure+Protected.m */; };
 		44A884DC193634E400FA503E /* TestOCSquirrelClosure+Protected.m in Sources */ = {isa = PBXBuildFile; fileRef = 44A884DA193634DE00FA503E /* TestOCSquirrelClosure+Protected.m */; };
+		480ADD99716A46F782193F47 /* libPods-OCSquirrelTests-GHUnit.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5537670A318940BCBCF3A7FE /* libPods-OCSquirrelTests-GHUnit.a */; };
 		5D639830171AA39F00CFECC1 /* TestOCSquirrelTableImpl.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D63982F171AA39F00CFECC1 /* TestOCSquirrelTableImpl.m */; };
 		5D639833171AA46900CFECC1 /* OCSquirrelTableImpl.h in Headers */ = {isa = PBXBuildFile; fileRef = 5D639831171AA46900CFECC1 /* OCSquirrelTableImpl.h */; };
 		5D639834171AA46900CFECC1 /* OCSquirrelTableImpl.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D639832171AA46900CFECC1 /* OCSquirrelTableImpl.m */; };
@@ -87,7 +89,6 @@
 		5DB09DF917196FA500F50257 /* TestOCSquirrelVM.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5DB09DF817196FA500F50257 /* TestOCSquirrelVM.mm */; };
 		5DB09DFD1719705500F50257 /* OCSquirrelVM.h in Headers */ = {isa = PBXBuildFile; fileRef = 5DB09DFB1719705500F50257 /* OCSquirrelVM.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		5DB09DFE1719705500F50257 /* OCSquirrelVM.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DB09DFC1719705500F50257 /* OCSquirrelVM.m */; };
-		5DB09E091719BA0F00F50257 /* libOCMock.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5DB09E001719BA0F00F50257 /* libOCMock.a */; };
 		5DB09E0D1719C0C500F50257 /* OCSquirrelVM+DelegateCallbacks.h in Headers */ = {isa = PBXBuildFile; fileRef = 5DB09E0B1719C0C500F50257 /* OCSquirrelVM+DelegateCallbacks.h */; };
 		5DB09E0E1719C0C500F50257 /* OCSquirrelVM+DelegateCallbacks.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DB09E0C1719C0C500F50257 /* OCSquirrelVM+DelegateCallbacks.m */; };
 		5DBE08A81733742200908658 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5DBE08A71733742200908658 /* UIKit.framework */; };
@@ -95,7 +96,6 @@
 		5DBE08AC1733742200908658 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5DBE08AB1733742200908658 /* CoreGraphics.framework */; };
 		5DBE08B21733742200908658 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 5DBE08B01733742200908658 /* InfoPlist.strings */; };
 		5DBE08B41733742200908658 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DBE08B31733742200908658 /* main.m */; };
-		5DBE08C21733745600908658 /* libOCMock.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5DB09E001719BA0F00F50257 /* libOCMock.a */; };
 		5DBE08C41733745C00908658 /* GHUnitIOS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5DBE08C31733745C00908658 /* GHUnitIOS.framework */; };
 		5DBE08C7173374B600908658 /* TestOCSquirrelClosureImpl.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DC90422172BB95C009C7082 /* TestOCSquirrelClosureImpl.m */; };
 		5DBE08C8173374B600908658 /* TestOCSquirrelClass.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DC9041F172BA6B7009C7082 /* TestOCSquirrelClass.m */; };
@@ -156,7 +156,7 @@
 		7CA9753D172E4FBE001E58B1 /* OCSquirrelVMFunctions_NoARC.m in Sources */ = {isa = PBXBuildFile; fileRef = 7CA9753B172E4FBE001E58B1 /* OCSquirrelVMFunctions_NoARC.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		7CA975D7172F8653001E58B1 /* OCSquirrelVMBindings_NoARC.h in Headers */ = {isa = PBXBuildFile; fileRef = 7CA975D5172F8653001E58B1 /* OCSquirrelVMBindings_NoARC.h */; };
 		7CA975D8172F8653001E58B1 /* OCSquirrelVMBindings_NoARC.m in Sources */ = {isa = PBXBuildFile; fileRef = 7CA975D6172F8653001E58B1 /* OCSquirrelVMBindings_NoARC.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
-		E0280AB91D744948AD60B461 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2DBB95FC36EB4B309037C555 /* libPods.a */; };
+		FF8B54321AC046CEA604A023 /* libPods-OCSquirrelTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 8CF54E72F6AC4CD2A0DB1C53 /* libPods-OCSquirrelTests.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -185,9 +185,9 @@
 
 /* Begin PBXFileReference section */
 		2DBB95FC36EB4B309037C555 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
-		402F2585BADB474D91B854B8 /* Pods.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.xcconfig; path = Pods/Pods.xcconfig; sourceTree = "<group>"; };
+		385C5710846547AFAB05E759 /* libPods-OCSquirrel.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-OCSquirrel.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		4409CE661936F2F800C424EB /* OCSquirrelBlockInvocation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OCSquirrelBlockInvocation.h; sourceTree = "<group>"; };
-		4409CE671936F2F800C424EB /* OCSquirrelBlockInvocation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OCSquirrelBlockInvocation.m; sourceTree = "<group>"; };
+		4409CE671936F2F800C424EB /* OCSquirrelBlockInvocation_NoARC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OCSquirrelBlockInvocation_NoARC.m; sourceTree = "<group>"; };
 		4409CE701936F76500C424EB /* OCSquirrelUserDataImpl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OCSquirrelUserDataImpl.h; sourceTree = "<group>"; };
 		4409CE711936F76500C424EB /* OCSquirrelUserDataImpl.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OCSquirrelUserDataImpl.m; sourceTree = "<group>"; };
 		44227BE319330B520011CE2C /* OCSquirrelTable.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OCSquirrelTable.m; sourceTree = "<group>"; };
@@ -204,6 +204,7 @@
 		44A884D619362CB300FA503E /* OCSquirrelClosure.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OCSquirrelClosure.m; sourceTree = "<group>"; };
 		44A884D919362D2E00FA503E /* OCSquirrelClosure+Protected.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "OCSquirrelClosure+Protected.h"; sourceTree = "<group>"; };
 		44A884DA193634DE00FA503E /* TestOCSquirrelClosure+Protected.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "TestOCSquirrelClosure+Protected.m"; sourceTree = "<group>"; };
+		5537670A318940BCBCF3A7FE /* libPods-OCSquirrelTests-GHUnit.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-OCSquirrelTests-GHUnit.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		5D0D16F41930E0990053EBCC /* SenTestingKitCompatibility.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SenTestingKitCompatibility.h; sourceTree = "<group>"; };
 		5D0D16F51930E2010053EBCC /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
 		5D63982F171AA39F00CFECC1 /* TestOCSquirrelTableImpl.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TestOCSquirrelTableImpl.m; sourceTree = "<group>"; };
@@ -276,14 +277,6 @@
 		5DB09DF817196FA500F50257 /* TestOCSquirrelVM.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = TestOCSquirrelVM.mm; sourceTree = "<group>"; };
 		5DB09DFB1719705500F50257 /* OCSquirrelVM.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OCSquirrelVM.h; sourceTree = "<group>"; };
 		5DB09DFC1719705500F50257 /* OCSquirrelVM.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OCSquirrelVM.m; sourceTree = "<group>"; };
-		5DB09E001719BA0F00F50257 /* libOCMock.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libOCMock.a; sourceTree = "<group>"; };
-		5DB09E011719BA0F00F50257 /* License.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = License.txt; sourceTree = "<group>"; };
-		5DB09E031719BA0F00F50257 /* NSNotificationCenter+OCMAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSNotificationCenter+OCMAdditions.h"; sourceTree = "<group>"; };
-		5DB09E041719BA0F00F50257 /* OCMArg.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OCMArg.h; sourceTree = "<group>"; };
-		5DB09E051719BA0F00F50257 /* OCMConstraint.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OCMConstraint.h; sourceTree = "<group>"; };
-		5DB09E061719BA0F00F50257 /* OCMock.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OCMock.h; sourceTree = "<group>"; };
-		5DB09E071719BA0F00F50257 /* OCMockObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OCMockObject.h; sourceTree = "<group>"; };
-		5DB09E081719BA0F00F50257 /* OCMockRecorder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OCMockRecorder.h; sourceTree = "<group>"; };
 		5DB09E0B1719C0C500F50257 /* OCSquirrelVM+DelegateCallbacks.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "OCSquirrelVM+DelegateCallbacks.h"; sourceTree = "<group>"; };
 		5DB09E0C1719C0C500F50257 /* OCSquirrelVM+DelegateCallbacks.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "OCSquirrelVM+DelegateCallbacks.m"; sourceTree = "<group>"; };
 		5DBE08A61733742200908658 /* OCSquirrelTests-GHUnit.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "OCSquirrelTests-GHUnit.app"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -348,6 +341,10 @@
 		7CA9753B172E4FBE001E58B1 /* OCSquirrelVMFunctions_NoARC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OCSquirrelVMFunctions_NoARC.m; sourceTree = "<group>"; };
 		7CA975D5172F8653001E58B1 /* OCSquirrelVMBindings_NoARC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OCSquirrelVMBindings_NoARC.h; sourceTree = "<group>"; };
 		7CA975D6172F8653001E58B1 /* OCSquirrelVMBindings_NoARC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OCSquirrelVMBindings_NoARC.m; sourceTree = "<group>"; };
+		8CF54E72F6AC4CD2A0DB1C53 /* libPods-OCSquirrelTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-OCSquirrelTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		901A9987892C4B1A9C123C96 /* Pods-OCSquirrel.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-OCSquirrel.xcconfig"; path = "Pods/Pods-OCSquirrel.xcconfig"; sourceTree = "<group>"; };
+		933710A7EBC942E2BD3ACD61 /* Pods-OCSquirrelTests-GHUnit.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-OCSquirrelTests-GHUnit.xcconfig"; path = "Pods/Pods-OCSquirrelTests-GHUnit.xcconfig"; sourceTree = "<group>"; };
+		9955D4027586443D9F2C6E20 /* Pods-OCSquirrelTests.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-OCSquirrelTests.xcconfig"; path = "Pods/Pods-OCSquirrelTests.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -355,7 +352,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				E0280AB91D744948AD60B461 /* libPods.a in Frameworks */,
+				09CA6C2A948B46ED892C9DED /* libPods-OCSquirrel.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -363,7 +360,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				5DB09E091719BA0F00F50257 /* libOCMock.a in Frameworks */,
+				FF8B54321AC046CEA604A023 /* libPods-OCSquirrelTests.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -372,10 +369,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				5DBE08C41733745C00908658 /* GHUnitIOS.framework in Frameworks */,
-				5DBE08C21733745600908658 /* libOCMock.a in Frameworks */,
 				5DBE08A81733742200908658 /* UIKit.framework in Frameworks */,
 				5DBE08AA1733742200908658 /* Foundation.framework in Frameworks */,
 				5DBE08AC1733742200908658 /* CoreGraphics.framework in Frameworks */,
+				480ADD99716A46F782193F47 /* libPods-OCSquirrelTests-GHUnit.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -397,7 +394,7 @@
 			isa = PBXGroup;
 			children = (
 				4409CE661936F2F800C424EB /* OCSquirrelBlockInvocation.h */,
-				4409CE671936F2F800C424EB /* OCSquirrelBlockInvocation.m */,
+				4409CE671936F2F800C424EB /* OCSquirrelBlockInvocation_NoARC.m */,
 			);
 			name = OCSquirrelBlockInvocation;
 			sourceTree = "<group>";
@@ -462,7 +459,9 @@
 				5DB09CC6171968A600F50257 /* Vendor */,
 				5DB09CAB1719686D00F50257 /* Frameworks */,
 				5DB09C9D1719686D00F50257 /* Products */,
-				402F2585BADB474D91B854B8 /* Pods.xcconfig */,
+				9955D4027586443D9F2C6E20 /* Pods-OCSquirrelTests.xcconfig */,
+				933710A7EBC942E2BD3ACD61 /* Pods-OCSquirrelTests-GHUnit.xcconfig */,
+				901A9987892C4B1A9C123C96 /* Pods-OCSquirrel.xcconfig */,
 			);
 			sourceTree = "<group>";
 		};
@@ -506,6 +505,9 @@
 				5DBE08A91733742200908658 /* Foundation.framework */,
 				5DBE08AB1733742200908658 /* CoreGraphics.framework */,
 				2DBB95FC36EB4B309037C555 /* libPods.a */,
+				8CF54E72F6AC4CD2A0DB1C53 /* libPods-OCSquirrelTests.a */,
+				5537670A318940BCBCF3A7FE /* libPods-OCSquirrelTests-GHUnit.a */,
+				385C5710846547AFAB05E759 /* libPods-OCSquirrel.a */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -527,7 +529,6 @@
 			isa = PBXGroup;
 			children = (
 				5D0D16F41930E0990053EBCC /* SenTestingKitCompatibility.h */,
-				5DB09DFF1719BA0F00F50257 /* OCMock */,
 				5DB09CB71719686D00F50257 /* OCSquirrelTests-Info.plist */,
 				5DB09CB81719686D00F50257 /* InfoPlist.strings */,
 			);
@@ -645,29 +646,6 @@
 				44A884D619362CB300FA503E /* OCSquirrelClosure.m */,
 			);
 			name = Classes;
-			sourceTree = "<group>";
-		};
-		5DB09DFF1719BA0F00F50257 /* OCMock */ = {
-			isa = PBXGroup;
-			children = (
-				5DB09E001719BA0F00F50257 /* libOCMock.a */,
-				5DB09E011719BA0F00F50257 /* License.txt */,
-				5DB09E021719BA0F00F50257 /* OCMock */,
-			);
-			path = OCMock;
-			sourceTree = "<group>";
-		};
-		5DB09E021719BA0F00F50257 /* OCMock */ = {
-			isa = PBXGroup;
-			children = (
-				5DB09E031719BA0F00F50257 /* NSNotificationCenter+OCMAdditions.h */,
-				5DB09E041719BA0F00F50257 /* OCMArg.h */,
-				5DB09E051719BA0F00F50257 /* OCMConstraint.h */,
-				5DB09E061719BA0F00F50257 /* OCMock.h */,
-				5DB09E071719BA0F00F50257 /* OCMockObject.h */,
-				5DB09E081719BA0F00F50257 /* OCMockRecorder.h */,
-			);
-			path = OCMock;
 			sourceTree = "<group>";
 		};
 		5DB09E0F1719C0C800F50257 /* protected */ = {
@@ -917,10 +895,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 5DB09CC31719686D00F50257 /* Build configuration list for PBXNativeTarget "OCSquirrelTests" */;
 			buildPhases = (
+				6E76EAFFD19C4ECC848847A9 /* Check Pods Manifest.lock */,
 				5DB09CA51719686D00F50257 /* Sources */,
 				5DB09CA61719686D00F50257 /* Frameworks */,
 				5DB09CA71719686D00F50257 /* Resources */,
 				5DB09CA81719686D00F50257 /* ShellScript */,
+				5CF40E9BB79D4C2BB2792466 /* Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -936,9 +916,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 5DBE08C11733742300908658 /* Build configuration list for PBXNativeTarget "OCSquirrelTests-GHUnit" */;
 			buildPhases = (
+				274AA5DB178B498F902C93E8 /* Check Pods Manifest.lock */,
 				5DBE08A21733742200908658 /* Sources */,
 				5DBE08A31733742200908658 /* Frameworks */,
 				5DBE08A41733742200908658 /* Resources */,
+				15C9C497C9AC420688C062D1 /* Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -1038,6 +1020,36 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
+		15C9C497C9AC420688C062D1 /* Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Pods-OCSquirrelTests-GHUnit-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		274AA5DB178B498F902C93E8 /* Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
 		4BA0967F2138435DA493CCC7 /* Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -1051,6 +1063,21 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+		5CF40E9BB79D4C2BB2792466 /* Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Pods-OCSquirrelTests-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		5DB09C941719686D00F50257 /* Run Script 1 */ = {
@@ -1108,6 +1135,21 @@
 			shellPath = /bin/sh;
 			shellScript = "# Run the unit tests in this test bundle.\n\"${SYSTEM_DEVELOPER_DIR}/Tools/RunUnitTests\"\n";
 		};
+		6E76EAFFD19C4ECC848847A9 /* Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
 		7AED5D8BE6A24E3A99F86BF9 /* Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -1120,7 +1162,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Pods-resources.sh\"\n";
+			shellScript = "\"${SRCROOT}/Pods/Pods-OCSquirrel-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
@@ -1164,7 +1206,7 @@
 				5DC9041D172BA3A9009C7082 /* OCSquirrelInstance.m in Sources */,
 				5DC90427172BBA95009C7082 /* OCSquirrelClosureImpl.m in Sources */,
 				44A884D819362CB300FA503E /* OCSquirrelClosure.m in Sources */,
-				4409CE691936F2F800C424EB /* OCSquirrelBlockInvocation.m in Sources */,
+				4409CE691936F2F800C424EB /* OCSquirrelBlockInvocation_NoARC.m in Sources */,
 				7CA9753D172E4FBE001E58B1 /* OCSquirrelVMFunctions_NoARC.m in Sources */,
 				4409CE731936F76500C424EB /* OCSquirrelUserDataImpl.m in Sources */,
 				7CA975D8172F8653001E58B1 /* OCSquirrelVMBindings_NoARC.m in Sources */,
@@ -1348,7 +1390,7 @@
 		};
 		5DB09CC11719686D00F50257 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 402F2585BADB474D91B854B8 /* Pods.xcconfig */;
+			baseConfigurationReference = 901A9987892C4B1A9C123C96 /* Pods-OCSquirrel.xcconfig */;
 			buildSettings = {
 				CONTENTS_FOLDER_PATH = "$(WRAPPER_NAME)/Versions/$(FRAMEWORK_VERSION)";
 				DEAD_CODE_STRIPPING = NO;
@@ -1376,7 +1418,7 @@
 		};
 		5DB09CC21719686D00F50257 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 402F2585BADB474D91B854B8 /* Pods.xcconfig */;
+			baseConfigurationReference = 901A9987892C4B1A9C123C96 /* Pods-OCSquirrel.xcconfig */;
 			buildSettings = {
 				CONTENTS_FOLDER_PATH = "$(WRAPPER_NAME)/Versions/$(FRAMEWORK_VERSION)";
 				DEAD_CODE_STRIPPING = NO;
@@ -1404,6 +1446,7 @@
 		};
 		5DB09CC41719686D00F50257 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 9955D4027586443D9F2C6E20 /* Pods-OCSquirrelTests.xcconfig */;
 			buildSettings = {
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(SDKROOT)/Developer/Library/Frameworks",
@@ -1412,19 +1455,20 @@
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "OCSquirrel/OCSquirrel-Prefix.pch";
-				HEADER_SEARCH_PATHS = "${SRCROOT}/OCSquirrelTests/OCMock";
+				HEADER_SEARCH_PATHS = "$(inherited)";
 				INFOPLIST_FILE = "OCSquirrelTests/OCSquirrelTests-Info.plist";
-				LIBRARY_SEARCH_PATHS = (
+				LIBRARY_SEARCH_PATHS = "$(inherited)";
+				OTHER_CFLAGS = (
 					"$(inherited)",
-					"\"$(SRCROOT)/OCSquirrelTests/OCMock\"",
+					"-fshort-wchar",
 				);
-				OTHER_CFLAGS = "-fshort-wchar";
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-framework",
+					XCTest,
+					"-framework",
 					.fake_fw_testing,
 					"-lstdc++",
-					"-ObjC",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
@@ -1432,6 +1476,7 @@
 		};
 		5DB09CC51719686D00F50257 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 9955D4027586443D9F2C6E20 /* Pods-OCSquirrelTests.xcconfig */;
 			buildSettings = {
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(SDKROOT)/Developer/Library/Frameworks",
@@ -1440,19 +1485,20 @@
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "OCSquirrel/OCSquirrel-Prefix.pch";
-				HEADER_SEARCH_PATHS = "${SRCROOT}/OCSquirrelTests/OCMock";
+				HEADER_SEARCH_PATHS = "$(inherited)";
 				INFOPLIST_FILE = "OCSquirrelTests/OCSquirrelTests-Info.plist";
-				LIBRARY_SEARCH_PATHS = (
+				LIBRARY_SEARCH_PATHS = "$(inherited)";
+				OTHER_CFLAGS = (
 					"$(inherited)",
-					"\"$(SRCROOT)/OCSquirrelTests/OCMock\"",
+					"-fshort-wchar",
 				);
-				OTHER_CFLAGS = "-fshort-wchar";
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-framework",
+					XCTest,
+					"-framework",
 					.fake_fw_testing,
 					"-lstdc++",
-					"-ObjC",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
@@ -1460,6 +1506,7 @@
 		};
 		5DBE08BF1733742300908658 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 933710A7EBC942E2BD3ACD61 /* Pods-OCSquirrelTests-GHUnit.xcconfig */;
 			buildSettings = {
 				CODE_SIGN_IDENTITY = "iPhone Developer: Andrey Chashkov (U4RY46T73D)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
@@ -1470,13 +1517,13 @@
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "OCSquirrelTests-GHUnit/OCSquirrelTests-GHUnit-Prefix.pch";
-				HEADER_SEARCH_PATHS = "${SRCROOT}/OCSquirrelTests/OCMock";
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					"${SRCROOT}/OCSquirrelTests/OCMock",
+				);
 				INFOPLIST_FILE = "OCSquirrelTests-GHUnit/OCSquirrelTests-GHUnit-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 6.1;
-				LIBRARY_SEARCH_PATHS = (
-					"$(inherited)",
-					"\"$(SRCROOT)/OCSquirrelTests/OCMock\"",
-				);
+				LIBRARY_SEARCH_PATHS = "$(inherited)";
 				OTHER_LDFLAGS = (
 					"-framework",
 					.fake_fw_testing,
@@ -1492,6 +1539,7 @@
 		};
 		5DBE08C01733742300908658 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 933710A7EBC942E2BD3ACD61 /* Pods-OCSquirrelTests-GHUnit.xcconfig */;
 			buildSettings = {
 				CODE_SIGN_IDENTITY = "iPhone Developer: Andrey Chashkov (U4RY46T73D)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
@@ -1502,14 +1550,17 @@
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "OCSquirrelTests-GHUnit/OCSquirrelTests-GHUnit-Prefix.pch";
-				HEADER_SEARCH_PATHS = "${SRCROOT}/OCSquirrelTests/OCMock";
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					"${SRCROOT}/OCSquirrelTests/OCMock",
+				);
 				INFOPLIST_FILE = "OCSquirrelTests-GHUnit/OCSquirrelTests-GHUnit-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 6.1;
-				LIBRARY_SEARCH_PATHS = (
+				LIBRARY_SEARCH_PATHS = "$(inherited)";
+				OTHER_CFLAGS = (
 					"$(inherited)",
-					"\"$(SRCROOT)/OCSquirrelTests/OCMock\"",
+					"-DNS_BLOCK_ASSERTIONS=1",
 				);
-				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
 				OTHER_LDFLAGS = (
 					"-framework",
 					.fake_fw_testing,
