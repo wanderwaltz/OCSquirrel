@@ -573,8 +573,8 @@
     
     id value = [_squirrelVM.stack valueAtPosition: -1];
     
-    XCTAssertTrue([value isKindOfClass: [OCSquirrelClass class]],
-                 @"-valueAtPosition: should return an OCSquirrelClass for class stack values, "
+    XCTAssertTrue([value isKindOfClass: [OCSquirrelClassImpl class]],
+                 @"-valueAtPosition: should return an OCSquirrelClassImpl for class stack values, "
                  @"got %@ instead", value);
 }
 
@@ -589,7 +589,7 @@
     id value = [_squirrelVM.stack valueAtPosition: -1];
     
     XCTAssertEqualStructs(*[value obj], class,
-                          @"-valueAtPosition: should return the corresponding OCSquirrelClass for "
+                          @"-valueAtPosition: should return the corresponding OCSquirrelClassImpl for "
                           @"class stack values");
 }
 

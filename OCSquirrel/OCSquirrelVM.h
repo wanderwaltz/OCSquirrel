@@ -14,7 +14,7 @@
 #pragma mark External declarations
 
 @class OCSquirrelObjectImpl;
-@class OCSquirrelClass;
+@class OCSquirrelClassImpl;
 @protocol OCSquirrelTable;
 
 
@@ -151,7 +151,7 @@ enum : NSInteger
 
 #pragma mark bindings
 
-- (OCSquirrelClass *) bindClass: (Class) aClass;
+- (OCSquirrelClassImpl *) bindClass: (Class) aClass;
 
 @end
 

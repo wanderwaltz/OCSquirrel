@@ -1,5 +1,5 @@
 //
-//  OCSquirrelClass.h
+//  OCSquirrelClassImpl.h
 //  OCSquirrel
 //
 //  Created by Egor Chiglintsev on 27.04.13.
@@ -11,9 +11,9 @@
 // TODO: chained invocations
 
 #pragma mark -
-#pragma mark OCSquirrelClass interface
+#pragma mark OCSquirrelClassImpl interface
 
-@interface OCSquirrelClass : OCSquirrelTableImpl
+@interface OCSquirrelClassImpl : OCSquirrelTableImpl
 @property (readonly, nonatomic) Class nativeClass;
 
 - (instancetype)initWithNativeClass:(Class)nativeClass

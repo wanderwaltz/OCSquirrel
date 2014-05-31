@@ -1,5 +1,5 @@
 //
-//  TestOCSquirrelClass.m
+//  TestOCSquirrelClassImpl.m
 //  OCSquirrel
 //
 //  Created by Egor Chiglintsev on 27.04.13.
@@ -19,12 +19,12 @@
 
 
 #pragma mark -
-#pragma mark TestOCSquirrelClass interface
+#pragma mark TestOCSquirrelClassImpl interface
 
-@interface TestOCSquirrelClass : XCTestCase
+@interface TestOCSquirrelClassImpl : XCTestCase
 {
     OCSquirrelVM *_squirrelVM;
-    OCSquirrelClass *_class;
+    OCSquirrelClassImpl *_class;
 }
 
 @end
@@ -32,15 +32,15 @@
 
 
 #pragma mark -
-#pragma mark TestOCSquirrelClass implementation
+#pragma mark TestOCSquirrelClassImpl implementation
 
-@implementation TestOCSquirrelClass
+@implementation TestOCSquirrelClassImpl
 
 - (void) setUp
 {
     [super setUp];
     _squirrelVM = [[OCSquirrelVM alloc] init];
-    _class      = [[OCSquirrelClass alloc] initWithVM: _squirrelVM];
+    _class      = [[OCSquirrelClassImpl alloc] initWithVM: _squirrelVM];
 }
 
 
@@ -78,7 +78,7 @@
 
 - (void) testPushNewInstance
 {
-    OCSquirrelClass *class = [OCSquirrelClass newWithVM: _squirrelVM];
+    OCSquirrelClassImpl *class = [OCSquirrelClassImpl newWithVM: _squirrelVM];
     
     [class pushNewInstance];
     
@@ -92,7 +92,7 @@
 
 - (void) testNewInstanceUserPointer
 {
-    OCSquirrelClass *class = [OCSquirrelClass newWithVM: _squirrelVM];
+    OCSquirrelClassImpl *class = [OCSquirrelClassImpl newWithVM: _squirrelVM];
     
     [class pushNewInstance];
     

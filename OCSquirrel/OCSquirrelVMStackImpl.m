@@ -286,7 +286,7 @@
             
             
             // First check if the class is one of the bound classes,
-            // then we already have an OCSquirrelClass instance corresponding
+            // then we already have an OCSquirrelClassImpl instance corresponding
             // to it and there is no need to create more.
             SQUserPointer nativeClass = NULL;
             sq_gettypetag(_squirrelVM.vm, position, &nativeClass);
@@ -304,7 +304,7 @@
             
             // If existing instance was not found, return a new one.
             if (value == nil)
-                value = [[OCSquirrelClass alloc] initWithHSQOBJECT: class
+                value = [[OCSquirrelClassImpl alloc] initWithHSQOBJECT: class
                                                               inVM: _squirrelVM];
         } break;
             

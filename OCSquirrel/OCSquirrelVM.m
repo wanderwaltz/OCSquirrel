@@ -17,7 +17,7 @@
 #import "OCSquirrelVMFunctions.h"
 #import "OCSquirrelVMBindings_NoARC.h"
 
-#import "OCSquirrelClass.h"
+#import "OCSquirrelClassImpl.h"
 #import "OCSquirrelTableImpl.h"
 #import "OCSquirrelClosureImpl.h"
 
@@ -232,9 +232,9 @@ static const SQChar * const kOCSquirrelVMCompileBufferSourceName = _SC("buffer")
 #pragma mark -
 #pragma mark bindings
 
-- (OCSquirrelClass *) bindClass: (Class) nativeClass;
+- (OCSquirrelClassImpl *) bindClass: (Class) nativeClass;
 {
-    __block OCSquirrelClass *class = nil;
+    __block OCSquirrelClassImpl *class = nil;
     
     [self performPreservingStackTop:^(HSQUIRRELVM vm, id<OCSquirrelVMStack> stack){
         NSString *className = NSStringFromClass(nativeClass);
@@ -243,7 +243,7 @@ static const SQChar * const kOCSquirrelVMCompileBufferSourceName = _SC("buffer")
         
         if (class == nil)
         {
-            class = [[OCSquirrelClass alloc] initWithNativeClass: nativeClass inVM: self];
+            class = [[OCSquirrelClassImpl alloc] initWithNativeClass: nativeClass inVM: self];
             _classBindings[className] = class;
             
             // Bind constructor. Note that the constructor only does alloc

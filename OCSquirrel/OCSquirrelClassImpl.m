@@ -1,5 +1,5 @@
 //
-//  OCSquirrelClass.m
+//  OCSquirrelClassImpl.m
 //  OCSquirrel
 //
 //  Created by Egor Chiglintsev on 27.04.13.
@@ -10,16 +10,16 @@
 #error "This file should be compiled with ARC support"
 #endif
 
-#import "OCSquirrelClass.h"
+#import "OCSquirrelClassImpl.h"
 #import "OCSquirrelClosureImpl.h"
 #import "OCSquirrelVMBindings_NoARC.h"
 
 #import <objc/runtime.h>
 
 #pragma mark -
-#pragma mark OCSquirrelClass implementation
+#pragma mark OCSquirrelClassImpl implementation
 
-@implementation OCSquirrelClass
+@implementation OCSquirrelClassImpl
 
 #pragma mark -
 #pragma mark properties
