@@ -467,6 +467,34 @@ static SQInteger IntClosureNoParamsCheckEnvironment(HSQUIRRELVM vm)
 }
 
 
+- (void)testBlockClosureCallMultipleParams
+{
+    __block int intParam = 0;
+    __block float floatParam = 0;
+    __block NSString *stringParam = nil;
+    __block BOOL boolParam = NO;
+    __block void *pointerParam = NULL;
+    
+    OCSquirrelClosureImpl *closure = [[OCSquirrelClosureImpl alloc] initWithBlock:
+    ^(id this, int intP, float floatP, NSString *stringP, BOOL boolP, void *pointerP) {
+        intParam = intP;
+        floatParam = floatP;
+        stringParam = stringP;
+        boolParam = boolP;
+        pointerParam = pointerP;
+    }
+                                                                       squirrelVM: _squirrelVM];
+    
+    [closure call: @[@123, @123.456, @"string", @YES, [NSValue valueWithPointer: (__bridge void *)self]]];
+    
+    XCTAssertEqual(intParam, (int)123, @"Block-based closures should be able to accept multiple parameters");
+    XCTAssertEqual(floatParam, (float)123.456, @"Block-based closures should be able to accept multiple parameters");
+    XCTAssertEqual(boolParam, (BOOL)YES, @"Block-based closures should be able to accept multiple parameters");
+    XCTAssertEqual(pointerParam, (__bridge void *)self, @"Block-based closures should be able to accept multiple parameters");
+    XCTAssertEqualObjects(stringParam, @"string", @"Block-based closures should be able to accept multiple parameters");
+}
+
+
 
 
 #pragma mark -
