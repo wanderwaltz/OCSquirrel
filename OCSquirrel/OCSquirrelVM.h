@@ -13,8 +13,8 @@
 #pragma mark -
 #pragma mark Constants
 
-/*! Default initial stack capacity of the Squirrel VM. When initializing an OCSquirrelVM 
-    instance using the -init method, the initial stack capacity will be set to this value.
+/* Default initial stack capacity of the Squirrel VM. When initializing an OCSquirrelVM
+ * instance using the -init method, the initial stack capacity will be set to this value.
  */
 extern const NSUInteger kOCSquirrelVMDefaultInitialStackSize;
 
@@ -26,7 +26,7 @@ extern NSString * const OCSquirrelVMErrorLocalsUserInfoKey;
 
 
 /* Call stack report is an array of NSDictionaries having the function name, source file
-   name and line numbers for these three keys respectively.
+ * name and line numbers for these three keys respectively.
  */
 extern NSString * const OCSquirrelVMCallStackFunctionKey;
 extern NSString * const OCSquirrelVMCallStackSourceKey;
@@ -34,40 +34,40 @@ extern NSString * const OCSquirrelVMCallStackLineKey;
 
 
 /* Locals report is an array of NSDictionaries having the local variable name and value
-   for these two keys respectively.
+ * for these two keys respectively.
  */
 extern NSString * const OCSquirrelVMLocalNameKey;
 extern NSString * const OCSquirrelVMLocalValueKey;
 
 
-/// Error codes returned by the OCSquirrelVM class
+// Error codes returned by the OCSquirrelVM class
 enum : NSInteger
 {
-    /*! Is returned when the compiler function fails to get a C string from the NSString with 
-        the script. This usually happens if you pass some wrong input to the function, for
-        example a nil value.
+    /* Is returned when the compiler function fails to get a C string from the NSString with
+     * the script. This usually happens if you pass some wrong input to the function, for
+     * example a nil value.
      */
     OCSquirrelVMError_FailedToGetCString = 0x01,
     
-    /// Is returned when a compiler error is encountered while compiling a Squirrel script.
+    // Is returned when a compiler error is encountered while compiling a Squirrel script.
     OCSquirrelVMError_CompilerError      = 0x02,
     
-    /// Is returned when a runtime error occurs while calling the compiled Squirrel script.
+    // Is returned when a runtime error occurs while calling the compiled Squirrel script.
     OCSquirrelVMError_RuntimeError       = 0x03,
 };
     
     
 enum : NSInteger
 {
-    /*! Is returned when trying to bind a selector to a Squirrel class which is
-        not bound to a certain native Objective-C class 
+    /* Is returned when trying to bind a selector to a Squirrel class which is
+     * not bound to a certain native Objective-C class
      */
     OCSquirrelVMBindingsError_NativeClassNotFound      = 0x01,
     
     
-    /*! Is returned when either trying to bind an instance method to a class whose
-        instances do not respond to the selector provided or when trying to bind
-        a class method to a class which does not respond to the provided selector.
+    /* Is returned when either trying to bind an instance method to a class whose
+     * instances do not respond to the selector provided or when trying to bind
+     * a class method to a class which does not respond to the provided selector.
      */
     OCSquirrelVMBindingsError_DoesNotRespondToSelector = 0x02
 };
@@ -78,11 +78,33 @@ enum : NSInteger
 
 @class OCSquirrelVM;
 
+/** Delegate protocol for an OCSquirrelVM.
+ */
 @protocol OCSquirrelVMDelegate<NSObject>
 @optional
 
-- (void) squirrelVM: (OCSquirrelVM *) squirrelVM didPrintString: (NSString *) string;
-- (void) squirrelVM: (OCSquirrelVM *) squirrelVM didPrintError:  (NSString *) error;
+/** Callback for OCSquirrelVM standard output.
+ *
+ *  @param squirrelVM Reference to the OCSquirrelVM which triggered the callback.
+ *
+ *  @param string `NSString` printed by the Squirrel standard output.
+ *
+ *  @discussion This callback is triggered when the `print()` function is called in
+ *    a Squirrel script.
+ */
+- (void)squirrelVM:(OCSquirrelVM *)squirrelVM didPrintString:(NSString *)string;
+
+
+
+/** Callback for OCSquirrelVM standard error output.
+ *  @param squirrelVM Reference to the OCSquirrelVM which triggered the callback.
+ *
+ *  @param error `NSString` printed by the Squirrel standard output.
+ *
+ *  @discussion This callback is triggered when an error message is sent to the 
+ *    Squirrel standard error output.
+ */
+- (void)squirrelVM:(OCSquirrelVM *)squirrelVM didPrintError:(NSString *)error;
 
 @end
 
@@ -100,7 +122,7 @@ enum : NSInteger
 /// Represents stack state of the current VM.
 @property (readonly, nonatomic) id<OCSquirrelVMStack> stack;
 
-/// Last compiler or runtime error represented as an NSError object
+/// Last compiler or runtime error represented as an `NSError` object
 @property (strong, readonly, nonatomic) NSError *lastError;
 
 

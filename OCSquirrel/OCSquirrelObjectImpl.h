@@ -33,12 +33,15 @@
 
 #pragma mark initializers
 
-/// Designated initializer
-- (id)initWithVM:(OCSquirrelVM *)squirrelVM;
+/** Initializes OCSquirrelObject as belonging to a given Squirrel VM.
+ *
+ *  @param squirrelVM An OCSquirrelVM instance. Should not be nil.
+ */
+- (instancetype)initWithVM:(OCSquirrelVM *)squirrelVM;
 
 
-- (id)initWithHSQOBJECT:(HSQOBJECT)object
-                   inVM:(OCSquirrelVM *)squirrelVM;
+- (instancetype)initWithHSQOBJECT:(HSQOBJECT)object
+                             inVM:(OCSquirrelVM *)squirrelVM;
 
 
 /// Pushes the object to the current VM's stack

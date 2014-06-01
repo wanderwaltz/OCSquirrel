@@ -47,7 +47,7 @@ NSString * const OCSquirrelVMLocalValueKey = @"value";
 
 
 
-/// A source name used when compiling a script from NSString.
+// A source name used when compiling a script from NSString.
 static const SQChar * const kOCSquirrelVMCompileBufferSourceName = _SC("buffer");
 
 

@@ -16,10 +16,10 @@
 @interface OCSquirrelVM ()
 {
 @protected
-    /// A concrete implementation of the stack property
+    // A concrete implementation of the stack property
     OCSquirrelVMStackImpl *_stack;
     
-    /// Contains Objective-C class names as keys an OCSquirrelClassImpl instances as values
+    // Contains Objective-C class names as keys an OCSquirrelClassImpl instances as values
     NSMutableDictionary *_classBindings;
 }
 
