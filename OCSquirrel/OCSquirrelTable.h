@@ -173,7 +173,7 @@
 
 /** Sets `SQUserPointer` value for a given key.
  *
- *  @param value `SQUserPointer` to store in the table.
+ *  @param pointer `SQUserPointer` to store in the table.
  *  @param key Key with which to store the value.
  */
 - (void)setUserPointer:(SQUserPointer)pointer forKey:(id)key;

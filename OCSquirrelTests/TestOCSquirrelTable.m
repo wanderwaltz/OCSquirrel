@@ -38,6 +38,27 @@
 }
 
 
+#pragma mark - initialization tests
+
+- (void)testInitWithVM
+{
+    OCSquirrelTable *table = [[OCSquirrelTable alloc] initWithVM: _squirrelVM];
+    
+    XCTAssertEqualObjects(table.squirrelVM, _squirrelVM,
+                          @"OCSquirrelTable should store the squirrelVM property value");
+}
+
+
+- (void)testThrowsInitWithNilVM
+{
+    XCTAssertThrowsSpecificNamed(({
+        __unused OCSquirrelTable *table = [[OCSquirrelTable alloc] initWithVM: nil];
+    }), NSException, NSInvalidArgumentException,
+                                 @"OCSquirrelTable should throw NSInvalidArgumentException when trying to initialize "
+                                 @"with nil Squirrel VM.");
+}
+
+
 #pragma mark - NSMutableDictionary integration tests
 
 - (void)testKindOfDictionary

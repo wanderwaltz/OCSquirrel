@@ -119,7 +119,9 @@ enum : NSInteger
 /// Delegate for the VM which will receive printing callbacks
 @property (weak, nonatomic) id<OCSquirrelVMDelegate> delegate;
 
-/// Represents stack state of the current VM.
+/** Represents stack state of the current VM. 
+ *  @see OCSquirrelVMStack for more info.
+ */
 @property (readonly, nonatomic) id<OCSquirrelVMStack> stack;
 
 /// Last compiler or runtime error represented as an `NSError` object
