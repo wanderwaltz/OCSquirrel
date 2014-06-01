@@ -114,6 +114,18 @@
     {
         [value push];
     }
+    else if ([value isKindOfClass: [NSArray class]])
+    {
+        OCSquirrelArray *array = [[OCSquirrelArray alloc] initWithVM: _squirrelVM];
+        [array addObjectsFromArray: value];
+        [array push];
+    }
+    else if ([value isKindOfClass: [NSDictionary class]])
+    {
+        OCSquirrelTable *table = [[OCSquirrelTable alloc] initWithVM: _squirrelVM];
+        [table addEntriesFromDictionary: value];
+        [table push];
+    }
     else if ([value isKindOfClass: [NSNumber class]])
     {
         const char *objCType = [value objCType];

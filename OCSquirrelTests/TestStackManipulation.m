@@ -762,6 +762,41 @@ static SQInteger NativeClosure(HSQUIRRELVM vm)
 }
 
 
+#pragma mark - 
+#pragma mark NSArray, NSDictionary integration
+
+- (void)testPushNSArrayClass
+{
+    [_squirrelVM.stack pushValue: @[@1, @2, @3]];
+    XCTAssertTrue([[_squirrelVM.stack valueAtPosition: -1] isKindOfClass: [OCSquirrelArray class]],
+                   @"NSArray should be pushed to OCSquirrelVM stack as an OCSquirrelArray");
+}
+
+
+- (void)testPushNSArrayValue
+{
+    [_squirrelVM.stack pushValue: @[@1, @2, @3]];
+    XCTAssertEqualObjects([_squirrelVM.stack valueAtPosition: -1], (@[@1, @2, @3]),
+                          @"NSArray should be pushed to OCSquirrelVM stack as an OCSquirrelArray");
+}
+
+
+- (void)testPushNSDictionaryClass
+{
+    [_squirrelVM.stack pushValue: @{@1 : @2, @3 : @4, @5 : @6}];
+    XCTAssertTrue([[_squirrelVM.stack valueAtPosition: -1] isKindOfClass: [OCSquirrelTable class]],
+                  @"NSDictionary should be pushed to OCSquirrelVM stack as an OCSquirrelDictionary");
+}
+
+
+- (void)testPushNSDictionaryValue
+{
+    [_squirrelVM.stack pushValue: @{@1 : @2, @3 : @4, @5 : @6}];
+    XCTAssertEqualObjects([_squirrelVM.stack valueAtPosition: -1], (@{@1 : @2, @3 : @4, @5 : @6}),
+                          @"NSDictionary should be pushed to OCSquirrelVM stack as an OCSquirrelTable");
+}
+
+
 #pragma mark -
 #pragma mark type information
 
