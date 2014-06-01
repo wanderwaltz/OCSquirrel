@@ -13,13 +13,11 @@
 #import "OCSquirrelObjectImpl.h"
 
 
-#pragma mark -
-#pragma mark OCSquirrelObjectImpl implementation
+#pragma mark - OCSquirrelObjectImpl implementation
 
 @implementation OCSquirrelObjectImpl
 
-#pragma mark -
-#pragma mark properties
+#pragma mark - properties
 
 - (HSQOBJECT *)obj
 {
@@ -29,18 +27,17 @@
 
 - (BOOL)isNull
 {
-    return sq_isnull(_obj);
+    return sq_isnull(*self.obj);
 }
 
 
 - (SQObjectType)type
 {
-    return _obj._type;
+    return (*self.obj)._type;
 }
 
 
-#pragma mark -
-#pragma mark class methods
+#pragma mark - class methods
 
 + (BOOL)isAllowedToInitWithSQObjectOfType:(SQObjectType)type
 {
@@ -62,8 +59,7 @@
 }
 
 
-#pragma mark -
-#pragma mark initialization methods
+#pragma mark - initialization methods
 
 - (id)initWithVM:(OCSquirrelVM *)squirrelVM
 {
@@ -116,18 +112,16 @@
 }
 
 
-#pragma mark -
-#pragma mark methods
+#pragma mark - methods
 
 - (void)push
 {
     OCSquirrelVM *squirrelVM = self.squirrelVM;
-    [squirrelVM.stack pushSQObject: _obj];
+    [squirrelVM.stack pushSQObject: *self.obj];
 }
 
 
-#pragma mark -
-#pragma mark NSObject
+#pragma mark - <NSObject>
 
 + (NSString *)stringForSQObjectType:(SQObjectType)sqType
 {
@@ -160,9 +154,53 @@
 
 - (NSString *)description
 {
-    NSString *type = [self.class stringForSQObjectType: _obj._type];
+    NSString *type = [self.class stringForSQObjectType: (*self.obj)._type];
     
     return [NSString stringWithFormat: @"%@ (%@)", [super description], type];
+}
+
+
+#pragma mark - <NSCopying>
+
+- (instancetype)copyWithZone:(NSZone *)zone
+{
+    __block id result = nil;
+    
+    [self.squirrelVM performPreservingStackTop:^(HSQUIRRELVM vm, id<OCSquirrelVMStack> stack) {
+        [self push];
+        
+        SQRESULT ok = SQ_OK;
+        
+        ok = sq_clone(vm, -1);
+        
+        if (ok != SQ_OK) {
+            return;
+        }
+        
+        HSQOBJECT cloned;
+        sq_resetobject(&cloned);
+        
+        ok = sq_getstackobj(vm, -1, &cloned);
+        
+        if (ok != SQ_OK) {
+            return;
+        }
+        
+        result = [[self.class allocWithZone: zone] initWithHSQOBJECT: cloned
+                                                                inVM: self.squirrelVM];
+    }];
+    
+    if (result == nil) {
+        @throw [NSException exceptionWithName: NSInvalidArgumentException
+                                       reason: [NSString stringWithFormat:
+                                                @"*** -copyWithZone: %@ class does not support NSCopying "
+                                                @"with HSQOBJECT of type %@",
+                                                NSStringFromClass(self.class),
+                                                [self.class stringForSQObjectType: (*self.obj)._type]]
+                                     userInfo: nil];
+    }
+    
+    return result;
 }
 
 @end

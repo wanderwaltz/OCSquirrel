@@ -13,7 +13,7 @@
 #pragma mark -
 #pragma mark OCSquirrelObjectImpl interface
 
-@interface OCSquirrelObjectImpl : NSObject<OCSquirrelObject>
+@interface OCSquirrelObjectImpl : NSObject<NSCopying, OCSquirrelObject>
 {
 @protected
     /// ivar backing the obj property; note that the obj property returns _obj by reference.
