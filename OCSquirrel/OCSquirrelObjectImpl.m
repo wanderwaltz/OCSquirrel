@@ -63,6 +63,15 @@
 
 - (id)initWithVM:(OCSquirrelVM *)squirrelVM
 {
+    if (squirrelVM == nil) {
+        @throw [NSException exceptionWithName: NSInvalidArgumentException
+                                       reason: [NSString stringWithFormat:
+                                                @"*** initWithVM: cannot initialize %@ with nil OCSquirrelVM",
+                                                self.class]
+                                     userInfo: nil];
+        return nil;
+    }
+    
     self = [super init];
     
     if (self != nil)

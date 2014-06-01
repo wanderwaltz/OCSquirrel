@@ -84,6 +84,16 @@
 }
 
 
+- (void) testThrowsExceptionIfVMisNil
+{
+    XCTAssertThrowsSpecificNamed(({
+        __unused OCSquirrelObjectImpl *object = [[OCSquirrelObjectImpl alloc] initWithVM: nil];
+    }), NSException, NSInvalidArgumentException,
+                                 @"OCSquirrelObjectImpl should throw an exception when "
+                                 @"initialized with nil OCSquirrelVM");
+}
+
+
 - (void) testHasReadonlyObjProperty
 {
     XCTAssertTrue( [OCSquirrelObjectImpl instancesRespondToSelector: @selector(obj)] &&
