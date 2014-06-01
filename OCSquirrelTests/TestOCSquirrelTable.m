@@ -162,4 +162,64 @@
                    @"-removeObjectsForKeys should remove corresponding objects from OCSquirrelTable");
 }
 
+
+#pragma mark - <NSCopying> tests
+
+- (void)testCopyClass
+{
+    OCSquirrelTable *table = [OCSquirrelTable new];
+    OCSquirrelTable *clone = [table copy];
+    
+    XCTAssertTrue([clone isKindOfClass: [OCSquirrelTable class]],
+                  @"Copying OCSquirrelTable should return an object of OCSquirrelTable class");
+}
+
+
+- (void)testCopySameVM
+{
+    OCSquirrelTable *table = [OCSquirrelTable new];
+    OCSquirrelTable *clone = [table copy];
+    
+    XCTAssertEqualObjects(table.squirrelVM, clone.squirrelVM,
+                          @"Copied OCSquirrelTable should be bound to the same SquirrelVM");
+}
+
+
+- (void)testCopyHasSameContents
+{
+    OCSquirrelTable *table = [[OCSquirrelTable alloc] initWithDictionary: @{ @1 : @2, @3 : @4, @5 : @6 }];
+    OCSquirrelTable *clone = [table copy];
+    
+    XCTAssertEqualObjects(table, clone,
+                          @"Copied OCSquirrelTable should have the same contents");
+}
+
+
+- (void)testCopyIsDifferentTable
+{
+    OCSquirrelTable *table = [[OCSquirrelTable alloc] initWithDictionary: @{ @1 : @2, @3 : @4, @5 : @6 }];
+    OCSquirrelTable *clone = [table copy];
+    
+    [clone removeAllObjects];
+    
+    XCTAssertNotEqualObjects(table, clone,
+                             @"Copied OCSquirrelTable should be a different mutable object");
+}
+
+
+- (void)testCopyIsShallow
+{
+    OCSquirrelTable *inner = [[OCSquirrelTable alloc] initWithDictionary: @{ @1 : @2, @3 : @4, @5 : @6 }];
+    OCSquirrelTable *table = [OCSquirrelTable new];
+    table[@"inner"] = inner;
+    
+    OCSquirrelTable *clone = [table copy];
+    OCSquirrelTable *clonedInner = clone[@"inner"];
+    
+    [clonedInner removeObjectForKey: @1];
+    
+    XCTAssertEqualObjects(inner, clonedInner,
+                          @"OCSquirrelTable copy is shallow and does not copy objects contained within the table");
+}
+
 @end

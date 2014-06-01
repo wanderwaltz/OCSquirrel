@@ -251,4 +251,26 @@ forKeyedSubscript:(id<NSCopying>)key
                               parameters: parameters];
 }
 
+
+#pragma mark - <NSCopying>
+
+- (instancetype)copyWithZone:(NSZone *)zone
+{
+    return [self mutableCopyWithZone: zone];
+}
+
+
+#pragma mark - <NSMutableCopying>
+
+- (instancetype)mutableCopyWithZone:(NSZone *)zone
+{
+    typeof(self.impl) clonedImpl = [self.impl copyWithZone: zone];
+    
+    if (clonedImpl == nil) {
+        return nil;
+    }
+    
+    return [[self.class allocWithZone: zone] initWithImpl: clonedImpl];
+}
+
 @end
