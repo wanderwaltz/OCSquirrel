@@ -20,29 +20,43 @@
     HSQOBJECT _obj;
 }
 
+#pragma mark properties
+
 @property (weak, readonly, nonatomic) OCSquirrelVM *squirrelVM;
 @property (readonly, nonatomic) HSQOBJECT *obj;
 
 @property (readonly, nonatomic) BOOL isNull;
 @property (readonly, nonatomic) SQObjectType type;
 
+
+#pragma mark initializers
+
 /// Designated initializer
-- (id) initWithVM: (OCSquirrelVM *) squirrelVM;
+- (id)initWithVM:(OCSquirrelVM *)squirrelVM;
 
 
-- (id) initWithHSQOBJECT: (HSQOBJECT) object
-                    inVM: (OCSquirrelVM *) squirrelVM;
+- (id)initWithHSQOBJECT:(HSQOBJECT)object
+                   inVM:(OCSquirrelVM *)squirrelVM;
 
 
 /// Pushes the object to the current VM's stack
-- (void) push;
+- (void)push;
 
 
-+ (BOOL) isAllowedToInitWithSQObjectOfType: (SQObjectType) type;
 
-+ (id) newWithVM: (OCSquirrelVM *) squirrelVM;
+#pragma mark class methods
 
-+ (id) newWithHSQOBJECT: (HSQOBJECT) object
-                   inVM: (OCSquirrelVM *) squirrelVM;
++ (BOOL)isAllowedToInitWithSQObjectOfType:(SQObjectType)type;
+
++ (id)newWithVM:(OCSquirrelVM *)squirrelVM;
+
++ (id)newWithHSQOBJECT:(HSQOBJECT)object
+                  inVM:(OCSquirrelVM *)squirrelVM;
+
+
+#pragma mark unavailable methods
+
++ (instancetype)new __unavailable;
+- (instancetype)init __unavailable;
 
 @end
