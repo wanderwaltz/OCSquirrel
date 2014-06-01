@@ -20,10 +20,6 @@
     HSQOBJECT _obj;
 }
 
-/*! Will throw an exception if accessed while the value of the _squirrelVM ivar is `nil`.
-    So basically OCSquirrelObjectImpl subclasses must be initialized with -initWithVM method
-    with a non-nil `squirrelVM` property.
- */
 @property (weak, readonly, nonatomic) OCSquirrelVM *squirrelVM;
 @property (readonly, nonatomic) HSQOBJECT *obj;
 
