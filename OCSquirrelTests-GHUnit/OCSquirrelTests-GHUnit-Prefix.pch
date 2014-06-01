@@ -37,6 +37,7 @@
     #define    XCTAssertNotEqual                GHAssertNotEquals
     #define    XCTAssertEqualStructs            GHAssertEquals
     #define    XCTAssertEqualObjects            GHAssertEqualObjects
+    #define    XCTAssertNotEqualObjects         GHAssertNotEqualObjects
     #define    XCTAssertEqualWithAccuracy       GHAssertEqualsWithAccuracy
 
     #define    XCTAssertThrows                  GHAssertThrows
