@@ -29,6 +29,9 @@
 		449DA974193A4F93007F0ECE /* OCSquirrelInstance.m in Sources */ = {isa = PBXBuildFile; fileRef = 449DA972193A4F93007F0ECE /* OCSquirrelInstance.m */; };
 		449DA977193ACB86007F0ECE /* TestOCSquirrelClass+Protected.m in Sources */ = {isa = PBXBuildFile; fileRef = 449DA976193ACB86007F0ECE /* TestOCSquirrelClass+Protected.m */; };
 		449DA978193ACB8E007F0ECE /* TestOCSquirrelClass+Protected.m in Sources */ = {isa = PBXBuildFile; fileRef = 449DA976193ACB86007F0ECE /* TestOCSquirrelClass+Protected.m */; };
+		449DA97A193ACED9007F0ECE /* TestOCSquirrelInstance+Protected.m in Sources */ = {isa = PBXBuildFile; fileRef = 449DA979193ACED9007F0ECE /* TestOCSquirrelInstance+Protected.m */; };
+		449DA97B193ACED9007F0ECE /* TestOCSquirrelInstance+Protected.m in Sources */ = {isa = PBXBuildFile; fileRef = 449DA979193ACED9007F0ECE /* TestOCSquirrelInstance+Protected.m */; };
+		449DA97C193ACEE3007F0ECE /* TestOCSquirrelUserData+Protected.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DE00B001939B5A900BB06E0 /* TestOCSquirrelUserData+Protected.m */; };
 		44A884D21935DBC400FA503E /* OCSquirrelObject.h in Headers */ = {isa = PBXBuildFile; fileRef = 44A884D11935DBAE00FA503E /* OCSquirrelObject.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		44A884D719362CB300FA503E /* OCSquirrelClosure.h in Headers */ = {isa = PBXBuildFile; fileRef = 44A884D519362CB300FA503E /* OCSquirrelClosure.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		44A884D819362CB300FA503E /* OCSquirrelClosure.m in Sources */ = {isa = PBXBuildFile; fileRef = 44A884D619362CB300FA503E /* OCSquirrelClosure.m */; };
@@ -212,6 +215,7 @@
 		449DA972193A4F93007F0ECE /* OCSquirrelInstance.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OCSquirrelInstance.m; sourceTree = "<group>"; };
 		449DA975193A505F007F0ECE /* OCSquirrelInstance+Protected.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "OCSquirrelInstance+Protected.h"; sourceTree = "<group>"; };
 		449DA976193ACB86007F0ECE /* TestOCSquirrelClass+Protected.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "TestOCSquirrelClass+Protected.m"; sourceTree = "<group>"; };
+		449DA979193ACED9007F0ECE /* TestOCSquirrelInstance+Protected.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "TestOCSquirrelInstance+Protected.m"; sourceTree = "<group>"; };
 		44A884D11935DBAE00FA503E /* OCSquirrelObject.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = OCSquirrelObject.h; sourceTree = "<group>"; };
 		44A884D519362CB300FA503E /* OCSquirrelClosure.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OCSquirrelClosure.h; sourceTree = "<group>"; };
 		44A884D619362CB300FA503E /* OCSquirrelClosure.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OCSquirrelClosure.m; sourceTree = "<group>"; };
@@ -826,6 +830,7 @@
 				44A884DA193634DE00FA503E /* TestOCSquirrelClosure+Protected.m */,
 				5DE00B001939B5A900BB06E0 /* TestOCSquirrelUserData+Protected.m */,
 				449DA976193ACB86007F0ECE /* TestOCSquirrelClass+Protected.m */,
+				449DA979193ACED9007F0ECE /* TestOCSquirrelInstance+Protected.m */,
 			);
 			name = "Protected API tests";
 			sourceTree = "<group>";
@@ -1275,6 +1280,7 @@
 				5DC29C35171AFE09000A2096 /* TestOCSquirrelObjectImpl.m in Sources */,
 				5D639830171AA39F00CFECC1 /* TestOCSquirrelTableImpl.m in Sources */,
 				7C94F8C9172A4D0D00C7BA78 /* TestBindClass.m in Sources */,
+				449DA97A193ACED9007F0ECE /* TestOCSquirrelInstance+Protected.m in Sources */,
 				5DC90420172BA6B7009C7082 /* TestOCSquirrelClassImpl.m in Sources */,
 				44227BF719339E350011CE2C /* TestOCSquirrelArray.m in Sources */,
 				44227BF419339B250011CE2C /* TestOCSquirrelArray+Protected.m in Sources */,
@@ -1302,6 +1308,8 @@
 				5DBE08CB173374B600908658 /* TestOCSquirrelObjectImpl.m in Sources */,
 				5DBE08CC173374B600908658 /* TestStackManipulation.m in Sources */,
 				5DBE08CD173374B600908658 /* TestPrinting.m in Sources */,
+				449DA97B193ACED9007F0ECE /* TestOCSquirrelInstance+Protected.m in Sources */,
+				449DA97C193ACEE3007F0ECE /* TestOCSquirrelUserData+Protected.m in Sources */,
 				44227BF819339E350011CE2C /* TestOCSquirrelArray.m in Sources */,
 				44227BF519339B250011CE2C /* TestOCSquirrelArray+Protected.m in Sources */,
 				5DBE08CE173374B600908658 /* TestOCSquirrelVM.mm in Sources */,

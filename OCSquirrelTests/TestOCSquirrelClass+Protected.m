@@ -11,7 +11,7 @@
 #endif
 
 #ifndef GHUnit_Target
-#import <XCTest/XCTest.h>
+    #import <XCTest/XCTest.h>
 #endif
 
 #import <OCSquirrel/OCSquirrel.h>
