@@ -43,6 +43,13 @@
 
 - (void) setTop: (NSInteger) top
 {
+    if (top < 0) {
+        @throw [NSException exceptionWithName: NSInvalidArgumentException
+                                       reason: [NSString stringWithFormat:
+                                                @"*** setTop: unable to set negative stack top value (%ld)", (long)top]
+                                     userInfo: nil];
+    }
+    
     sq_settop(_squirrelVM.vm, top);
 }
 

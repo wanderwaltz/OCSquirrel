@@ -103,6 +103,31 @@
 }
 
 
+- (void) testSetTopThrowsIfNegative
+{
+    XCTAssertThrowsSpecificNamed(_squirrelVM.stack.top = -1,
+                                 NSException,
+                                 NSInvalidArgumentException,
+                                 @"-setTop: should throw NSInvalidArgumentException for negative argument values");
+}
+
+
+- (void) testSetTopGreaterThanCurrent
+{
+    
+    _squirrelVM.stack.top = 10;
+    
+    for (NSInteger i = 1; i <= 10; ++i)
+    {
+        BOOL isNull = [_squirrelVM.stack isNullAtPosition: i];
+        
+        XCTAssertTrue(isNull,
+                      @"-setTop: setting value greater than the current top should push the appropriate amount of "
+                      @"nulls to the stack");
+    }
+}
+
+
 #pragma mark -
 #pragma mark pushing tests
 
