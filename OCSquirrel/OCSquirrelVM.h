@@ -119,23 +119,43 @@ enum : NSInteger
 - (instancetype)init;
 
 
-/// Designated initializer
+/** Designated initializer.
+ *
+ *  @param stackSize Initial stack size of the Squirrel VM.
+ */
 - (instancetype)initWithStackSize:(NSUInteger)stackSize;
 
 
 
 #pragma mark script execution
 
-/// Compiles and executes the Squirrel script synchronously, returning the result of the script execution.
+/** Compiles and executes the Squirrel script synchronously, returning the result of the script execution.
+ *
+ *  @param script `NSString` containing the Squirrel script to execute.
+ *
+ *  @param error Will contain the compilation error if any.
+ *
+ *  @return Value returned by the script function boxed into an Objective-C object according
+ *    to the rules of OCSquirrelVMStack protocol.
+ */
 - (id) execute: (NSString *) script error: (__autoreleasing NSError **) error;
 
-/// Block is executed synchronously
+
+/** Performs a given block providing the means to access the underlying `HSQUIRRELVM`.
+ *
+ *  @param block Objective-C block to execute.
+ *
+ *  @note Block is executed synchronously.
+ */
 - (void) perform: (void (^)(HSQUIRRELVM vm, id<OCSquirrelVMStack> stack)) block;
 
-/*! Stores the current stack top value and pops everything which will be pushed above this value before returning.
+
+/** Stores the current stack top value and pops everything which will be pushed above this value before returning.
  *  Should be used when you expect pushing something to the stack and don't want to bother popping it manually.
+ *
+ *  @param block Objective-C block to execute.
  * 
- *  Block is executed synchronously
+ *  @note Block is executed synchronously
  */
 - (void) performPreservingStackTop: (void (^)(HSQUIRRELVM vm, id<OCSquirrelVMStack> stack)) block;
 

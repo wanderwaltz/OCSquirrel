@@ -9,6 +9,8 @@
 #import "OCSquirrelObjectImpl.h"
 #import "OCSquirrelUserData.h"
 
+/** Internal implementation of OCSquirrelUserData protocol.
+ */
 @interface OCSquirrelUserDataImpl : OCSquirrelObjectImpl<OCSquirrelUserData>
 @property (nonatomic, strong, readonly) id object;
 

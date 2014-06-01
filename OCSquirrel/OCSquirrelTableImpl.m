@@ -11,7 +11,7 @@
 #endif
 
 #import "OCSquirrelTableImpl.h"
-#import "OCSquirrelClosureImpl.h"
+#import "OCSquirrelClosure.h"
 
 
 #pragma mark -
@@ -22,7 +22,7 @@
 #pragma mark -
 #pragma mark class methods
 
-+ (BOOL) isAllowedToInitWithSQObjectOfType: (SQObjectType) type
++ (BOOL)isAllowedToInitWithSQObjectOfType:(SQObjectType)type
 {
     return (type == OT_TABLE);
 }
@@ -31,7 +31,7 @@
 #pragma mark -
 #pragma mark initialization methods
 
-+ (id) rootTableForVM: (OCSquirrelVM *) squirrelVM
++ (id)rootTableForVM:(OCSquirrelVM *)squirrelVM
 {
     __block id table = nil;
     
@@ -49,7 +49,7 @@
 }
 
 
-+ (id) registryTableForVM: (OCSquirrelVM *) squirrelVM
++ (id)registryTableForVM:(OCSquirrelVM *)squirrelVM
 {
     __block id table = nil;
     
@@ -67,7 +67,7 @@
 }
 
 
-- (id) initWithVM: (OCSquirrelVM *) squirrelVM
+- (id)initWithVM:(OCSquirrelVM *)squirrelVM
 {
     self = [super initWithVM: squirrelVM];
     
@@ -107,7 +107,7 @@
 }
 
 
-- (SQInteger) integerForKey: (id) key
+- (SQInteger)integerForKey:(id)key
 {
     id object = [self objectForKey: key];
     
@@ -119,7 +119,7 @@
 }
 
 
-- (SQFloat) floatForKey: (id) key
+- (SQFloat)floatForKey:(id)key
 {
     id object = [self objectForKey: key];
     
@@ -131,7 +131,7 @@
 }
 
 
-- (BOOL) boolForKey: (id) key
+- (BOOL)boolForKey:(id)key
 {
     id object = [self objectForKey: key];
     
@@ -143,7 +143,7 @@
 }
 
 
-- (NSString *) stringForKey: (id) key
+- (NSString *)stringForKey:(id)key
 {
     id object = [self objectForKey: key];
     
@@ -155,7 +155,7 @@
 }
 
 
-- (SQUserPointer) userPointerForKey: (id) key
+- (SQUserPointer)userPointerForKey:(id)key
 {
     id object = [self objectForKey: key];
     
@@ -167,7 +167,7 @@
 }
 
 
-- (id) objectForKey: (id) key
+- (id)objectForKey:(id)key
 {
     __block id object = nil;
     
@@ -188,7 +188,7 @@
 }
 
 
-- (id) objectForKeyedSubscript:(id<NSCopying>)key
+- (id)objectForKeyedSubscript:(id<NSCopying>)key
 {
     return [self objectForKey: key];
 }
@@ -197,7 +197,7 @@
 #pragma mark -
 #pragma mark setter objects
 
-- (void) setObject: (id) object forKey: (id) key
+- (void)setObject:(id)object forKey:(id)key
 {
     OCSquirrelVM *squirrelVM = self.squirrelVM;
     
@@ -211,43 +211,43 @@
 }
 
 
-- (void) setObject:(id)object forKeyedSubscript:(id<NSCopying>)key
+- (void)setObject:(id)object forKeyedSubscript:(id<NSCopying>)key
 {
     [self setObject: object forKey: key];
 }
 
 
-- (void) setInteger: (SQInteger) value forKey: (id) key
+- (void)setInteger:(SQInteger)value forKey:(id)key
 {
     [self setObject: @(value) forKey: key];
 }
 
 
-- (void) setFloat: (SQFloat) value forKey: (id) key
+- (void)setFloat:(SQFloat)value forKey:(id)key
 {
     [self setObject: @(value) forKey: key];
 }
 
 
-- (void) setBool: (BOOL) value forKey: (id) key
+- (void)setBool:(BOOL)value forKey:(id)key
 {
     [self setObject: @(value) forKey: key];
 }
 
 
-- (void) setString: (NSString *) value forKey: (id) key
+- (void)setString:(NSString *)value forKey:(id)key
 {
     [self setObject: value forKey: key];
 }
 
 
-- (void) setUserPointer: (SQUserPointer) pointer forKey: (id) key
+- (void)setUserPointer:(SQUserPointer)pointer forKey:(id)key
 {
     [self setObject: [NSValue valueWithPointer: pointer] forKey: key];
 }
 
 
-- (void) removeObjectForKey: (id) key
+- (void)removeObjectForKey:(id)key
 {
     OCSquirrelVM *squirrelVM = self.squirrelVM;
     
@@ -263,15 +263,15 @@
 #pragma mark -
 #pragma mark key-value coding
 
-- (id) valueForUndefinedKey: (NSString *) key
+- (id)valueForUndefinedKey:(NSString *)key
 {
     // Tries to get the value from the underlying Squirrel table.
     return [self objectForKey: key];
 }
 
 
-- (void) setValue: (id) value
-  forUndefinedKey: (NSString *) key
+- (void)setValue:(id)value
+ forUndefinedKey:(NSString *)key
 {
     // Tries to set the corresponding slot of the underlying Squirrel table
     [self setObject: value forKey: key];
@@ -281,7 +281,7 @@
 #pragma mark -
 #pragma mark enumeration
 
-- (void) enumerateObjectsAndKeysUsingBlock: (void (^)(id key, id value, BOOL *stop)) block
+- (void)enumerateObjectsAndKeysUsingBlock:(void (^)(id key, id value, BOOL *stop))block
 {
     if (block != nil)
     {
@@ -313,7 +313,7 @@
 #pragma mark -
 #pragma mark calls
 
-- (id) callClosureWithKey: (id) key
+- (id)callClosureWithKey:(id)key
 {
     id closure = [self objectForKey: key];
     
@@ -325,8 +325,8 @@
 }
 
 
-- (id) callClosureWithKey: (id) key
-               parameters: (NSArray *) parameters
+- (id)callClosureWithKey:(id)key
+              parameters:(NSArray *)parameters
 {
     id closure = [self objectForKey: key];
     

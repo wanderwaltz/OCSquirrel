@@ -14,6 +14,8 @@
 
 #pragma mark - <OCSquirrelObject> protocol
 
+/** Basic interface of all Squirrel Objects.
+ */
 @protocol OCSquirrelObject <NSObject>
 @required
 

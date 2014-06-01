@@ -13,6 +13,8 @@
 #pragma mark -
 #pragma mark OCSquirrelObjectImpl interface
 
+/** Internal implementation of OCSquirrelObject protocol.
+ */
 @interface OCSquirrelObjectImpl : NSObject<NSCopying, OCSquirrelObject>
 {
 @protected

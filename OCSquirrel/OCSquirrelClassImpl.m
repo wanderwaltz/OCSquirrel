@@ -182,7 +182,7 @@
 #pragma mark -
 #pragma mark bindings: private
 
-/// Traverses all superclasses
+// Traverses all superclasses
 - (void) bindInstanceMethodsOfNativeClassHierarchy: (Class) nativeClass
 {
     if (nativeClass != [NSObject class])

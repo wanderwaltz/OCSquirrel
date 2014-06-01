@@ -12,5 +12,7 @@
 #pragma mark -
 #pragma mark OCSquirrelArrayImpl interface
 
+/** Internal implementation of OCSquirrelArray protocol.
+ */
 @interface OCSquirrelArrayImpl : OCSquirrelObjectImpl<OCSquirrelArray>
 @end

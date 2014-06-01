@@ -17,7 +17,7 @@
 #import "OCSquirrelUserDataImpl.h"
 
 
-/*! Implementation for constructor() method of the Squirrel classes bound to Objective-C classes.
+/*  Implementation for constructor() method of the Squirrel classes bound to Objective-C classes.
     This implementation actually only +allocs the instance, but does not initialize it, so the
     initializer methods should be called afterwards similar to how it would be done in Objective-C
     with NSObject subclasses.
@@ -56,7 +56,7 @@ SQInteger OCSquirrelVMBindings_Constructor(HSQUIRRELVM vm)
 
 
 
-/// This function is used internally by other binding implementations
+// This function is used internally by other binding implementations
 void _setArgumentAtIndex(NSUInteger i,
                          HSQUIRRELVM vm,           // Have to pass both HSQUIRRELVM
                          OCSquirrelVM *squirrelVM, // and OCSquirrelVM here since both
@@ -164,7 +164,7 @@ void _setArgumentAtIndex(NSUInteger i,
 }
 
 
-/*! This function is used internally by other binding implementations.
+/*  This function is used internally by other binding implementations.
     Returns YES if pushed return value to the Squirrel VM stack.
  */
 BOOL _pushReturnValueAtIndex(HSQUIRRELVM vm,           // Have to pass both HSQUIRRELVM
@@ -241,7 +241,7 @@ BOOL _pushReturnValueAtIndex(HSQUIRRELVM vm,           // Have to pass both HSQU
 }
 
 
-/*! Implementation for instance methods simple invocation. Simple invocations accept zero or one parameter
+/*  Implementation for instance methods simple invocation. Simple invocations accept zero or one parameter
     and may return a value.
  */
 SQInteger OCSquirrelVMBindings_Instance_SimpleInvocation(HSQUIRRELVM vm)
@@ -287,7 +287,7 @@ SQInteger OCSquirrelVMBindings_Instance_SimpleInvocation(HSQUIRRELVM vm)
 
 
 
-/*! Implementation for initializer methods simple invocation. Initializer methods
+/*  Implementation for initializer methods simple invocation. Initializer methods
     are special in the way that they return `self` and allow assignment of `self`
     in these methods. This means we have to replace the Squirrel instance user
     pointer with the return value of the initializer method.
