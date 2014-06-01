@@ -452,10 +452,9 @@
     
     XCTAssertEqualObjects(self,
                           // Pointers to a generic Objective-C object are pushed to Squirrel stack
-                          // as user pointers, so are returned as NSValues with the corresponding
-                          // pointer set as pointerValue.
-                          (__bridge id)[[instance callClosureWithKey: @"objectMethodReturnParam"
-                                                          parameters: @[self]] pointerValue],
+                          // as user data, so are returned as OCSquirrelUserData
+                          [[instance callClosureWithKey: @"objectMethodReturnParam"
+                                            parameters: @[self]] object],
                           @"Bound class should have a method returning the single object parameter");
 }
 

@@ -352,7 +352,7 @@
 }
 
 
-- (void) testUserPointerForUnsupportedTypesClass
+- (void) testUserDataForUnsupportedTypesClass
 {
     id object = [NSObject new];
     
@@ -360,12 +360,12 @@
     
     id value = [_squirrelVM.stack valueAtPosition: -1];
     
-    XCTAssertTrue([value isKindOfClass: [NSValue class]],
-                  @"-pushValue: shoud push an unsupported value as a user pointer");
+    XCTAssertTrue([value isKindOfClass: [OCSquirrelUserData class]],
+                  @"-pushValue: shoud push an unsupported value as OCSquirrelUserData");
 }
 
 
-- (void) testUserPointerForUnsupportedTypesValue
+- (void) testUserDataForUnsupportedTypesValue
 {
     id object = [NSObject new];
     
@@ -373,8 +373,8 @@
     
     id value = [_squirrelVM.stack valueAtPosition: -1];
     
-    XCTAssertEqual((__bridge void *)object, [value pointerValue],
-                   @"-pushValue: shoud push an unsupported value as a user pointer");
+    XCTAssertEqualObjects([value object], object,
+                          @"-pushValue: shoud push an unsupported value as OCSquirrelUserData");
 }
 
 

@@ -181,7 +181,10 @@
     }
     else
     {
-        [self pushUserPointer: (__bridge void *)value];
+        // Push any other Objective-C object as OCSquirrelUserData
+        OCSquirrelUserDataImpl *impl = [[OCSquirrelUserDataImpl alloc] initWithObject: value
+                                                                                 inVM: _squirrelVM];
+        [impl push];
     }
 }
 
