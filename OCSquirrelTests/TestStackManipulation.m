@@ -353,6 +353,17 @@
 }
 
 
+- (void) testPushObjectBoundToDifferentVMThrows
+{
+    OCSquirrelVM *otherVM = [OCSquirrelVM new];
+    
+    XCTAssertThrowsSpecificNamed([_squirrelVM.stack pushValue: [otherVM rootTable]],
+                                 NSException,
+                                 NSInvalidArgumentException,
+                                 @"-pushValue: should throw an NSInvalidArgumentException when trying to "
+                                 @"push an OCSquirrelObject bound to a different Squirrel VM");
+}
+
 
 #pragma mark -
 #pragma mark reading successfull tests

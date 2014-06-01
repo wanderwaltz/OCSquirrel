@@ -222,4 +222,19 @@
                           @"OCSquirrelTable copy is shallow and does not copy objects contained within the table");
 }
 
+
+#pragma mark - other tests
+
+- (void)testThrowsWhenSettingValueBoundToOtherVM
+{
+    // Table is bound to [OCSquirrelVM defaultVM] which differs from _squrrelVM
+    OCSquirrelTable *table = [OCSquirrelTable new];
+    
+    XCTAssertThrowsSpecificNamed(table[@"key"] = [_squirrelVM rootTable],
+                                 NSException, NSInvalidArgumentException,
+                                 @"OCSquirrelTable should throw an NSInvalidArgumentException when trying to set "
+                                 @"an OCSquirrelObject bound to another Squirrel VM as a value");
+    
+}
+
 @end

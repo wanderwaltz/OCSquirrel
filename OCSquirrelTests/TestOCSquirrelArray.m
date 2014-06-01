@@ -220,4 +220,19 @@
 }
 
 
+#pragma mark - other tests
+
+- (void)testThrowsWhenSettingValueBoundToOtherVM
+{
+    // Array is bound to [OCSquirrelVM defaultVM] which differs from _squirrelVM
+    OCSquirrelArray *array = [OCSquirrelArray new];
+    
+    XCTAssertThrowsSpecificNamed([array addObject: [_squirrelVM rootTable]],
+                                 NSException, NSInvalidArgumentException,
+                                 @"OCSquirrelArray should throw an NSInvalidArgumentException when trying to add "
+                                 @"an OCSquirrelObject bound to another Squirrel VM as a value");
+    
+}
+
+
 @end

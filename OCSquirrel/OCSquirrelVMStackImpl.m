@@ -112,6 +112,15 @@
 {
     if ([value conformsToProtocol: @protocol(OCSquirrelObject)])
     {
+        if ([value squirrelVM] != _squirrelVM) {
+            @throw [NSException exceptionWithName: NSInvalidArgumentException
+                                           reason: [NSString stringWithFormat:
+                                                    @"*** -pushValue: unable to push %@ which is bound to a different "
+                                                    @"OCSquirrelVM", value]
+                                         userInfo: nil];
+            return;
+        }
+        
         [value push];
     }
     else if ([value isKindOfClass: [NSArray class]])
