@@ -54,7 +54,7 @@
  *  - `NSArray` and `NSDictionary` objects are automatically converted to `OCSquirrelArray` 
  *  and `OCSquirrelDictionary` instances respectively.
  *  - Objective-C classes which are unknown to the Squirrel VM are represented as objects of
- *  user pointer type.
+ *  `OCSquirrelUserData` class.
  *
  *  Stack indexation
  *  ----------------

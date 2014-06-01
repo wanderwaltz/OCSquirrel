@@ -27,6 +27,8 @@
 		4409CE691936F2F800C424EB /* OCSquirrelBlockInvocation_NoARC.m in Sources */ = {isa = PBXBuildFile; fileRef = 4409CE671936F2F800C424EB /* OCSquirrelBlockInvocation_NoARC.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		4409CE721936F76500C424EB /* OCSquirrelUserDataImpl.h in Headers */ = {isa = PBXBuildFile; fileRef = 4409CE701936F76500C424EB /* OCSquirrelUserDataImpl.h */; };
 		4409CE731936F76500C424EB /* OCSquirrelUserDataImpl.m in Sources */ = {isa = PBXBuildFile; fileRef = 4409CE711936F76500C424EB /* OCSquirrelUserDataImpl.m */; };
+		440DD990193B3E1A007FF0A5 /* TestOCSquirrelUserData.m in Sources */ = {isa = PBXBuildFile; fileRef = 440DD98F193B3E1A007FF0A5 /* TestOCSquirrelUserData.m */; };
+		440DD991193B3E1A007FF0A5 /* TestOCSquirrelUserData.m in Sources */ = {isa = PBXBuildFile; fileRef = 440DD98F193B3E1A007FF0A5 /* TestOCSquirrelUserData.m */; };
 		44227BE419330B520011CE2C /* OCSquirrelTable.m in Sources */ = {isa = PBXBuildFile; fileRef = 44227BE319330B520011CE2C /* OCSquirrelTable.m */; };
 		44227BE7193323B60011CE2C /* TestOCSquirrelTable+Protected.m in Sources */ = {isa = PBXBuildFile; fileRef = 44227BE6193323B60011CE2C /* TestOCSquirrelTable+Protected.m */; };
 		44227BE9193324BE0011CE2C /* TestOCSquirrelTable+Protected.m in Sources */ = {isa = PBXBuildFile; fileRef = 44227BE6193323B60011CE2C /* TestOCSquirrelTable+Protected.m */; };
@@ -221,6 +223,7 @@
 		4409CE671936F2F800C424EB /* OCSquirrelBlockInvocation_NoARC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OCSquirrelBlockInvocation_NoARC.m; sourceTree = "<group>"; };
 		4409CE701936F76500C424EB /* OCSquirrelUserDataImpl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OCSquirrelUserDataImpl.h; sourceTree = "<group>"; };
 		4409CE711936F76500C424EB /* OCSquirrelUserDataImpl.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OCSquirrelUserDataImpl.m; sourceTree = "<group>"; };
+		440DD98F193B3E1A007FF0A5 /* TestOCSquirrelUserData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TestOCSquirrelUserData.m; sourceTree = "<group>"; };
 		44227BE319330B520011CE2C /* OCSquirrelTable.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OCSquirrelTable.m; sourceTree = "<group>"; };
 		44227BE519330B9C0011CE2C /* OCSquirrelTable+Protected.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "OCSquirrelTable+Protected.h"; sourceTree = "<group>"; };
 		44227BE6193323B60011CE2C /* TestOCSquirrelTable+Protected.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "TestOCSquirrelTable+Protected.m"; sourceTree = "<group>"; };
@@ -865,6 +868,7 @@
 				5D8EC814171A64690084F92C /* TestStackManipulation.m */,
 				44227BEA193330130011CE2C /* TestOCSquirrelTable.m */,
 				44227BF619339E350011CE2C /* TestOCSquirrelArray.m */,
+				440DD98F193B3E1A007FF0A5 /* TestOCSquirrelUserData.m */,
 			);
 			name = "Public API tests";
 			sourceTree = "<group>";
@@ -1319,6 +1323,7 @@
 				5DB09DF617196D1F00F50257 /* TestRawSquirrelAPI.m in Sources */,
 				44A884DB193634DE00FA503E /* TestOCSquirrelClosure+Protected.m in Sources */,
 				5DB09DF917196FA500F50257 /* TestOCSquirrelVM.mm in Sources */,
+				440DD990193B3E1A007FF0A5 /* TestOCSquirrelUserData.m in Sources */,
 				5D8EC812171A57600084F92C /* TestPrinting.m in Sources */,
 				5D8EC815171A64690084F92C /* TestStackManipulation.m in Sources */,
 				5DE00AF91939AE9200BB06E0 /* TestOCSquirrelUserDataImpl.m in Sources */,
@@ -1357,6 +1362,7 @@
 				449DA97C193ACEE3007F0ECE /* TestOCSquirrelUserData+Protected.m in Sources */,
 				44227BF819339E350011CE2C /* TestOCSquirrelArray.m in Sources */,
 				44227BF519339B250011CE2C /* TestOCSquirrelArray+Protected.m in Sources */,
+				440DD991193B3E1A007FF0A5 /* TestOCSquirrelUserData.m in Sources */,
 				5DBE08CE173374B600908658 /* TestOCSquirrelVM.mm in Sources */,
 				5DBE08CF173374B600908658 /* TestRawSquirrelAPI.m in Sources */,
 				44227BE9193324BE0011CE2C /* TestOCSquirrelTable+Protected.m in Sources */,
@@ -1745,6 +1751,7 @@
 				449DA987193AFA73007F0ECE /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		5DB09C931719686C00F50257 /* Build configuration list for PBXProject "OCSquirrel" */ = {
 			isa = XCConfigurationList;
