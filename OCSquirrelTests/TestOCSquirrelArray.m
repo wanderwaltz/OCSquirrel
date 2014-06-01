@@ -161,4 +161,63 @@
 }
 
 
+#pragma mark - <NSCopying> tests
+
+- (void)testCopyClass
+{
+    OCSquirrelArray *array = [OCSquirrelArray new];
+    OCSquirrelArray *clone = [array copy];
+    
+    XCTAssertTrue([clone isKindOfClass: [OCSquirrelArray class]],
+                  @"Copying OCSquirrelArray should return an object of OCSquirrelArray class");
+}
+
+
+- (void)testCopySameVM
+{
+    OCSquirrelArray *array = [OCSquirrelArray new];
+    OCSquirrelArray *clone = [array copy];
+    
+    XCTAssertEqualObjects(array.squirrelVM, clone.squirrelVM,
+                          @"Copied OCSquirrelArray should be bound to the same SquirrelVM");
+}
+
+
+- (void)testCopyHasSameContents
+{
+    OCSquirrelArray *array = [[OCSquirrelArray alloc] initWithArray: @[@1, @2, @3]];
+    OCSquirrelArray *clone = [array copy];
+    
+    XCTAssertEqualObjects(array, clone,
+                          @"Copied OCSquirrelArray should have the same contents");
+}
+
+
+- (void)testCopyIsDifferentArray
+{
+    OCSquirrelArray *array = [[OCSquirrelArray alloc] initWithArray: @[@1, @2, @3]];
+    OCSquirrelArray *clone = [array copy];
+    
+    [clone removeAllObjects];
+    
+    XCTAssertNotEqualObjects(array, clone,
+                             @"Copied OCSquirrelArray should be a different mutable object");
+}
+
+
+- (void)testCopyIsShallow
+{
+    OCSquirrelTable *inner = [[OCSquirrelTable alloc] initWithDictionary: @{ @1 : @2, @3 : @4, @5 : @6 }];
+    OCSquirrelArray *array = [[OCSquirrelArray alloc] initWithObjects: inner, nil];
+    
+    OCSquirrelArray *clone = [array copy];
+    OCSquirrelTable *clonedInner = clone.firstObject;
+    
+    [clonedInner removeObjectForKey: @1];
+    
+    XCTAssertEqualObjects(inner, clonedInner,
+                          @"OCSquirrelArray copy is shallow and does not copy objects contained within the array");
+}
+
+
 @end
