@@ -72,7 +72,12 @@
 /** Number of values currently contained in the Squirrel VM stack.
  *  
  *  Setting this property to a value less than current effectively
- *  pops multiple items from the stack.
+ *  pops multiple items from the stack. Settings this property to
+ *  a value greater than current will push an appropriate number of
+ *  `null`s to the top of the stack.
+ *
+ *  @exception NSInvalidArgumentException Is thrown when trying to set
+ *    a negative value to this property.
  */
 @property (assign, nonatomic) NSInteger top;
 
