@@ -1056,7 +1056,7 @@
     
     NSMutableDictionary *enumerated = [NSMutableDictionary dictionary];
     
-    [table enumerateObjectsAndKeysUsingBlock:
+    [table enumerateKeysAndObjectsUsingBlock:
      ^(id key, id value, BOOL *stop)
      {
          if (key   == nil) key   = [NSNull null];
@@ -1080,7 +1080,7 @@
     
     __block NSUInteger iterations = 0;
     
-    [table enumerateObjectsAndKeysUsingBlock:
+    [table enumerateKeysAndObjectsUsingBlock:
      ^(id key, id value, BOOL *stop)
      {
          iterations++;

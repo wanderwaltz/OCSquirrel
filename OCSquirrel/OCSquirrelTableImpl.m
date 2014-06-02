@@ -281,7 +281,7 @@
 #pragma mark -
 #pragma mark enumeration
 
-- (void)enumerateObjectsAndKeysUsingBlock:(void (^)(id key, id value, BOOL *stop))block
+- (void)enumerateKeysAndObjectsUsingBlock:(void (^)(id key, id value, BOOL *stop))block
 {
     if (block != nil)
     {

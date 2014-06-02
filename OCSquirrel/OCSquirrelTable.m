@@ -230,9 +230,9 @@ forKeyedSubscript:(id<NSCopying>)key
 
 #pragma mark enumeration
 
-- (void)enumerateObjectsAndKeysUsingBlock:(void (^)(id key, id value, BOOL *stop))block
+- (void)enumerateKeysAndObjectsUsingBlock:(void (^)(id key, id value, BOOL *stop))block
 {
-    [self.impl enumerateObjectsAndKeysUsingBlock: block];
+    [self.impl enumerateKeysAndObjectsUsingBlock: block];
 }
 
 

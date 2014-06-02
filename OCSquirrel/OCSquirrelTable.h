@@ -204,7 +204,7 @@
  *
  *  @discussion If the `block` sets `*stop` to `YES`, the enumeration stops.
  */
-- (void)enumerateObjectsAndKeysUsingBlock:(void (^)(id key, id value, BOOL *stop))block;
+- (void)enumerateKeysAndObjectsUsingBlock:(void (^)(id key, id value, BOOL *stop))block;
 
 
 #pragma mark calls

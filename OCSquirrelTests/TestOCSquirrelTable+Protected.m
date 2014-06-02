@@ -417,9 +417,9 @@
     id implMock = [OCMockObject mockForClass: [OCSquirrelTableImpl class]];
     OCSquirrelTable *table = [[OCSquirrelTable alloc] initWithImpl: implMock];
     
-    [(OCSquirrelTableImpl *)[implMock expect] enumerateObjectsAndKeysUsingBlock: OCMOCK_ANY];
+    [(OCSquirrelTableImpl *)[implMock expect] enumerateKeysAndObjectsUsingBlock: OCMOCK_ANY];
     
-    [table enumerateObjectsAndKeysUsingBlock:^(id key, id value, BOOL *stop) {
+    [table enumerateKeysAndObjectsUsingBlock:^(id key, id value, BOOL *stop) {
         
     }];
     
