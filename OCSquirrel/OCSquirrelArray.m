@@ -45,9 +45,70 @@
 }
 
 
+#pragma mark - initialization methods + OCSquirrelVM
+
 - (instancetype)initWithSquirrelVM:(OCSquirrelVM *)squirrelVM
 {
     OCSquirrelArrayImpl *impl = [[OCSquirrelArrayImpl alloc] initWithSquirrelVM: squirrelVM];
+    
+    return [self initWithImpl: impl];
+}
+
+
+- (instancetype)initWithSquirrelVM:(OCSquirrelVM *)squirrelVM
+                           objects:(const id [])objects
+                             count:(NSUInteger)count
+{
+    OCSquirrelArrayImpl *impl = [[OCSquirrelArrayImpl alloc] initWithSquirrelVM: squirrelVM];
+    
+    for (NSUInteger i = 0; i < count; ++i)
+    {
+        [impl addObject: objects[i]];
+    }
+    
+    return [self initWithImpl: impl];
+}
+
+
+- (instancetype)initWithSquirrelVM:(OCSquirrelVM *)squirrelVM
+                           objects:(id)firstObj, ...
+{
+    OCSquirrelArrayImpl *impl = [[OCSquirrelArrayImpl alloc] initWithSquirrelVM: squirrelVM];
+    
+    id arg = nil;
+    
+    va_list args;
+    va_start(args, firstObj);
+    
+    while ((arg = va_arg(args, id)))
+    {
+        [impl addObject: arg];
+    }
+    
+    va_end(args);
+    
+    return [self initWithImpl: impl];
+}
+
+
+- (instancetype)initWithSquirrelVM:(OCSquirrelVM *)squirrelVM
+                             array:(NSArray *)array
+{
+    return [self initWithSquirrelVM: squirrelVM
+                              array: array
+                          copyItems: NO];
+}
+
+
+- (instancetype)initWithSquirrelVM:(OCSquirrelVM *)squirrelVM
+                             array:(NSArray *)array
+                         copyItems:(BOOL)flag
+{
+    OCSquirrelArrayImpl *impl = [[OCSquirrelArrayImpl alloc] initWithSquirrelVM: squirrelVM];
+    
+    [array enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
+        [impl addObject: obj];
+    }];
     
     return [self initWithImpl: impl];
 }

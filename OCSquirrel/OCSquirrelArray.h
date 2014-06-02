@@ -43,4 +43,18 @@
 
 - (instancetype)initWithSquirrelVM:(OCSquirrelVM *)squirrelVM;
 
+- (instancetype)initWithSquirrelVM:(OCSquirrelVM *)squirrelVM
+                           objects:(const id [])objects
+                             count:(NSUInteger)count;
+
+- (instancetype)initWithSquirrelVM:(OCSquirrelVM *)squirrelVM
+                           objects:(id)firstObj, ... NS_REQUIRES_NIL_TERMINATION;
+
+- (instancetype)initWithSquirrelVM:(OCSquirrelVM *)squirrelVM
+                             array:(NSArray *)array;
+
+- (instancetype)initWithSquirrelVM:(OCSquirrelVM *)squirrelVM
+                             array:(NSArray *)array
+                         copyItems:(BOOL)flag;
+
 @end

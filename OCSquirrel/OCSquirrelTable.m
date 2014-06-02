@@ -38,6 +38,8 @@
 }
 
 
+#pragma mark - initialization methods + OCSquirrelVM
+
 - (instancetype)initWithSquirrelVM:(OCSquirrelVM *)squirrelVM
 {
     const id objects[0] = {};
@@ -50,12 +52,12 @@
 }
 
 
-- (instancetype)initWithSquirrelVM:(OCSquirrelVM *)vm
+- (instancetype)initWithSquirrelVM:(OCSquirrelVM *)squirrelVM
                            objects:(const id [])objects
                            forKeys:(const id<NSCopying> [])keys
                              count:(NSUInteger)count
 {
-    OCSquirrelTableImpl *impl = [[OCSquirrelTableImpl alloc] initWithSquirrelVM: vm];
+    OCSquirrelTableImpl *impl = [[OCSquirrelTableImpl alloc] initWithSquirrelVM: squirrelVM];
     
     for (NSUInteger i = 0; i < count; ++i)
     {
@@ -64,6 +66,77 @@
     
     return [self initWithImpl: impl];
 }
+
+
+- (instancetype)initWithSquirrelVM:(OCSquirrelVM *)squirrelVM
+                    objectsAndKeys:(id)firstObject, ...
+{
+    OCSquirrelTableImpl *impl = [[OCSquirrelTableImpl alloc] initWithSquirrelVM: squirrelVM];
+    
+    id arg = nil;
+    
+    id object = nil;
+    
+    va_list args;
+    va_start(args, firstObject);
+    
+    while ((arg = va_arg(args, id)))
+    {
+        if (object == nil) {
+            object = arg;
+        }
+        else {
+            impl[arg] = object;
+            object = nil;
+        }
+    }
+    
+    va_end(args);
+    
+    return [self initWithImpl: impl];
+}
+
+
+- (instancetype)initWithSquirrelVM:(OCSquirrelVM *)squirrelVM
+                        dictionary:(NSDictionary *)otherDictionary
+{
+    return [self initWithSquirrelVM: squirrelVM
+                         dictionary: otherDictionary
+                          copyItems: NO];
+}
+
+
+- (instancetype)initWithSquirrelVM:(OCSquirrelVM *)squirrelVM
+                        dictionary:(NSDictionary *)otherDictionary
+                         copyItems:(BOOL)flag
+{
+    OCSquirrelTableImpl *impl = [[OCSquirrelTableImpl alloc] initWithSquirrelVM: squirrelVM];
+    
+    [otherDictionary enumerateKeysAndObjectsUsingBlock: ^(id key, id obj, BOOL *stop) {
+        impl[key] = (flag) ? [obj copy] : obj;
+    }];
+    
+    return [self initWithImpl: impl];
+}
+
+
+- (instancetype)initWithSquirrelVM:(OCSquirrelVM *)squirrelVM
+                           objects:(NSArray *)objects
+                           forKeys:(NSArray *)keys
+{
+    OCSquirrelTableImpl *impl = [[OCSquirrelTableImpl alloc] initWithSquirrelVM: squirrelVM];
+    
+    for (NSUInteger i = 0; i < objects.count; ++i)
+    {
+        id object = objects[i];
+        id key = keys[i];
+        
+        impl[key] = object;
+    }
+    
+    return [self initWithImpl: impl];
+}
+
 
 
 #pragma mark - NSDictionary primitive methods

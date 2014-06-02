@@ -282,10 +282,25 @@
  *
  *  @exception NSInvalidArgumentException Is thrown when trying to initialize with `nil` OCSquirrelVM.
  */
-- (instancetype)initWithSquirrelVM:(OCSquirrelVM *)vm
+- (instancetype)initWithSquirrelVM:(OCSquirrelVM *)squirrelVM
                            objects:(const id [])objects
                            forKeys:(const id<NSCopying> [])keys
                              count:(NSUInteger)count;
+
+- (instancetype)initWithSquirrelVM:(OCSquirrelVM *)squirrelVM
+                    objectsAndKeys:(id)firstObject, ... NS_REQUIRES_NIL_TERMINATION;
+
+- (instancetype)initWithSquirrelVM:(OCSquirrelVM *)squirrelVM
+                        dictionary:(NSDictionary *)otherDictionary;
+
+- (instancetype)initWithSquirrelVM:(OCSquirrelVM *)squirrelVM
+                        dictionary:(NSDictionary *)otherDictionary
+                         copyItems:(BOOL)flag;
+
+- (instancetype)initWithSquirrelVM:(OCSquirrelVM *)squirrelVM
+                           objects:(NSArray *)objects
+                           forKeys:(NSArray *)keys;
+
 
 #pragma mark unavailable NSDictionary methods
 
