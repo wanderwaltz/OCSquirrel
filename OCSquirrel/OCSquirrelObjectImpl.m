@@ -47,7 +47,7 @@
 
 + (id)newWithVM:(OCSquirrelVM *)squirrelVM
 {
-    return [[self alloc] initWithVM:squirrelVM];
+    return [[self alloc] initWithSquirrelVM:squirrelVM];
 }
 
 
@@ -61,7 +61,7 @@
 
 #pragma mark - initialization methods
 
-- (id)initWithVM:(OCSquirrelVM *)squirrelVM
+- (id)initWithSquirrelVM:(OCSquirrelVM *)squirrelVM
 {
     if (squirrelVM == nil) {
         @throw [NSException exceptionWithName: NSInvalidArgumentException

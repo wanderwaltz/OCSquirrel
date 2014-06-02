@@ -35,7 +35,7 @@
 }
 
 
-- (instancetype)initWithVM:(OCSquirrelVM *)squirrelVM
+- (instancetype)initWithSquirrelVM:(OCSquirrelVM *)squirrelVM
 {
     return [self initWithObject: nil
                            inVM: squirrelVM];
@@ -45,7 +45,7 @@
 - (instancetype)initWithObject:(id)object
                           inVM:(OCSquirrelVM *)squirrelVM
 {
-    self = [super initWithVM: squirrelVM];
+    self = [super initWithSquirrelVM: squirrelVM];
     
     if (self != nil) {
         

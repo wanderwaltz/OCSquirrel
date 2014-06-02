@@ -48,9 +48,9 @@
 #pragma mark -
 #pragma mark initialization methods
 
-- (id) initWithVM: (OCSquirrelVM *) squirrelVM
+- (id) initWithSquirrelVM: (OCSquirrelVM *) squirrelVM
 {
-    self = [super initWithVM: squirrelVM];
+    self = [super initWithSquirrelVM: squirrelVM];
     
     if (self != nil)
     {

@@ -41,6 +41,6 @@
 
 @interface OCSquirrelArray : NSMutableArray<OCSquirrelArray>
 
-- (instancetype)initWithVM:(OCSquirrelVM *)vm;
+- (instancetype)initWithSquirrelVM:(OCSquirrelVM *)squirrelVM;
 
 @end

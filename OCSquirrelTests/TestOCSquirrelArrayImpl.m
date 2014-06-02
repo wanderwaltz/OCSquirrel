@@ -62,7 +62,7 @@
 
 - (void) testNewArrayInitializingWithVM
 {
-    OCSquirrelArrayImpl *array = [[OCSquirrelArrayImpl alloc] initWithVM: _squirrelVM];
+    OCSquirrelArrayImpl *array = [[OCSquirrelArrayImpl alloc] initWithSquirrelVM: _squirrelVM];
     
     XCTAssertNotNil(array, @"Should be able to create OCSquirrelArrayImpl instances");
 }
@@ -70,7 +70,7 @@
 
 - (void) testTypeAfterInitializingWithVM
 {
-    OCSquirrelArrayImpl *array = [[OCSquirrelArrayImpl alloc] initWithVM: _squirrelVM];
+    OCSquirrelArrayImpl *array = [[OCSquirrelArrayImpl alloc] initWithSquirrelVM: _squirrelVM];
     
     XCTAssertEqual(array.type, OT_ARRAY,
                    @"OCSquirrelArrayImpl should be a wrapper for OT_ARRAY HSQOBJECT");
@@ -93,7 +93,7 @@
 
 - (void) testNewEmptyArrayCount
 {
-    OCSquirrelArrayImpl *array = [[OCSquirrelArrayImpl alloc] initWithVM: _squirrelVM];
+    OCSquirrelArrayImpl *array = [[OCSquirrelArrayImpl alloc] initWithSquirrelVM: _squirrelVM];
     
     XCTAssertEqual((NSUInteger)array.count, (NSUInteger)0,
                    @"Number of elements should be zero after creating a new empty array.");
@@ -102,7 +102,7 @@
 
 - (void) testCountAfterAddingElement
 {
-    OCSquirrelArrayImpl *array = [[OCSquirrelArrayImpl alloc] initWithVM: _squirrelVM];
+    OCSquirrelArrayImpl *array = [[OCSquirrelArrayImpl alloc] initWithSquirrelVM: _squirrelVM];
     
     [array addObject: @123];
     
@@ -369,7 +369,7 @@
 
 - (void) testEnumerateObjectsUsingBlock
 {
-    OCSquirrelArrayImpl *array = [[OCSquirrelArrayImpl alloc] initWithVM: _squirrelVM];
+    OCSquirrelArrayImpl *array = [[OCSquirrelArrayImpl alloc] initWithSquirrelVM: _squirrelVM];
     
     NSArray *values = @[@1, @2, @3];
     
@@ -397,7 +397,7 @@
 
 - (void) testEnumerateObjectsUsingBlockStop
 {
-    OCSquirrelArrayImpl *array = [[OCSquirrelArrayImpl alloc] initWithVM: _squirrelVM];
+    OCSquirrelArrayImpl *array = [[OCSquirrelArrayImpl alloc] initWithSquirrelVM: _squirrelVM];
     
     [array addObject: @1];
     [array addObject: @2];
@@ -419,8 +419,8 @@
 
 - (void)testNestedBlockEnumeration
 {
-    OCSquirrelArrayImpl *first = [[OCSquirrelArrayImpl alloc] initWithVM: _squirrelVM];
-    OCSquirrelArrayImpl *second = [[OCSquirrelArrayImpl alloc] initWithVM: _squirrelVM];
+    OCSquirrelArrayImpl *first = [[OCSquirrelArrayImpl alloc] initWithSquirrelVM: _squirrelVM];
+    OCSquirrelArrayImpl *second = [[OCSquirrelArrayImpl alloc] initWithSquirrelVM: _squirrelVM];
     
     [first addObject: @1];
     [first addObject: @2];
@@ -451,7 +451,7 @@
 
 - (void) testSetObjectIntAtIndexOnce
 {
-    OCSquirrelArrayImpl *array = [[OCSquirrelArrayImpl alloc] initWithVM: _squirrelVM];
+    OCSquirrelArrayImpl *array = [[OCSquirrelArrayImpl alloc] initWithSquirrelVM: _squirrelVM];
     
     [array addObject: @1234];
     
@@ -464,7 +464,7 @@
 
 - (void) testSetObjectFloatAtIndex
 {
-    OCSquirrelArrayImpl *array = [[OCSquirrelArrayImpl alloc] initWithVM: _squirrelVM];
+    OCSquirrelArrayImpl *array = [[OCSquirrelArrayImpl alloc] initWithSquirrelVM: _squirrelVM];
     
     [array addObject: @1234];
     
@@ -477,7 +477,7 @@
 
 - (void) testSetObjectBoolAtIndex
 {
-    OCSquirrelArrayImpl *array = [[OCSquirrelArrayImpl alloc] initWithVM: _squirrelVM];
+    OCSquirrelArrayImpl *array = [[OCSquirrelArrayImpl alloc] initWithSquirrelVM: _squirrelVM];
     
     [array addObject: @1234];
     
@@ -490,7 +490,7 @@
 
 - (void) testSetObjectUserPointerAtIndex
 {
-    OCSquirrelArrayImpl *array = [[OCSquirrelArrayImpl alloc] initWithVM: _squirrelVM];
+    OCSquirrelArrayImpl *array = [[OCSquirrelArrayImpl alloc] initWithSquirrelVM: _squirrelVM];
     
     [array addObject: @1234];
     
@@ -503,7 +503,7 @@
 
 - (void) testSetObjectStringAtIndex
 {
-    OCSquirrelArrayImpl *array = [[OCSquirrelArrayImpl alloc] initWithVM: _squirrelVM];
+    OCSquirrelArrayImpl *array = [[OCSquirrelArrayImpl alloc] initWithSquirrelVM: _squirrelVM];
     
     [array addObject: @1234];
     
@@ -516,7 +516,7 @@
 
 - (void) testSetObjectNilAtIndex
 {
-    OCSquirrelArrayImpl *array = [[OCSquirrelArrayImpl alloc] initWithVM: _squirrelVM];
+    OCSquirrelArrayImpl *array = [[OCSquirrelArrayImpl alloc] initWithSquirrelVM: _squirrelVM];
     
     [array addObject: @1234];
     
@@ -531,7 +531,7 @@
 
 - (void)testInsertObjectIntoEmptyArrayCount
 {
-    OCSquirrelArrayImpl *array = [[OCSquirrelArrayImpl alloc] initWithVM: _squirrelVM];
+    OCSquirrelArrayImpl *array = [[OCSquirrelArrayImpl alloc] initWithSquirrelVM: _squirrelVM];
     
     [array insertObject: @1 atIndex: 0];
     
@@ -542,7 +542,7 @@
 
 - (void)testInsertObjectIntoEmptyArrayValue
 {
-    OCSquirrelArrayImpl *array = [[OCSquirrelArrayImpl alloc] initWithVM: _squirrelVM];
+    OCSquirrelArrayImpl *array = [[OCSquirrelArrayImpl alloc] initWithSquirrelVM: _squirrelVM];
     
     [array insertObject: @1 atIndex: 0];
     
@@ -553,7 +553,7 @@
 
 - (void)testInsertObjectZeroIndex
 {
-    OCSquirrelArrayImpl *array = [[OCSquirrelArrayImpl alloc] initWithVM: _squirrelVM];
+    OCSquirrelArrayImpl *array = [[OCSquirrelArrayImpl alloc] initWithSquirrelVM: _squirrelVM];
     
     [array insertObject: @1 atIndex: 0];
     [array insertObject: @2 atIndex: 0];
@@ -570,7 +570,7 @@
 
 - (void)testInsertObjectVariousIndexes
 {
-    OCSquirrelArrayImpl *array = [[OCSquirrelArrayImpl alloc] initWithVM: _squirrelVM];
+    OCSquirrelArrayImpl *array = [[OCSquirrelArrayImpl alloc] initWithSquirrelVM: _squirrelVM];
     
     [array insertObject: @1 atIndex: 0];
     [array insertObject: @2 atIndex: 1];
@@ -587,7 +587,7 @@
 
 - (void)testPopReturnValue
 {
-    OCSquirrelArrayImpl *array = [[OCSquirrelArrayImpl alloc] initWithVM: _squirrelVM];
+    OCSquirrelArrayImpl *array = [[OCSquirrelArrayImpl alloc] initWithSquirrelVM: _squirrelVM];
     
     [array insertObject: @1 atIndex: 0];
     [array insertObject: @2 atIndex: 0];
@@ -601,7 +601,7 @@
 
 - (void)testPopCount
 {
-    OCSquirrelArrayImpl *array = [[OCSquirrelArrayImpl alloc] initWithVM: _squirrelVM];
+    OCSquirrelArrayImpl *array = [[OCSquirrelArrayImpl alloc] initWithSquirrelVM: _squirrelVM];
     
     [array insertObject: @1 atIndex: 0];
     [array insertObject: @2 atIndex: 0];
@@ -615,7 +615,7 @@
 
 - (void)testPopRemoval
 {
-    OCSquirrelArrayImpl *array = [[OCSquirrelArrayImpl alloc] initWithVM: _squirrelVM];
+    OCSquirrelArrayImpl *array = [[OCSquirrelArrayImpl alloc] initWithSquirrelVM: _squirrelVM];
     
     [array insertObject: @1 atIndex: 0];
     [array insertObject: @2 atIndex: 0];
@@ -629,7 +629,7 @@
 
 - (void)testRemoveObjectAtIndexCount
 {
-    OCSquirrelArrayImpl *array = [[OCSquirrelArrayImpl alloc] initWithVM: _squirrelVM];
+    OCSquirrelArrayImpl *array = [[OCSquirrelArrayImpl alloc] initWithSquirrelVM: _squirrelVM];
     
     [array insertObject: @1 atIndex: 0];
     [array insertObject: @2 atIndex: 0];
@@ -644,7 +644,7 @@
 
 - (void)testRemoveObjectAtIndexValues
 {
-    OCSquirrelArrayImpl *array = [[OCSquirrelArrayImpl alloc] initWithVM: _squirrelVM];
+    OCSquirrelArrayImpl *array = [[OCSquirrelArrayImpl alloc] initWithSquirrelVM: _squirrelVM];
     
     [array insertObject: @1 atIndex: 0];
     [array insertObject: @2 atIndex: 0];
@@ -663,7 +663,7 @@
 
 - (void)testObjectAtIndexUpperBoundException
 {
-    OCSquirrelArrayImpl *array = [[OCSquirrelArrayImpl alloc] initWithVM: _squirrelVM];
+    OCSquirrelArrayImpl *array = [[OCSquirrelArrayImpl alloc] initWithSquirrelVM: _squirrelVM];
     
     [array insertObject: @1 atIndex: 0];
     [array insertObject: @2 atIndex: 1];
@@ -677,7 +677,7 @@
 
 - (void)testObjectAtIndexLowerBoundException
 {
-    OCSquirrelArrayImpl *array = [[OCSquirrelArrayImpl alloc] initWithVM: _squirrelVM];
+    OCSquirrelArrayImpl *array = [[OCSquirrelArrayImpl alloc] initWithSquirrelVM: _squirrelVM];
     
     [array insertObject: @1 atIndex: 0];
     [array insertObject: @2 atIndex: 1];
@@ -691,7 +691,7 @@
 
 - (void)testSetObjectAtIndexUpperBoundException
 {
-    OCSquirrelArrayImpl *array = [[OCSquirrelArrayImpl alloc] initWithVM: _squirrelVM];
+    OCSquirrelArrayImpl *array = [[OCSquirrelArrayImpl alloc] initWithSquirrelVM: _squirrelVM];
     
     [array insertObject: @1 atIndex: 0];
     [array insertObject: @2 atIndex: 1];
@@ -705,7 +705,7 @@
 
 - (void)testSetObjectAtIndexLowerBoundException
 {
-    OCSquirrelArrayImpl *array = [[OCSquirrelArrayImpl alloc] initWithVM: _squirrelVM];
+    OCSquirrelArrayImpl *array = [[OCSquirrelArrayImpl alloc] initWithSquirrelVM: _squirrelVM];
     
     [array insertObject: @1 atIndex: 0];
     [array insertObject: @2 atIndex: 1];
@@ -719,7 +719,7 @@
 
 - (void)testInsertObjectAtIndexOutOfBoundsThrowsNSRangeException
 {
-    OCSquirrelArrayImpl *array = [[OCSquirrelArrayImpl alloc] initWithVM: _squirrelVM];
+    OCSquirrelArrayImpl *array = [[OCSquirrelArrayImpl alloc] initWithSquirrelVM: _squirrelVM];
     
     [array insertObject: @1 atIndex: 0];
     [array insertObject: @2 atIndex: 1];
@@ -733,7 +733,7 @@
 
 - (void)testPopFromEmptyArrayThrowsNSRangeException
 {
-    OCSquirrelArrayImpl *array = [[OCSquirrelArrayImpl alloc] initWithVM: _squirrelVM];
+    OCSquirrelArrayImpl *array = [[OCSquirrelArrayImpl alloc] initWithSquirrelVM: _squirrelVM];
     
     XCTAssertThrowsSpecificNamed([array pop], NSException, NSRangeException,
                                  @"-pop should throw an NSRangeException if there are no objects in array");
@@ -742,7 +742,7 @@
 
 - (void)testRemoveObjectAtIndexOutOfBoundsThrowsNSRangeException
 {
-    OCSquirrelArrayImpl *array = [[OCSquirrelArrayImpl alloc] initWithVM: _squirrelVM];
+    OCSquirrelArrayImpl *array = [[OCSquirrelArrayImpl alloc] initWithSquirrelVM: _squirrelVM];
     
     [array insertObject: @1 atIndex: 0];
     [array insertObject: @2 atIndex: 0];
@@ -758,7 +758,7 @@
 
 - (void)testObjectAtNegativeIndex
 {
-    OCSquirrelArrayImpl *array = [[OCSquirrelArrayImpl alloc] initWithVM: _squirrelVM];
+    OCSquirrelArrayImpl *array = [[OCSquirrelArrayImpl alloc] initWithSquirrelVM: _squirrelVM];
     
     [array insertObject: @1 atIndex: 0];
     [array insertObject: @2 atIndex: 0];
@@ -771,7 +771,7 @@
 
 - (void)testSetObjectAtNegativeIndex
 {
-    OCSquirrelArrayImpl *array = [[OCSquirrelArrayImpl alloc] initWithVM: _squirrelVM];
+    OCSquirrelArrayImpl *array = [[OCSquirrelArrayImpl alloc] initWithSquirrelVM: _squirrelVM];
     
     [array insertObject: @1 atIndex: 0];
     [array insertObject: @2 atIndex: 0];

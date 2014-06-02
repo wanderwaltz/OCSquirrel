@@ -41,7 +41,7 @@
 {
     [super setUp];
     _squirrelVM = [[OCSquirrelVM alloc] init];
-    _class      = [[OCSquirrelClassImpl alloc] initWithVM: _squirrelVM];
+    _class      = [[OCSquirrelClassImpl alloc] initWithSquirrelVM: _squirrelVM];
 }
 
 

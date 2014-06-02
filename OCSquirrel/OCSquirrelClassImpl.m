@@ -52,7 +52,7 @@
 - (instancetype)initWithNativeClass:(Class)nativeClass
                                inVM:(OCSquirrelVM *)squirrelVM
 {
-    self = [super initWithVM: squirrelVM];
+    self = [super initWithSquirrelVM: squirrelVM];
     
     if (self != nil)
     {
@@ -71,7 +71,7 @@
 }
 
 
-- (instancetype)initWithVM:(OCSquirrelVM *)squirrelVM
+- (instancetype)initWithSquirrelVM:(OCSquirrelVM *)squirrelVM
 {
     return [self initWithNativeClass: nil inVM: squirrelVM];
 }

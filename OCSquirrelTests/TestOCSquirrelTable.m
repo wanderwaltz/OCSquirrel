@@ -42,7 +42,7 @@
 
 - (void)testInitWithVM
 {
-    OCSquirrelTable *table = [[OCSquirrelTable alloc] initWithVM: _squirrelVM];
+    OCSquirrelTable *table = [[OCSquirrelTable alloc] initWithSquirrelVM: _squirrelVM];
     
     XCTAssertEqualObjects(table.squirrelVM, _squirrelVM,
                           @"OCSquirrelTable should store the squirrelVM property value");
@@ -52,7 +52,7 @@
 - (void)testThrowsInitWithNilVM
 {
     XCTAssertThrowsSpecificNamed(({
-        __unused OCSquirrelTable *table = [[OCSquirrelTable alloc] initWithVM: nil];
+        __unused OCSquirrelTable *table = [[OCSquirrelTable alloc] initWithSquirrelVM: nil];
     }), NSException, NSInvalidArgumentException,
                                  @"OCSquirrelTable should throw NSInvalidArgumentException when trying to initialize "
                                  @"with nil Squirrel VM.");

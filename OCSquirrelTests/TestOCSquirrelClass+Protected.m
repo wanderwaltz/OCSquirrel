@@ -48,7 +48,7 @@
 
 - (void)testOCSquirrelVMHasImplPropertyAfterInitWithImpl
 {
-    OCSquirrelClassImpl *impl = [[OCSquirrelClassImpl alloc] initWithVM: _squirrelVM];
+    OCSquirrelClassImpl *impl = [[OCSquirrelClassImpl alloc] initWithSquirrelVM: _squirrelVM];
     OCSquirrelClass *class = [[OCSquirrelClass alloc] initWithImpl: impl];
     
     XCTAssertEqualObjects(class.impl, impl, @"-initWithImpl: should set the impl property of OCSquirrelClass");

@@ -48,7 +48,7 @@
 
 - (void)testOCSquirrelVMHasImplPropertyAfterInitWithImpl
 {
-    OCSquirrelTableImpl *impl = [[OCSquirrelTableImpl alloc] initWithVM: _squirrelVM];
+    OCSquirrelTableImpl *impl = [[OCSquirrelTableImpl alloc] initWithSquirrelVM: _squirrelVM];
     OCSquirrelTable *table = [[OCSquirrelTable alloc] initWithImpl: impl];
     
     XCTAssertEqualObjects(table.impl, impl, @"-initWithImpl: should set the impl property of OCSquirrelTable");

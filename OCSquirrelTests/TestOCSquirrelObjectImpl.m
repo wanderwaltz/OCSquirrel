@@ -71,14 +71,14 @@
 
 - (void) testInitWithVMMethodExists
 {
-    XCTAssertNotNil([[OCSquirrelObjectImpl alloc] initWithVM: _squirrelVM],
+    XCTAssertNotNil([[OCSquirrelObjectImpl alloc] initWithSquirrelVM: _squirrelVM],
                    @"OCSquirrelObjectImpl should have an -initWithSquirrelVM initializer method.");
 }
 
 
 - (void) testNoThrowWhenVMSet
 {
-    OCSquirrelObjectImpl *object = [[OCSquirrelObjectImpl alloc] initWithVM: _squirrelVM];
+    OCSquirrelObjectImpl *object = [[OCSquirrelObjectImpl alloc] initWithSquirrelVM: _squirrelVM];
     XCTAssertEqualObjects(object.squirrelVM, _squirrelVM,
                          @"Should not throw exception if VM has been set in initializer.");
 }
@@ -87,7 +87,7 @@
 - (void) testThrowsExceptionIfVMisNil
 {
     XCTAssertThrowsSpecificNamed(({
-        __unused OCSquirrelObjectImpl *object = [[OCSquirrelObjectImpl alloc] initWithVM: nil];
+        __unused OCSquirrelObjectImpl *object = [[OCSquirrelObjectImpl alloc] initWithSquirrelVM: nil];
     }), NSException, NSInvalidArgumentException,
                                  @"OCSquirrelObjectImpl should throw an exception when "
                                  @"initialized with nil OCSquirrelVM");
@@ -104,7 +104,7 @@
 
 - (void) testNotNULLObjWhenCreated
 {
-    OCSquirrelObjectImpl *object = [[OCSquirrelObjectImpl alloc] initWithVM: _squirrelVM];
+    OCSquirrelObjectImpl *object = [[OCSquirrelObjectImpl alloc] initWithSquirrelVM: _squirrelVM];
     XCTAssertTrue(object.obj != NULL,
                  @"OCSquirrelObjectImpl should have a non-NULL obj property value when created.");
 }
@@ -120,7 +120,7 @@
 
 - (void) testSQNullWhenCreated
 {
-    OCSquirrelObjectImpl *object = [[OCSquirrelObjectImpl alloc] initWithVM: _squirrelVM];
+    OCSquirrelObjectImpl *object = [[OCSquirrelObjectImpl alloc] initWithSquirrelVM: _squirrelVM];
     XCTAssertTrue(sq_isnull(*object.obj),
                  @"OCSquirrelObjectImpl's obj property should have a default `null` value in Squirrel VM.");
 }
@@ -136,7 +136,7 @@
 
 - (void) testIsNullWhenCreated
 {
-    OCSquirrelObjectImpl *object = [[OCSquirrelObjectImpl alloc] initWithVM: _squirrelVM];
+    OCSquirrelObjectImpl *object = [[OCSquirrelObjectImpl alloc] initWithSquirrelVM: _squirrelVM];
     XCTAssertTrue(object.isNull,
                  @"isNull property should be YES by default for OCSquirrelObjectImpl");
 }
@@ -222,7 +222,7 @@
 {
     NSInteger top = _squirrelVM.stack.top;
     
-    OCSquirrelObjectImpl *object = [[OCSquirrelObjectImpl alloc] initWithVM: _squirrelVM];
+    OCSquirrelObjectImpl *object = [[OCSquirrelObjectImpl alloc] initWithSquirrelVM: _squirrelVM];
     
     [object push];
     

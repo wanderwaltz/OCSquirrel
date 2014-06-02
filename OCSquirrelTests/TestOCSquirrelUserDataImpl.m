@@ -53,7 +53,7 @@
 
 - (void)testNewUserDataInitializingWithVM
 {
-    OCSquirrelUserDataImpl *userData = [[OCSquirrelUserDataImpl alloc] initWithVM: _squirrelVM];
+    OCSquirrelUserDataImpl *userData = [[OCSquirrelUserDataImpl alloc] initWithSquirrelVM: _squirrelVM];
     
     XCTAssertNotNil(userData, @"Should be able to create OCSquirrelUserDataImpl instances");
 }
@@ -61,7 +61,7 @@
 
 - (void)testTypeAfterInitializingWithVM
 {
-    OCSquirrelUserDataImpl *userData = [[OCSquirrelUserDataImpl alloc] initWithVM: _squirrelVM];
+    OCSquirrelUserDataImpl *userData = [[OCSquirrelUserDataImpl alloc] initWithSquirrelVM: _squirrelVM];
     
     XCTAssertEqual(userData.type, OT_USERDATA,
                    @"OCSquirrelUserDataImpl should be a wrapper for OT_USERDATA HSQOBJECT");
@@ -84,7 +84,7 @@
 
 - (void)testObjectPropertyIsNilByDefault
 {
-    OCSquirrelUserDataImpl *userData = [[OCSquirrelUserDataImpl alloc] initWithVM: _squirrelVM];
+    OCSquirrelUserDataImpl *userData = [[OCSquirrelUserDataImpl alloc] initWithSquirrelVM: _squirrelVM];
     
     XCTAssertNil(userData.object, @"Object property of the OCSquirrelUserDataImpl should be nil by default");
 }

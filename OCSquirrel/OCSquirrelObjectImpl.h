@@ -37,7 +37,7 @@
  *
  *  @param squirrelVM An OCSquirrelVM instance. Should not be nil.
  */
-- (instancetype)initWithVM:(OCSquirrelVM *)squirrelVM;
+- (instancetype)initWithSquirrelVM:(OCSquirrelVM *)squirrelVM;
 
 
 - (instancetype)initWithHSQOBJECT:(HSQOBJECT)object

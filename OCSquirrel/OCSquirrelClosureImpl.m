@@ -48,7 +48,7 @@
                     name:(NSString *)name
               squirrelVM:(OCSquirrelVM *)squirrelVM
 {
-    self = [super initWithVM: squirrelVM];
+    self = [super initWithSquirrelVM: squirrelVM];
     
     if (self != nil)
     {
@@ -87,7 +87,7 @@
     OCSquirrelUserDataImpl *invocationUD = [[OCSquirrelUserDataImpl alloc] initWithObject: blockInvocation
                                                                                      inVM: squirrelVM];
     
-    self = [super initWithVM: squirrelVM];
+    self = [super initWithSquirrelVM: squirrelVM];
     
     if (self != nil)
     {

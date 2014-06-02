@@ -110,7 +110,7 @@
 
 - (void) testNativeClassForUnboundClass
 {
-    OCSquirrelClass *class = [[OCSquirrelClass alloc] initWithVM: _squirrelVM];
+    OCSquirrelClass *class = [[OCSquirrelClass alloc] initWithSquirrelVM: _squirrelVM];
     
     XCTAssertNil(class.nativeClass,
                  @"OCSquirrelClass instances should have a native class property "

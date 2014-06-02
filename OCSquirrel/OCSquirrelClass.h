@@ -35,6 +35,6 @@
 - (instancetype)initWithNativeClass:(Class)nativeClass
                                inVM:(OCSquirrelVM *)squirrelVM;
 
-- (instancetype)initWithVM:(OCSquirrelVM *)squirrelVM;
+- (instancetype)initWithSquirrelVM:(OCSquirrelVM *)squirrelVM;
 
 @end

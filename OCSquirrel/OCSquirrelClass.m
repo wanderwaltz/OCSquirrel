@@ -44,9 +44,9 @@
 }
 
 
-- (instancetype)initWithVM:(OCSquirrelVM *)squirrelVM
+- (instancetype)initWithSquirrelVM:(OCSquirrelVM *)squirrelVM
 {
-    OCSquirrelClassImpl *impl = [[OCSquirrelClassImpl alloc] initWithVM: squirrelVM];
+    OCSquirrelClassImpl *impl = [[OCSquirrelClassImpl alloc] initWithSquirrelVM: squirrelVM];
     
     return [self initWithImpl: impl];
 }

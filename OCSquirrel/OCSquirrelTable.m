@@ -34,16 +34,16 @@
 
 - (instancetype)init
 {
-    return [self initWithVM: [OCSquirrelVM defaultVM]];
+    return [self initWithSquirrelVM: [OCSquirrelVM defaultVM]];
 }
 
 
-- (instancetype)initWithVM:(OCSquirrelVM *)vm
+- (instancetype)initWithSquirrelVM:(OCSquirrelVM *)squirrelVM
 {
     const id objects[0] = {};
     const id keys[0] = {};
     
-    return [self initWithSquirrelVM: vm
+    return [self initWithSquirrelVM: squirrelVM
                             objects: objects
                             forKeys: keys
                               count: 0];
@@ -55,7 +55,7 @@
                            forKeys:(const id<NSCopying> [])keys
                              count:(NSUInteger)count
 {
-    OCSquirrelTableImpl *impl = [[OCSquirrelTableImpl alloc] initWithVM: vm];
+    OCSquirrelTableImpl *impl = [[OCSquirrelTableImpl alloc] initWithSquirrelVM: vm];
     
     for (NSUInteger i = 0; i < count; ++i)
     {

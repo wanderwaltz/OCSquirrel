@@ -33,7 +33,7 @@
 
 - (instancetype)init
 {
-    OCSquirrelArrayImpl *impl = [[OCSquirrelArrayImpl alloc] initWithVM: [OCSquirrelVM defaultVM]];
+    OCSquirrelArrayImpl *impl = [[OCSquirrelArrayImpl alloc] initWithSquirrelVM: [OCSquirrelVM defaultVM]];
     
     return [self initWithImpl: impl];
 }
@@ -45,9 +45,9 @@
 }
 
 
-- (instancetype)initWithVM:(OCSquirrelVM *)vm
+- (instancetype)initWithSquirrelVM:(OCSquirrelVM *)squirrelVM
 {
-    OCSquirrelArrayImpl *impl = [[OCSquirrelArrayImpl alloc] initWithVM: vm];
+    OCSquirrelArrayImpl *impl = [[OCSquirrelArrayImpl alloc] initWithSquirrelVM: squirrelVM];
     
     return [self initWithImpl: impl];
 }

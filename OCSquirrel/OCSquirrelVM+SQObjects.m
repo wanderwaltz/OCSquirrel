@@ -55,7 +55,7 @@
 - (id<OCSquirrelTable>) newTable
 {
     return [[OCSquirrelTable alloc] initWithImpl:
-            [[OCSquirrelTableImpl alloc] initWithVM: self]];
+            [[OCSquirrelTableImpl alloc] initWithSquirrelVM: self]];
 }
 
 
@@ -72,7 +72,7 @@
 - (OCSquirrelArray *)newArray
 {
     return [[OCSquirrelArray alloc] initWithImpl:
-            [[OCSquirrelArrayImpl alloc] initWithVM: self]];
+            [[OCSquirrelArrayImpl alloc] initWithSquirrelVM: self]];
 }
 
 

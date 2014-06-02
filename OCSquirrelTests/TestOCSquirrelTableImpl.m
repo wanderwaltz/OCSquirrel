@@ -91,7 +91,7 @@
 
 - (void) testNewTableWhenInitializingWithVM
 {
-    OCSquirrelTableImpl *table = [[OCSquirrelTableImpl alloc] initWithVM: _squirrelVM];
+    OCSquirrelTableImpl *table = [[OCSquirrelTableImpl alloc] initWithSquirrelVM: _squirrelVM];
     
     XCTAssertEqual(sq_type(*table.obj), OT_TABLE,
                    @"OCSquirrelTableImpl obj property should be of OT_TABLE type.");
@@ -512,7 +512,7 @@
 
 - (void) testSetObjectIntForKeyOnce
 {
-    OCSquirrelTableImpl *table = [[OCSquirrelTableImpl alloc] initWithVM: _squirrelVM];
+    OCSquirrelTableImpl *table = [[OCSquirrelTableImpl alloc] initWithSquirrelVM: _squirrelVM];
     
     [table setObject: @1234 forKey: @"key"];
     
@@ -523,7 +523,7 @@
 
 - (void) testSetObjectIntForKeyTwice
 {
-    OCSquirrelTableImpl *table = [[OCSquirrelTableImpl alloc] initWithVM: _squirrelVM];
+    OCSquirrelTableImpl *table = [[OCSquirrelTableImpl alloc] initWithSquirrelVM: _squirrelVM];
     
     [table setObject: @1234 forKey: @"key"];
     [table setObject: @5678 forKey: @"key"];
@@ -535,7 +535,7 @@
 
 - (void) testSetObjectFloatForKey
 {
-    OCSquirrelTableImpl *table = [[OCSquirrelTableImpl alloc] initWithVM: _squirrelVM];
+    OCSquirrelTableImpl *table = [[OCSquirrelTableImpl alloc] initWithSquirrelVM: _squirrelVM];
     
     [table setObject: @123.456 forKey: @"key"];
     
@@ -546,7 +546,7 @@
 
 - (void) testSetObjectBoolForKey
 {
-    OCSquirrelTableImpl *table = [[OCSquirrelTableImpl alloc] initWithVM: _squirrelVM];
+    OCSquirrelTableImpl *table = [[OCSquirrelTableImpl alloc] initWithSquirrelVM: _squirrelVM];
     
     [table setObject: @YES forKey: @"key"];
     
@@ -557,7 +557,7 @@
 
 - (void) testSetObjectUserPointerForKey
 {
-    OCSquirrelTableImpl *table = [[OCSquirrelTableImpl alloc] initWithVM: _squirrelVM];
+    OCSquirrelTableImpl *table = [[OCSquirrelTableImpl alloc] initWithSquirrelVM: _squirrelVM];
     
     [table setObject: [NSValue valueWithPointer: (__bridge void *)self] forKey: @"key"];
     
@@ -568,7 +568,7 @@
 
 - (void) testSetObjectStringForKey
 {
-    OCSquirrelTableImpl *table = [[OCSquirrelTableImpl alloc] initWithVM: _squirrelVM];
+    OCSquirrelTableImpl *table = [[OCSquirrelTableImpl alloc] initWithSquirrelVM: _squirrelVM];
     
     [table setObject: @"value" forKey: @"key"];
     
@@ -579,7 +579,7 @@
 
 - (void) testSetObjectNilForKey
 {
-    OCSquirrelTableImpl *table = [[OCSquirrelTableImpl alloc] initWithVM: _squirrelVM];
+    OCSquirrelTableImpl *table = [[OCSquirrelTableImpl alloc] initWithSquirrelVM: _squirrelVM];
     
     [table setObject: nil forKey: @"key"];
     
@@ -593,7 +593,7 @@
 
 - (void) testSubscriptSetObjectIntForKeyOnce
 {
-    OCSquirrelTableImpl *table = [[OCSquirrelTableImpl alloc] initWithVM: _squirrelVM];
+    OCSquirrelTableImpl *table = [[OCSquirrelTableImpl alloc] initWithSquirrelVM: _squirrelVM];
     
     table[@"key"] = @1234;
     
@@ -604,7 +604,7 @@
 
 - (void) testSubscriptSetObjectIntForKeyTwice
 {
-    OCSquirrelTableImpl *table = [[OCSquirrelTableImpl alloc] initWithVM: _squirrelVM];
+    OCSquirrelTableImpl *table = [[OCSquirrelTableImpl alloc] initWithSquirrelVM: _squirrelVM];
     
     table[@"key"] = @1234;
     table[@"key"] = @5678;
@@ -616,7 +616,7 @@
 
 - (void) testSubscriptSetObjectFloatForKey
 {
-    OCSquirrelTableImpl *table = [[OCSquirrelTableImpl alloc] initWithVM: _squirrelVM];
+    OCSquirrelTableImpl *table = [[OCSquirrelTableImpl alloc] initWithSquirrelVM: _squirrelVM];
     
     table[@"key"] = @123.456;
     
@@ -627,7 +627,7 @@
 
 - (void) testSubscriptSetObjectBoolForKey
 {
-    OCSquirrelTableImpl *table = [[OCSquirrelTableImpl alloc] initWithVM: _squirrelVM];
+    OCSquirrelTableImpl *table = [[OCSquirrelTableImpl alloc] initWithSquirrelVM: _squirrelVM];
     
     table[@"key"] = @YES;
     
@@ -638,7 +638,7 @@
 
 - (void) testSubscriptSetObjectUserPointerForKey
 {
-    OCSquirrelTableImpl *table = [[OCSquirrelTableImpl alloc] initWithVM: _squirrelVM];
+    OCSquirrelTableImpl *table = [[OCSquirrelTableImpl alloc] initWithSquirrelVM: _squirrelVM];
     
     table[@"key"] = [NSValue valueWithPointer: (__bridge void *)self];
     
@@ -649,7 +649,7 @@
 
 - (void) testSubscriptSetObjectStringForKey
 {
-    OCSquirrelTableImpl *table = [[OCSquirrelTableImpl alloc] initWithVM: _squirrelVM];
+    OCSquirrelTableImpl *table = [[OCSquirrelTableImpl alloc] initWithSquirrelVM: _squirrelVM];
     
     table[@"key"] = @"value";
     
@@ -660,7 +660,7 @@
 
 - (void) testSubscriptSetObjectNilForKey
 {
-    OCSquirrelTableImpl *table = [[OCSquirrelTableImpl alloc] initWithVM: _squirrelVM];
+    OCSquirrelTableImpl *table = [[OCSquirrelTableImpl alloc] initWithSquirrelVM: _squirrelVM];
     
     table[@"key"] = nil;
     
@@ -674,7 +674,7 @@
 
 - (void) testSetIntegerForKey
 {
-    OCSquirrelTableImpl *table = [[OCSquirrelTableImpl alloc] initWithVM: _squirrelVM];
+    OCSquirrelTableImpl *table = [[OCSquirrelTableImpl alloc] initWithSquirrelVM: _squirrelVM];
     [table setInteger: 1234 forKey: @"key"];
     
     XCTAssertEqual((SQInteger)[table integerForKey: @"key"], (SQInteger)1234,
@@ -684,7 +684,7 @@
 
 - (void) testSetFloatForKey
 {
-    OCSquirrelTableImpl *table = [[OCSquirrelTableImpl alloc] initWithVM: _squirrelVM];
+    OCSquirrelTableImpl *table = [[OCSquirrelTableImpl alloc] initWithSquirrelVM: _squirrelVM];
     [table setFloat: 123.456 forKey: @"key"];
     
     XCTAssertEqual([table floatForKey: @"key"], 123.456,
@@ -694,7 +694,7 @@
 
 - (void) testSetBoolForKey
 {
-    OCSquirrelTableImpl *table = [[OCSquirrelTableImpl alloc] initWithVM: _squirrelVM];
+    OCSquirrelTableImpl *table = [[OCSquirrelTableImpl alloc] initWithSquirrelVM: _squirrelVM];
     [table setBool: YES forKey: @"key"];
     
     XCTAssertEqual([table boolForKey: @"key"], YES,
@@ -704,7 +704,7 @@
 
 - (void) testSetUserPointerForKey
 {
-    OCSquirrelTableImpl *table = [[OCSquirrelTableImpl alloc] initWithVM: _squirrelVM];
+    OCSquirrelTableImpl *table = [[OCSquirrelTableImpl alloc] initWithSquirrelVM: _squirrelVM];
     [table setUserPointer: (__bridge SQUserPointer)self forKey: @"key"];
     
     XCTAssertEqual([table userPointerForKey: @"key"], (__bridge SQUserPointer)self,
@@ -714,7 +714,7 @@
 
 - (void) testSetStringForKey
 {
-    OCSquirrelTableImpl *table = [[OCSquirrelTableImpl alloc] initWithVM: _squirrelVM];
+    OCSquirrelTableImpl *table = [[OCSquirrelTableImpl alloc] initWithSquirrelVM: _squirrelVM];
     [table setString: @"value" forKey: @"key"];
     
     XCTAssertEqualObjects([table stringForKey: @"key"], @"value",
@@ -727,7 +727,7 @@
 
 - (void) testIntegerValueForKey
 {
-    OCSquirrelTableImpl *table = [[OCSquirrelTableImpl alloc] initWithVM: _squirrelVM];
+    OCSquirrelTableImpl *table = [[OCSquirrelTableImpl alloc] initWithSquirrelVM: _squirrelVM];
     [table setInteger: 12345 forKey: @"key"];
     
     XCTAssertEqual((NSInteger)[[table valueForKey: @"key"] integerValue], (NSInteger)12345,
@@ -737,7 +737,7 @@
 
 - (void) testFloatValueForKey
 {
-    OCSquirrelTableImpl *table = [[OCSquirrelTableImpl alloc] initWithVM: _squirrelVM];
+    OCSquirrelTableImpl *table = [[OCSquirrelTableImpl alloc] initWithSquirrelVM: _squirrelVM];
     [table setFloat: 123.456 forKey: @"key"];
     
     XCTAssertEqualWithAccuracy([[table valueForKey: @"key"] floatValue], 123.456f, 1e-3,
@@ -747,7 +747,7 @@
 
 - (void) testBoolValueForKey
 {
-    OCSquirrelTableImpl *table = [[OCSquirrelTableImpl alloc] initWithVM: _squirrelVM];
+    OCSquirrelTableImpl *table = [[OCSquirrelTableImpl alloc] initWithSquirrelVM: _squirrelVM];
     [table setBool: YES forKey: @"key"];
     
     XCTAssertEqual([[table valueForKey: @"key"] boolValue], YES,
@@ -757,7 +757,7 @@
 
 - (void) testUserPointerValueForKey
 {
-    OCSquirrelTableImpl *table = [[OCSquirrelTableImpl alloc] initWithVM: _squirrelVM];
+    OCSquirrelTableImpl *table = [[OCSquirrelTableImpl alloc] initWithSquirrelVM: _squirrelVM];
     [table setUserPointer: (__bridge SQUserPointer)self forKey: @"key"];
     
     XCTAssertEqual([[table valueForKey: @"key"] pointerValue], (__bridge SQUserPointer)self,
@@ -767,7 +767,7 @@
 
 - (void) testStringValueForKey
 {
-    OCSquirrelTableImpl *table = [[OCSquirrelTableImpl alloc] initWithVM: _squirrelVM];
+    OCSquirrelTableImpl *table = [[OCSquirrelTableImpl alloc] initWithSquirrelVM: _squirrelVM];
     [table setString: @"value" forKey: @"key"];
     
     XCTAssertEqualObjects([table valueForKey: @"key"], @"value",
@@ -780,7 +780,7 @@
 
 - (void) testSetIntegerValueForKey
 {
-    OCSquirrelTableImpl *table = [[OCSquirrelTableImpl alloc] initWithVM: _squirrelVM];
+    OCSquirrelTableImpl *table = [[OCSquirrelTableImpl alloc] initWithSquirrelVM: _squirrelVM];
     [table setValue: @12345 forKey: @"key"];
     
     XCTAssertEqual((SQInteger)[[table valueForKey: @"key"] integerValue], (SQInteger)12345,
@@ -790,7 +790,7 @@
 
 - (void) testSetFloatValueForKey
 {
-    OCSquirrelTableImpl *table = [[OCSquirrelTableImpl alloc] initWithVM: _squirrelVM];
+    OCSquirrelTableImpl *table = [[OCSquirrelTableImpl alloc] initWithSquirrelVM: _squirrelVM];
     [table setValue: @123.456 forKey: @"key"];
     
     XCTAssertEqualWithAccuracy([[table valueForKey: @"key"] floatValue], 123.456f, 1e-3,
@@ -800,7 +800,7 @@
 
 - (void) testSetBoolValueForKey
 {
-    OCSquirrelTableImpl *table = [[OCSquirrelTableImpl alloc] initWithVM: _squirrelVM];
+    OCSquirrelTableImpl *table = [[OCSquirrelTableImpl alloc] initWithSquirrelVM: _squirrelVM];
     [table setValue: @YES forKey: @"key"];
     
     XCTAssertEqual([[table valueForKey: @"key"] boolValue], YES,
@@ -810,7 +810,7 @@
 
 - (void) testSetUserPointerValueForKey
 {
-    OCSquirrelTableImpl *table = [[OCSquirrelTableImpl alloc] initWithVM: _squirrelVM];
+    OCSquirrelTableImpl *table = [[OCSquirrelTableImpl alloc] initWithSquirrelVM: _squirrelVM];
     [table setValue: [NSValue valueWithPointer: (__bridge SQUserPointer)self] forKey: @"key"];
     
     XCTAssertEqual([[table valueForKey: @"key"] pointerValue], (__bridge SQUserPointer)self,
@@ -820,7 +820,7 @@
 
 - (void) testSetStringValueForKey
 {
-    OCSquirrelTableImpl *table = [[OCSquirrelTableImpl alloc] initWithVM: _squirrelVM];
+    OCSquirrelTableImpl *table = [[OCSquirrelTableImpl alloc] initWithSquirrelVM: _squirrelVM];
     [table setValue: @"value" forKey: @"key"];
     
     XCTAssertEqualObjects([table valueForKey: @"key"], @"value",
@@ -834,7 +834,7 @@
 
 - (void)testCount
 {
-    OCSquirrelTableImpl *table = [[OCSquirrelTableImpl alloc] initWithVM: _squirrelVM];
+    OCSquirrelTableImpl *table = [[OCSquirrelTableImpl alloc] initWithSquirrelVM: _squirrelVM];
     
     [table setObject: nil      forKey: @"other"];
     [table setObject: @"value" forKey: @"key"];
@@ -846,7 +846,7 @@
 
 - (void)testCountAfterRemovingObject
 {
-    OCSquirrelTableImpl *table = [[OCSquirrelTableImpl alloc] initWithVM: _squirrelVM];
+    OCSquirrelTableImpl *table = [[OCSquirrelTableImpl alloc] initWithSquirrelVM: _squirrelVM];
     
     [table setObject: nil      forKey: @"other"];
     [table setObject: @"value" forKey: @"key"];
@@ -860,7 +860,7 @@
 
 - (void)testRemovingNonexistantObjectDoesNotThrow
 {
-    OCSquirrelTableImpl *table = [[OCSquirrelTableImpl alloc] initWithVM: _squirrelVM];
+    OCSquirrelTableImpl *table = [[OCSquirrelTableImpl alloc] initWithSquirrelVM: _squirrelVM];
     
     XCTAssertNoThrow([table removeObjectForKey: @12345], @"Removing object for nonexistant key does not throw");
 }
@@ -868,7 +868,7 @@
 
 - (void)testRemovingNonexistantObjectDoesNotGenerateError
 {
-    OCSquirrelTableImpl *table = [[OCSquirrelTableImpl alloc] initWithVM: _squirrelVM];
+    OCSquirrelTableImpl *table = [[OCSquirrelTableImpl alloc] initWithSquirrelVM: _squirrelVM];
     
     [table removeObjectForKey: @12345];
     
@@ -881,7 +881,7 @@
 
 - (void)testKeyEnumeratorClass
 {
-    OCSquirrelTableImpl *table = [[OCSquirrelTableImpl alloc] initWithVM: _squirrelVM];
+    OCSquirrelTableImpl *table = [[OCSquirrelTableImpl alloc] initWithSquirrelVM: _squirrelVM];
     
     XCTAssertTrue([table.keyEnumerator isKindOfClass: [NSEnumerator class]],
                   @"OCSquirrelTableImpl should have a keyEnumerator property of NSEnumerator class");
@@ -890,7 +890,7 @@
 
 - (void)testKeyEnumeratorNextObject
 {
-    OCSquirrelTableImpl *table = [[OCSquirrelTableImpl alloc] initWithVM: _squirrelVM];
+    OCSquirrelTableImpl *table = [[OCSquirrelTableImpl alloc] initWithSquirrelVM: _squirrelVM];
     
     NSSet *keys = [NSSet setWithArray: @[@"other", @"key", @12345]];
     
@@ -916,7 +916,7 @@
 
 - (void)testKeyEnumeratorAllObjectsAll
 {
-    OCSquirrelTableImpl *table = [[OCSquirrelTableImpl alloc] initWithVM: _squirrelVM];
+    OCSquirrelTableImpl *table = [[OCSquirrelTableImpl alloc] initWithSquirrelVM: _squirrelVM];
     
     NSSet *keys = [NSSet setWithArray: @[@"other", @"key", @12345]];
     
@@ -933,7 +933,7 @@
 
 - (void)testKeyEnumeratorAllObjectsTail
 {
-    OCSquirrelTableImpl *table = [[OCSquirrelTableImpl alloc] initWithVM: _squirrelVM];
+    OCSquirrelTableImpl *table = [[OCSquirrelTableImpl alloc] initWithSquirrelVM: _squirrelVM];
     
     NSMutableSet *keys = [[NSSet setWithArray: @[@"other", @"key", @12345]] mutableCopy];
     
@@ -956,7 +956,7 @@
 
 - (void)testKeyEnumeratorNextObjectStackState
 {
-    OCSquirrelTableImpl *table = [[OCSquirrelTableImpl alloc] initWithVM: _squirrelVM];
+    OCSquirrelTableImpl *table = [[OCSquirrelTableImpl alloc] initWithSquirrelVM: _squirrelVM];
     
     [table setObject: nil      forKey: @"other"];
     [table setObject: @"value" forKey: @"key"];
@@ -987,7 +987,7 @@
 
 - (void)testKeyEnumeratorAllObjectsAllStackState
 {
-    OCSquirrelTableImpl *table = [[OCSquirrelTableImpl alloc] initWithVM: _squirrelVM];
+    OCSquirrelTableImpl *table = [[OCSquirrelTableImpl alloc] initWithSquirrelVM: _squirrelVM];
     
     [table setObject: nil      forKey: @"other"];
     [table setObject: @"value" forKey: @"key"];
@@ -1008,7 +1008,7 @@
 
 - (void)testKeyEnumeratorAllObjectsTailStackTop
 {
-    OCSquirrelTableImpl *table = [[OCSquirrelTableImpl alloc] initWithVM: _squirrelVM];
+    OCSquirrelTableImpl *table = [[OCSquirrelTableImpl alloc] initWithSquirrelVM: _squirrelVM];
     
     [table setObject: nil      forKey: @"other"];
     [table setObject: @"value" forKey: @"key"];
@@ -1041,7 +1041,7 @@
 
 - (void)testEnumerateObjectsAndKeys
 {
-    OCSquirrelTableImpl *table = [[OCSquirrelTableImpl alloc] initWithVM: _squirrelVM];
+    OCSquirrelTableImpl *table = [[OCSquirrelTableImpl alloc] initWithSquirrelVM: _squirrelVM];
     
     NSDictionary *valuesAndKeys =
     @{
@@ -1072,7 +1072,7 @@
 
 - (void) testEnumerateObjectsAndKeysStop
 {
-    OCSquirrelTableImpl *table = [[OCSquirrelTableImpl alloc] initWithVM: _squirrelVM];
+    OCSquirrelTableImpl *table = [[OCSquirrelTableImpl alloc] initWithSquirrelVM: _squirrelVM];
     
     [table setObject: nil      forKey: @"other"];
     [table setObject: @"value" forKey: @"key"];

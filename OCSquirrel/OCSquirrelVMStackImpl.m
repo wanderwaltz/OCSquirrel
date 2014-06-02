@@ -132,13 +132,13 @@
     }
     else if ([value isKindOfClass: [NSArray class]])
     {
-        OCSquirrelArray *array = [[OCSquirrelArray alloc] initWithVM: _squirrelVM];
+        OCSquirrelArray *array = [[OCSquirrelArray alloc] initWithSquirrelVM: _squirrelVM];
         [array addObjectsFromArray: value];
         [array push];
     }
     else if ([value isKindOfClass: [NSDictionary class]])
     {
-        OCSquirrelTable *table = [[OCSquirrelTable alloc] initWithVM: _squirrelVM];
+        OCSquirrelTable *table = [[OCSquirrelTable alloc] initWithSquirrelVM: _squirrelVM];
         [table addEntriesFromDictionary: value];
         [table push];
     }

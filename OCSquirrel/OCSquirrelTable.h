@@ -262,7 +262,7 @@
  *
  *  @exception NSInvalidArgumentException Is thrown when trying to initialize with `nil` OCSquirrelVM.
  */
-- (instancetype)initWithVM:(OCSquirrelVM *)vm;
+- (instancetype)initWithSquirrelVM:(OCSquirrelVM *)squirrelVM;
 
 
 /** Initializes a newly allocated OCSquirrelTable with count entries.

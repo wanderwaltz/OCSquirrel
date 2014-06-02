@@ -230,7 +230,7 @@ static SQInteger IntClosureNoParamsCheckEnvironment(HSQUIRRELVM vm)
 {
     [_root setInteger: 12345 forKey: kEnvironmentKey];
     
-    OCSquirrelTable *otherEnvironment = [[OCSquirrelTable alloc] initWithVM: _squirrelVM];
+    OCSquirrelTable *otherEnvironment = [[OCSquirrelTable alloc] initWithSquirrelVM: _squirrelVM];
     
     [otherEnvironment setInteger: 6789 forKey: kEnvironmentKey];
     [_root setObject: otherEnvironment forKey: @"other environment"];
@@ -335,7 +335,7 @@ static SQInteger IntClosureNoParamsCheckEnvironment(HSQUIRRELVM vm)
 {
     [_root setInteger: 12345 forKey: @"x"];
     
-    OCSquirrelTable *otherEnvironment = [[OCSquirrelTable alloc] initWithVM: _squirrelVM];
+    OCSquirrelTable *otherEnvironment = [[OCSquirrelTable alloc] initWithSquirrelVM: _squirrelVM];
     
     [otherEnvironment setInteger: 6789 forKey: @"x"];
     [_root setObject: otherEnvironment forKey: @"other environment"];
