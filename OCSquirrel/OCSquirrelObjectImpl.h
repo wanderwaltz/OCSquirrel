@@ -40,8 +40,8 @@
 - (instancetype)initWithSquirrelVM:(OCSquirrelVM *)squirrelVM;
 
 
-- (instancetype)initWithHSQOBJECT:(HSQOBJECT)object
-                             inVM:(OCSquirrelVM *)squirrelVM;
+- (instancetype)initWithSquirrelVM:(OCSquirrelVM *)squirrelVM
+                         HSQOBJECT:(HSQOBJECT)object;
 
 
 /// Pushes the object to the current VM's stack
@@ -53,10 +53,10 @@
 
 + (BOOL)isAllowedToInitWithSQObjectOfType:(SQObjectType)type;
 
-+ (id)newWithVM:(OCSquirrelVM *)squirrelVM;
++ (id)newWithSquirrelVM:(OCSquirrelVM *)squirrelVM;
 
-+ (id)newWithHSQOBJECT:(HSQOBJECT)object
-                  inVM:(OCSquirrelVM *)squirrelVM;
++ (id)newWithSquirrelVM:(OCSquirrelVM *)squirrelVM
+              HSQOBJECT:(HSQOBJECT)obj;
 
 
 #pragma mark unavailable methods

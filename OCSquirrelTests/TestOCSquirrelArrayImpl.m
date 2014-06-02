@@ -83,8 +83,8 @@
     sq_resetobject(&obj);
     
     XCTAssertThrowsSpecificNamed(({
-        __unused OCSquirrelArrayImpl *array = [[OCSquirrelArrayImpl alloc] initWithHSQOBJECT: obj
-                                                                                        inVM: _squirrelVM];
+        __unused OCSquirrelArrayImpl *array = [[OCSquirrelArrayImpl alloc] initWithSquirrelVM: _squirrelVM
+                                                                                    HSQOBJECT: obj];
     }), NSException, NSInvalidArgumentException,
                                  @"-initWithHSQOBJECT:inVM: should throw an NSInvalidArgumentException "
                                  @"if the provided HSQOBJECT is not of OT_ARRAY type.");
@@ -125,8 +125,8 @@
     
     sq_arrayappend(_squirrelVM.vm, -2);
     
-    OCSquirrelArrayImpl *array = [[OCSquirrelArrayImpl alloc] initWithHSQOBJECT: sqArray
-                                                                   inVM: _squirrelVM];
+    OCSquirrelArrayImpl *array = [[OCSquirrelArrayImpl alloc] initWithSquirrelVM: _squirrelVM
+                                                                       HSQOBJECT: sqArray];
     
     XCTAssertTrue([[array objectAtIndex: 0] isKindOfClass: [NSNumber class]],
                   @"-objectAtIndex: should return an NSNumber for integer value");
@@ -143,8 +143,8 @@
     
     sq_arrayappend(_squirrelVM.vm, -2);
     
-    OCSquirrelArrayImpl *array = [[OCSquirrelArrayImpl alloc] initWithHSQOBJECT: sqArray
-                                                                   inVM: _squirrelVM];
+    OCSquirrelArrayImpl *array = [[OCSquirrelArrayImpl alloc] initWithSquirrelVM: _squirrelVM
+                                                                       HSQOBJECT: sqArray];
     
     XCTAssertEqual((NSInteger)[[array objectAtIndex: 0] integerValue], (NSInteger)1234,
                    @"-objectAtIndex: should return the appropriate NSNumber for integer value");
@@ -161,8 +161,8 @@
     
     sq_arrayappend(_squirrelVM.vm, -2);
     
-    OCSquirrelArrayImpl *array = [[OCSquirrelArrayImpl alloc] initWithHSQOBJECT: sqArray
-                                                                   inVM: _squirrelVM];
+    OCSquirrelArrayImpl *array = [[OCSquirrelArrayImpl alloc] initWithSquirrelVM: _squirrelVM
+                                                                       HSQOBJECT: sqArray];
     
     XCTAssertTrue([[array objectAtIndex: 0] isKindOfClass: [NSNumber class]],
                   @"-objectAtIndex: should return an NSNumber for float value");
@@ -179,8 +179,8 @@
     
     sq_arrayappend(_squirrelVM.vm, -2);
     
-    OCSquirrelArrayImpl *array = [[OCSquirrelArrayImpl alloc] initWithHSQOBJECT: sqArray
-                                                                   inVM: _squirrelVM];
+    OCSquirrelArrayImpl *array = [[OCSquirrelArrayImpl alloc] initWithSquirrelVM: _squirrelVM
+                                                                       HSQOBJECT: sqArray];
     
     XCTAssertEqual([[array objectAtIndex: 0] floatValue], 123.456f,
                    @"-objectAtIndex: should return the appropriate NSNumber for float value");
@@ -197,8 +197,8 @@
     
     sq_arrayappend(_squirrelVM.vm, -2);
     
-    OCSquirrelArrayImpl *array = [[OCSquirrelArrayImpl alloc] initWithHSQOBJECT: sqArray
-                                                                   inVM: _squirrelVM];
+    OCSquirrelArrayImpl *array = [[OCSquirrelArrayImpl alloc] initWithSquirrelVM: _squirrelVM
+                                                                       HSQOBJECT: sqArray];
     
     XCTAssertTrue([[array objectAtIndex: 0] isKindOfClass: [NSNumber class]],
                   @"-objectAtIndex: should return an NSNumber for BOOL value");
@@ -215,8 +215,8 @@
     
     sq_arrayappend(_squirrelVM.vm, -2);
     
-    OCSquirrelArrayImpl *array = [[OCSquirrelArrayImpl alloc] initWithHSQOBJECT: sqArray
-                                                                   inVM: _squirrelVM];
+    OCSquirrelArrayImpl *array = [[OCSquirrelArrayImpl alloc] initWithSquirrelVM: _squirrelVM
+                                                                       HSQOBJECT: sqArray];
     
     XCTAssertEqual([[array objectAtIndex: 0] boolValue], YES,
                    @"-objectAtIndex: should return the appropriate NSNumber for BOOL value");
@@ -233,8 +233,8 @@
     
     sq_arrayappend(_squirrelVM.vm, -2);
     
-    OCSquirrelArrayImpl *array = [[OCSquirrelArrayImpl alloc] initWithHSQOBJECT: sqArray
-                                                                   inVM: _squirrelVM];
+    OCSquirrelArrayImpl *array = [[OCSquirrelArrayImpl alloc] initWithSquirrelVM: _squirrelVM
+                                                                       HSQOBJECT: sqArray];
     
     XCTAssertTrue([[array objectAtIndex: 0] isKindOfClass: [NSString class]],
                   @"-objectAtIndex: should return an NSString for string value");
@@ -251,8 +251,8 @@
     
     sq_arrayappend(_squirrelVM.vm, -2);
     
-    OCSquirrelArrayImpl *array = [[OCSquirrelArrayImpl alloc] initWithHSQOBJECT: sqArray
-                                                                   inVM: _squirrelVM];
+    OCSquirrelArrayImpl *array = [[OCSquirrelArrayImpl alloc] initWithSquirrelVM: _squirrelVM
+                                                                       HSQOBJECT: sqArray];
     
     XCTAssertEqualObjects([array objectAtIndex: 0], @"someValue",
                           @"-objectAtIndex: should return the appropriate NSString for string value");
@@ -269,8 +269,8 @@
     
     sq_arrayappend(_squirrelVM.vm, -2);
     
-    OCSquirrelArrayImpl *array = [[OCSquirrelArrayImpl alloc] initWithHSQOBJECT: sqArray
-                                                                   inVM: _squirrelVM];
+    OCSquirrelArrayImpl *array = [[OCSquirrelArrayImpl alloc] initWithSquirrelVM: _squirrelVM
+                                                                       HSQOBJECT: sqArray];
     
     XCTAssertTrue([[array objectAtIndex: 0] isKindOfClass: [NSValue class]],
                   @"-objectAtIndex: should return an NSValue for userPointer value");
@@ -287,8 +287,8 @@
     
     sq_arrayappend(_squirrelVM.vm, -2);
     
-    OCSquirrelArrayImpl *array = [[OCSquirrelArrayImpl alloc] initWithHSQOBJECT: sqArray
-                                                                   inVM: _squirrelVM];
+    OCSquirrelArrayImpl *array = [[OCSquirrelArrayImpl alloc] initWithSquirrelVM: _squirrelVM
+                                                                       HSQOBJECT: sqArray];
     
     XCTAssertEqual([[array objectAtIndex: 0] pointerValue], (__bridge void *)self,
                    @"-objectAtIndex: should return the appropriate NSValue for userPointer value");
@@ -305,8 +305,8 @@
     
     sq_arrayappend(_squirrelVM.vm, -2);
     
-    OCSquirrelArrayImpl *array = [[OCSquirrelArrayImpl alloc] initWithHSQOBJECT: sqArray
-                                                                   inVM: _squirrelVM];
+    OCSquirrelArrayImpl *array = [[OCSquirrelArrayImpl alloc] initWithSquirrelVM: _squirrelVM
+                                                                       HSQOBJECT: sqArray];
     
     XCTAssertNil([array objectAtIndex: 0],
                  @"-objectAtIndex: should return nil for `null` value");
@@ -326,8 +326,8 @@
     
     sq_arrayappend(_squirrelVM.vm, -2);
     
-    OCSquirrelArrayImpl *array = [[OCSquirrelArrayImpl alloc] initWithHSQOBJECT: sqArray
-                                                                   inVM: _squirrelVM];
+    OCSquirrelArrayImpl *array = [[OCSquirrelArrayImpl alloc] initWithSquirrelVM: _squirrelVM
+                                                                       HSQOBJECT: sqArray];
     
     id arrayMock = [OCMockObject partialMockForObject: array];
     
@@ -349,8 +349,8 @@
     
     sq_arrayappend(_squirrelVM.vm, -2);
     
-    OCSquirrelArrayImpl *array = [[OCSquirrelArrayImpl alloc] initWithHSQOBJECT: sqArray
-                                                                   inVM: _squirrelVM];
+    OCSquirrelArrayImpl *array = [[OCSquirrelArrayImpl alloc] initWithSquirrelVM: _squirrelVM
+                                                                       HSQOBJECT: sqArray];
     
     id arrayMock = [OCMockObject partialMockForObject: array];
     

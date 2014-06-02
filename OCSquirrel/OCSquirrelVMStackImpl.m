@@ -292,8 +292,8 @@
         {
             HSQOBJECT table = [self sqObjectAtPosition: position];
             
-            OCSquirrelTableImpl *impl = [[OCSquirrelTableImpl alloc] initWithHSQOBJECT: table
-                                                                                  inVM: _squirrelVM];
+            OCSquirrelTableImpl *impl = [[OCSquirrelTableImpl alloc] initWithSquirrelVM: _squirrelVM
+                                                                              HSQOBJECT: table];
             
             value = [[OCSquirrelTable alloc] initWithImpl: impl];
         } break;
@@ -302,8 +302,8 @@
         {
             HSQOBJECT array = [self sqObjectAtPosition: position];
             
-            OCSquirrelArrayImpl *impl = [[OCSquirrelArrayImpl alloc] initWithHSQOBJECT: array
-                                                                                  inVM: _squirrelVM];
+            OCSquirrelArrayImpl *impl = [[OCSquirrelArrayImpl alloc] initWithSquirrelVM: _squirrelVM
+                                                                              HSQOBJECT: array];
             
             value = [[OCSquirrelArray alloc] initWithImpl: impl];
             
@@ -333,8 +333,8 @@
             
             // If existing instance was not found, return a new one.
             if (value == nil) {
-                OCSquirrelClassImpl *impl = [[OCSquirrelClassImpl alloc] initWithHSQOBJECT: class
-                                                                                      inVM: _squirrelVM];
+                OCSquirrelClassImpl *impl = [[OCSquirrelClassImpl alloc] initWithSquirrelVM: _squirrelVM
+                                                                                  HSQOBJECT: class];
                 
                 value = [[OCSquirrelClass alloc] initWithImpl: impl];
             }
@@ -344,8 +344,8 @@
         {
             HSQOBJECT instance = [self sqObjectAtPosition: position];
             
-            OCSquirrelInstanceImpl *impl = [[OCSquirrelInstanceImpl alloc] initWithHSQOBJECT: instance
-                                                                                        inVM: _squirrelVM];
+            OCSquirrelInstanceImpl *impl = [[OCSquirrelInstanceImpl alloc] initWithSquirrelVM: _squirrelVM
+                                                                                    HSQOBJECT: instance];
             
             value = [[OCSquirrelInstance alloc] initWithImpl: impl];
         } break;
@@ -356,8 +356,8 @@
         {
             HSQOBJECT instance = [self sqObjectAtPosition: position];
             
-            OCSquirrelClosureImpl *impl = [[OCSquirrelClosureImpl alloc] initWithHSQOBJECT: instance
-                                                                                      inVM: _squirrelVM];
+            OCSquirrelClosureImpl *impl = [[OCSquirrelClosureImpl alloc] initWithSquirrelVM: _squirrelVM
+                                                                                  HSQOBJECT: instance];
             
             value = [[OCSquirrelClosure alloc] initWithImpl: impl];
         } break;
@@ -367,8 +367,8 @@
         {
             HSQOBJECT object = [self sqObjectAtPosition: position];
             
-            OCSquirrelUserDataImpl *impl = [[OCSquirrelUserDataImpl alloc] initWithHSQOBJECT: object
-                                                                                        inVM: _squirrelVM];
+            OCSquirrelUserDataImpl *impl = [[OCSquirrelUserDataImpl alloc] initWithSquirrelVM: _squirrelVM
+                                            HSQOBJECT: object];
             
             value = [[OCSquirrelUserData alloc] initWithImpl: impl];
         } break;
@@ -378,8 +378,8 @@
         {
             HSQOBJECT object = [self sqObjectAtPosition: position];
             
-            value = [[OCSquirrelObjectImpl alloc] initWithHSQOBJECT: object
-                                                               inVM: _squirrelVM];
+            value = [[OCSquirrelObjectImpl alloc] initWithSquirrelVM: _squirrelVM
+                                                           HSQOBJECT: object];
         } break;
     }
     

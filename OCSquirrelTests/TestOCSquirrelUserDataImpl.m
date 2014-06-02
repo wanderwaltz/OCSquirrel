@@ -74,8 +74,8 @@
     sq_resetobject(&obj);
     
     XCTAssertThrowsSpecificNamed(({
-        __unused OCSquirrelUserDataImpl *userData = [[OCSquirrelUserDataImpl alloc] initWithHSQOBJECT: obj
-                                                                                              inVM: _squirrelVM];
+        __unused OCSquirrelUserDataImpl *userData = [[OCSquirrelUserDataImpl alloc] initWithSquirrelVM: _squirrelVM
+                                                                                             HSQOBJECT: obj];
     }), NSException, NSInvalidArgumentException,
                                  @"-initWithHSQOBJECT:inVM: should throw an NSInvalidArgumentException "
                                  @"if the provided HSQOBJECT is not of OT_USERDATA type.");

@@ -45,23 +45,23 @@
 }
 
 
-+ (id)newWithVM:(OCSquirrelVM *)squirrelVM
++ (id)newWithSquirrelVM:(OCSquirrelVM *)squirrelVM
 {
     return [[self alloc] initWithSquirrelVM:squirrelVM];
 }
 
 
-+ (id)newWithHSQOBJECT:(HSQOBJECT)object
-                  inVM:(OCSquirrelVM *)squirrelVM
++ (id)newWithSquirrelVM:(OCSquirrelVM *)squirrelVM
+              HSQOBJECT:(HSQOBJECT)obj
 {
-    return [[self alloc] initWithHSQOBJECT: object
-                                      inVM: squirrelVM];
+    return [[self alloc] initWithSquirrelVM: squirrelVM
+                                  HSQOBJECT: obj];
 }
 
 
 #pragma mark - initialization methods
 
-- (id)initWithSquirrelVM:(OCSquirrelVM *)squirrelVM
+- (instancetype)initWithSquirrelVM:(OCSquirrelVM *)squirrelVM
 {
     if (squirrelVM == nil) {
         @throw [NSException exceptionWithName: NSInvalidArgumentException
@@ -83,8 +83,8 @@
 }
 
 
-- (id)initWithHSQOBJECT:(HSQOBJECT)object
-                   inVM:(OCSquirrelVM *)squirrelVM
+- (instancetype)initWithSquirrelVM:(OCSquirrelVM *)squirrelVM
+                         HSQOBJECT:(HSQOBJECT)object
 {
     if ([[self class] isAllowedToInitWithSQObjectOfType: object._type]) {
         self = [super init];
@@ -195,8 +195,8 @@
             return;
         }
         
-        result = [[self.class allocWithZone: zone] initWithHSQOBJECT: cloned
-                                                                inVM: self.squirrelVM];
+        result = [[self.class allocWithZone: zone] initWithSquirrelVM: self.squirrelVM
+                                                            HSQOBJECT: cloned];
     }];
     
     if (result == nil) {

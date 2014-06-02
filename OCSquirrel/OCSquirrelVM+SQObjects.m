@@ -62,8 +62,8 @@
 - (id<OCSquirrelTable>) newTableWithHSQObject:(HSQOBJECT)sqObject
 {
     return [[OCSquirrelTable alloc] initWithImpl:
-            [[OCSquirrelTableImpl alloc] initWithHSQOBJECT: sqObject
-                                                      inVM: self]];
+            [[OCSquirrelTableImpl alloc] initWithSquirrelVM: self
+                                                  HSQOBJECT: sqObject]];
 }
 
 
@@ -79,8 +79,8 @@
 - (OCSquirrelArray *)newArrayWithHSQObject:(HSQOBJECT)sqObject
 {
     return [[OCSquirrelArray alloc] initWithImpl:
-            [[OCSquirrelArrayImpl alloc] initWithHSQOBJECT: sqObject
-                                                      inVM: self]];
+            [[OCSquirrelArrayImpl alloc] initWithSquirrelVM: self
+                                                  HSQOBJECT: sqObject]];
 }
 
 

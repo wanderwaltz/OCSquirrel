@@ -40,8 +40,8 @@
         
         HSQOBJECT root = [stack sqObjectAtPosition: -1];
         
-        table = [[self alloc] initWithHSQOBJECT: root
-                                           inVM: squirrelVM];
+        table = [[self alloc] initWithSquirrelVM: squirrelVM
+                                       HSQOBJECT: root];
     }];
     
     
@@ -58,8 +58,8 @@
         
         HSQOBJECT registry = [stack sqObjectAtPosition: -1];
         
-        table = [[self alloc] initWithHSQOBJECT: registry
-                                           inVM: squirrelVM];
+        table = [[self alloc] initWithSquirrelVM: squirrelVM
+                                       HSQOBJECT: registry];
     }];
     
     

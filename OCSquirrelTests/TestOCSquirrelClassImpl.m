@@ -79,7 +79,7 @@
 
 - (void) testPushNewInstance
 {
-    OCSquirrelClassImpl *class = [OCSquirrelClassImpl newWithVM: _squirrelVM];
+    OCSquirrelClassImpl *class = [OCSquirrelClassImpl newWithSquirrelVM: _squirrelVM];
     
     [class pushNewInstance];
     
@@ -93,7 +93,7 @@
 
 - (void) testNewInstanceUserPointer
 {
-    OCSquirrelClassImpl *class = [OCSquirrelClassImpl newWithVM: _squirrelVM];
+    OCSquirrelClassImpl *class = [OCSquirrelClassImpl newWithSquirrelVM: _squirrelVM];
     
     [class pushNewInstance];
     
